@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<groupId>com.buschmais.osgi.external</groupId>
+		<artifactId>mx4j</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.buschmais.osgi.external.mx4j</groupId>
+	<artifactId>mx4j-tools-osgi</artifactId>
+	<version>3.0.1</version>
+	<packaging>bundle</packaging>
+	<name>External Artifacts - MX4J Tools</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<configuration>
+					<instructions>
+						<Export-Package>mx4j.*;version=${pom.version}</Export-Package>
+						<Private-Package />
+						<Embed-Dependency>mx4j-tools;inline=true</Embed-Dependency>
+						<Import-Package>mx4j;resolution:=optional,
+							com.caucho.burlap.*;resolution:=optional,
+							com.caucho.hessian.*;resolution:=optional,
+							com.sun.net.ssl.*;resolution:=optional,
+							javax.mail.*;resolution:=optional,
+							javax.servlet.*;resolution:=optional,
+							javax.xml.rpc.*;resolution:=optional,
+							org.apache.axis.*;resolution:=optional,
+							org.mortbay.http.*;resolution:=optional,
+							org.mortbay.jetty.*;resolution:=optional,
+							org.python.*;resolution:=optional,
+							*</Import-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>mx4j</groupId>
+			<artifactId>mx4j-tools</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+	</dependencies>
+</project>

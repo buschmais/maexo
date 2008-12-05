@@ -2,12 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<parent>
-		<groupId>com.buschmais</groupId>
-		<artifactId>osgi</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-	</parent>
-
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.buschmais.osgi</groupId>
 	<artifactId>maexo</artifactId>
@@ -19,16 +13,24 @@
 		<module>core</module>
 		<module>mbeans</module>
 		<module>server</module>
+		<module>adaptor</module>
 	</modules>
 
 	<properties>
 		<maexo.version>1.0.0-SNAPSHOT</maexo.version>
-		<slf4j.version>1.5.0</slf4j.version>
+		<slf4j.version>1.5.6</slf4j.version>
 		<spring.maven.artifact.version>2.5.5</spring.maven.artifact.version>
 		<spring.osgi.version>1.1.2</spring.osgi.version>
-		<equinox.version>3.2.2</equinox.version>
+		<equinox.version>3.5.0.200811061137</equinox.version>
 		<mx4j-tools.version>3.0.1</mx4j-tools.version>
 	</properties>
+	
+	<description>Management Extensions for OSGi</description>
+	<url>http://code.google.com/p/maexo</url>
+	<organization>
+		<name>buschmais GbR</name>
+		<url>http://www.buschmais.com</url>
+	</organization>
 
 	<build>
 		<pluginManagement>
@@ -107,7 +109,7 @@
 
 			<dependency>
 				<groupId>com.buschmais.osgi.external.mx4j</groupId>
-				<artifactId>mx4j-tools</artifactId>
+				<artifactId>mx4j-tools-osgi</artifactId>
 				<version>${mx4j-tools.version}</version>
 			</dependency>
 

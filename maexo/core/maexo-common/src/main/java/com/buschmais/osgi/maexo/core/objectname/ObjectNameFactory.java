@@ -4,7 +4,7 @@ import javax.management.ObjectName;
 
 public interface ObjectNameFactory {
 
-	public static final String DEFAULT_DOMAIN = "com.buschmais.maexo";
+	public static final String DEFAULT_DOMAIN = "com.buschmais.osgi.maexo";
 
 	public static final String SERVICE_PROPERTY_RESOURCEINTERFACE = "resourceInterface";
 
