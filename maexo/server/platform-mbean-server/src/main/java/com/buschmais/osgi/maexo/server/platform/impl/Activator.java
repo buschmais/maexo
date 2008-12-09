@@ -15,8 +15,6 @@ public class Activator implements BundleActivator {
 
 	private static Logger logger = LoggerFactory.getLogger(Activator.class);
 
-	private ServiceRegistration mbeanServerConnectionRegistration;
-
 	private ServiceRegistration mbeanServerRegistration;
 
 	/*
@@ -32,10 +30,10 @@ public class Activator implements BundleActivator {
 		MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
 		if (logger.isDebugEnabled())
 			logger.debug("registering instance " + mbeanServer + " as service");
-		this.mbeanServerConnectionRegistration = bundleContext.registerService(
-				MBeanServerConnection.class.getName(), mbeanServer, null);
 		this.mbeanServerRegistration = bundleContext.registerService(
-				MBeanServer.class.getName(), mbeanServer, null);
+				new String[] { MBeanServer.class.getName(),
+						MBeanServerConnection.class.getName() }, mbeanServer,
+				null);
 	}
 
 	/*
@@ -48,7 +46,6 @@ public class Activator implements BundleActivator {
 		if (logger.isDebugEnabled())
 			logger.debug("unregistering service");
 		this.mbeanServerRegistration.unregister();
-		this.mbeanServerConnectionRegistration.unregister();
 	}
 
 }
