@@ -46,7 +46,6 @@ public class ServerRegistryImpl {
 			}
 			mbeanServer.registerMBean(mbean, objectName);
 		} catch (Exception e) {
-			e.printStackTrace();
 			logger.warn("caught exception while registering mbean " + objectName
 					+ ", on mbean server " + mbeanServer, e);
 		}
@@ -80,7 +79,7 @@ public class ServerRegistryImpl {
 	 * com.buschmais.osgimaexoxo.core.registry.impl.OSGiMBeanRegistry#getMBeanServers
 	 * ()
 	 */
-	public synchronized Set<MBeanServer> getMBeanServers() {
+	public Set<MBeanServer> getMBeanServers() {
 		return Collections.unmodifiableSet(this.mbeanServers.keySet());
 	}
 

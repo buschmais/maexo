@@ -85,7 +85,7 @@ public class ServerRegistryTest extends AbstractConfigurableBundleCreatorTests {
 				.registerService(MBeanServer.class.getName(), serverMock, null);
 		// register/unregister mbean
 		Dictionary<String, ObjectName> properties = new Hashtable<String, ObjectName>();
-		properties.put("objectName", objectName);
+		properties.put(ObjectName.class.getName(), objectName);
 		ServiceRegistration mbeanServiceRegistration = this.bundleContext
 				.registerService(mbeanInterface.getName(), mbean, properties);
 		mbeanServiceRegistration.unregister();
@@ -122,7 +122,7 @@ public class ServerRegistryTest extends AbstractConfigurableBundleCreatorTests {
 		EasyMock.replay(serverMock);
 		// register mbean
 		Dictionary<String, ObjectName> properties = new Hashtable<String, ObjectName>();
-		properties.put("objectName", objectName);
+		properties.put(ObjectName.class.getName(), objectName);
 		ServiceRegistration mbeanServiceRegistration = this.bundleContext
 				.registerService(mbeanInterface.getName(), mbean, properties);
 		// register/unregister mbean server

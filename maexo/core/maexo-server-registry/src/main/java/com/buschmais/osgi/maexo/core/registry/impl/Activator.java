@@ -14,18 +14,28 @@ import org.slf4j.LoggerFactory;
 
 public class Activator implements BundleActivator {
 
+	/**
+	 * Definition of the filter for mbean servers
+	 */
 	private static final String FILTER_MBEANSERVER = "(objectClass="
 			+ MBeanServer.class.getName() + ")";
 
-	private static final String FILTER_MBEAN = "(objectClass=*MBean)";
+	/**
+	 * Definition of the filter for mbeans. It contains condition to only accept
+	 * services which have a javax.management.ObjectName or objectName
+	 * attribute.
+	 */
+	private static final String FILTER_MBEAN = "(&(objectClass=*MBean)(|("
+			+ ObjectName.class.getName() + "=*)(objectName=*)))";
 
-	private static final String SERVICE_PROPERTY_NAME = "name";
-
+	/**
+	 * The object name property
+	 */
 	private static final String SERVICE_PROPERTY_OBJECTNAME = "objectName";
 
 	private static Logger logger = LoggerFactory.getLogger(Activator.class);
 
-	private ServerRegistryImpl jmxRegistry;
+	private ServerRegistryImpl registry;
 
 	private ServiceListener mbeanServerServiceListener;
 
@@ -42,7 +52,7 @@ public class Activator implements BundleActivator {
 		if (logger.isDebugEnabled()) {
 			logger.debug("starting mbean registry");
 		}
-		this.jmxRegistry = new ServerRegistryImpl();
+		this.registry = new ServerRegistryImpl();
 		this.mbeanServerServiceListener = this
 				.registerMBeanServerServiceListener(bundleContext);
 		this.mbeanServiceListener = this
@@ -61,15 +71,15 @@ public class Activator implements BundleActivator {
 			bundleContext
 					.removeServiceListener(this.mbeanServerServiceListener);
 		}
-		for (MBeanServer mbeanServer : this.jmxRegistry.getMBeanServers()) {
-			this.jmxRegistry.unregisterMBeanServer(mbeanServer);
+		for (MBeanServer mbeanServer : this.registry.getMBeanServers()) {
+			this.registry.unregisterMBeanServer(mbeanServer);
 		}
 		// remove service listener for mbeans and clean up
 		if (this.mbeanServiceListener != null) {
 			bundleContext.removeServiceListener(this.mbeanServiceListener);
 		}
-		for (ObjectName objectName : this.jmxRegistry.getMBeans().keySet()) {
-			this.jmxRegistry.unregisterMBean(objectName);
+		for (ObjectName objectName : this.registry.getMBeans().keySet()) {
+			this.registry.unregisterMBean(objectName);
 		}
 	}
 
@@ -85,6 +95,13 @@ public class Activator implements BundleActivator {
 			final BundleContext bundleContext) throws InvalidSyntaxException {
 		ServiceListener mbeanServerServiceListener = new ServiceListener() {
 
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.osgi.framework.ServiceListener#serviceChanged(org.osgi.framework
+			 * .ServiceEvent)
+			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
 				ServiceReference serviceReference = serviceEvent
 						.getServiceReference();
@@ -92,12 +109,11 @@ public class Activator implements BundleActivator {
 						.getService(serviceReference);
 				switch (serviceEvent.getType()) {
 				case ServiceEvent.REGISTERED: {
-					Activator.this.jmxRegistry.registerMBeanServer(mbeanServer);
+					Activator.this.registry.registerMBeanServer(mbeanServer);
 				}
 					break;
 				case ServiceEvent.UNREGISTERING: {
-					Activator.this.jmxRegistry
-							.unregisterMBeanServer(mbeanServer);
+					Activator.this.registry.unregisterMBeanServer(mbeanServer);
 				}
 					break;
 				default:
@@ -141,9 +157,9 @@ public class Activator implements BundleActivator {
 						.getServiceReference();
 				// get object name from service properties
 				ObjectName objectName = (ObjectName) serviceReference
-						.getProperty(SERVICE_PROPERTY_OBJECTNAME);
+						.getProperty(ObjectName.class.getName());
 				String name = (String) serviceReference
-						.getProperty(SERVICE_PROPERTY_NAME);
+						.getProperty(SERVICE_PROPERTY_OBJECTNAME);
 				if (objectName == null && name != null) {
 					// if no object name is available try to construct it from
 					// given name
@@ -158,15 +174,15 @@ public class Activator implements BundleActivator {
 				}
 				if (objectName != null) {
 					Object mbean = bundleContext.getService(serviceReference);
-					// populate event to jmx registry
+					// populate event to registry
 					switch (serviceEvent.getType()) {
 					case ServiceEvent.REGISTERED: {
-						Activator.this.jmxRegistry.registerMBean(objectName,
-								mbean);
+						Activator.this.registry
+								.registerMBean(objectName, mbean);
 					}
 						break;
 					case ServiceEvent.UNREGISTERING: {
-						Activator.this.jmxRegistry.unregisterMBean(objectName);
+						Activator.this.registry.unregisterMBean(objectName);
 					}
 						break;
 					default:

@@ -15,7 +15,7 @@
 	<name>maexo - MBeans</name>
 
 	<modules>
-		<module>framework-mbeans</module>
+		<module>osgi-core-mbeans</module>
 	</modules>
 
 </project>

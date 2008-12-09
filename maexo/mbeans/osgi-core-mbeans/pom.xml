@@ -3,15 +3,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<groupId>com.buschmais.osgi.maexo</groupId>
-		<artifactId>core</artifactId>
+		<artifactId>mbeans</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.buschmais.osgi.maexo.core</groupId>
-	<artifactId>maexo-server-registry</artifactId>
+	<groupId>com.buschmais.osgi.maexo.mbeans</groupId>
+	<artifactId>osgi-core-mbeans</artifactId>
 	<packaging>bundle</packaging>
-	<name>maexo - Server Registry</name>
+	<name>maexo - OSGi Core MBeans</name>
 
 	<build>
 		<plugins>
@@ -20,11 +20,11 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-						<Export-Package />
-						<Private-Package>com.buschmais.osgi.maexo.core.registry.impl</Private-Package>
+						<Export-Package/>
+						<Private-Package>com.buschmais.osgi.maexo.mbeans.osgi_core.*</Private-Package>
 						<Import-Package>*</Import-Package>
 						<Include-Resource>src/main/resources</Include-Resource>
-						<Bundle-Activator>com.buschmais.osgi.maexo.core.registry.impl.Activator</Bundle-Activator>
+						<Bundle-Activator>com.buschmais.osgi.maexo.mbeans.osgi_core.impl.Activator</Bundle-Activator>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -32,6 +32,11 @@
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.buschmais.osgi.maexo.core</groupId>
+			<artifactId>maexo-common</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.eclipse.osgi</groupId>
 			<artifactId>org.eclipse.osgi</artifactId>

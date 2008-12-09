@@ -97,7 +97,7 @@
 
 			<dependency>
 				<groupId>com.buschmais.maexo.osgi.mbeans</groupId>
-				<artifactId>framework-mbeans</artifactId>
+				<artifactId>osgi-core-mbeans</artifactId>
 				<version>${maexo.version}</version>
 			</dependency>
 
