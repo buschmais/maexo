@@ -20,33 +20,12 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.Mx4jHttpAdaptorActivator;
+
 /**
  * Activator for the MX4J HTTP adaptor
  */
 public class Activator implements BundleActivator {
-
-	public static final String HTTP_ADAPTOR_OBJECTNAME = "com.buschmais.osgi.maexo:type=adaptor,name=mx4j_http_adaptor";
-
-	public static final String HOST_PROPERTY = "com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.host";
-	public static final String HOST_DEFAULT_VALUE = "localhost";
-
-	public static final String PORT_PROPERTY = "com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.port";
-	public static final String PORT_DEFAULT_VALUE = "8081";
-
-	public static final String AUTHENTICATION_PROPERTY = "com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.authentication";
-	public static final String AUTHENTICATION_DEFAULT_VALUE = "none";
-
-	public static final String USER_PROPERTY = "com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.user";
-	public static final String USER_DEFAULT_VALUE = "admin";
-
-	public static final String PASSWORD_PROPERTY = "com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.password";
-	public static final String PASSWORD_DEFAULT_VALUE = "maexo";
-
-	public static final String STYLESHEET_PROPERTY = "com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.stylesheet";
-	public static final String STYLESHEET_DEFAULT_VALUE = "/mx4j/tools/adaptor/http/xsl";
-
-	public static final String START_PROPERTY = "com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.start";
-	public static final String START_DEFAULT_VALUE = "true";
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(Activator.class);
@@ -54,20 +33,30 @@ public class Activator implements BundleActivator {
 	private static final Map<String, String> CONFIGURATION_PROPERTIES = new HashMap<String, String>();
 
 	static {
-		CONFIGURATION_PROPERTIES.put(HOST_PROPERTY, HOST_DEFAULT_VALUE);
-		CONFIGURATION_PROPERTIES.put(PORT_PROPERTY, PORT_DEFAULT_VALUE);
-		CONFIGURATION_PROPERTIES.put(AUTHENTICATION_PROPERTY,
-				AUTHENTICATION_DEFAULT_VALUE);
-		CONFIGURATION_PROPERTIES.put(USER_PROPERTY, USER_DEFAULT_VALUE);
-		CONFIGURATION_PROPERTIES.put(PASSWORD_PROPERTY, PASSWORD_DEFAULT_VALUE);
-		CONFIGURATION_PROPERTIES.put(STYLESHEET_PROPERTY,
-				STYLESHEET_DEFAULT_VALUE);
-		CONFIGURATION_PROPERTIES.put(START_PROPERTY, START_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(Mx4jHttpAdaptorActivator.HOST_PROPERTY,
+				Mx4jHttpAdaptorActivator.HOST_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(Mx4jHttpAdaptorActivator.PORT_PROPERTY,
+				Mx4jHttpAdaptorActivator.PORT_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(
+				Mx4jHttpAdaptorActivator.AUTHENTICATION_PROPERTY,
+				Mx4jHttpAdaptorActivator.AUTHENTICATION_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(Mx4jHttpAdaptorActivator.USER_PROPERTY,
+				Mx4jHttpAdaptorActivator.USER_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(
+				Mx4jHttpAdaptorActivator.PASSWORD_PROPERTY,
+				Mx4jHttpAdaptorActivator.PASSWORD_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(
+				Mx4jHttpAdaptorActivator.STYLESHEET_PROPERTY,
+				Mx4jHttpAdaptorActivator.STYLESHEET_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(Mx4jHttpAdaptorActivator.START_PROPERTY,
+				Mx4jHttpAdaptorActivator.START_DEFAULT_VALUE);
 	}
 
 	private HttpAdaptorMBean httpAdaptorMBean;
 
-	private ServiceRegistration serviceRegistration;
+	private ServiceRegistration adaptorServiceRegistration;
+
+	private ServiceRegistration processorServiceRegistration;
 
 	/*
 	 * (non-Javadoc)
@@ -86,29 +75,48 @@ public class Activator implements BundleActivator {
 		}
 		// create instance of the http adaptor mbean and apply configuration
 		this.httpAdaptorMBean = new HttpAdaptor();
-		this.httpAdaptorMBean.setHost(properties.getProperty(HOST_PROPERTY));
+		this.httpAdaptorMBean.setHost(properties
+				.getProperty(Mx4jHttpAdaptorActivator.HOST_PROPERTY));
 		this.httpAdaptorMBean.setPort(Integer.parseInt(properties
-				.getProperty(PORT_PROPERTY)));
+				.getProperty(Mx4jHttpAdaptorActivator.PORT_PROPERTY)));
 		this.httpAdaptorMBean.setAuthenticationMethod(properties
-				.getProperty(AUTHENTICATION_PROPERTY));
-		this.httpAdaptorMBean.addAuthorization(properties
-				.getProperty(USER_PROPERTY), properties
-				.getProperty(PASSWORD_PROPERTY));
+				.getProperty(Mx4jHttpAdaptorActivator.AUTHENTICATION_PROPERTY));
+		this.httpAdaptorMBean
+				.addAuthorization(
+						properties
+								.getProperty(Mx4jHttpAdaptorActivator.USER_PROPERTY),
+						properties
+								.getProperty(Mx4jHttpAdaptorActivator.PASSWORD_PROPERTY));
 		// create instance of the xsl processor
 		XSLTProcessorMBean xsltProcessorMBean = new XSLTProcessor();
 		xsltProcessorMBean.setPathInJar(properties
-				.getProperty(STYLESHEET_PROPERTY));
+				.getProperty(Mx4jHttpAdaptorActivator.STYLESHEET_PROPERTY));
 		this.httpAdaptorMBean.setProcessor(xsltProcessorMBean);
-		// create object name
-		Dictionary serviceProperties = new Hashtable();
-		ObjectName objectName = new ObjectName(HTTP_ADAPTOR_OBJECTNAME);
-		serviceProperties.put("objectName", objectName);
-		// register mbean
-		this.serviceRegistration = bundleContext.registerService(
+		// create adaptor object name
+		Dictionary adaptorServiceProperties = new Hashtable();
+		ObjectName adaptorObjectName = new ObjectName(
+				Mx4jHttpAdaptorActivator.HTTP_ADAPTOR_OBJECTNAME);
+		adaptorServiceProperties.put(javax.management.ObjectName.class
+				.getName(), adaptorObjectName);
+		// register adaptor mbean
+		this.adaptorServiceRegistration = bundleContext.registerService(
 				HttpAdaptorMBean.class.getName(), this.httpAdaptorMBean,
-				serviceProperties);
+				adaptorServiceProperties);
+
+		// create processor object name
+		Dictionary processorServiceProperties = new Hashtable();
+		ObjectName processorObjectName = new ObjectName(
+				Mx4jHttpAdaptorActivator.XSLT_PROCESSOR_OBJECTNAME);
+		processorServiceProperties.put(javax.management.ObjectName.class
+				.getName(), processorObjectName);
+		// register processor mbean
+		this.processorServiceRegistration = bundleContext.registerService(
+				XSLTProcessorMBean.class.getName(), xsltProcessorMBean,
+				processorServiceProperties);
+
 		// start http adaptor
-		if (Boolean.parseBoolean(properties.getProperty(START_PROPERTY))) {
+		if (Boolean.parseBoolean(properties
+				.getProperty(Mx4jHttpAdaptorActivator.START_PROPERTY))) {
 			if (logger.isInfoEnabled()) {
 				logger.info("starting MX4J HTTP adaptor");
 			}
@@ -147,8 +155,11 @@ public class Activator implements BundleActivator {
 	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
-		if (this.serviceRegistration != null) {
-			this.serviceRegistration.unregister();
+		if (this.processorServiceRegistration != null) {
+			this.processorServiceRegistration.unregister();
+		}
+		if (this.adaptorServiceRegistration != null) {
+			this.adaptorServiceRegistration.unregister();
 		}
 		if (this.httpAdaptorMBean != null && this.httpAdaptorMBean.isActive()) {
 			if (logger.isInfoEnabled()) {
