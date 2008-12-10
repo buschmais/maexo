@@ -10,15 +10,16 @@
 	<name>maexo - Management Extensions for OSGi</name>
 
 	<modules>
-		<module>core</module>
+		<module>adaptor</module>
+		<module>framework</module>
 		<module>mbeans</module>
 		<module>server</module>
-		<module>adaptor</module>
 	</modules>
 
 	<properties>
 		<maexo.version>1.0.0-SNAPSHOT</maexo.version>
 		<slf4j.version>1.5.6</slf4j.version>
+		<log4j.version>1.2.15</log4j.version>
 		<spring.maven.artifact.version>2.5.5</spring.maven.artifact.version>
 		<spring.osgi.version>1.1.2</spring.osgi.version>
 		<equinox.version>3.5.0.200811061137</equinox.version>
@@ -84,26 +85,32 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.buschmais.osgi.maexo.core</groupId>
-				<artifactId>maexo-common</artifactId>
+				<groupId>com.buschmais.osgi.maexo.framework</groupId>
+				<artifactId>commons-mbean</artifactId>
 				<version>${maexo.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.buschmais.maexo.osgi.core</groupId>
-				<artifactId>server-registry</artifactId>
+				<groupId>com.buschmais.osgi.maexo.framework</groupId>
+				<artifactId>mbean-exporter</artifactId>
 				<version>${maexo.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.buschmais.maexo.osgi.mbeans</groupId>
+				<groupId>com.buschmais.osgi.maexo.mbeans</groupId>
 				<artifactId>osgi-core-mbeans</artifactId>
 				<version>${maexo.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.buschmais.maexo.osgi.server</groupId>
+				<groupId>com.buschmais.osgi.maexo.server</groupId>
 				<artifactId>platform-mbean-server</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.osgi.maexo.adaptor</groupId>
+				<artifactId>mx4j-http-adaptor-activator</artifactId>
 				<version>${maexo.version}</version>
 			</dependency>
 
@@ -133,14 +140,13 @@
 				<groupId>org.eclipse.osgi</groupId>
 				<artifactId>org.eclipse.osgi</artifactId>
 				<version>${equinox.version}</version>
-				<scope>test</scope>
+				<scope>runtime</scope>
 			</dependency>
 
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>com.springsource.slf4j.api</artifactId>
 				<version>${slf4j.version}</version>
-				<scope>provided</scope>
 			</dependency>
 
 			<!-- Spring Framework and Spring DM -->
@@ -148,7 +154,7 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-beans</artifactId>
 				<version>${spring.maven.artifact.version}</version>
-				<scope>provided</scope>
+				<scope>test</scope>
 				<exclusions>
 					<exclusion>
 						<groupId>commons-logging</groupId>
@@ -161,7 +167,7 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-core</artifactId>
 				<version>${spring.maven.artifact.version}</version>
-				<scope>provided</scope>
+				<scope>test</scope>
 				<exclusions>
 					<exclusion>
 						<groupId>commons-logging</groupId>
@@ -174,7 +180,7 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context</artifactId>
 				<version>${spring.maven.artifact.version}</version>
-				<scope>provided</scope>
+				<scope>test</scope>
 				<exclusions>
 					<exclusion>
 						<groupId>aopalliance</groupId>
@@ -191,7 +197,7 @@
 				<groupId>org.slf4j</groupId>
 				<artifactId>com.springsource.slf4j.log4j</artifactId>
 				<version>${slf4j.version}</version>
-				<scope>test</scope>
+				<scope>runtime</scope>
 				<exclusions>
 					<exclusion>
 						<groupId>log4j</groupId>
@@ -268,14 +274,21 @@
 				<groupId>org.slf4j</groupId>
 				<artifactId>com.springsource.slf4j.org.apache.commons.logging</artifactId>
 				<version>${slf4j.version}</version>
-				<scope>test</scope>
+				<scope>runtime</scope>
 			</dependency>
 
 			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+				<version>1.1.1</version>
+				<scope>runtime</scope>
+			</dependency>
+
+				<dependency>
 				<groupId>org.apache.log4j</groupId>
 				<artifactId>com.springsource.org.apache.log4j</artifactId>
-				<version>1.2.15</version>
-				<scope>test</scope>
+				<version>${log4j.version}</version>
+				<scope>runtime</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

@@ -3,15 +3,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<groupId>com.buschmais.osgi.maexo</groupId>
-		<artifactId>mbeans</artifactId>
+		<artifactId>framework</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.buschmais.osgi.maexo.mbeans</groupId>
-	<artifactId>osgi-core-mbeans</artifactId>
+	<groupId>com.buschmais.osgi.maexo.framework</groupId>
+	<artifactId>commons-mbean</artifactId>
 	<packaging>bundle</packaging>
-	<name>maexo - OSGi Core MBeans</name>
+	<name>maexo - Commons MBean</name>
 
 	<build>
 		<plugins>
@@ -20,11 +20,10 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-						<Export-Package/>
-						<Private-Package>com.buschmais.osgi.maexo.mbeans.osgi.core.*</Private-Package>
+						<Export-Package>com.buschmais.osgi.maexo.framework.commons.mbean.*;version="${pom.version}"</Export-Package>
+						<Private-Package/>
 						<Import-Package>*</Import-Package>
 						<Include-Resource>src/main/resources</Include-Resource>
-						<Bundle-Activator>com.buschmais.osgi.maexo.mbeans.osgi.core.impl.Activator</Bundle-Activator>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -32,11 +31,6 @@
 	</build>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.buschmais.osgi.maexo.framework</groupId>
-			<artifactId>commons-mbean</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.eclipse.osgi</groupId>
 			<artifactId>org.eclipse.osgi</artifactId>
