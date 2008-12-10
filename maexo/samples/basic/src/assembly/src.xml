@@ -1,0 +1,18 @@
+<assembly>
+  <id>basic</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <fileSets>
+	<fileSet>
+		<outputDirectory></outputDirectory>
+		<directory>src/main/resources</directory>
+		<filtered>true</filtered>
+	</fileSet>
+  </fileSets>
+  <dependencySets>
+	  <dependencySet>
+		<outputDirectory></outputDirectory>
+	  </dependencySet>
+  </dependencySets>
+</assembly>

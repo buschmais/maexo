@@ -13,6 +13,7 @@
 		<module>adaptor</module>
 		<module>framework</module>
 		<module>mbeans</module>
+		<module>samples</module>
 		<module>server</module>
 	</modules>
 
