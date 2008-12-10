@@ -39,9 +39,6 @@ public class ObjectNameHelper {
 	 * @return the object name
 	 */
 	public ObjectName getObjectName(Object resource) {
-		if (resource == null) {
-			throw new IllegalArgumentException("resource must not be null");
-		}
 		return this
 				.getObjectName(resource, resource.getClass().getInterfaces());
 	}
@@ -78,7 +75,7 @@ public class ObjectNameHelper {
 			throw new IllegalArgumentException(
 					"resource and resourceInterface must not be null");
 		}
-		// find the object name factory that handles instance of the resource's
+		// find the object name factory that handles instances of the resource's
 		// interfaces
 		if (logger.isDebugEnabled()) {
 			logger
@@ -172,7 +169,7 @@ public class ObjectNameHelper {
 	 * @return the object name
 	 */
 	public static ObjectName getObjectName(String domain, Properties properties) {
-		StringBuilder sb = new StringBuilder(ObjectNameFactory.DEFAULT_DOMAIN);
+		StringBuilder sb = new StringBuilder(domain);
 		sb.append(':');
 		int i = 0;
 		for (Entry<Object, Object> entry : properties.entrySet()) {
