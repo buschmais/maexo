@@ -1,7 +1,6 @@
 package com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.impl;
 
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
