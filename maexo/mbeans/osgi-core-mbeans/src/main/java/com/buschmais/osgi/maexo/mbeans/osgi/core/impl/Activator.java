@@ -12,6 +12,8 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.listener.BundleEventListener;
@@ -20,6 +22,9 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.BundleObjectNam
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.ServiceObjectNameFactory;
 
 public class Activator implements BundleActivator {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(Activator.class);
 
 	private List<ServiceRegistration> serviceRegistrations;
 
@@ -35,6 +40,9 @@ public class Activator implements BundleActivator {
 	 * )
 	 */
 	public void start(final BundleContext bundleContext) throws Exception {
+		if (logger.isInfoEnabled()) {
+			logger.info("Starting maexo OSGi Core MBeans");
+		}
 		ObjectNameHelper objectNameHelper = new ObjectNameHelper(bundleContext);
 		this.serviceRegistrations = new LinkedList<ServiceRegistration>();
 		this.serviceRegistrations.add(objectNameHelper
@@ -70,6 +78,9 @@ public class Activator implements BundleActivator {
 	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
+		if (logger.isInfoEnabled()) {
+			logger.info("Stopping maexo OSGi Core MBeans");
+		}
 		// remove bundle listener
 		bundleContext.removeBundleListener(this.bundleListener);
 		// unregister all registered bundle mbeans

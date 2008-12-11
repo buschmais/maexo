@@ -1,6 +1,7 @@
 package com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.impl;
 
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -70,8 +71,10 @@ public class Activator implements BundleActivator {
 		// get configuration
 		Properties properties = this.getProperties(bundleContext);
 		if (logger.isInfoEnabled()) {
-			logger.info("creating MX4J HTTP adaptor with properties "
-					+ properties);
+			logger.info("Starting MX4J HTTP adaptor");
+			for (String key : CONFIGURATION_PROPERTIES.keySet()) {
+				logger.info("\t" + key + ": " + properties.getProperty(key));
+			}
 		}
 		// create instance of the http adaptor mbean and apply configuration
 		this.httpAdaptorMBean = new HttpAdaptor();
@@ -155,6 +158,9 @@ public class Activator implements BundleActivator {
 	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
+		if (logger.isInfoEnabled()) {
+			logger.info("Stopping MX4J HTTP adaptor");
+		}
 		if (this.processorServiceRegistration != null) {
 			this.processorServiceRegistration.unregister();
 		}

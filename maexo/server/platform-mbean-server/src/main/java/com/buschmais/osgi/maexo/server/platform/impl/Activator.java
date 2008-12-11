@@ -25,8 +25,9 @@ public class Activator implements BundleActivator {
 	 * )
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
-		if (logger.isDebugEnabled())
-			logger.debug("looking up PlatformMBeanServer");
+		if (logger.isInfoEnabled()) {
+			logger.info("Starting maexo PlatformMBeanServer Service");
+		}
 		MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
 		if (logger.isDebugEnabled())
 			logger.debug("registering instance " + mbeanServer + " as service");
@@ -43,8 +44,9 @@ public class Activator implements BundleActivator {
 	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
-		if (logger.isDebugEnabled())
-			logger.debug("unregistering service");
+		if (logger.isInfoEnabled()) {
+			logger.info("Stopping maexo PlatformMBeanServer Service");
+		}
 		this.mbeanServerRegistration.unregister();
 	}
 

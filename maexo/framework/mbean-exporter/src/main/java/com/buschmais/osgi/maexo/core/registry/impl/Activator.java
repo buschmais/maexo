@@ -49,8 +49,8 @@ public class Activator implements BundleActivator {
 	 * )
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
-		if (logger.isDebugEnabled()) {
-			logger.debug("starting mbean registry");
+		if (logger.isInfoEnabled()) {
+			logger.info("Starting maexo MBean Exporter");
 		}
 		this.registry = new ServerRegistryImpl();
 		this.mbeanServerServiceListener = this
@@ -66,6 +66,9 @@ public class Activator implements BundleActivator {
 	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
+		if (logger.isInfoEnabled()) {
+			logger.info("Stopping maexo MBean Exporter");
+		}
 		// remove service listener for mbean servers and clean up
 		if (this.mbeanServerServiceListener != null) {
 			bundleContext
