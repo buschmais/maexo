@@ -1,4 +1,4 @@
-package com.buschmais.osgi.maexo.core.registry.impl;
+package com.buschmais.osgi.maexo.framework.mbeanexporter.impl;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
@@ -35,7 +35,7 @@ public class Activator implements BundleActivator {
 
 	private static Logger logger = LoggerFactory.getLogger(Activator.class);
 
-	private ServerRegistryImpl registry;
+	private MBeanExporterImpl registry;
 
 	private ServiceListener mbeanServerServiceListener;
 
@@ -52,7 +52,7 @@ public class Activator implements BundleActivator {
 		if (logger.isInfoEnabled()) {
 			logger.info("Starting maexo MBean Exporter");
 		}
-		this.registry = new ServerRegistryImpl();
+		this.registry = new MBeanExporterImpl();
 		this.mbeanServerServiceListener = this
 				.registerMBeanServerServiceListener(bundleContext);
 		this.mbeanServiceListener = this

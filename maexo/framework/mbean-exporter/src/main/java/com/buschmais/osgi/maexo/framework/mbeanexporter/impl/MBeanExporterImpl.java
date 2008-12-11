@@ -1,4 +1,4 @@
-package com.buschmais.osgi.maexo.core.registry.impl;
+package com.buschmais.osgi.maexo.framework.mbeanexporter.impl;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,15 +13,15 @@ import javax.management.ObjectName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ServerRegistryImpl {
+public class MBeanExporterImpl {
 
-	private static Logger logger = LoggerFactory.getLogger(ServerRegistryImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(MBeanExporterImpl.class);
 
 	private Map<MBeanServer, MBeanServer> mbeanServers = new IdentityHashMap<MBeanServer, MBeanServer>();
 
 	private Map<ObjectName, Object> mbeans = new HashMap<ObjectName, Object>();
 
-	public ServerRegistryImpl() {
+	public MBeanExporterImpl() {
 		if (logger.isDebugEnabled()) {
 			logger.debug("creating mbean registry");
 		}

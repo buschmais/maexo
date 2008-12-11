@@ -21,10 +21,10 @@
 				<configuration>
 					<instructions>
 						<Export-Package />
-						<Private-Package>com.buschmais.osgi.maexo.core.registry.impl</Private-Package>
+						<Private-Package>com.buschmais.osgi.maexo.framework.mbeanexporter.impl</Private-Package>
 						<Import-Package>*</Import-Package>
 						<Include-Resource>src/main/resources</Include-Resource>
-						<Bundle-Activator>com.buschmais.osgi.maexo.core.registry.impl.Activator</Bundle-Activator>
+						<Bundle-Activator>com.buschmais.osgi.maexo.framework.mbeanexporter.impl.Activator</Bundle-Activator>
 					</instructions>
 				</configuration>
 			</plugin>
