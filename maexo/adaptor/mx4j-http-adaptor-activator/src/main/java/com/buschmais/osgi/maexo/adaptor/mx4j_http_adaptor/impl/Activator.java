@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 
 import javax.management.ObjectName;
 
-import mx4j.tools.adaptor.http.HttpAdaptor;
 import mx4j.tools.adaptor.http.HttpAdaptorMBean;
 import mx4j.tools.adaptor.http.XSLTProcessor;
 import mx4j.tools.adaptor.http.XSLTProcessorMBean;
@@ -52,11 +51,11 @@ public class Activator implements BundleActivator {
 				Mx4jHttpAdaptorActivator.START_DEFAULT_VALUE);
 	}
 
-	private HttpAdaptorMBean httpAdaptorMBean;
-
 	private ServiceRegistration adaptorServiceRegistration;
 
 	private ServiceRegistration processorServiceRegistration;
+
+	private ServiceRegistration notificationListenerRegistration;
 
 	/*
 	 * (non-Javadoc)
@@ -70,20 +69,22 @@ public class Activator implements BundleActivator {
 		// get configuration
 		Properties properties = this.getProperties(bundleContext);
 		if (logger.isInfoEnabled()) {
-			logger.info("Starting MX4J HTTP adaptor");
+			logger.info("Registering MX4J HTTP adaptor");
 			for (String key : CONFIGURATION_PROPERTIES.keySet()) {
 				logger.info("\t" + key + ": " + properties.getProperty(key));
 			}
 		}
 		// create instance of the http adaptor mbean and apply configuration
-		this.httpAdaptorMBean = new HttpAdaptor();
-		this.httpAdaptorMBean.setHost(properties
+		Mxj4HttpAdaptorMBean httpAdaptorMBean = new Mx4jHttpAdaptor();
+		httpAdaptorMBean.setStartOnRegistration(Boolean.parseBoolean(properties
+				.getProperty(Mx4jHttpAdaptorActivator.START_PROPERTY)));
+		httpAdaptorMBean.setHost(properties
 				.getProperty(Mx4jHttpAdaptorActivator.HOST_PROPERTY));
-		this.httpAdaptorMBean.setPort(Integer.parseInt(properties
+		httpAdaptorMBean.setPort(Integer.parseInt(properties
 				.getProperty(Mx4jHttpAdaptorActivator.PORT_PROPERTY)));
-		this.httpAdaptorMBean.setAuthenticationMethod(properties
+		httpAdaptorMBean.setAuthenticationMethod(properties
 				.getProperty(Mx4jHttpAdaptorActivator.AUTHENTICATION_PROPERTY));
-		this.httpAdaptorMBean
+		httpAdaptorMBean
 				.addAuthorization(
 						properties
 								.getProperty(Mx4jHttpAdaptorActivator.USER_PROPERTY),
@@ -93,37 +94,27 @@ public class Activator implements BundleActivator {
 		XSLTProcessorMBean xsltProcessorMBean = new XSLTProcessor();
 		xsltProcessorMBean.setPathInJar(properties
 				.getProperty(Mx4jHttpAdaptorActivator.STYLESHEET_PROPERTY));
-		this.httpAdaptorMBean.setProcessor(xsltProcessorMBean);
+		httpAdaptorMBean.setProcessor(xsltProcessorMBean);
 		// create adaptor object name
 		Dictionary adaptorServiceProperties = new Hashtable();
 		ObjectName adaptorObjectName = new ObjectName(
 				Mx4jHttpAdaptorActivator.HTTP_ADAPTOR_OBJECTNAME);
 		adaptorServiceProperties.put(javax.management.ObjectName.class
 				.getName(), adaptorObjectName);
-		// register adaptor mbean
-		this.adaptorServiceRegistration = bundleContext.registerService(
-				HttpAdaptorMBean.class.getName(), this.httpAdaptorMBean,
-				adaptorServiceProperties);
-
 		// create processor object name
 		Dictionary processorServiceProperties = new Hashtable();
 		ObjectName processorObjectName = new ObjectName(
 				Mx4jHttpAdaptorActivator.XSLT_PROCESSOR_OBJECTNAME);
 		processorServiceProperties.put(javax.management.ObjectName.class
 				.getName(), processorObjectName);
+		// register adaptor mbean
+		this.adaptorServiceRegistration = bundleContext.registerService(
+				HttpAdaptorMBean.class.getName(), httpAdaptorMBean,
+				adaptorServiceProperties);
 		// register processor mbean
 		this.processorServiceRegistration = bundleContext.registerService(
 				XSLTProcessorMBean.class.getName(), xsltProcessorMBean,
 				processorServiceProperties);
-
-		// start http adaptor
-		if (Boolean.parseBoolean(properties
-				.getProperty(Mx4jHttpAdaptorActivator.START_PROPERTY))) {
-			if (logger.isInfoEnabled()) {
-				logger.info("starting MX4J HTTP adaptor");
-			}
-			this.httpAdaptorMBean.start();
-		}
 	}
 
 	/**
@@ -158,19 +149,16 @@ public class Activator implements BundleActivator {
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("Stopping MX4J HTTP adaptor");
+			logger.info("Unregistering MX4J HTTP adaptor");
+		}
+		if (this.notificationListenerRegistration != null) {
+			this.notificationListenerRegistration.unregister();
 		}
 		if (this.processorServiceRegistration != null) {
 			this.processorServiceRegistration.unregister();
 		}
 		if (this.adaptorServiceRegistration != null) {
 			this.adaptorServiceRegistration.unregister();
-		}
-		if (this.httpAdaptorMBean != null && this.httpAdaptorMBean.isActive()) {
-			if (logger.isInfoEnabled()) {
-				logger.info("stopping MX4J HTTP adaptor");
-			}
-			this.httpAdaptorMBean.stop();
 		}
 	}
 
