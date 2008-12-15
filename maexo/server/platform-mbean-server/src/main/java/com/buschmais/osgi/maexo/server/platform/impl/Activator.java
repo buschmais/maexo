@@ -26,7 +26,7 @@ public class Activator implements BundleActivator {
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("Starting maexo PlatformMBeanServer Service");
+			logger.info("Starting maexo Platform MBean Server");
 		}
 		MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
 		if (logger.isDebugEnabled())
@@ -45,7 +45,7 @@ public class Activator implements BundleActivator {
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("Stopping maexo PlatformMBeanServer Service");
+			logger.info("Stopping maexo Platform MBean Server");
 		}
 		this.mbeanServerRegistration.unregister();
 	}
