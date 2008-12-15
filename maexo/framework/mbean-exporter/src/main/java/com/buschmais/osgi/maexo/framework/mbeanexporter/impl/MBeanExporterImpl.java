@@ -1,13 +1,12 @@
 package com.buschmais.osgi.maexo.framework.mbeanexporter.impl;
 
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.Map.Entry;
 
 import javax.management.MBeanServer;
+import javax.management.NotificationFilter;
+import javax.management.NotificationListener;
 import javax.management.ObjectName;
 
 import org.slf4j.Logger;
@@ -15,16 +14,101 @@ import org.slf4j.LoggerFactory;
 
 public class MBeanExporterImpl {
 
-	private static Logger logger = LoggerFactory.getLogger(MBeanExporterImpl.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(MBeanExporterImpl.class);
 
-	private Map<MBeanServer, MBeanServer> mbeanServers = new IdentityHashMap<MBeanServer, MBeanServer>();
+	private Set<MBeanServerRegistration> mbeanServers = new HashSet<MBeanServerRegistration>();
 
-	private Map<ObjectName, Object> mbeans = new HashMap<ObjectName, Object>();
+	private Set<MBeanRegistration> mbeans = new HashSet<MBeanRegistration>();
 
-	public MBeanExporterImpl() {
-		if (logger.isDebugEnabled()) {
-			logger.debug("creating mbean registry");
+	private Set<NotificationListenerRegistration> notificationListeners = new HashSet<NotificationListenerRegistration>();
+
+	/**
+	 * Adds a notification listener on a mbean server
+	 * 
+	 * @param mbeanServer
+	 *            the mbean server
+	 * @param objectName
+	 *            the object name
+	 * @param notificationListener
+	 *            the notification listener
+	 * @param handback
+	 *            the handback object
+	 */
+	private void addNotificationListener(MBeanServer mbeanServer,
+			ObjectName objectName, NotificationListener notificationListener,
+			NotificationFilter notificationFilter, Object handback) {
+		try {
+			if (logger.isDebugEnabled()) {
+				logger.debug("adding notification listener "
+						+ notificationListener + " on server " + mbeanServer);
+			}
+			mbeanServer.addNotificationListener(objectName,
+					notificationListener, notificationFilter, handback);
+		} catch (Exception e) {
+			logger.warn(
+					"caught exception while adding notification listener "
+							+ notificationListener + ", on mbean server "
+							+ mbeanServer, e);
 		}
+	}
+
+	/**
+	 * Adds a notification listener
+	 * 
+	 * @param notificationListenerRegistration
+	 *            the notification listener registration
+	 */
+	public synchronized void addNotificationListener(
+			NotificationListenerRegistration notificationListenerRegistration) {
+		if (!this.notificationListeners
+				.contains(notificationListenerRegistration)) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("adding notification listener "
+						+ notificationListenerRegistration);
+			}
+			this.notificationListeners.add(notificationListenerRegistration);
+			for (MBeanServerRegistration mbeanServerRegistration : this.mbeanServers) {
+				this.addNotificationListener(mbeanServerRegistration
+						.getMbeanServer(), notificationListenerRegistration
+						.getObjectName(), notificationListenerRegistration
+						.getNotificationListener(),
+						notificationListenerRegistration
+								.getNotificationFilter(),
+						notificationListenerRegistration.getHandback());
+			}
+		} else {
+			logger.warn("notification listener "
+					+ notificationListenerRegistration
+					+ " is already registered");
+		}
+	}
+
+	/**
+	 * Returns the currently registered mbeans
+	 * 
+	 * @return the map of mbeans registrations
+	 */
+	public Set<MBeanRegistration> getMBeans() {
+		return Collections.unmodifiableSet(this.mbeans);
+	}
+
+	/**
+	 * Returns the registered mbean servers
+	 * 
+	 * @return the mbean server registrations
+	 */
+	public Set<MBeanServerRegistration> getMBeanServers() {
+		return Collections.unmodifiableSet(this.mbeanServers);
+	}
+
+	/**
+	 * Returns the currently registered notification listeners
+	 * 
+	 * @return the set of notification listener registrations
+	 */
+	public Set<NotificationListenerRegistration> getNotificationListeners() {
+		return Collections.unmodifiableSet(this.notificationListeners);
 	}
 
 	/**
@@ -39,15 +123,125 @@ public class MBeanExporterImpl {
 	 */
 	private void registerMBean(MBeanServer mbeanServer, ObjectName objectName,
 			Object mbean) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("registering mbean " + objectName + " on server "
+					+ mbeanServer);
+		}
 		try {
-			if (logger.isDebugEnabled()) {
-				logger.debug("registering mbean " + objectName + " on server "
-						+ mbeanServer);
-			}
 			mbeanServer.registerMBean(mbean, objectName);
 		} catch (Exception e) {
-			logger.warn("caught exception while registering mbean " + objectName
-					+ ", on mbean server " + mbeanServer, e);
+			logger.warn("caught exception while registering mbean "
+					+ objectName + ", on mbean server " + mbeanServer, e);
+		}
+	}
+
+	/**
+	 * Registers a mbean
+	 * 
+	 * @param mbeanRegistration
+	 *            the mbean registration
+	 */
+	public synchronized void registerMBean(MBeanRegistration mbeanRegistration) {
+		if (!this.mbeans.contains(mbeanRegistration)) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("registering mbean " + mbeanRegistration);
+			}
+			this.mbeans.add(mbeanRegistration);
+			for (MBeanServerRegistration mbeanServerRegistration : this.mbeanServers) {
+				this.registerMBean(mbeanServerRegistration.getMbeanServer(),
+						mbeanRegistration.getObjectName(), mbeanRegistration
+								.getMbean());
+			}
+		} else {
+			logger
+					.warn("mbean " + mbeanRegistration
+							+ " is already registered");
+		}
+	}
+
+	/**
+	 * Registers a mbean server instance
+	 * 
+	 * @param mbeanServerRegistration
+	 *            the mbean server registration
+	 */
+	public synchronized void registerMBeanServer(
+			MBeanServerRegistration mbeanServerRegistration) {
+		if (!this.mbeanServers.contains(mbeanServerRegistration)) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("registering mbean server "
+						+ mbeanServerRegistration);
+			}
+			this.mbeanServers.add(mbeanServerRegistration);
+			for (MBeanRegistration mbeanRegistration : this.mbeans) {
+				this.registerMBean(mbeanServerRegistration.getMbeanServer(),
+						mbeanRegistration.getObjectName(), mbeanRegistration
+								.getMbean());
+			}
+		} else {
+			logger.warn("mbean server " + mbeanServerRegistration
+					+ " is already registered");
+		}
+	}
+
+	/**
+	 * Removes a notification listener from a mbean server
+	 * 
+	 * @param mbeanServer
+	 *            the mbean server
+	 * @param objectName
+	 *            the object name
+	 * @param notificationListener
+	 *            the notification listener
+	 * @param notificationFilter
+	 *            the notification filter
+	 * @param handback
+	 *            the handback object
+	 */
+	private void removeNotificationListener(MBeanServer mbeanServer,
+			ObjectName objectName, NotificationListener notificationListener,
+			NotificationFilter notificationFilter, Object handback) {
+		try {
+			if (logger.isDebugEnabled()) {
+				logger.debug("removing notification listener "
+						+ notificationListener + " from server " + mbeanServer);
+			}
+			mbeanServer.removeNotificationListener(objectName,
+					notificationListener, notificationFilter, handback);
+		} catch (Exception e) {
+			logger.warn(
+					"caught exception while removing notification listener "
+							+ notificationListener + ", from mbean server "
+							+ mbeanServer, e);
+		}
+	}
+
+	/**
+	 * Removes a notification listener
+	 * 
+	 * @param notificationListenerRegistration
+	 *            the notification listener registration
+	 * 
+	 */
+	public synchronized void removeNotificationListener(
+			NotificationListenerRegistration notificationListenerRegistration) {
+		if (this.notificationListeners.remove(notificationListenerRegistration)) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("removing notification listener "
+						+ notificationListenerRegistration);
+			}
+			for (MBeanServerRegistration mbeanServerRegistration : this.mbeanServers) {
+				this.removeNotificationListener(mbeanServerRegistration
+						.getMbeanServer(), notificationListenerRegistration
+						.getObjectName(), notificationListenerRegistration
+						.getNotificationListener(),
+						notificationListenerRegistration
+								.getNotificationFilter(),
+						notificationListenerRegistration.getHandback());
+			}
+		} else {
+			logger.warn("notification listener "
+					+ notificationListenerRegistration + " is not registered");
 		}
 	}
 
@@ -62,114 +256,56 @@ public class MBeanExporterImpl {
 	private void unregisterMBean(MBeanServer mbeanServer, ObjectName objectName) {
 		try {
 			if (logger.isDebugEnabled()) {
-				logger.debug("unregistering mbean " + objectName + " from server "
-						+ mbeanServer);
+				logger.debug("unregistering mbean " + objectName
+						+ " from server " + mbeanServer);
 			}
 			mbeanServer.unregisterMBean(objectName);
 		} catch (Exception e) {
-			logger.warn("caught exception while unregistering mbean " + objectName
-					+ ", from mbean server " + mbeanServer, e);
+			logger.warn("caught exception while unregistering mbean "
+					+ objectName + ", from mbean server " + mbeanServer, e);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Unregisters a mbean
 	 * 
-	 * @see
-	 * com.buschmais.osgimaexoxo.core.registry.impl.OSGiMBeanRegistry#getMBeanServers
-	 * ()
+	 * @param mbeanRegistration
+	 *            the mbean registration
 	 */
-	public Set<MBeanServer> getMBeanServers() {
-		return Collections.unmodifiableSet(this.mbeanServers.keySet());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmaimaexoexo.core.registry.JmxRegistry#registerMBeanServer
-	 * (javax.management.MBeanServer)
-	 */
-	public synchronized void registerMBeanServer(MBeanServer mbeanServer) {
-		if (this.mbeanServers.put(mbeanServer, mbeanServer) == null) {
+	public synchronized void unregisterMBean(MBeanRegistration mbeanRegistration) {
+		if (this.mbeans.remove(mbeanRegistration)) {
 			if (logger.isDebugEnabled()) {
-				logger.debug("registering mbean server " + mbeanServer);
+				logger.debug("unregistering mbean " + mbeanRegistration);
 			}
-			for (Entry<ObjectName, Object> entry : this.mbeans.entrySet()) {
-				this.registerMBean(mbeanServer, entry.getKey(), entry
-						.getValue());
+			for (MBeanServerRegistration mbeanServerRegistration : this.mbeanServers) {
+				this.unregisterMBean(mbeanServerRegistration.getMbeanServer(),
+						mbeanRegistration.getObjectName());
 			}
 		} else {
-			logger.warn("mbean server " + mbeanServer + " is already registered");
+			logger.warn("mbean " + mbeanRegistration + " is not registered");
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Unregisters a mbean server instance
 	 * 
-	 * @see com.buschmamaexoaexo.core.registry.JmxRegistry#unregisterMBeanServer
-	 * (javax.management.MBeanServer)
+	 * @param mbeanServerRegistration
+	 *            the mbean server registration
 	 */
-	public synchronized void unregisterMBeanServer(MBeanServer mbeanServer) {
-		if (this.mbeanServers.remove(mbeanServer) != null) {
+	public synchronized void unregisterMBeanServer(
+			MBeanServerRegistration mbeanServerRegistration) {
+		if (this.mbeanServers.remove(mbeanServerRegistration)) {
 			if (logger.isDebugEnabled()) {
-				logger.debug("unregistering mbean server " + mbeanServer);
+				logger.debug("unregistering mbean server "
+						+ mbeanServerRegistration);
 			}
-			for (ObjectName objectName : this.mbeans.keySet()) {
-				this.unregisterMBean(mbeanServer, objectName);
+			for (MBeanRegistration mbeanRegistration : this.mbeans) {
+				this.unregisterMBean(mbeanServerRegistration.getMbeanServer(),
+						mbeanRegistration.getObjectName());
 			}
 		} else {
-			logger.warn("mbean server " + mbeanServer
+			logger.warn("mbean server " + mbeanServerRegistration
 					+ " is not registered, skipping.");
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmmaexomaexo.core.registry.JmxRegistry#getMBeans()
-	 */
-	public Map<ObjectName, Object> getMBeans() {
-		return Collections.unmodifiableMap(this.mbeans);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.maexo.maexo.core.registry.impl.OSGiMBeanRegistry#registerMBean
-	 * (javax.management.ObjectName, java.lang.Object)
-	 */
-	public synchronized void registerMBean(ObjectName objectName, Object mbean) {
-		if (this.mbeans.put(objectName, mbean) == null) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("registering mbean " + objectName);
-			}
-			for (MBeanServer mbeanServer : this.mbeanServers.keySet()) {
-				this.registerMBean(mbeanServer, objectName, mbean);
-			}
-		} else {
-			logger.warn("mbean " + objectName + " is already registered");
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmaismaexoi.maexo.core.registry.impl.OSGiMBeanRegistry#unregisterMBean
-	 * (javax.management.ObjectName)
-	 */
-	public synchronized void unregisterMBean(ObjectName objectName) {
-		if (this.mbeans.remove(objectName) != null) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("unregistering mbean " + objectName);
-			}
-			for (MBeanServer mbeanServer : this.mbeanServers.keySet()) {
-				this.unregisterMBean(mbeanServer, objectName);
-			}
-		} else {
-			logger.warn("mbean " + objectName + " is not registered");
-		}
-	}
-
 }

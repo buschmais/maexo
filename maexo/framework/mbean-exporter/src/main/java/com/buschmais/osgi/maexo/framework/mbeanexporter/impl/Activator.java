@@ -1,6 +1,7 @@
 package com.buschmais.osgi.maexo.framework.mbeanexporter.impl;
 
 import javax.management.MBeanServer;
+import javax.management.NotificationListener;
 import javax.management.ObjectName;
 
 import org.osgi.framework.BundleActivator;
@@ -29,17 +30,21 @@ public class Activator implements BundleActivator {
 			+ ObjectName.class.getName() + "=*)(objectName=*)))";
 
 	/**
-	 * The object name property
+	 * Definition of the filter for notification listeners
 	 */
-	private static final String SERVICE_PROPERTY_OBJECTNAME = "objectName";
+	private static final String FILTER_NOTIFICATIONLISTENER = "(&(objectClass="
+			+ NotificationListener.class.getName() + ")("
+			+ ObjectName.class.getName() + "=*))";
 
 	private static Logger logger = LoggerFactory.getLogger(Activator.class);
 
-	private MBeanExporterImpl registry;
+	private MBeanExporterImpl mbeanExporter;
 
 	private ServiceListener mbeanServerServiceListener;
 
 	private ServiceListener mbeanServiceListener;
+
+	private ServiceListener notificationListenerServiceListener;
 
 	/*
 	 * (non-Javadoc)
@@ -52,11 +57,13 @@ public class Activator implements BundleActivator {
 		if (logger.isInfoEnabled()) {
 			logger.info("Starting maexo MBean Exporter");
 		}
-		this.registry = new MBeanExporterImpl();
+		this.mbeanExporter = new MBeanExporterImpl();
 		this.mbeanServerServiceListener = this
 				.registerMBeanServerServiceListener(bundleContext);
 		this.mbeanServiceListener = this
 				.registerMBeanServiceListener(bundleContext);
+		this.notificationListenerServiceListener = this
+				.registerNotificationListenerServiceListener(bundleContext);
 	}
 
 	/*
@@ -74,15 +81,27 @@ public class Activator implements BundleActivator {
 			bundleContext
 					.removeServiceListener(this.mbeanServerServiceListener);
 		}
-		for (MBeanServer mbeanServer : this.registry.getMBeanServers()) {
-			this.registry.unregisterMBeanServer(mbeanServer);
+		for (MBeanServerRegistration mbeanServerRegistration : this.mbeanExporter
+				.getMBeanServers()) {
+			this.mbeanExporter.unregisterMBeanServer(mbeanServerRegistration);
 		}
 		// remove service listener for mbeans and clean up
 		if (this.mbeanServiceListener != null) {
 			bundleContext.removeServiceListener(this.mbeanServiceListener);
 		}
-		for (ObjectName objectName : this.registry.getMBeans().keySet()) {
-			this.registry.unregisterMBean(objectName);
+		for (MBeanRegistration mbeanRegistration : this.mbeanExporter
+				.getMBeans()) {
+			this.mbeanExporter.unregisterMBean(mbeanRegistration);
+		}
+		// remove service listener for mbeans and clean up
+		if (this.notificationListenerServiceListener != null) {
+			bundleContext
+					.removeServiceListener(this.notificationListenerServiceListener);
+		}
+		for (NotificationListenerRegistration notificationListenerRegistration : this.mbeanExporter
+				.getNotificationListeners()) {
+			this.mbeanExporter
+					.removeNotificationListener(notificationListenerRegistration);
 		}
 	}
 
@@ -108,15 +127,17 @@ public class Activator implements BundleActivator {
 			public void serviceChanged(ServiceEvent serviceEvent) {
 				ServiceReference serviceReference = serviceEvent
 						.getServiceReference();
-				MBeanServer mbeanServer = (MBeanServer) bundleContext
-						.getService(serviceReference);
+				MBeanServerRegistration mBeanServerRegistration = new MBeanServerRegistration(
+						bundleContext, serviceReference);
 				switch (serviceEvent.getType()) {
 				case ServiceEvent.REGISTERED: {
-					Activator.this.registry.registerMBeanServer(mbeanServer);
+					Activator.this.mbeanExporter
+							.registerMBeanServer(mBeanServerRegistration);
 				}
 					break;
 				case ServiceEvent.UNREGISTERING: {
-					Activator.this.registry.unregisterMBeanServer(mbeanServer);
+					Activator.this.mbeanExporter
+							.unregisterMBeanServer(mBeanServerRegistration);
 				}
 					break;
 				default:
@@ -158,34 +179,26 @@ public class Activator implements BundleActivator {
 			public void serviceChanged(ServiceEvent serviceEvent) {
 				ServiceReference serviceReference = serviceEvent
 						.getServiceReference();
-				// get object name from service properties
-				ObjectName objectName = (ObjectName) serviceReference
-						.getProperty(ObjectName.class.getName());
-				String name = (String) serviceReference
-						.getProperty(SERVICE_PROPERTY_OBJECTNAME);
-				if (objectName == null && name != null) {
-					// if no object name is available try to construct it from
-					// given name
-					try {
-						objectName = new ObjectName(name);
-					} catch (Exception e) {
-						Activator.logger
-								.error("cannot create ObjectName instance from \""
-										+ name
-										+ "\", skipping mbean (un-)registration");
-					}
+				MBeanRegistration mbeanRegistration = null;
+				try {
+					mbeanRegistration = new MBeanRegistration(bundleContext,
+							serviceReference);
+				} catch (Exception e) {
+					Activator.logger
+							.warn(
+									"cannot create mbean registration, skipping (un-)registration",
+									e);
 				}
-				if (objectName != null) {
-					Object mbean = bundleContext.getService(serviceReference);
-					// populate event to registry
+				if (mbeanRegistration != null) {
 					switch (serviceEvent.getType()) {
 					case ServiceEvent.REGISTERED: {
-						Activator.this.registry
-								.registerMBean(objectName, mbean);
+						Activator.this.mbeanExporter
+								.registerMBean(mbeanRegistration);
 					}
 						break;
 					case ServiceEvent.UNREGISTERING: {
-						Activator.this.registry.unregisterMBean(objectName);
+						Activator.this.mbeanExporter
+								.unregisterMBean(mbeanRegistration);
 					}
 						break;
 					default:
@@ -203,6 +216,69 @@ public class Activator implements BundleActivator {
 		this.registerExistingServices(FILTER_MBEAN, bundleContext,
 				mbeanServiceListener);
 		return mbeanServiceListener;
+	}
+
+	/**
+	 * Registers a service listener for notification listeners
+	 * 
+	 * @param bundleContext
+	 *            the bundle context
+	 * @return the service listener
+	 * @throws InvalidSyntaxException
+	 */
+	private ServiceListener registerNotificationListenerServiceListener(
+			final BundleContext bundleContext) throws InvalidSyntaxException {
+		ServiceListener notificationListenerServiceListener = new ServiceListener() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.osgi.framework.ServiceListener#serviceChanged(org.osgi.framework
+			 * .ServiceEvent)
+			 */
+			public void serviceChanged(ServiceEvent serviceEvent) {
+				ServiceReference serviceReference = serviceEvent
+						.getServiceReference();
+				NotificationListenerRegistration notificationListenerRegistration = null;
+				try {
+					notificationListenerRegistration = new NotificationListenerRegistration(
+							bundleContext, serviceReference);
+				} catch (Exception e) {
+					Activator.logger
+							.warn(
+									"cannot create notification listener registration, skipping add/remove",
+									e);
+				}
+				if (notificationListenerRegistration != null) {
+					switch (serviceEvent.getType()) {
+					case ServiceEvent.REGISTERED: {
+						Activator.this.mbeanExporter
+								.addNotificationListener(notificationListenerRegistration);
+					}
+						break;
+					case ServiceEvent.UNREGISTERING: {
+						Activator.this.mbeanExporter
+								.removeNotificationListener(notificationListenerRegistration);
+					}
+						break;
+					default:
+						break;
+					}
+				}
+			}
+
+		};
+		bundleContext.addServiceListener(notificationListenerServiceListener,
+				FILTER_NOTIFICATIONLISTENER);
+		// do initial registration of MBeans
+		if (logger.isDebugEnabled()) {
+			logger
+					.debug("performing initial registration of notification listeners");
+		}
+		this.registerExistingServices(FILTER_NOTIFICATIONLISTENER,
+				bundleContext, notificationListenerServiceListener);
+		return notificationListenerServiceListener;
 	}
 
 	/**
