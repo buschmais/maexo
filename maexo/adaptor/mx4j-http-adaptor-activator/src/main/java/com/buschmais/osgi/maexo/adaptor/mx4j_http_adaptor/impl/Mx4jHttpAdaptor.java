@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Mx4jHttpAdaptor extends HttpAdaptor implements
-		Mxj4HttpAdaptorMBean {
+		Mx4jHttpAdaptorMBean {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(Mx4jHttpAdaptor.class);
@@ -19,7 +19,7 @@ public class Mx4jHttpAdaptor extends HttpAdaptor implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.impl.Mxj4HttpAdaptorMBean
+	 * com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.impl.Mx4jHttpAdaptorMBean
 	 * #isStartOnRegistration()
 	 */
 	public boolean isStartOnRegistration() {
@@ -30,7 +30,7 @@ public class Mx4jHttpAdaptor extends HttpAdaptor implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.impl.Mxj4HttpAdaptorMBean
+	 * com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.impl.Mx4jHttpAdaptorMBean
 	 * #setStartOnRegistration(boolean)
 	 */
 	public void setStartOnRegistration(boolean startOnRegistration) {

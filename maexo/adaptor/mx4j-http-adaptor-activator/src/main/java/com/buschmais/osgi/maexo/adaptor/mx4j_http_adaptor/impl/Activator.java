@@ -75,7 +75,7 @@ public class Activator implements BundleActivator {
 			}
 		}
 		// create instance of the http adaptor mbean and apply configuration
-		Mxj4HttpAdaptorMBean httpAdaptorMBean = new Mx4jHttpAdaptor();
+		Mx4jHttpAdaptorMBean httpAdaptorMBean = new Mx4jHttpAdaptor();
 		httpAdaptorMBean.setStartOnRegistration(Boolean.parseBoolean(properties
 				.getProperty(Mx4jHttpAdaptorActivator.START_PROPERTY)));
 		httpAdaptorMBean.setHost(properties
