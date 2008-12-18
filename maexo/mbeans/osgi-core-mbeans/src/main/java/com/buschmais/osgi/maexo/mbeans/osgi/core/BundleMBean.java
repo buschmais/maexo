@@ -292,7 +292,7 @@ public class BundleMBean implements DynamicMBean,
 	}
 
 	public Long getId() {
-		return new Long(this.bundle.getBundleId());
+		return Long.valueOf(this.bundle.getBundleId());
 	}
 
 	public Integer getState() {
