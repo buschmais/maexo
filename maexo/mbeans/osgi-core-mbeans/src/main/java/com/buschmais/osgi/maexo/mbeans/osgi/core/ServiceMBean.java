@@ -114,23 +114,26 @@ public class ServiceMBean implements DynamicMBean, Service {
 	public Object getAttribute(String attribute)
 			throws AttributeNotFoundException, MBeanException,
 			ReflectionException {
-		if (ATTRIBUTE_BUNDLE_NAME.equals(attribute)) {
+		if (ServiceConstants.ATTRIBUTE_BUNDLE_NAME.equals(attribute)) {
 			return this.getBundle();
-		} else if (ATTRIBUTE_DESCRIPTION_NAME.equals(attribute)) {
+		} else if (ServiceConstants.ATTRIBUTE_DESCRIPTION_NAME
+				.equals(attribute)) {
 			return this.getDescription();
-		} else if (ATTRIBUTE_ID_NAME.equals(attribute)) {
+		} else if (ServiceConstants.ATTRIBUTE_ID_NAME.equals(attribute)) {
 			return this.getId();
-		} else if (ATTRIBUTE_OBJECTCLASS_NAME.equals(attribute)) {
+		} else if (ServiceConstants.ATTRIBUTE_OBJECTCLASS_NAME
+				.equals(attribute)) {
 			return this.getObjectClass();
-		} else if (ATTRIBUTE_PID_NAME.equals(attribute)) {
+		} else if (ServiceConstants.ATTRIBUTE_PID_NAME.equals(attribute)) {
 			return this.getPid();
-		} else if (ATTRIBUTE_PROPERTIES_NAME.equals(attribute)) {
+		} else if (ServiceConstants.ATTRIBUTE_PROPERTIES_NAME.equals(attribute)) {
 			return this.getProperties();
-		} else if (ATTRIBUTE_RANKING_NAME.equals(attribute)) {
+		} else if (ServiceConstants.ATTRIBUTE_RANKING_NAME.equals(attribute)) {
 			return this.getRanking();
-		} else if (ATTRIBUTE_USINGBUNDLES_NAME.equals(attribute)) {
+		} else if (ServiceConstants.ATTRIBUTE_USINGBUNDLES_NAME
+				.equals(attribute)) {
 			return this.getUsingBundles();
-		} else if (ATTRIBUTE_VENDOR_NAME.equals(attribute)) {
+		} else if (ServiceConstants.ATTRIBUTE_VENDOR_NAME.equals(attribute)) {
 			return this.getVendor();
 		}
 		throw new AttributeNotFoundException("unknown attribute" + attribute);
@@ -167,54 +170,65 @@ public class ServiceMBean implements DynamicMBean, Service {
 			List<OpenMBeanAttributeInfoSupport> attributeList = new ArrayList<OpenMBeanAttributeInfoSupport>();
 			// bundle
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_BUNDLE_NAME, ATTRIBUTE_BUNDLE_DESCRIPTION,
+					ServiceConstants.ATTRIBUTE_BUNDLE_NAME,
+					ServiceConstants.ATTRIBUTE_BUNDLE_DESCRIPTION,
 					SimpleType.OBJECTNAME, true, false, false));
 			// description
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_DESCRIPTION_NAME,
-					ATTRIBUTE_DESCRIPTION_DESCRIPTION, SimpleType.STRING, true,
-					false, false));
+					ServiceConstants.ATTRIBUTE_DESCRIPTION_NAME,
+					ServiceConstants.ATTRIBUTE_DESCRIPTION_DESCRIPTION,
+					SimpleType.STRING, true, false, false));
 			// id
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_ID_NAME, ATTRIBUTE_ID_DESCRIPTION,
-					SimpleType.LONG, true, false, false));
+					ServiceConstants.ATTRIBUTE_ID_NAME,
+					ServiceConstants.ATTRIBUTE_ID_DESCRIPTION, SimpleType.LONG,
+					true, false, false));
 			// object class
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_OBJECTCLASS_NAME,
-					ATTRIBUTE_OBJECTCLASS_DESCRIPTION, new ArrayType(1,
-							SimpleType.LONG), true, false, false));
+					ServiceConstants.ATTRIBUTE_OBJECTCLASS_NAME,
+					ServiceConstants.ATTRIBUTE_OBJECTCLASS_DESCRIPTION,
+					new ArrayType(1, SimpleType.LONG), true, false, false));
 			// pid
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_PID_NAME, ATTRIBUTE_PID_DESCRIPTION,
+					ServiceConstants.ATTRIBUTE_PID_NAME,
+					ServiceConstants.ATTRIBUTE_PID_DESCRIPTION,
 					SimpleType.STRING, true, false, false));
 			// properties
 			this.propertiesRowType = new CompositeType(
-					COMPOSITETYPE_PROPERTIES_ENTRY,
-					COMPOSITETYPE_PROPERTIES_ENTRY_DESCRIPTION, new String[] {
-							COMPOSITETYPE_PROPERTIES_NAME,
-							COMPOSITETYPE_PROPERTIES_VALUE }, new String[] {
-							COMPOSITETYPE_PROPERTIES_NAME,
-							COMPOSITETYPE_PROPERTIES_VALUE }, new OpenType[] {
-							SimpleType.STRING, SimpleType.STRING });
-			this.propertiesType = new TabularType(TABULARTYPE_PROPERTIES_NAME,
-					TABULARTYPE_PROPERTIES_DESCRIPTION, this.propertiesRowType,
-					new String[] { COMPOSITETYPE_PROPERTIES_NAME });
+					ServiceConstants.COMPOSITETYPE_PROPERTIES_ENTRY,
+					ServiceConstants.COMPOSITETYPE_PROPERTIES_ENTRY_DESCRIPTION,
+					new String[] {
+							ServiceConstants.COMPOSITETYPE_PROPERTIES_NAME,
+							ServiceConstants.COMPOSITETYPE_PROPERTIES_VALUE },
+					new String[] {
+							ServiceConstants.COMPOSITETYPE_PROPERTIES_NAME,
+							ServiceConstants.COMPOSITETYPE_PROPERTIES_VALUE },
+					new OpenType[] { SimpleType.STRING, SimpleType.STRING });
+			this.propertiesType = new TabularType(
+					ServiceConstants.TABULARTYPE_PROPERTIES_NAME,
+					ServiceConstants.TABULARTYPE_PROPERTIES_DESCRIPTION,
+					this.propertiesRowType,
+					new String[] { ServiceConstants.COMPOSITETYPE_PROPERTIES_NAME });
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_PROPERTIES_NAME,
-					ATTRIBUTE_PROPERTIES_DESCRIPTION, this.propertiesType,
-					true, false, false));
+					ServiceConstants.ATTRIBUTE_PROPERTIES_NAME,
+					ServiceConstants.ATTRIBUTE_PROPERTIES_DESCRIPTION,
+					this.propertiesType, true, false, false));
 			// ranking
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_RANKING_NAME, ATTRIBUTE_RANKING_DESCRIPTION,
+					ServiceConstants.ATTRIBUTE_RANKING_NAME,
+					ServiceConstants.ATTRIBUTE_RANKING_DESCRIPTION,
 					SimpleType.INTEGER, true, false, false));
 			// using bundles
-			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_USINGBUNDLES_NAME,
-					ATTRIBUTE_USINGBUNDLES_DESCRIPTION, new ArrayType(1,
-							SimpleType.OBJECTNAME), true, false, false));
+			attributeList
+					.add(new OpenMBeanAttributeInfoSupport(
+							ServiceConstants.ATTRIBUTE_USINGBUNDLES_NAME,
+							ServiceConstants.ATTRIBUTE_USINGBUNDLES_DESCRIPTION,
+							new ArrayType(1, SimpleType.OBJECTNAME), true,
+							false, false));
 			// vendor
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_VENDOR_NAME, ATTRIBUTE_VENDOR_DESCRIPTION,
+					ServiceConstants.ATTRIBUTE_VENDOR_NAME,
+					ServiceConstants.ATTRIBUTE_VENDOR_DESCRIPTION,
 					SimpleType.STRING, true, false, false));
 
 			OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = attributeList
@@ -223,9 +237,9 @@ public class ServiceMBean implements DynamicMBean, Service {
 			OpenMBeanConstructorInfoSupport[] mbeanConstructorInfos = new OpenMBeanConstructorInfoSupport[] {};
 			MBeanNotificationInfo[] mbeanNotificationInfos = new MBeanNotificationInfo[] {};
 			OpenMBeanInfoSupport mbeanInfo = new OpenMBeanInfoSupport(
-					className, MBEAN_DESCRIPTION, mbeanAttributeInfos,
-					mbeanConstructorInfos, mbeanOperationInfos,
-					mbeanNotificationInfos);
+					className, ServiceConstants.MBEAN_DESCRIPTION,
+					mbeanAttributeInfos, mbeanConstructorInfos,
+					mbeanOperationInfos, mbeanNotificationInfos);
 			return mbeanInfo;
 		} catch (OpenDataException e) {
 			throw new RuntimeException("cannot construct mbean info", e);
@@ -334,9 +348,10 @@ public class ServiceMBean implements DynamicMBean, Service {
 				}
 				try {
 					CompositeDataSupport row = new CompositeDataSupport(
-							this.propertiesRowType, new String[] {
-									COMPOSITETYPE_PROPERTIES_NAME,
-									COMPOSITETYPE_PROPERTIES_VALUE },
+							this.propertiesRowType,
+							new String[] {
+									ServiceConstants.COMPOSITETYPE_PROPERTIES_NAME,
+									ServiceConstants.COMPOSITETYPE_PROPERTIES_VALUE },
 							new Object[] { key, stringRepresentation });
 					tabularProperties.put(row);
 				} catch (OpenDataException e) {

@@ -25,16 +25,17 @@ import org.osgi.framework.ServiceReference;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.ServiceConstants;
 
 /**
  * Object name factory implementation which supports service references
  */
 public class ServiceObjectNameFactory implements ObjectNameFactory {
 
-	private static final String PROPERTY_TYPE_SERVICE = "service";
-
-	private static final String PROPERTY_PID = "pid";
-
+	/**
+	 * the separator token to use if several object classes are implemented by
+	 * the service
+	 */
 	private static final char SEPARATOR_OBJECTCLASS = '|';
 
 	/*
@@ -48,11 +49,12 @@ public class ServiceObjectNameFactory implements ObjectNameFactory {
 		ServiceReference serviceReference = (ServiceReference) resource;
 		Properties objectNameProperties = new Properties();
 		// type
-		objectNameProperties.setProperty(ObjectNameFactory.PROPERTY_TYPE,
-				PROPERTY_TYPE_SERVICE);
+		objectNameProperties.setProperty(
+				ServiceConstants.OBJECTNAME_TYPE_PROPERTY,
+				ServiceConstants.OBJECTNAME_TYPE_VALUE);
 		// id
 		Long id = (Long) serviceReference.getProperty(Constants.SERVICE_ID);
-		objectNameProperties.put(ObjectNameFactory.PROPERTY_ID, id);
+		objectNameProperties.put(ServiceConstants.OBJECTNAME_ID_PROPERTY, id);
 		// object classes
 		String[] objectClasses = (String[]) serviceReference
 				.getProperty(Constants.OBJECTCLASS);
@@ -63,13 +65,14 @@ public class ServiceObjectNameFactory implements ObjectNameFactory {
 			}
 			objectClassValue.append(objectClass);
 		}
-		objectNameProperties.put(ObjectNameFactory.PROPERTY_NAME,
+		objectNameProperties.put(ServiceConstants.OBJECTNAME_NAME_PROPERTY,
 				objectClassValue);
 		// pid
 		String pid = (String) serviceReference
 				.getProperty(Constants.SERVICE_PID);
 		if (pid != null) {
-			objectNameProperties.put(PROPERTY_PID, pid);
+			objectNameProperties.put(ServiceConstants.OBJECTNAME_PID_PROPERTY,
+					pid);
 		}
 		return ObjectNameHelper.getObjectName(objectNameProperties);
 	}

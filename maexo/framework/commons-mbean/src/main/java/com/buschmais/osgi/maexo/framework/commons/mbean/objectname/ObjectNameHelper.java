@@ -102,8 +102,7 @@ public class ObjectNameHelper {
 		StringBuilder filter = new StringBuilder();
 		filter.append("(|");
 		for (Class<?> resourceInterface : resourceInterfaces) {
-			filter.append("("
-					+ ObjectNameFactory.SERVICE_PROPERTY_RESOURCEINTERFACE
+			filter.append("(" + Constants.SERVICE_PROPERTY_RESOURCEINTERFACE
 					+ "=" + resourceInterface.getName() + ")");
 		}
 		filter.append(")");
@@ -157,7 +156,7 @@ public class ObjectNameHelper {
 					"objectNameFactory and resourceInterface must be provided");
 		}
 		Dictionary<String, String> properties = new Hashtable<String, String>();
-		properties.put(ObjectNameFactory.SERVICE_PROPERTY_RESOURCEINTERFACE,
+		properties.put(Constants.SERVICE_PROPERTY_RESOURCEINTERFACE,
 				resourceInterface.getName());
 		return this.bundleContext.registerService(ObjectNameFactory.class
 				.getName(), objectNameFactory, properties);
@@ -172,7 +171,7 @@ public class ObjectNameHelper {
 	 * @return the object name
 	 */
 	public static ObjectName getObjectName(Properties properties) {
-		return getObjectName(ObjectNameFactory.DEFAULT_DOMAIN, properties);
+		return getObjectName(Constants.DEFAULT_DOMAIN, properties);
 	}
 
 	/**

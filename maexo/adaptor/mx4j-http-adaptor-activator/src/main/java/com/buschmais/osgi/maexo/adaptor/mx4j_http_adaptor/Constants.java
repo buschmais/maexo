@@ -16,7 +16,7 @@
  */
 package com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor;
 
-public interface Mx4jHttpAdaptorActivator {
+public class Constants {
 
 	public static final String HTTP_ADAPTOR_OBJECTNAME = "com.buschmais.osgi.maexo:type=adaptor,name=mx4j_http_adaptor";
 	public static final String XSLT_PROCESSOR_OBJECTNAME = "com.buschmais.osgi.maexo:type=adaptor,name=mx4j_xslt_processor";

@@ -105,15 +105,16 @@ public class BundleMBean implements DynamicMBean,
 	public Object getAttribute(String attribute)
 			throws AttributeNotFoundException, MBeanException,
 			ReflectionException {
-		if (ATTRIBUTE_ID_NAME.equals(attribute)) {
+		if (BundleConstants.ATTRIBUTE_ID_NAME.equals(attribute)) {
 			return this.getId();
-		} else if (ATTRIBUTE_STATE_NAME.equals(attribute)) {
+		} else if (BundleConstants.ATTRIBUTE_STATE_NAME.equals(attribute)) {
 			return this.getState();
-		} else if (ATTRIBUTE_STATENAME_NAME.equals(attribute)) {
+		} else if (BundleConstants.ATTRIBUTE_STATENAME_NAME.equals(attribute)) {
 			return this.getStateName();
-		} else if (ATTRIBUTE_HEADERS_NAME.equals(attribute)) {
+		} else if (BundleConstants.ATTRIBUTE_HEADERS_NAME.equals(attribute)) {
 			return this.getHeaders();
-		} else if (ATTRIBUTE_REGISTEREDSERVICES_NAME.equals(attribute)) {
+		} else if (BundleConstants.ATTRIBUTE_REGISTEREDSERVICES_NAME
+				.equals(attribute)) {
 			return this.getRegisteredServices();
 		}
 		throw new AttributeNotFoundException("unknown attribute" + attribute);
@@ -149,36 +150,44 @@ public class BundleMBean implements DynamicMBean,
 			List<OpenMBeanAttributeInfoSupport> attributeList = new ArrayList<OpenMBeanAttributeInfoSupport>();
 			// id
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_ID_NAME, ATTRIBUTE_ID_DESCRIPTION,
+					BundleConstants.ATTRIBUTE_ID_NAME,
+					BundleConstants.ATTRIBUTE_ID_DESCRIPTION,
 					SimpleType.INTEGER, true, false, false));
 			// state
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_STATE_NAME, ATTRIBUTE_STATE_DESCRIPTION,
+					BundleConstants.ATTRIBUTE_STATE_NAME,
+					BundleConstants.ATTRIBUTE_STATE_DESCRIPTION,
 					SimpleType.INTEGER, true, false, false));
 			// state as name
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_STATENAME_NAME, ATTRIBUTE_STATENAME_DESCRIPTION,
+					BundleConstants.ATTRIBUTE_STATENAME_NAME,
+					BundleConstants.ATTRIBUTE_STATENAME_DESCRIPTION,
 					SimpleType.STRING, true, false, false));
 			// header
 			this.headersRowType = new CompositeType(
-					COMPOSITETYPE_HEADERS_ENTRY,
-					COMPOSITETYPE_HEADERS_ENTRY_DESCRIPTION, new String[] {
-							COMPOSITETYPE_HEADERS_NAME,
-							COMPOSITETYPE_HEADERS_VALUE }, new String[] {
-							COMPOSITETYPE_HEADERS_NAME,
-							COMPOSITETYPE_HEADERS_VALUE }, new OpenType[] {
-							SimpleType.STRING, SimpleType.STRING });
-			this.headersType = new TabularType(TABULARTYPE_HEADERS_NAME,
-					TABULARTYPE_HEADERS_DESCRIPTION, this.headersRowType,
-					new String[] { COMPOSITETYPE_HEADERS_NAME });
+					BundleConstants.COMPOSITETYPE_HEADERS_ENTRY,
+					BundleConstants.COMPOSITETYPE_HEADERS_ENTRY_DESCRIPTION,
+					new String[] { BundleConstants.COMPOSITETYPE_HEADERS_NAME,
+							BundleConstants.COMPOSITETYPE_HEADERS_VALUE },
+					new String[] { BundleConstants.COMPOSITETYPE_HEADERS_NAME,
+							BundleConstants.COMPOSITETYPE_HEADERS_VALUE },
+					new OpenType[] { SimpleType.STRING, SimpleType.STRING });
+			this.headersType = new TabularType(
+					BundleConstants.TABULARTYPE_HEADERS_NAME,
+					BundleConstants.TABULARTYPE_HEADERS_DESCRIPTION,
+					this.headersRowType,
+					new String[] { BundleConstants.COMPOSITETYPE_HEADERS_NAME });
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_HEADERS_NAME, ATTRIBUTE_HEADERS_DESCRIPTION,
+					BundleConstants.ATTRIBUTE_HEADERS_NAME,
+					BundleConstants.ATTRIBUTE_HEADERS_DESCRIPTION,
 					this.headersType, true, false, false));
 			// registered services
-			attributeList.add(new OpenMBeanAttributeInfoSupport(
-					ATTRIBUTE_REGISTEREDSERVICES_NAME,
-					ATTRIBUTE_REGISTEREDSERVICES_DESCRIPTION, new ArrayType(1,
-							SimpleType.OBJECTNAME), true, false, false));
+			attributeList
+					.add(new OpenMBeanAttributeInfoSupport(
+							BundleConstants.ATTRIBUTE_REGISTEREDSERVICES_NAME,
+							BundleConstants.ATTRIBUTE_REGISTEREDSERVICES_DESCRIPTION,
+							new ArrayType(1, SimpleType.OBJECTNAME), true,
+							false, false));
 			OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = attributeList
 					.toArray(new OpenMBeanAttributeInfoSupport[attributeList
 							.size()]);
@@ -187,24 +196,30 @@ public class BundleMBean implements DynamicMBean,
 			List<OpenMBeanOperationInfoSupport> operationList = new ArrayList<OpenMBeanOperationInfoSupport>();
 			// start
 			operationList.add(new OpenMBeanOperationInfoSupport(
-					OPERATION_START_NAME, OPERATION_START_NAME,
+					BundleConstants.OPERATION_START_NAME,
+					BundleConstants.OPERATION_START_NAME,
 					new OpenMBeanParameterInfoSupport[] {}, SimpleType.VOID,
 					OpenMBeanOperationInfoSupport.ACTION_INFO));
 			// stop
 			operationList.add(new OpenMBeanOperationInfoSupport(
-					OPERATION_STOP_NAME, OPERATION_STOP_NAME,
+					BundleConstants.OPERATION_STOP_NAME,
+					BundleConstants.OPERATION_STOP_NAME,
 					new OpenMBeanParameterInfoSupport[] {}, SimpleType.VOID,
 					OpenMBeanOperationInfoSupport.ACTION_INFO));
 			// update
 			operationList.add(new OpenMBeanOperationInfoSupport(
-					OPERATION_UPDATE_NAME, OPERATION_UPDATE_NAME,
+					BundleConstants.OPERATION_UPDATE_NAME,
+					BundleConstants.OPERATION_UPDATE_NAME,
 					new OpenMBeanParameterInfoSupport[] {}, SimpleType.VOID,
 					OpenMBeanOperationInfoSupport.ACTION_INFO));
 			// update from url
-			operationList.add(new OpenMBeanOperationInfoSupport(
-					OPERATION_UPDATEFROMURL_NAME, OPERATION_UPDATEFROMURL_NAME,
-					OPERATION_UPDATEFROMURL_PARAMETERS, SimpleType.VOID,
-					OpenMBeanOperationInfoSupport.ACTION_INFO));
+			operationList
+					.add(new OpenMBeanOperationInfoSupport(
+							BundleConstants.OPERATION_UPDATEFROMURL_NAME,
+							BundleConstants.OPERATION_UPDATEFROMURL_NAME,
+							BundleConstants.OPERATION_UPDATEFROMURL_PARAMETERS,
+							SimpleType.VOID,
+							OpenMBeanOperationInfoSupport.ACTION_INFO));
 			OpenMBeanOperationInfoSupport[] mbeanOperationInfos = operationList
 					.toArray(new OpenMBeanOperationInfoSupport[0]);
 			// constructors
@@ -213,9 +228,9 @@ public class BundleMBean implements DynamicMBean,
 			MBeanNotificationInfo[] mbeanNotificationInfos = new MBeanNotificationInfo[] {};
 			// mbean info
 			OpenMBeanInfoSupport mbeanInfo = new OpenMBeanInfoSupport(
-					className, MBEAN_DESCRIPTION, mbeanAttributeInfos,
-					mbeanConstructorInfos, mbeanOperationInfos,
-					mbeanNotificationInfos);
+					className, BundleConstants.MBEAN_DESCRIPTION,
+					mbeanAttributeInfos, mbeanConstructorInfos,
+					mbeanOperationInfos, mbeanNotificationInfos);
 			return mbeanInfo;
 		} catch (OpenDataException e) {
 			throw new RuntimeException("cannot construct mbean info", e);
@@ -230,22 +245,22 @@ public class BundleMBean implements DynamicMBean,
 	 */
 	public Object invoke(String actionName, Object[] params, String[] signature)
 			throws MBeanException, ReflectionException {
-		if (OPERATION_START_NAME.equals(actionName)) {
+		if (BundleConstants.OPERATION_START_NAME.equals(actionName)) {
 			this.start();
 			return null;
-		} else if (OPERATION_STOP_NAME.equals(actionName)) {
+		} else if (BundleConstants.OPERATION_STOP_NAME.equals(actionName)) {
 			this.stop();
 			return null;
-		} else if (OPERATION_UPDATE_NAME.equals(actionName)) {
+		} else if (BundleConstants.OPERATION_UPDATE_NAME.equals(actionName)) {
 			if (signature.length == 0) {
 				this.update();
 			} else if (signature.length == 1
-					&& OPERATION_UPDATEFROMURL_PARAMETERS[0]
+					&& BundleConstants.OPERATION_UPDATEFROMURL_PARAMETERS[0]
 							.equals(signature[0])) {
 				this.update((String) params[0]);
 			}
 			return null;
-		} else if (OPERATION_UNINSTALL_NAME.equals(actionName)) {
+		} else if (BundleConstants.OPERATION_UNINSTALL_NAME.equals(actionName)) {
 			this.uninstall();
 			return null;
 		}
@@ -326,9 +341,9 @@ public class BundleMBean implements DynamicMBean,
 			try {
 				CompositeDataSupport row = new CompositeDataSupport(
 						this.headersRowType, new String[] {
-								COMPOSITETYPE_HEADERS_NAME,
-								COMPOSITETYPE_HEADERS_VALUE }, new Object[] {
-								key, value });
+								BundleConstants.COMPOSITETYPE_HEADERS_NAME,
+								BundleConstants.COMPOSITETYPE_HEADERS_VALUE },
+						new Object[] { key, value });
 				tabularHeaders.put(row);
 			} catch (Exception e) {
 				throw new MBeanException(e);

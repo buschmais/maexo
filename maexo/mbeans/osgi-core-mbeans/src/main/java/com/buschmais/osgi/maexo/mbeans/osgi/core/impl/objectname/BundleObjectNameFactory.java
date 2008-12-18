@@ -25,6 +25,7 @@ import org.osgi.framework.Constants;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleConstants;
 
 /**
  * Object name factory implementation which supports service references
@@ -51,15 +52,15 @@ public class BundleObjectNameFactory implements ObjectNameFactory {
 		// create object name properties
 		Properties objectNameProperties = new Properties();
 		// type
-		objectNameProperties.setProperty(ObjectNameFactory.PROPERTY_TYPE,
-				PROPERTY_TYPE_BUNDLE);
+		objectNameProperties.setProperty(
+				BundleConstants.OBJECTNAME_PROPERTY_TYPE, PROPERTY_TYPE_BUNDLE);
 		// create name property: <symbolic name>
 		String symbolicName = bundle.getSymbolicName();
 		if (symbolicName == null) {
 			symbolicName = DEFAULT_BUNDLE_SYMBOLICNAME;
 		}
-		objectNameProperties.setProperty(ObjectNameFactory.PROPERTY_NAME,
-				symbolicName);
+		objectNameProperties.setProperty(
+				BundleConstants.OBJECTNAME_PROPERTY_NAME, symbolicName);
 		// create version property
 		String bundleVersion = (String) bundle.getHeaders().get(
 				Constants.BUNDLE_VERSION);
