@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.osgi.maexo.test.framework.mbeanexporter;
+package com.buschmais.osgi.maexo.test.framework.switchboard;
 
 public interface TestMBean {
 

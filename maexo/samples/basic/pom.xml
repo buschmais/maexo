@@ -56,7 +56,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.buschmais.osgi.maexo.framework</groupId>
-			<artifactId>mbean-exporter</artifactId>
+			<artifactId>switchboard</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.buschmais.osgi.maexo.framework</groupId>

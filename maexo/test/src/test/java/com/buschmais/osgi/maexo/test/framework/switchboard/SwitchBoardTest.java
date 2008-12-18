@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.osgi.maexo.test.framework.mbeanexporter;
+package com.buschmais.osgi.maexo.test.framework.switchboard;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -38,7 +38,7 @@ import com.buschmais.osgi.maexo.test.MaexoTests;
 /**
  * @see MaexoTests
  */
-public class MBeanExporterTest extends MaexoTests {
+public class SwitchBoardTest extends MaexoTests {
 
 	private static final String OBJECTNAME_TESTMBEAN = "com.buschmais.osgi.maexo:type=TestMBean";
 
@@ -73,7 +73,7 @@ public class MBeanExporterTest extends MaexoTests {
 	 * getTestBundlesNames()
 	 */
 	protected String[] getTestBundlesNames() {
-		return new String[] { Constants.ARTIFACT_MBEAN_EXPORTER,
+		return new String[] { Constants.ARTIFACT_SWITCHBOARD,
 				Constants.ARTIFACT_EASYMOCK };
 	}
 

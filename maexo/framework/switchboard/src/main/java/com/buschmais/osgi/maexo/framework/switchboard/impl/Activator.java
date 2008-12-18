@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.osgi.maexo.framework.mbeanexporter.impl;
+package com.buschmais.osgi.maexo.framework.switchboard.impl;
 
 import javax.management.MBeanServer;
 import javax.management.NotificationListener;
@@ -54,7 +54,7 @@ public class Activator implements BundleActivator {
 
 	private static Logger logger = LoggerFactory.getLogger(Activator.class);
 
-	private MBeanExporterImpl mbeanExporter;
+	private SwitchBoardImpl mbeanExporter;
 
 	private ServiceListener mbeanServerServiceListener;
 
@@ -71,9 +71,9 @@ public class Activator implements BundleActivator {
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("Starting maexo MBean Exporter");
+			logger.info("Starting maexo switch board");
 		}
-		this.mbeanExporter = new MBeanExporterImpl();
+		this.mbeanExporter = new SwitchBoardImpl();
 		this.mbeanServerServiceListener = this
 				.registerMBeanServerServiceListener(bundleContext);
 		this.mbeanServiceListener = this
@@ -90,7 +90,7 @@ public class Activator implements BundleActivator {
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("Stopping maexo MBean Exporter");
+			logger.info("Stopping maexo switch board");
 		}
 		// remove service listener for mbean servers and clean up
 		if (this.mbeanServerServiceListener != null) {

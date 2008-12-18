@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.osgi.maexo.framework.mbeanexporter.impl;
+package com.buschmais.osgi.maexo.framework.switchboard.impl;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -28,10 +28,10 @@ import javax.management.ObjectName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MBeanExporterImpl {
+public class SwitchBoardImpl {
 
 	private static Logger logger = LoggerFactory
-			.getLogger(MBeanExporterImpl.class);
+			.getLogger(SwitchBoardImpl.class);
 
 	private Set<MBeanServerRegistration> mbeanServers = new HashSet<MBeanServerRegistration>();
 

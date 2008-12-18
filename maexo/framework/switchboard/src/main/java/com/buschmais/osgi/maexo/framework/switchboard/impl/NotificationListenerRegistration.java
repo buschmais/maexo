@@ -14,29 +14,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.osgi.maexo.framework.mbeanexporter.impl;
+package com.buschmais.osgi.maexo.framework.switchboard.impl;
 
 import javax.management.MalformedObjectNameException;
+import javax.management.NotificationFilter;
+import javax.management.NotificationListener;
 import javax.management.ObjectName;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
-public class MBeanRegistration {
+public class NotificationListenerRegistration {
 
 	/**
-	 * The object name property
+	 * the object name property
 	 */
 	private static final String SERVICE_PROPERTY_OBJECTNAME = "objectName";
 
+	/**
+	 * the handback property
+	 */
+	private static final String SERVICE_PROPERTY_HANDBACK = "handback";
+
 	private ObjectName objectName;
 
-	private Object mbean;
+	private NotificationListener notificationListener;
 
-	public MBeanRegistration(BundleContext bundleContext,
+	private NotificationFilter notificationFilter;
+
+	private Object handback;
+
+	public NotificationListenerRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference)
 			throws MalformedObjectNameException, NullPointerException {
-		// get object name from service properties
+		this.notificationListener = (NotificationListener) bundleContext
+				.getService(serviceReference);
 		this.objectName = (ObjectName) serviceReference
 				.getProperty(ObjectName.class.getName());
 		if (this.objectName == null) {
@@ -44,7 +56,9 @@ public class MBeanRegistration {
 					.getProperty(SERVICE_PROPERTY_OBJECTNAME);
 			this.objectName = new ObjectName(name);
 		}
-		this.mbean = bundleContext.getService(serviceReference);
+		this.notificationFilter = (NotificationFilter) serviceReference
+				.getProperty(NotificationFilter.class.getName());
+		this.handback = serviceReference.getProperty(SERVICE_PROPERTY_HANDBACK);
 	}
 
 	/*
@@ -56,7 +70,16 @@ public class MBeanRegistration {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((mbean == null) ? 0 : mbean.hashCode());
+		result = prime * result
+				+ ((handback == null) ? 0 : handback.hashCode());
+		result = prime
+				* result
+				+ ((notificationFilter == null) ? 0 : notificationFilter
+						.hashCode());
+		result = prime
+				* result
+				+ ((notificationListener == null) ? 0 : notificationListener
+						.hashCode());
 		result = prime * result
 				+ ((objectName == null) ? 0 : objectName.hashCode());
 		return result;
@@ -75,11 +98,21 @@ public class MBeanRegistration {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MBeanRegistration other = (MBeanRegistration) obj;
-		if (mbean == null) {
-			if (other.mbean != null)
+		NotificationListenerRegistration other = (NotificationListenerRegistration) obj;
+		if (handback == null) {
+			if (other.handback != null)
 				return false;
-		} else if (!mbean.equals(other.mbean))
+		} else if (!handback.equals(other.handback))
+			return false;
+		if (notificationFilter == null) {
+			if (other.notificationFilter != null)
+				return false;
+		} else if (!notificationFilter.equals(other.notificationFilter))
+			return false;
+		if (notificationListener == null) {
+			if (other.notificationListener != null)
+				return false;
+		} else if (!notificationListener.equals(other.notificationListener))
 			return false;
 		if (objectName == null) {
 			if (other.objectName != null)
@@ -97,10 +130,24 @@ public class MBeanRegistration {
 	}
 
 	/**
-	 * @return the mbean
+	 * @return the notificationListener
 	 */
-	public Object getMbean() {
-		return mbean;
+	public NotificationListener getNotificationListener() {
+		return notificationListener;
+	}
+
+	/**
+	 * @return the notificationFilter
+	 */
+	public NotificationFilter getNotificationFilter() {
+		return notificationFilter;
+	}
+
+	/**
+	 * @return the handback
+	 */
+	public Object getHandback() {
+		return handback;
 	}
 
 	/*
@@ -110,7 +157,8 @@ public class MBeanRegistration {
 	 */
 	@Override
 	public String toString() {
-		return this.objectName + " (" + this.mbean + ")";
+		return this.objectName + " (" + this.notificationListener + ", "
+				+ this.notificationFilter + ", " + this.handback + ")";
 	}
 
 }

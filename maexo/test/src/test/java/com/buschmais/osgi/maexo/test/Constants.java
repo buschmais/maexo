@@ -23,7 +23,7 @@ public class Constants {
 	public static final String SPRING_VERSION = "2.5.6.A";
 	public static final String SPRING_OSGI_VERSION = "1.1.2.A";
 
-	public static final String ARTIFACT_MBEAN_EXPORTER = "com.buschmais.osgi.maexo.framework, mbean-exporter, "
+	public static final String ARTIFACT_SWITCHBOARD = "com.buschmais.osgi.maexo.framework, switchboard, "
 			+ MAEXO_VERSION;
 
 	public static final String ARTIFACT_COMMONS_MBEAN = "com.buschmais.osgi.maexo.framework, commons-mbean, "

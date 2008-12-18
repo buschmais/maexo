@@ -194,7 +194,7 @@ limitations under the License
 
 			<dependency>
 				<groupId>com.buschmais.osgi.maexo.framework</groupId>
-				<artifactId>mbean-exporter</artifactId>
+				<artifactId>switchboard</artifactId>
 				<version>${maexo.version}</version>
 			</dependency>
 

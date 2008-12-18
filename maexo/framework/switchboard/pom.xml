@@ -27,9 +27,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.buschmais.osgi.maexo.framework</groupId>
-	<artifactId>mbean-exporter</artifactId>
+	<artifactId>switchboard</artifactId>
 	<packaging>bundle</packaging>
-	<name>maexo - MBean Exporter</name>
+	<name>maexo - Switchboard</name>
 
 	<build>
 		<plugins>
@@ -39,10 +39,10 @@
 				<configuration>
 					<instructions>
 						<Export-Package />
-						<Private-Package>com.buschmais.osgi.maexo.framework.mbeanexporter.impl</Private-Package>
+						<Private-Package>com.buschmais.osgi.maexo.framework.switchboard.impl</Private-Package>
 						<Import-Package>*</Import-Package>
 						<Include-Resource>src/main/resources</Include-Resource>
-						<Bundle-Activator>com.buschmais.osgi.maexo.framework.mbeanexporter.impl.Activator</Bundle-Activator>
+						<Bundle-Activator>com.buschmais.osgi.maexo.framework.switchboard.impl.Activator</Bundle-Activator>
 					</instructions>
 				</configuration>
 			</plugin>

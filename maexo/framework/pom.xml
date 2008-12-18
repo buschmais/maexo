@@ -33,7 +33,7 @@
 
 	<modules>
 		<module>commons-mbean</module>
-		<module>mbean-exporter</module>
+		<module>switchboard</module>
 	</modules>
 
 </project>
