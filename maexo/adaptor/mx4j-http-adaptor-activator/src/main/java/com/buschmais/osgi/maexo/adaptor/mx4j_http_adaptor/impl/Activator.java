@@ -69,8 +69,6 @@ public class Activator implements BundleActivator {
 
 	private ServiceRegistration processorServiceRegistration;
 
-	private ServiceRegistration notificationListenerRegistration;
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -161,9 +159,6 @@ public class Activator implements BundleActivator {
 	public void stop(BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {
 			logger.info("Unregistering MX4J HTTP adaptor");
-		}
-		if (this.notificationListenerRegistration != null) {
-			this.notificationListenerRegistration.unregister();
 		}
 		if (this.processorServiceRegistration != null) {
 			this.processorServiceRegistration.unregister();

@@ -67,12 +67,12 @@ public class BundleMBean implements DynamicMBean,
 
 	static {
 		bundleStates = new HashMap<Integer, String>();
-		bundleStates.put(new Integer(Bundle.ACTIVE), "ACTIVE");
-		bundleStates.put(new Integer(Bundle.INSTALLED), "INSTALLED");
-		bundleStates.put(new Integer(Bundle.RESOLVED), "RESOLVED");
-		bundleStates.put(new Integer(Bundle.STARTING), "STARTING");
-		bundleStates.put(new Integer(Bundle.STOPPING), "STOPPING");
-		bundleStates.put(new Integer(Bundle.UNINSTALLED), "UNINSTALLED");
+		bundleStates.put(Integer.valueOf(Bundle.ACTIVE), "ACTIVE");
+		bundleStates.put(Integer.valueOf(Bundle.INSTALLED), "INSTALLED");
+		bundleStates.put(Integer.valueOf(Bundle.RESOLVED), "RESOLVED");
+		bundleStates.put(Integer.valueOf(Bundle.STARTING), "STARTING");
+		bundleStates.put(Integer.valueOf(Bundle.STOPPING), "STOPPING");
+		bundleStates.put(Integer.valueOf(Bundle.UNINSTALLED), "UNINSTALLED");
 	}
 
 	/**
@@ -256,7 +256,7 @@ public class BundleMBean implements DynamicMBean,
 				this.update();
 			} else if (signature.length == 1
 					&& BundleConstants.OPERATION_UPDATEFROMURL_PARAMETERS[0]
-							.equals(signature[0])) {
+							.getName().equals(signature[0])) {
 				this.update((String) params[0]);
 			}
 			return null;
@@ -296,11 +296,11 @@ public class BundleMBean implements DynamicMBean,
 	}
 
 	public Integer getState() {
-		return new Integer(this.bundle.getState());
+		return Integer.valueOf(this.bundle.getState());
 	}
 
 	public String getStateName() {
-		return bundleStates.get(new Integer(this.bundle.getState()));
+		return bundleStates.get(Integer.valueOf(this.bundle.getState()));
 	}
 
 	/**

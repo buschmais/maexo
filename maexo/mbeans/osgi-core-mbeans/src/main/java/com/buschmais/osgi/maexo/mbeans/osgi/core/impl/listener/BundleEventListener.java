@@ -41,7 +41,7 @@ public class BundleEventListener extends EventListener implements
 	 */
 	public synchronized void bundleChanged(BundleEvent bundleEvent) {
 		Bundle bundle = bundleEvent.getBundle();
-		Long id = new Long(bundle.getBundleId());
+		Long id = Long.valueOf((bundle.getBundleId()));
 		switch (bundleEvent.getType()) {
 		case BundleEvent.INSTALLED: {
 			BundleMBean bundleMBean = new BundleMBean(bundle, super
