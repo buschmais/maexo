@@ -49,7 +49,7 @@ public class ServiceEventListener extends EventListener implements
 		ServiceReference serviceReference = serviceEvent.getServiceReference();
 		// do not process (mbean) services which have been registered by this
 		// bundle
-		if (!serviceReference.getBundle().equals(this.bundle)) {
+		if (!this.bundle.equals(serviceReference.getBundle())) {
 			Long id = (Long) serviceReference.getProperty(Constants.SERVICE_ID);
 			switch (serviceEvent.getType()) {
 			case ServiceEvent.REGISTERED: {
