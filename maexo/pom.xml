@@ -135,7 +135,8 @@ limitations under the License
 				<configuration>
 					<xmlOutput>true</xmlOutput>
 					<xmlOutputDirectory>target</xmlOutputDirectory>
-					<threshold>Low</threshold>
+					<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+					<threshold>Normal</threshold>
 					<effort>Default</effort>
 				</configuration>
 			</plugin>
@@ -227,7 +228,7 @@ limitations under the License
 				<groupId>org.apache.felix</groupId>
 				<artifactId>org.osgi.core</artifactId>
 				<version>1.0.1</version>
-				<scope>compile</scope>
+				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
