@@ -29,7 +29,7 @@
 	<groupId>com.buschmais.osgi.maexo.framework</groupId>
 	<artifactId>switchboard</artifactId>
 	<packaging>bundle</packaging>
-	<name>maexo - Switchboard</name>
+	<name>maexo - Switch Board</name>
 
 	<build>
 		<plugins>
