@@ -16,9 +16,6 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
-import javax.management.openmbean.OpenMBeanParameterInfo;
-import javax.management.openmbean.OpenMBeanParameterInfoSupport;
-import javax.management.openmbean.SimpleType;
 
 public class BundleConstants {
 
@@ -92,8 +89,8 @@ public class BundleConstants {
 	 */
 	public static final String OPERATION_UPDATEFROMURL_NAME = "update";
 	public static final String OPERATION_UPDATEFROMURL_DESCRIPTION = "Update the bundle from the given url";
-	public static final OpenMBeanParameterInfo[] OPERATION_UPDATEFROMURL_PARAMETERS = new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-			"url", "The url to update the bundle from", SimpleType.STRING) };
+	public static final String OPERATION_UPDATEFROMURL_URL_PARAMETER = "url";
+	public static final String OPERATION_UPDATEFROMURL_URL_DESCRIPTION = "url";
 
 	/**
 	 * operation: uninstall

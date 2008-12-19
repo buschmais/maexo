@@ -43,6 +43,7 @@ import javax.management.openmbean.OpenMBeanAttributeInfoSupport;
 import javax.management.openmbean.OpenMBeanConstructorInfoSupport;
 import javax.management.openmbean.OpenMBeanInfoSupport;
 import javax.management.openmbean.OpenMBeanOperationInfoSupport;
+import javax.management.openmbean.OpenMBeanParameterInfo;
 import javax.management.openmbean.OpenMBeanParameterInfoSupport;
 import javax.management.openmbean.OpenType;
 import javax.management.openmbean.SimpleType;
@@ -217,8 +218,10 @@ public class BundleMBean implements DynamicMBean,
 					.add(new OpenMBeanOperationInfoSupport(
 							BundleConstants.OPERATION_UPDATEFROMURL_NAME,
 							BundleConstants.OPERATION_UPDATEFROMURL_NAME,
-							BundleConstants.OPERATION_UPDATEFROMURL_PARAMETERS,
-							SimpleType.VOID,
+							new OpenMBeanParameterInfo[] { new OpenMBeanParameterInfoSupport(
+									BundleConstants.OPERATION_UPDATEFROMURL_URL_PARAMETER,
+									BundleConstants.OPERATION_UPDATEFROMURL_URL_DESCRIPTION,
+									SimpleType.STRING) }, SimpleType.VOID,
 							OpenMBeanOperationInfoSupport.ACTION_INFO));
 			OpenMBeanOperationInfoSupport[] mbeanOperationInfos = operationList
 					.toArray(new OpenMBeanOperationInfoSupport[0]);
@@ -255,8 +258,8 @@ public class BundleMBean implements DynamicMBean,
 			if (signature.length == 0) {
 				this.update();
 			} else if (signature.length == 1
-					&& BundleConstants.OPERATION_UPDATEFROMURL_PARAMETERS[0]
-							.getName().equals(signature[0])) {
+					&& BundleConstants.OPERATION_UPDATEFROMURL_URL_PARAMETER
+							.equals(signature[0])) {
 				this.update((String) params[0]);
 			}
 			return null;
