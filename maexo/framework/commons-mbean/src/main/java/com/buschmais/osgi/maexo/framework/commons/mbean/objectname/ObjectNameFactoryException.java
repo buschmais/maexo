@@ -29,6 +29,6 @@ public class ObjectNameFactoryException extends RuntimeException {
 	}
 
 	public ObjectNameFactoryException(String message, Throwable throwable) {
-		super(message);
+		super(message, throwable);
 	}
 }

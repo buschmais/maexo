@@ -54,6 +54,8 @@ import javax.management.openmbean.TabularType;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 
@@ -62,6 +64,9 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHel
  */
 public class BundleMBean implements DynamicMBean,
 		com.buschmais.osgi.maexo.mbeans.osgi.core.Bundle {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(BundleMBean.class);
 
 	// translation map for bundle states
 	private static Map<Integer, String> bundleStates;
@@ -133,7 +138,7 @@ public class BundleMBean implements DynamicMBean,
 			try {
 				attributeList.add(this.getAttribute(attribute));
 			} catch (Exception e) {
-				// silently ignore
+				logger.warn("cannot get attribute " + attribute, e);
 			}
 		}
 		return attributeList;
