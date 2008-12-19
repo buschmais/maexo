@@ -28,9 +28,15 @@ import com.buschmais.osgi.maexo.test.MaexoTests;
  */
 public class PlatformServerTest extends MaexoTests {
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
+	 * getTestBundlesNames()
+	 */
 	protected String[] getTestBundlesNames() {
 		return new String[] { Constants.ARTIFACT_PLATFORM_MBEAN_SERVER };
-	};
+	}
 
 	/**
 	 * just see if we can find a MBeanServer instance in the OSGi service

@@ -34,13 +34,14 @@ import org.osgi.framework.ServiceRegistration;
 
 import com.buschmais.osgi.maexo.test.Constants;
 import com.buschmais.osgi.maexo.test.MaexoTests;
+import com.buschmais.osgi.maexo.test.common.mbeans.ClassicMBean;
 
 /**
  * @see MaexoTests
  */
 public class SwitchBoardTest extends MaexoTests {
 
-	private static final String OBJECTNAME_TESTMBEAN = "com.buschmais.osgi.maexo:type=TestMBean";
+	private static final String OBJECTNAME_TESTMBEAN = "com.buschmais.osgi.maexo:type=ClassicMBean";
 
 	private ObjectName objectName;
 
@@ -69,7 +70,7 @@ public class SwitchBoardTest extends MaexoTests {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @seeorg.springframework.osgi.test.AbstractDependencyManagerTests#
+	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
 	 * getTestBundlesNames()
 	 */
 	protected String[] getTestBundlesNames() {
@@ -173,9 +174,9 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceNotFoundException, InstanceAlreadyExistsException,
 			MBeanRegistrationException, NotCompliantMBeanException {
 		// create a mbean
-		TestMBean mbean = (TestMBean) EasyMock.createMock(TestMBean.class);
+		ClassicMBean mbean = (ClassicMBean) EasyMock.createMock(ClassicMBean.class);
 		this.test_registerMBeanOnExistingServer(this.objectName, mbean,
-				TestMBean.class);
+				ClassicMBean.class);
 	}
 
 	/**
@@ -214,9 +215,9 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceAlreadyExistsException, MBeanRegistrationException,
 			NotCompliantMBeanException, InstanceNotFoundException {
 		// create a mbean
-		TestMBean mbean = (TestMBean) EasyMock.createMock(TestMBean.class);
+		ClassicMBean mbean = (ClassicMBean) EasyMock.createMock(ClassicMBean.class);
 		this.test_registerMBeanOnNewServer(this.objectName, mbean,
-				TestMBean.class);
+				ClassicMBean.class);
 	}
 
 	/**

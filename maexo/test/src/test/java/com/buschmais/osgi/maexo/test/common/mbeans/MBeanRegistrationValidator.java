@@ -14,8 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.osgi.maexo.test.framework.switchboard;
+package com.buschmais.osgi.maexo.test.common.mbeans;
 
-public interface TestMBean {
+import javax.management.ObjectName;
 
+public interface MBeanRegistrationValidator {
+	
+	/**
+	 * @return the registrationDone
+	 */
+	public Boolean isRegistrationDone();
+
+	/**
+	 * @return the objectName
+	 */
+	public ObjectName getObjectName();
 }

@@ -49,8 +49,8 @@ public class Activator implements BundleActivator {
 	 * Definition of the filter for notification listeners
 	 */
 	private static final String FILTER_NOTIFICATIONLISTENER = "(&(objectClass="
-			+ NotificationListener.class.getName() + ")("
-			+ ObjectName.class.getName() + "=*))";
+			+ NotificationListener.class.getName() + ")(|("
+			+ ObjectName.class.getName() + "=*)(objectName=*)))";
 
 	private static Logger logger = LoggerFactory.getLogger(Activator.class);
 

@@ -90,7 +90,7 @@ public class ObjectNameHelperTest extends MaexoTests {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @seeorg.springframework.osgi.test.AbstractDependencyManagerTests#
+	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
 	 * getTestBundlesNames()
 	 */
 	protected String[] getTestBundlesNames() {
