@@ -37,13 +37,20 @@ public abstract class EventListener {
 
 	private BundleContext bundleContext;
 
-	ObjectNameHelper objectNameHelper;
+	private ObjectNameHelper objectNameHelper;
 
 	private Map<Object, ServiceRegistration> mbeanRegistrations = new ConcurrentHashMap<Object, ServiceRegistration>();
 
 	protected EventListener(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
 		this.objectNameHelper = new ObjectNameHelper(bundleContext);
+	}
+
+	/**
+	 * @return the bundleContext
+	 */
+	protected BundleContext getBundleContext() {
+		return bundleContext;
 	}
 
 	/**
@@ -98,5 +105,4 @@ public abstract class EventListener {
 					+ " not found, skipping unregistration");
 		}
 	}
-
 }

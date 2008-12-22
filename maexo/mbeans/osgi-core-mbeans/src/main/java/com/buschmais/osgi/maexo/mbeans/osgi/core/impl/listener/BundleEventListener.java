@@ -19,13 +19,17 @@ package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.listener;
 import javax.management.DynamicMBean;
 import javax.management.ObjectName;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 
+import com.buschmais.osgi.maexo.mbeans.osgi.core.Bundle;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean;
 
+/**
+ * This class implements a bundle event listener to manage the lifecycle of the
+ * associated bundle mbeans.
+ */
 public class BundleEventListener extends EventListener implements
 		BundleListener {
 
@@ -40,14 +44,14 @@ public class BundleEventListener extends EventListener implements
 	 * .BundleEvent)
 	 */
 	public synchronized void bundleChanged(BundleEvent bundleEvent) {
-		Bundle bundle = bundleEvent.getBundle();
+		org.osgi.framework.Bundle bundle = bundleEvent.getBundle();
 		Long id = Long.valueOf((bundle.getBundleId()));
 		switch (bundleEvent.getType()) {
 		case BundleEvent.INSTALLED: {
-			BundleMBean bundleMBean = new BundleMBean(bundle, super
+			BundleMBean bundleMBean = new Bundle(bundle, super
 					.getObjectNameHelper());
 			ObjectName objectName = super.getObjectNameHelper().getObjectName(
-					bundle, Bundle.class);
+					bundle, org.osgi.framework.Bundle.class);
 			super.registerMBeanService(DynamicMBean.class, objectName, id,
 					bundleMBean);
 		}

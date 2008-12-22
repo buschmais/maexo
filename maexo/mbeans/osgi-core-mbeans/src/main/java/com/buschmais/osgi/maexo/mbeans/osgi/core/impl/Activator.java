@@ -28,14 +28,17 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.startlevel.StartLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.listener.BundleEventListener;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.listener.ServiceEventListener;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.listener.StartLevelEventListener;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.BundleObjectNameFactory;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.ServiceObjectNameFactory;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.StartLevelObjectNameFactory;
 
 public class Activator implements BundleActivator {
 
@@ -47,6 +50,8 @@ public class Activator implements BundleActivator {
 	private BundleListener bundleListener;
 
 	private ServiceListener serviceListener;
+
+	private ServiceListener startLevelServiceListener;
 
 	/*
 	 * (non-Javadoc)
@@ -67,6 +72,9 @@ public class Activator implements BundleActivator {
 		this.serviceRegistrations.add(objectNameHelper
 				.registerObjectNameFactory(new ServiceObjectNameFactory(),
 						ServiceReference.class));
+		this.serviceRegistrations.add(objectNameHelper
+				.registerObjectNameFactory(new StartLevelObjectNameFactory(),
+						StartLevel.class));
 		// create bundle listener
 		this.bundleListener = new BundleEventListener(bundleContext);
 		// register all existing bundles as mbeans
@@ -85,6 +93,19 @@ public class Activator implements BundleActivator {
 					ServiceEvent.REGISTERED, serviceReference));
 		}
 		bundleContext.addServiceListener(this.serviceListener);
+
+		// create start level service listener
+		this.startLevelServiceListener = new StartLevelEventListener(
+				bundleContext);
+		// register all existing services as mbeans
+		for (ServiceReference serviceReference : bundleContext
+				.getServiceReferences(
+						org.osgi.service.startlevel.StartLevel.class.getName(),
+						null)) {
+			this.startLevelServiceListener.serviceChanged(new ServiceEvent(
+					ServiceEvent.REGISTERED, serviceReference));
+		}
+		bundleContext.addServiceListener(this.startLevelServiceListener);
 	}
 
 	/*
@@ -113,6 +134,18 @@ public class Activator implements BundleActivator {
 			this.serviceListener.serviceChanged(new ServiceEvent(
 					ServiceEvent.UNREGISTERING, serviceReference));
 		}
+
+		// remove service listener
+		bundleContext.removeServiceListener(this.startLevelServiceListener);
+		// unregister all registered service mbeans
+		for (ServiceReference serviceReference : bundleContext
+				.getServiceReferences(
+						org.osgi.service.startlevel.StartLevel.class.getName(),
+						null)) {
+			this.startLevelServiceListener.serviceChanged(new ServiceEvent(
+					ServiceEvent.UNREGISTERING, serviceReference));
+		}
+
 		// unregister services
 		for (ServiceRegistration serviceRegistration : this.serviceRegistrations) {
 			serviceRegistration.unregister();

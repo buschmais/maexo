@@ -16,14 +16,19 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
-
 public class BundleConstants {
 
 	/**
 	 * object name properties: type and name
 	 */
-	public static final String OBJECTNAME_PROPERTY_TYPE = "type";
-	public static final String OBJECTNAME_PROPERTY_NAME = "name";
+	public static final String OBJECTNAME_TYPE_PROPERTY = "type";
+	public static final String OBJECTNAME_NAME_PROPERTY = "name";
+	public static final String OBJECTNAME_VERSION_PROPERTY = "version";
+
+	/**
+	 * value of the type property
+	 */
+	public static final String OBJECTNAME_TYPE_VALUE = org.osgi.framework.Bundle.class.getName();
 
 	/**
 	 * MBean description

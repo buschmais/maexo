@@ -20,21 +20,14 @@ import java.util.Properties;
 
 import javax.management.ObjectName;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.Constants;
-
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
-import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleConstants;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelConstants;
 
 /**
- * Object name factory implementation which supports bundles
+ * Object name factory implementation which supports the start level service
  */
-public class BundleObjectNameFactory implements ObjectNameFactory {
-
-	private static final String DEFAULT_BUNDLE_SYMBOLICNAME = "unknown";
-
-	private static final String DEFAULT_BUNDLE_VERSION = "0.0.0";
+public class StartLevelObjectNameFactory implements ObjectNameFactory {
 
 	/*
 	 * (non-Javadoc)
@@ -44,27 +37,12 @@ public class BundleObjectNameFactory implements ObjectNameFactory {
 	 * .lang.Object)
 	 */
 	public ObjectName getObjectName(Object resource) {
-		Bundle bundle = (Bundle) resource;
 		// create object name properties
 		Properties objectNameProperties = new Properties();
 		// type
 		objectNameProperties.setProperty(
-				BundleConstants.OBJECTNAME_TYPE_PROPERTY,
-				BundleConstants.OBJECTNAME_TYPE_VALUE);
-		// create name property: <symbolic name>
-		String symbolicName = bundle.getSymbolicName();
-		if (symbolicName == null) {
-			symbolicName = DEFAULT_BUNDLE_SYMBOLICNAME;
-		}
-		objectNameProperties.setProperty(
-				BundleConstants.OBJECTNAME_NAME_PROPERTY, symbolicName);
-		// create version property
-		String bundleVersion = (String) bundle.getHeaders().get(
-				Constants.BUNDLE_VERSION);
-		if (bundleVersion == null) {
-			bundleVersion = DEFAULT_BUNDLE_VERSION;
-		}
-		objectNameProperties.setProperty(BundleConstants.OBJECTNAME_VERSION_PROPERTY, bundleVersion);
+				StartLevelConstants.OBJECTNAME_TYPE_PROPERTY,
+				StartLevelConstants.OBJECTNAME_TYPE_VALUE);
 		return ObjectNameHelper.getObjectName(objectNameProperties);
 	}
 }

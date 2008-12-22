@@ -16,6 +16,8 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
+import org.osgi.framework.ServiceReference;
+
 public class ServiceConstants {
 
 	/**
@@ -27,9 +29,10 @@ public class ServiceConstants {
 	public static final String OBJECTNAME_PID_PROPERTY = "pid";
 
 	/**
-	 * definition of the service property type;
+	 * value of the type property
 	 */
-	public static final String OBJECTNAME_TYPE_VALUE = "service";
+	public static final String OBJECTNAME_TYPE_VALUE = ServiceReference.class
+			.getName();
 
 	/**
 	 * MBean description

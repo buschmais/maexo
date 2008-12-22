@@ -26,8 +26,12 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 
-import com.buschmais.osgi.maexo.mbeans.osgi.core.ServiceMBean;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.Service;
 
+/**
+ * This class implements a service event listener to manage the lifecycle of the
+ * associated service mbeans.
+ */
 public class ServiceEventListener extends EventListener implements
 		ServiceListener {
 
@@ -57,7 +61,7 @@ public class ServiceEventListener extends EventListener implements
 						.getObjectNameHelper()
 						.getObjectName(serviceReference, ServiceReference.class);
 				super.registerMBeanService(DynamicMBean.class, objectName, id,
-						new ServiceMBean(serviceReference, super
+						new Service(serviceReference, super
 								.getObjectNameHelper()));
 			}
 				break;
