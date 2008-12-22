@@ -20,7 +20,6 @@ import javax.management.ObjectName;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
@@ -32,7 +31,7 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean;
  * This class implements a service event listener which tracks the lifecycle of
  * the start level admin service.
  */
-public class StartLevelEventListener extends EventListener implements
+public class StartLevelEventListener extends LifecycleListener implements
 		ServiceListener {
 
 	public StartLevelEventListener(BundleContext bundleContext) {
@@ -51,20 +50,19 @@ public class StartLevelEventListener extends EventListener implements
 		ServiceReference serviceReference = serviceEvent.getServiceReference();
 		org.osgi.service.startlevel.StartLevel startLevel = (org.osgi.service.startlevel.StartLevel) bundleContext
 				.getService(serviceReference);
-		Long id = (Long) serviceReference.getProperty(Constants.SERVICE_ID);
+		ObjectName objectName = super.getObjectNameHelper().getObjectName(
+				startLevel, org.osgi.service.startlevel.StartLevel.class);
 		switch (serviceEvent.getType()) {
 		case ServiceEvent.REGISTERED: {
 			StartLevelMBean startLevelMBean = new StartLevel(super
 					.getBundleContext(), startLevel);
-			ObjectName objectName = super.getObjectNameHelper().getObjectName(
-					startLevel, org.osgi.service.startlevel.StartLevel.class);
-			super.registerMBeanService(StartLevelMBean.class, objectName, id,
+			super.registerMBeanService(StartLevelMBean.class, objectName,
 					startLevelMBean);
 		}
 			break;
 		case BundleEvent.UNINSTALLED: {
 			bundleContext.ungetService(serviceReference);
-			super.unregisterMBeanService(id);
+			super.unregisterMBeanService(objectName);
 		}
 			break;
 		}

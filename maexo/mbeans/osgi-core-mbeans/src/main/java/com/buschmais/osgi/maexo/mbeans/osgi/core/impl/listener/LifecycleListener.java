@@ -30,10 +30,10 @@ import org.slf4j.LoggerFactory;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 
-public abstract class EventListener {
+public abstract class LifecycleListener {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(EventListener.class);
+			.getLogger(LifecycleListener.class);
 
 	private BundleContext bundleContext;
 
@@ -41,7 +41,7 @@ public abstract class EventListener {
 
 	private Map<Object, ServiceRegistration> mbeanRegistrations = new ConcurrentHashMap<Object, ServiceRegistration>();
 
-	protected EventListener(BundleContext bundleContext) {
+	protected LifecycleListener(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
 		this.objectNameHelper = new ObjectNameHelper(bundleContext);
 	}
@@ -68,20 +68,18 @@ public abstract class EventListener {
 	 *            the interface to use for registration
 	 * @param objectName
 	 *            the object name
-	 * @param key
-	 *            the key to identify the bean
 	 * @param mbean
 	 *            the managed bean
 	 */
 	protected void registerMBeanService(Class<?> mbeanInterface,
-			ObjectName objectName, Object key, Object mbean) {
+			ObjectName objectName, Object mbean) {
 		try {
 			Dictionary<String, Object> serviceProperties = new Hashtable<String, Object>();
 			serviceProperties.put(ObjectName.class.getName(), objectName);
 			ServiceRegistration serviceRegistration = this.bundleContext
 					.registerService(mbeanInterface.getName(), mbean,
 							serviceProperties);
-			this.mbeanRegistrations.put(key, serviceRegistration);
+			this.mbeanRegistrations.put(objectName, serviceRegistration);
 		} catch (Exception e) {
 			logger.error("cannot register mbean", e);
 		}
@@ -93,15 +91,15 @@ public abstract class EventListener {
 	 * @param key
 	 *            the key, which identifies the mbean
 	 */
-	protected void unregisterMBeanService(Object key) {
+	protected void unregisterMBeanService(ObjectName objectName) {
 		// lookup serviceRegistration
 		ServiceRegistration serviceRegistration = this.mbeanRegistrations
-				.get(key);
+				.get(objectName);
 		if (serviceRegistration != null) {
 			// unregister service
 			serviceRegistration.unregister();
 		} else {
-			logger.warn("mbean service with key=" + key
+			logger.warn("mbean service with key=" + objectName
 					+ " not found, skipping unregistration");
 		}
 	}

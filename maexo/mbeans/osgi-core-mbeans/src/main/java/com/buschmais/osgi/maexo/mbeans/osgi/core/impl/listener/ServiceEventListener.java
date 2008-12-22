@@ -21,7 +21,6 @@ import javax.management.ObjectName;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
@@ -32,7 +31,7 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.Service;
  * This class implements a service event listener to manage the lifecycle of the
  * associated service mbeans.
  */
-public class ServiceEventListener extends EventListener implements
+public class ServiceEventListener extends LifecycleListener implements
 		ServiceListener {
 
 	private Bundle bundle;
@@ -54,19 +53,17 @@ public class ServiceEventListener extends EventListener implements
 		// do not process (mbean) services which have been registered by this
 		// bundle
 		if (!this.bundle.equals(serviceReference.getBundle())) {
-			Long id = (Long) serviceReference.getProperty(Constants.SERVICE_ID);
+			ObjectName objectName = super.getObjectNameHelper().getObjectName(
+					serviceReference, ServiceReference.class);
 			switch (serviceEvent.getType()) {
 			case ServiceEvent.REGISTERED: {
-				ObjectName objectName = super
-						.getObjectNameHelper()
-						.getObjectName(serviceReference, ServiceReference.class);
-				super.registerMBeanService(DynamicMBean.class, objectName, id,
+				super.registerMBeanService(DynamicMBean.class, objectName,
 						new Service(serviceReference, super
 								.getObjectNameHelper()));
 			}
 				break;
 			case ServiceEvent.UNREGISTERING: {
-				super.unregisterMBeanService(id);
+				super.unregisterMBeanService(objectName);
 			}
 				break;
 			}
