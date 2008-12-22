@@ -1,4 +1,4 @@
-package com.buschmais.osgi.maexo.mbeans.osgi.core;
+package com.buschmais.osgi.maexo.framework.commons.mbean.dynamic;
 
 import java.util.Iterator;
 
@@ -46,9 +46,9 @@ public abstract class DynamicMBeanSupport implements DynamicMBean {
 	@SuppressWarnings("unchecked")
 	public final AttributeList setAttributes(AttributeList attributes) {
 		AttributeList attributeList = new AttributeList();
-		for (Iterator<Attribute> iterator = attributes.iterator(); iterator
+		for (Iterator iterator = attributes.iterator(); iterator
 				.hasNext();) {
-			Attribute attribute = iterator.next();
+			Attribute attribute = (Attribute) iterator.next();
 			try {
 				this.setAttribute(attribute);
 				attributeList.add(attribute);

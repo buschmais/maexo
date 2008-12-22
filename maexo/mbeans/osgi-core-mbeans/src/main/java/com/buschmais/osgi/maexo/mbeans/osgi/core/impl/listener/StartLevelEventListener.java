@@ -24,6 +24,7 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 
+import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.LifecycleListener;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevel;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean;
 

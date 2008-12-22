@@ -53,6 +53,7 @@ import javax.management.openmbean.TabularType;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
 
+import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 
 /**

@@ -41,6 +41,8 @@ import javax.management.openmbean.SimpleType;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
+import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
+
 /**
  * MBean implementation which represents the OSGi start level service
  */

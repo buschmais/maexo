@@ -23,6 +23,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 
+import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.LifecycleListener;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.Bundle;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean;
 
