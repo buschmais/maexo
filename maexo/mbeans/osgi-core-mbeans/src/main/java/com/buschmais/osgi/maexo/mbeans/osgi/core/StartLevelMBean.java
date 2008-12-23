@@ -23,7 +23,7 @@ public interface StartLevelMBean {
 	 * @throws MBeanException
 	 * @throws ReflectionException
 	 */
-	public int getBundleStartLevel(ObjectName objectName)
+	public Integer getBundleStartLevel(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException;
 
@@ -36,7 +36,7 @@ public interface StartLevelMBean {
 	 *            the id of the bundle
 	 * @return The start level value of the specified Bundle.
 	 */
-	public int getBundleStartLevel(long id);
+	public Integer getBundleStartLevel(Long id);
 
 	/**
 	 * Return the initial start level value that is assigned to a Bundle when it
@@ -46,7 +46,7 @@ public interface StartLevelMBean {
 	 * 
 	 * @return The initial start level value for Bundles.
 	 */
-	public int getInitialBundleStartLevel();
+	public Integer getInitialBundleStartLevel();
 
 	/**
 	 * Return the active start level value of the Framework. If the Framework is
@@ -57,7 +57,7 @@ public interface StartLevelMBean {
 	 * 
 	 * @return The active start level value of the Framework.
 	 */
-	public int getStartLevel();
+	public Integer getStartLevel();
 
 	/**
 	 * Return the persistent state of the specified bundle.
@@ -73,7 +73,7 @@ public interface StartLevelMBean {
 	 * @throws MBeanException
 	 * @throws ReflectionException
 	 */
-	public boolean isBundlePersistentlyStarted(ObjectName objectName)
+	public Boolean isBundlePersistentlyStarted(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException;
 
@@ -87,7 +87,7 @@ public interface StartLevelMBean {
 	 * @return true if the bundle is persistently marked to be started, false if
 	 *         the bundle is not persistently marked to be started.
 	 */
-	public boolean isBundlePersistentlyStarted(long id);
+	public Boolean isBundlePersistentlyStarted(Long id);
 
 	/**
 	 * Assign a start level value to the specified Bundle.
@@ -105,7 +105,7 @@ public interface StartLevelMBean {
 	 * @throws ReflectionException
 	 */
 	public void setBundleStartLevel(ObjectName objectName,
-			int startLevel) throws AttributeNotFoundException,
+			Integer startLevel) throws AttributeNotFoundException,
 			InstanceNotFoundException, MBeanException, ReflectionException;
 
 	/**
@@ -119,7 +119,7 @@ public interface StartLevelMBean {
 	 * @param startLevel
 	 *            The new start level for the specified Bundle.
 	 */
-	public void setBundleStartLevel(long id, int startLevel);
+	public void setBundleStartLevel(Long id, Integer startLevel);
 
 	/**
 	 * Set the initial start level value that is assigned to a Bundle when it is
@@ -130,7 +130,7 @@ public interface StartLevelMBean {
 	 * @param startLevel
 	 *            The initial start level for newly installed bundles.
 	 */
-	public void setInitialBundleStartLevel(int startLevel);
+	public void setInitialBundleStartLevel(Integer startLevel);
 
 	/**
 	 * Modify the active start level of the Framework.
@@ -140,6 +140,6 @@ public interface StartLevelMBean {
 	 * @param startLevel
 	 *            The requested start level for the Framework.
 	 */
-	public void setStartLevel(int startLevel);
+	public void setStartLevel(Integer startLevel);
 
 }

@@ -23,15 +23,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import javax.management.Attribute;
-import javax.management.AttributeNotFoundException;
 import javax.management.DynamicMBean;
-import javax.management.InvalidAttributeValueException;
 import javax.management.MBeanException;
 import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.ObjectName;
-import javax.management.ReflectionException;
 import javax.management.openmbean.ArrayType;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.openmbean.CompositeType;
@@ -105,39 +101,6 @@ public class Service extends DynamicMBeanSupport implements DynamicMBean,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see javax.management.DynamicMBean#getAttribute(java.lang.String)
-	 */
-	public Object getAttribute(String attribute)
-			throws AttributeNotFoundException, MBeanException,
-			ReflectionException {
-		if (ServiceConstants.ATTRIBUTE_BUNDLE_NAME.equals(attribute)) {
-			return this.getBundle();
-		} else if (ServiceConstants.ATTRIBUTE_DESCRIPTION_NAME
-				.equals(attribute)) {
-			return this.getDescription();
-		} else if (ServiceConstants.ATTRIBUTE_ID_NAME.equals(attribute)) {
-			return this.getId();
-		} else if (ServiceConstants.ATTRIBUTE_OBJECTCLASS_NAME
-				.equals(attribute)) {
-			return this.getObjectClass();
-		} else if (ServiceConstants.ATTRIBUTE_PID_NAME.equals(attribute)) {
-			return this.getPid();
-		} else if (ServiceConstants.ATTRIBUTE_PROPERTIES_NAME.equals(attribute)) {
-			return this.getProperties();
-		} else if (ServiceConstants.ATTRIBUTE_RANKING_NAME.equals(attribute)) {
-			return this.getRanking();
-		} else if (ServiceConstants.ATTRIBUTE_USINGBUNDLES_NAME
-				.equals(attribute)) {
-			return this.getUsingBundles();
-		} else if (ServiceConstants.ATTRIBUTE_VENDOR_NAME.equals(attribute)) {
-			return this.getVendor();
-		}
-		throw new AttributeNotFoundException("unknown attribute" + attribute);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see javax.management.DynamicMBean#getMBeanInfo()
 	 */
 	public MBeanInfo getMBeanInfo() {
@@ -164,7 +127,7 @@ public class Service extends DynamicMBeanSupport implements DynamicMBean,
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
 					ServiceConstants.ATTRIBUTE_OBJECTCLASS_NAME,
 					ServiceConstants.ATTRIBUTE_OBJECTCLASS_DESCRIPTION,
-					new ArrayType(1, SimpleType.LONG), true, false, false));
+					new ArrayType(1, SimpleType.STRING), true, false, false));
 			// pid
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
 					ServiceConstants.ATTRIBUTE_PID_NAME,
@@ -221,30 +184,6 @@ public class Service extends DynamicMBeanSupport implements DynamicMBean,
 		} catch (OpenDataException e) {
 			throw new RuntimeException("cannot construct mbean info", e);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.DynamicMBean#invoke(java.lang.String,
-	 * java.lang.Object[], java.lang.String[])
-	 */
-	public Object invoke(String actionName, Object[] params, String[] signature)
-			throws MBeanException, ReflectionException {
-		throw new ReflectionException(new NoSuchMethodException(actionName));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.management.DynamicMBean#setAttribute(javax.management.Attribute)
-	 */
-	public void setAttribute(Attribute attribute)
-			throws AttributeNotFoundException, InvalidAttributeValueException,
-			MBeanException, ReflectionException {
-		throw new ReflectionException(new IllegalAccessException(attribute
-				.getName()));
 	}
 
 	/*

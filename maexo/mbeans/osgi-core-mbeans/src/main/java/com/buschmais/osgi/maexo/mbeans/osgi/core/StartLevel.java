@@ -19,11 +19,9 @@ package com.buschmais.osgi.maexo.mbeans.osgi.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.Attribute;
 import javax.management.AttributeNotFoundException;
 import javax.management.DynamicMBean;
 import javax.management.InstanceNotFoundException;
-import javax.management.InvalidAttributeValueException;
 import javax.management.MBeanException;
 import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
@@ -52,12 +50,13 @@ public class StartLevel extends DynamicMBeanSupport implements
 	private BundleContext bundleContext;
 
 	/**
-	 * the mbean server where this mbean is registered
+	 * The mbean server where this mbean is registered. It is needed to lookup
+	 * bundles by their object name.
 	 */
 	private MBeanServer mbeanServer;
 
 	/**
-	 * the start level service to manage
+	 * The start level service to manage
 	 */
 	private org.osgi.service.startlevel.StartLevel startLevel;
 
@@ -71,23 +70,6 @@ public class StartLevel extends DynamicMBeanSupport implements
 			org.osgi.service.startlevel.StartLevel startLevel) {
 		this.bundleContext = bundleContext;
 		this.startLevel = startLevel;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.DynamicMBean#getAttribute(java.lang.String)
-	 */
-	public Object getAttribute(String attribute)
-			throws AttributeNotFoundException, MBeanException,
-			ReflectionException {
-		if (StartLevelConstants.ATTRIBUTE_STARTLEVEL_NAME.equals(attribute)) {
-			return Integer.valueOf(this.getStartLevel());
-		} else if (StartLevelConstants.ATTRIBUTE_INITIALBUNDLESTARTLEVEL_NAME
-				.equals(attribute)) {
-			return Integer.valueOf(this.getInitialBundleStartLevel());
-		}
-		throw new AttributeNotFoundException("unknown attribute " + attribute);
 	}
 
 	/*
@@ -202,110 +184,16 @@ public class StartLevel extends DynamicMBeanSupport implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see javax.management.DynamicMBean#invoke(java.lang.String,
-	 * java.lang.Object[], java.lang.String[])
-	 */
-	public Object invoke(String actionName, Object[] params, String[] signature)
-			throws MBeanException, ReflectionException {
-		if (StartLevelConstants.OPERATION_GETBUNDLESTARTLEVEL_NAME
-				.equals(actionName)
-				&& signature.length == 1) {
-			// getBundleStartLevel
-			if (ObjectName.class.getName().equals(signature[0])) {
-				ObjectName objectName = (ObjectName) params[0];
-				try {
-					return Integer
-							.valueOf(this.getBundleStartLevel(objectName));
-				} catch (Exception e) {
-					throw new MBeanException(e);
-				}
-			} else if (Long.class.getName().equals(signature[0])) {
-				long id = ((Long) params[0]).longValue();
-				return Integer.valueOf(this.getBundleStartLevel(id));
-			}
-		} else if (StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_NAME
-				.equals(actionName)
-				&& signature.length == 2) {
-			// setBundleStartLevel
-			if (Integer.class.getName().equals(signature[1])) {
-				int startLevel = ((Integer) params[1]).intValue();
-				if (ObjectName.class.getName().equals(signature[0])) {
-					ObjectName objectName = (ObjectName) params[0];
-					try {
-						this.setBundleStartLevel(objectName, startLevel);
-						return null;
-					} catch (Exception e) {
-						throw new MBeanException(e);
-					}
-				} else if (Integer.class.getName().equals(signature[0])) {
-					long id = ((Long) params[0]).longValue();
-					this.setBundleStartLevel(id, startLevel);
-					return null;
-				}
-			}
-		}
-		if (StartLevelConstants.OPERATION_ISBUNDLEPERSISTENTLYSTARTED_NAME
-				.equals(actionName)
-				&& signature.length == 1) {
-			// isBundlePersistentlyStarted
-			if (ObjectName.class.getName().equals(signature[0])) {
-				ObjectName objectName = (ObjectName) params[0];
-				try {
-					return Boolean.valueOf(this
-							.isBundlePersistentlyStarted(objectName));
-				} catch (Exception e) {
-					throw new MBeanException(e);
-				}
-			} else if (Long.class.getName().equals(signature[0])) {
-				long id = ((Long) params[0]).longValue();
-				return Boolean.valueOf(this.isBundlePersistentlyStarted(id));
-			}
-		}
-		throw new ReflectionException(new NoSuchMethodException(actionName
-				+ "/" + signature));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.management.DynamicMBean#setAttribute(javax.management.Attribute)
-	 */
-	public void setAttribute(Attribute attribute)
-			throws AttributeNotFoundException, InvalidAttributeValueException,
-			MBeanException, ReflectionException {
-		String name = attribute.getName();
-		Object value = attribute.getValue();
-		if (value != null && value instanceof Integer) {
-			int startLevel = ((Integer) value).intValue();
-			if (StartLevelConstants.ATTRIBUTE_STARTLEVEL_NAME.equals(name)) {
-				this.setStartLevel(startLevel);
-			} else if (StartLevelConstants.ATTRIBUTE_INITIALBUNDLESTARTLEVEL_NAME
-					.equals(name)) {
-				this.setInitialBundleStartLevel(startLevel);
-			} else {
-				throw new AttributeNotFoundException("unknown attribute "
-						+ attribute);
-			}
-		} else {
-			throw new InvalidAttributeValueException(
-					"expected a positive integer value for attribute " + name);
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#getBundleStartLevel
 	 * (javax.management.ObjectName)
 	 */
-	public int getBundleStartLevel(ObjectName objectName)
+	public Integer getBundleStartLevel(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
 		Long id = (Long) this.mbeanServer.getAttribute(objectName,
 				BundleConstants.ATTRIBUTE_ID_NAME);
-		return this.getBundleStartLevel(id.longValue());
+		return this.getBundleStartLevel(id);
 	}
 
 	/*
@@ -313,21 +201,21 @@ public class StartLevel extends DynamicMBeanSupport implements
 	 * 
 	 * @see
 	 * com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#getBundleStartLevel
-	 * (long)
+	 * (java.lang.Long)
 	 */
-	public int getBundleStartLevel(long id) {
-		Bundle bundle = this.bundleContext.getBundle(id);
-		return this.startLevel.getBundleStartLevel(bundle);
+	public Integer getBundleStartLevel(Long id) {
+		Bundle bundle = this.bundleContext.getBundle(id.longValue());
+		return Integer.valueOf(this.startLevel.getBundleStartLevel(bundle));
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @seecom.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#
+	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#
 	 * getInitialBundleStartLevel()
 	 */
-	public int getInitialBundleStartLevel() {
-		return this.startLevel.getInitialBundleStartLevel();
+	public Integer getInitialBundleStartLevel() {
+		return Integer.valueOf(this.startLevel.getInitialBundleStartLevel());
 	}
 
 	/*
@@ -336,33 +224,34 @@ public class StartLevel extends DynamicMBeanSupport implements
 	 * @see
 	 * com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#getStartLevel()
 	 */
-	public int getStartLevel() {
-		return this.startLevel.getStartLevel();
+	public Integer getStartLevel() {
+		return Integer.valueOf(this.startLevel.getStartLevel());
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @seecom.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#
+	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#
 	 * isBundlePersistentlyStarted(javax.management.ObjectName)
 	 */
-	public boolean isBundlePersistentlyStarted(ObjectName objectName)
+	public Boolean isBundlePersistentlyStarted(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
 		Long id = (Long) this.mbeanServer.getAttribute(objectName,
 				BundleConstants.ATTRIBUTE_ID_NAME);
-		return this.isBundlePersistentlyStarted(id.longValue());
+		return this.isBundlePersistentlyStarted(id);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @seecom.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#
-	 * isBundlePersistentlyStarted(long)
+	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#
+	 * isBundlePersistentlyStarted(Long)
 	 */
-	public boolean isBundlePersistentlyStarted(long id) {
-		Bundle bundle = this.bundleContext.getBundle(id);
-		return this.startLevel.isBundlePersistentlyStarted(bundle);
+	public Boolean isBundlePersistentlyStarted(Long id) {
+		Bundle bundle = this.bundleContext.getBundle(id.longValue());
+		return Boolean.valueOf(this.startLevel
+				.isBundlePersistentlyStarted(bundle));
 	}
 
 	/*
@@ -370,14 +259,14 @@ public class StartLevel extends DynamicMBeanSupport implements
 	 * 
 	 * @see
 	 * com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#setBundleStartLevel
-	 * (javax.management.ObjectName, int)
+	 * (javax.management.ObjectName, Integer)
 	 */
-	public void setBundleStartLevel(ObjectName objectName, int startLevel)
+	public void setBundleStartLevel(ObjectName objectName, Integer startLevel)
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
 		Long id = (Long) this.mbeanServer.getAttribute(objectName,
 				BundleConstants.ATTRIBUTE_ID_NAME);
-		this.setBundleStartLevel(id.longValue(), startLevel);
+		this.setBundleStartLevel(id, startLevel);
 	}
 
 	/*
@@ -385,21 +274,21 @@ public class StartLevel extends DynamicMBeanSupport implements
 	 * 
 	 * @see
 	 * com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#setBundleStartLevel
-	 * (long, int)
+	 * (Long, Integer)
 	 */
-	public void setBundleStartLevel(long id, int startLevel) {
-		Bundle bundle = this.bundleContext.getBundle(id);
-		this.startLevel.setBundleStartLevel(bundle, startLevel);
+	public void setBundleStartLevel(Long id, Integer startLevel) {
+		Bundle bundle = this.bundleContext.getBundle(id.longValue());
+		this.startLevel.setBundleStartLevel(bundle, startLevel.intValue());
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @seecom.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#
-	 * setInitialBundleStartLevel(int)
+	 * setInitialBundleStartLevel(Integer)
 	 */
-	public void setInitialBundleStartLevel(int startLevel) {
-		this.startLevel.setInitialBundleStartLevel(startLevel);
+	public void setInitialBundleStartLevel(Integer startLevel) {
+		this.startLevel.setInitialBundleStartLevel(startLevel.intValue());
 	}
 
 	/*
@@ -407,10 +296,10 @@ public class StartLevel extends DynamicMBeanSupport implements
 	 * 
 	 * @see
 	 * com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#setStartLevel
-	 * (int)
+	 * (Integer)
 	 */
-	public void setStartLevel(int startLevel) {
-		this.startLevel.setStartLevel(startLevel);
+	public void setStartLevel(Integer startLevel) {
+		this.startLevel.setStartLevel(startLevel.intValue());
 	}
 
 	/*

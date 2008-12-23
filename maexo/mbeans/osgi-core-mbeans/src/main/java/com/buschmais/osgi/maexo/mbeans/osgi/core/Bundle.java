@@ -25,15 +25,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.management.Attribute;
-import javax.management.AttributeNotFoundException;
 import javax.management.DynamicMBean;
-import javax.management.InvalidAttributeValueException;
 import javax.management.MBeanException;
 import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.ObjectName;
-import javax.management.ReflectionException;
 import javax.management.openmbean.ArrayType;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.openmbean.CompositeType;
@@ -103,29 +99,6 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 			ObjectNameHelper objectNameHelper) {
 		this.bundle = bundle;
 		this.objectNameHelper = objectNameHelper;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.DynamicMBean#getAttribute(java.lang.String)
-	 */
-	public Object getAttribute(String attribute)
-			throws AttributeNotFoundException, MBeanException,
-			ReflectionException {
-		if (BundleConstants.ATTRIBUTE_ID_NAME.equals(attribute)) {
-			return this.getId();
-		} else if (BundleConstants.ATTRIBUTE_STATE_NAME.equals(attribute)) {
-			return this.getState();
-		} else if (BundleConstants.ATTRIBUTE_STATENAME_NAME.equals(attribute)) {
-			return this.getStateName();
-		} else if (BundleConstants.ATTRIBUTE_HEADERS_NAME.equals(attribute)) {
-			return this.getHeaders();
-		} else if (BundleConstants.ATTRIBUTE_REGISTEREDSERVICES_NAME
-				.equals(attribute)) {
-			return this.getRegisteredServices();
-		}
-		throw new AttributeNotFoundException("unknown attribute " + attribute);
 	}
 
 	/*
@@ -227,54 +200,6 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		} catch (OpenDataException e) {
 			throw new RuntimeException("cannot construct mbean info", e);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.DynamicMBean#invoke(java.lang.String,
-	 * java.lang.Object[], java.lang.String[])
-	 */
-	public Object invoke(String actionName, Object[] params, String[] signature)
-			throws MBeanException, ReflectionException {
-		if (BundleConstants.OPERATION_START_NAME.equals(actionName)) {
-			this.start();
-			return null;
-		} else if (BundleConstants.OPERATION_STOP_NAME.equals(actionName)) {
-			this.stop();
-			return null;
-		} else if (BundleConstants.OPERATION_UPDATE_NAME.equals(actionName)) {
-			switch (signature.length) {
-			case 1: {
-				this.update();
-				return null;
-			}
-			case 2: {
-				if (String.class.getName().equals(signature[0])) {
-					this.update((String) params[0]);
-					return null;
-				}
-			}
-			}
-		} else if (BundleConstants.OPERATION_UNINSTALL_NAME.equals(actionName)) {
-			this.uninstall();
-			return null;
-		}
-		throw new ReflectionException(new NoSuchMethodException(actionName
-				+ "/" + signature));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.management.DynamicMBean#setAttribute(javax.management.Attribute)
-	 */
-	public void setAttribute(Attribute attribute)
-			throws AttributeNotFoundException, InvalidAttributeValueException,
-			MBeanException, ReflectionException {
-		throw new ReflectionException(new IllegalAccessException(attribute
-				.getName()));
 	}
 
 	public Long getId() {
@@ -405,5 +330,4 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 			throw new MBeanException(e);
 		}
 	}
-
 }
