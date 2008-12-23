@@ -40,8 +40,8 @@ public class BundleObjectNameFactory implements ObjectNameFactory {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.buschmais.maexo.core.registry.ObjectNameFactory#getObjectName(java
-	 * .lang.Object)
+	 * com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory
+	 * #getObjectName(java.lang.Object)
 	 */
 	public ObjectName getObjectName(Object resource) {
 		Bundle bundle = (Bundle) resource;
@@ -64,7 +64,8 @@ public class BundleObjectNameFactory implements ObjectNameFactory {
 		if (bundleVersion == null) {
 			bundleVersion = DEFAULT_BUNDLE_VERSION;
 		}
-		objectNameProperties.setProperty(BundleConstants.OBJECTNAME_VERSION_PROPERTY, bundleVersion);
+		objectNameProperties.setProperty(
+				BundleConstants.OBJECTNAME_VERSION_PROPERTY, bundleVersion);
 		return ObjectNameHelper.getObjectName(objectNameProperties);
 	}
 }

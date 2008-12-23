@@ -33,8 +33,8 @@ public class StartLevelObjectNameFactory implements ObjectNameFactory {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.buschmais.maexo.core.registry.ObjectNameFactory#getObjectName(java
-	 * .lang.Object)
+	 * com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory
+	 * #getObjectName(java.lang.Object)
 	 */
 	public ObjectName getObjectName(Object resource) {
 		// create object name properties
