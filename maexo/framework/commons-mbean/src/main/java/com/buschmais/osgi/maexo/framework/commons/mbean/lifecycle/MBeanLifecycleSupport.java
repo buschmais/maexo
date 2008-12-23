@@ -30,18 +30,27 @@ import org.slf4j.LoggerFactory;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 
-public abstract class LifecycleListener {
+/**
+ * Provides support to control the life cycle of MBeans.
+ */
+public class MBeanLifecycleSupport {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(LifecycleListener.class);
+			.getLogger(MBeanLifecycleSupport.class);
 
+	/**
+	 * The bundle context of the exporting bundle
+	 */
 	private BundleContext bundleContext;
 
+	/**
+	 * the object name helper instance
+	 */
 	private ObjectNameHelper objectNameHelper;
 
 	private Map<Object, ServiceRegistration> mbeanRegistrations = new ConcurrentHashMap<Object, ServiceRegistration>();
 
-	protected LifecycleListener(BundleContext bundleContext) {
+	public MBeanLifecycleSupport(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
 		this.objectNameHelper = new ObjectNameHelper(bundleContext);
 	}
@@ -49,14 +58,14 @@ public abstract class LifecycleListener {
 	/**
 	 * @return the bundleContext
 	 */
-	protected BundleContext getBundleContext() {
+	public BundleContext getBundleContext() {
 		return bundleContext;
 	}
 
 	/**
 	 * @return the objectNameHelper
 	 */
-	protected ObjectNameHelper getObjectNameHelper() {
+	public ObjectNameHelper getObjectNameHelper() {
 		return objectNameHelper;
 	}
 
@@ -71,7 +80,7 @@ public abstract class LifecycleListener {
 	 * @param mbean
 	 *            the managed bean
 	 */
-	protected void registerMBeanService(Class<?> mbeanInterface,
+	public void registerMBeanService(Class<?> mbeanInterface,
 			ObjectName objectName, Object mbean) {
 		try {
 			Dictionary<String, Object> serviceProperties = new Hashtable<String, Object>();
@@ -91,7 +100,7 @@ public abstract class LifecycleListener {
 	 * @param key
 	 *            the key, which identifies the mbean
 	 */
-	protected void unregisterMBeanService(ObjectName objectName) {
+	public void unregisterMBeanService(ObjectName objectName) {
 		// lookup serviceRegistration
 		ServiceRegistration serviceRegistration = this.mbeanRegistrations
 				.get(objectName);

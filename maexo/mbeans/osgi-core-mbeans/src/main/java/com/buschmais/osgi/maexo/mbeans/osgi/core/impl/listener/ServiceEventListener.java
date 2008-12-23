@@ -25,14 +25,14 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 
-import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.LifecycleListener;
+import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.MBeanLifecycleSupport;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.Service;
 
 /**
  * This class implements a service event listener to manage the lifecycle of the
  * associated service mbeans.
  */
-public class ServiceEventListener extends LifecycleListener implements
+public final class ServiceEventListener extends MBeanLifecycleSupport implements
 		ServiceListener {
 
 	private Bundle bundle;

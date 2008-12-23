@@ -23,7 +23,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 
-import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.LifecycleListener;
+import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.MBeanLifecycleSupport;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.Bundle;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean;
 
@@ -31,7 +31,7 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean;
  * This class implements a bundle event listener to manage the lifecycle of the
  * associated bundle mbeans.
  */
-public class BundleEventListener extends LifecycleListener implements
+public final class BundleEventListener extends MBeanLifecycleSupport implements
 		BundleListener {
 
 	public BundleEventListener(BundleContext bundleContext) {

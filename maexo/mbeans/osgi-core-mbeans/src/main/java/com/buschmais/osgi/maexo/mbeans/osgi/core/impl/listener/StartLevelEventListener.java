@@ -24,7 +24,7 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 
-import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.LifecycleListener;
+import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.MBeanLifecycleSupport;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevel;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean;
 
@@ -32,7 +32,7 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean;
  * This class implements a service event listener which tracks the lifecycle of
  * the start level admin service.
  */
-public class StartLevelEventListener extends LifecycleListener implements
+public final class StartLevelEventListener extends MBeanLifecycleSupport implements
 		ServiceListener {
 
 	public StartLevelEventListener(BundleContext bundleContext) {
