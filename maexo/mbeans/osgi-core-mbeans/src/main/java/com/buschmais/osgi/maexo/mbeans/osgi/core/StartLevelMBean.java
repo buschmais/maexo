@@ -6,8 +6,6 @@ import javax.management.MBeanException;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
 
-import org.osgi.framework.Bundle;
-
 public interface StartLevelMBean {
 
 	/**
