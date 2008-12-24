@@ -16,4 +16,4 @@ rem See the License for the specific language governing permissions and
 rem limitations under the License
 
 echo Starting Equinox, enter "close" to exit
-java -Dlog4j.configuration=file:log4j.properties -jar org.eclipse.osgi-${equinox.version}.jar -console
+java -Dcom.sun.management.jmxremote -Dlog4j.configuration=file:log4j.properties -jar org.eclipse.osgi-${equinox.version}.jar -console
