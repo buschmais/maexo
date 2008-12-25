@@ -13,6 +13,9 @@ import javax.management.DynamicMBean;
 import javax.management.InvalidAttributeValueException;
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanException;
+import javax.management.MBeanRegistration;
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
 import javax.management.ReflectionException;
 
 import org.slf4j.Logger;
@@ -24,13 +27,20 @@ import org.slf4j.LoggerFactory;
  * via introspection of the mbeans class and using the metadata provided by the
  * mbean itself.
  */
-public abstract class DynamicMBeanSupport implements DynamicMBean {
+public abstract class DynamicMBeanSupport implements DynamicMBean,
+		MBeanRegistration {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(DynamicMBeanSupport.class);
 
 	private static final String GETTER_PREFIX = "get";
 	private static final String SETTER_PREFIX = "set";
+
+	/**
+	 * The mbean server where this mbean is registered. It may be used to lookup
+	 * other mbeans by their object name.
+	 */
+	private MBeanServer mbeanServer;
 
 	/**
 	 * This map holds the attribute names as keys and the types as values
@@ -215,4 +225,47 @@ public abstract class DynamicMBeanSupport implements DynamicMBean {
 		return attribute.substring(0, 1).toUpperCase() + attribute.substring(1);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.management.MBeanRegistration#postDeregister()
+	 */
+	public void postDeregister() {
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.management.MBeanRegistration#postRegister(java.lang.Boolean)
+	 */
+	public void postRegister(Boolean registrationDone) {
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.management.MBeanRegistration#preDeregister()
+	 */
+	public void preDeregister() throws Exception {
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.management.MBeanRegistration#preRegister(javax.management.MBeanServer
+	 * , javax.management.ObjectName)
+	 */
+	public ObjectName preRegister(MBeanServer server, ObjectName name)
+			throws Exception {
+		this.mbeanServer = server;
+		return name;
+	}
+
+	/**
+	 * @return the mbeanServer
+	 */
+	protected MBeanServer getMbeanServer() {
+		return mbeanServer;
+	}
 }
