@@ -22,24 +22,27 @@ import java.util.List;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleEvent;
-import org.osgi.framework.BundleListener;
-import org.osgi.framework.ServiceEvent;
-import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.packageadmin.PackageAdmin;
 import org.osgi.service.startlevel.StartLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
-import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.listener.BundleEventListener;
-import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.listener.ServiceEventListener;
-import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.listener.StartLevelEventListener;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.BundleMBeanLifeCycle;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.PackageAdminMBeanLifeCycle;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.ServiceMBeanLifeCycle;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.ServiceMBeanLifeCycleSupport;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.StartLevelMBeanLifeCycle;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.BundleObjectNameFactory;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.PackageAdminObjectNameFactory;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.ServiceObjectNameFactory;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.StartLevelObjectNameFactory;
 
+/**
+ * Activator class for the OSGi Core MBeans
+ */
 public class Activator implements BundleActivator {
 
 	private static final Logger logger = LoggerFactory
@@ -47,11 +50,13 @@ public class Activator implements BundleActivator {
 
 	private List<ServiceRegistration> serviceRegistrations;
 
-	private BundleListener bundleListener;
+	private BundleMBeanLifeCycle bundleLifecyle;
 
-	private ServiceListener serviceListener;
+	private ServiceMBeanLifeCycleSupport serviceLifecycle;
 
-	private ServiceListener startLevelServiceListener;
+	private ServiceMBeanLifeCycleSupport startLevelServiceLifecycle;
+
+	private ServiceMBeanLifeCycleSupport packageAdminServiceLifecycle;
 
 	/*
 	 * (non-Javadoc)
@@ -75,37 +80,27 @@ public class Activator implements BundleActivator {
 		this.serviceRegistrations.add(objectNameHelper
 				.registerObjectNameFactory(new StartLevelObjectNameFactory(),
 						StartLevel.class));
+		this.serviceRegistrations.add(objectNameHelper
+				.registerObjectNameFactory(new PackageAdminObjectNameFactory(),
+						PackageAdmin.class));
+
 		// create bundle listener
-		this.bundleListener = new BundleEventListener(bundleContext);
-		// register all existing bundles as mbeans
-		for (Bundle bundle : bundleContext.getBundles()) {
-			this.bundleListener.bundleChanged(new BundleEvent(
-					BundleEvent.INSTALLED, bundle));
-		}
-		bundleContext.addBundleListener(this.bundleListener);
+		this.bundleLifecyle = new BundleMBeanLifeCycle(bundleContext);
+		this.bundleLifecyle.start();
 
 		// create service listener
-		this.serviceListener = new ServiceEventListener(bundleContext);
-		// register all existing services as mbeans
-		for (ServiceReference serviceReference : bundleContext
-				.getServiceReferences(null, null)) {
-			this.serviceListener.serviceChanged(new ServiceEvent(
-					ServiceEvent.REGISTERED, serviceReference));
-		}
-		bundleContext.addServiceListener(this.serviceListener);
+		this.serviceLifecycle = new ServiceMBeanLifeCycle(bundleContext);
+		this.serviceLifecycle.start();
 
 		// create start level service listener
-		this.startLevelServiceListener = new StartLevelEventListener(
+		this.startLevelServiceLifecycle = new StartLevelMBeanLifeCycle(
 				bundleContext);
-		// register all existing services as mbeans
-		for (ServiceReference serviceReference : bundleContext
-				.getServiceReferences(
-						org.osgi.service.startlevel.StartLevel.class.getName(),
-						null)) {
-			this.startLevelServiceListener.serviceChanged(new ServiceEvent(
-					ServiceEvent.REGISTERED, serviceReference));
-		}
-		bundleContext.addServiceListener(this.startLevelServiceListener);
+		this.startLevelServiceLifecycle.start();
+
+		// create package admin service listener
+		this.packageAdminServiceLifecycle = new PackageAdminMBeanLifeCycle(
+				bundleContext);
+		this.packageAdminServiceLifecycle.start();
 	}
 
 	/*
@@ -118,38 +113,22 @@ public class Activator implements BundleActivator {
 		if (logger.isInfoEnabled()) {
 			logger.info("Stopping maexo OSGi Core MBeans");
 		}
+
 		// remove bundle listener
-		bundleContext.removeBundleListener(this.bundleListener);
-		// unregister all registered bundle mbeans
-		for (Bundle bundle : bundleContext.getBundles()) {
-			this.bundleListener.bundleChanged(new BundleEvent(
-					BundleEvent.UNINSTALLED, bundle));
-		}
+		this.bundleLifecyle.stop();
 
 		// remove service listener
-		bundleContext.removeServiceListener(this.serviceListener);
-		// unregister all registered service mbeans
-		for (ServiceReference serviceReference : bundleContext
-				.getServiceReferences(null, null)) {
-			this.serviceListener.serviceChanged(new ServiceEvent(
-					ServiceEvent.UNREGISTERING, serviceReference));
-		}
+		this.serviceLifecycle.stop();
 
-		// remove service listener
-		bundleContext.removeServiceListener(this.startLevelServiceListener);
-		// unregister all registered service mbeans
-		for (ServiceReference serviceReference : bundleContext
-				.getServiceReferences(
-						org.osgi.service.startlevel.StartLevel.class.getName(),
-						null)) {
-			this.startLevelServiceListener.serviceChanged(new ServiceEvent(
-					ServiceEvent.UNREGISTERING, serviceReference));
-		}
+		// remove start level service listener
+		this.startLevelServiceLifecycle.stop();
+
+		// remove package admin service listener
+		this.packageAdminServiceLifecycle.stop();
 
 		// unregister services
 		for (ServiceRegistration serviceRegistration : this.serviceRegistrations) {
 			serviceRegistration.unregister();
 		}
 	}
-
 }

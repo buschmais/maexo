@@ -43,6 +43,7 @@ import javax.management.openmbean.TabularDataSupport;
 import javax.management.openmbean.TabularType;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 
@@ -87,15 +88,15 @@ public class Service extends DynamicMBeanSupport implements DynamicMBean,
 	/**
 	 * Constructs the service mbean
 	 * 
+	 * @param bundleContext
+	 *            the bundle context
 	 * @param serviceReference
 	 *            the service reference
-	 * @param objectNameHelper
-	 *            the object name helper
 	 */
-	public Service(ServiceReference serviceReference,
-			ObjectNameHelper objectNameHelper) {
+	public Service(BundleContext bundleContext,
+			ServiceReference serviceReference) {
 		this.serviceReference = serviceReference;
-		this.objectNameHelper = objectNameHelper;
+		this.objectNameHelper = new ObjectNameHelper(bundleContext);
 	}
 
 	/*

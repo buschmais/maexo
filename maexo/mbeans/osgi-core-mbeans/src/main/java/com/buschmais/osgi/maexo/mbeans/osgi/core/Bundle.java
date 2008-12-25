@@ -46,6 +46,7 @@ import javax.management.openmbean.TabularData;
 import javax.management.openmbean.TabularDataSupport;
 import javax.management.openmbean.TabularType;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
 
@@ -95,10 +96,9 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	 * @param bundle
 	 *            the bundle to manage
 	 */
-	public Bundle(org.osgi.framework.Bundle bundle,
-			ObjectNameHelper objectNameHelper) {
+	public Bundle(BundleContext bundleContext, org.osgi.framework.Bundle bundle) {
 		this.bundle = bundle;
-		this.objectNameHelper = objectNameHelper;
+		this.objectNameHelper = new ObjectNameHelper(bundleContext);
 	}
 
 	/*
@@ -210,7 +210,7 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		return Integer.valueOf(this.bundle.getState());
 	}
 
-	public String getStateName() {
+	public String getStateAsName() {
 		return bundleStates.get(Integer.valueOf(this.bundle.getState()));
 	}
 

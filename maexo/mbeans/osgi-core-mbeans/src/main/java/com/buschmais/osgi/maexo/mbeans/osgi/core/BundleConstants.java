@@ -50,7 +50,7 @@ public class BundleConstants {
 	/**
 	 * attribute: stateName
 	 */
-	public static final String ATTRIBUTE_STATENAME_NAME = "stateName";
+	public static final String ATTRIBUTE_STATENAME_NAME = "stateAsName";
 	public static final String ATTRIBUTE_STATENAME_DESCRIPTION = "The current state of bundle the bundle (human readable string value)";
 
 	/**

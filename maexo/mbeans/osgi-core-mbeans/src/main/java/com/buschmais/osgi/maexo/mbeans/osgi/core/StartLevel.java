@@ -25,8 +25,6 @@ import javax.management.InstanceNotFoundException;
 import javax.management.MBeanException;
 import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
-import javax.management.MBeanRegistration;
-import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
 import javax.management.openmbean.OpenMBeanAttributeInfoSupport;
@@ -44,16 +42,13 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupp
 /**
  * MBean implementation which represents the OSGi start level service
  */
-public class StartLevel extends DynamicMBeanSupport implements
-		MBeanRegistration, StartLevelMBean, DynamicMBean {
-
-	private BundleContext bundleContext;
+public final class StartLevel extends DynamicMBeanSupport implements
+		StartLevelMBean, DynamicMBean {
 
 	/**
-	 * The mbean server where this mbean is registered. It is needed to lookup
-	 * bundles by their object name.
+	 * The bundle context
 	 */
-	private MBeanServer mbeanServer;
+	private BundleContext bundleContext;
 
 	/**
 	 * The start level service to manage
@@ -191,7 +186,7 @@ public class StartLevel extends DynamicMBeanSupport implements
 	public Integer getBundleStartLevel(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
-		Long id = (Long) this.mbeanServer.getAttribute(objectName,
+		Long id = (Long) super.getMbeanServer().getAttribute(objectName,
 				BundleConstants.ATTRIBUTE_ID_NAME);
 		return this.getBundleStartLevel(id);
 	}
@@ -237,7 +232,7 @@ public class StartLevel extends DynamicMBeanSupport implements
 	public Boolean isBundlePersistentlyStarted(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
-		Long id = (Long) this.mbeanServer.getAttribute(objectName,
+		Long id = (Long) super.getMbeanServer().getAttribute(objectName,
 				BundleConstants.ATTRIBUTE_ID_NAME);
 		return this.isBundlePersistentlyStarted(id);
 	}
@@ -264,7 +259,7 @@ public class StartLevel extends DynamicMBeanSupport implements
 	public void setBundleStartLevel(ObjectName objectName, Integer startLevel)
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
-		Long id = (Long) this.mbeanServer.getAttribute(objectName,
+		Long id = (Long) super.getMbeanServer().getAttribute(objectName,
 				BundleConstants.ATTRIBUTE_ID_NAME);
 		this.setBundleStartLevel(id, startLevel);
 	}
@@ -301,42 +296,4 @@ public class StartLevel extends DynamicMBeanSupport implements
 	public void setStartLevel(Integer startLevel) {
 		this.startLevel.setStartLevel(startLevel.intValue());
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.MBeanRegistration#postDeregister()
-	 */
-	public void postDeregister() {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.MBeanRegistration#postRegister(java.lang.Boolean)
-	 */
-	public void postRegister(Boolean registrationDone) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.MBeanRegistration#preDeregister()
-	 */
-	public void preDeregister() throws Exception {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.management.MBeanRegistration#preRegister(javax.management.MBeanServer
-	 * , javax.management.ObjectName)
-	 */
-	public ObjectName preRegister(MBeanServer server, ObjectName name)
-			throws Exception {
-		this.mbeanServer = server;
-		return name;
-	}
-
 }

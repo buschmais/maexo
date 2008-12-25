@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.listener;
+package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle;
 
 import javax.management.DynamicMBean;
 import javax.management.ObjectName;
@@ -31,11 +31,32 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean;
  * This class implements a bundle event listener to manage the lifecycle of the
  * associated bundle mbeans.
  */
-public final class BundleEventListener extends MBeanLifecycleSupport implements
+public final class BundleMBeanLifeCycle extends MBeanLifecycleSupport implements
 		BundleListener {
 
-	public BundleEventListener(BundleContext bundleContext) {
+	public BundleMBeanLifeCycle(BundleContext bundleContext) {
 		super(bundleContext);
+	}
+
+	public void start() {
+		// register all existing bundles as mbeans
+		for (org.osgi.framework.Bundle bundle : super.getBundleContext()
+				.getBundles()) {
+			this.bundleChanged(new BundleEvent(BundleEvent.INSTALLED, bundle));
+		}
+		super.getBundleContext().addBundleListener(this);
+	}
+
+	public void stop() {
+		// remove bundle listener
+		super.getBundleContext().removeBundleListener(this);
+		// unregister all registered bundle mbeans
+		for (org.osgi.framework.Bundle bundle : super.getBundleContext()
+				.getBundles()) {
+			this
+					.bundleChanged(new BundleEvent(BundleEvent.UNINSTALLED,
+							bundle));
+		}
 	}
 
 	/*
@@ -50,8 +71,8 @@ public final class BundleEventListener extends MBeanLifecycleSupport implements
 				bundle, org.osgi.framework.Bundle.class);
 		switch (bundleEvent.getType()) {
 		case BundleEvent.INSTALLED: {
-			BundleMBean bundleMBean = new Bundle(bundle, super
-					.getObjectNameHelper());
+			BundleMBean bundleMBean = new Bundle(super.getBundleContext(),
+					bundle);
 			super.registerMBeanService(DynamicMBean.class, objectName,
 					bundleMBean);
 		}

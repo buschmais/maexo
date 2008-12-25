@@ -42,7 +42,7 @@ public interface BundleMBean {
 	 * 
 	 * @return the state
 	 */
-	public String getStateName();
+	public String getStateAsName();
 
 
 	/**
