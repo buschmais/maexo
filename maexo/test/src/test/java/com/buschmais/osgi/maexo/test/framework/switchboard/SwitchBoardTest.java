@@ -111,7 +111,7 @@ public class SwitchBoardTest extends MaexoTests {
 		ServiceRegistration serverServiceRegistration = super.bundleContext
 				.registerService(MBeanServer.class.getName(), serverMock, null);
 		// register/unregister mbean
-		Dictionary<String, ObjectName> properties = new Hashtable<String, ObjectName>();
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
 		properties.put(ObjectName.class.getName(), objectName);
 		ServiceRegistration mbeanServiceRegistration = this.bundleContext
 				.registerService(mbeanInterface.getName(), mbean, properties);
@@ -148,7 +148,7 @@ public class SwitchBoardTest extends MaexoTests {
 		// do test
 		EasyMock.replay(serverMock);
 		// register mbean
-		Dictionary<String, ObjectName> properties = new Hashtable<String, ObjectName>();
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
 		properties.put(ObjectName.class.getName(), objectName);
 		ServiceRegistration mbeanServiceRegistration = this.bundleContext
 				.registerService(mbeanInterface.getName(), mbean, properties);
