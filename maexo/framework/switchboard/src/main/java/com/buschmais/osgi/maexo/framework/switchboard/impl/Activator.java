@@ -17,6 +17,7 @@
 package com.buschmais.osgi.maexo.framework.switchboard.impl;
 
 import javax.management.MBeanServer;
+import javax.management.MBeanServerConnection;
 import javax.management.NotificationListener;
 import javax.management.ObjectName;
 
@@ -30,6 +31,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Activator implements BundleActivator {
+
+	/**
+	 * Definition of the filter for mbean server connections
+	 */
+	private static final String FILTER_MBEANSERVERCONNECTION = "(|(objectClass="
+			+ MBeanServerConnection.class.getName()
+			+ ")(objectClass="
+			+ MBeanServer.class.getName() + "))";
 
 	/**
 	 * Definition of the filter for mbean servers
@@ -54,7 +63,9 @@ public class Activator implements BundleActivator {
 
 	private static Logger logger = LoggerFactory.getLogger(Activator.class);
 
-	private SwitchBoardImpl mbeanExporter;
+	private SwitchBoardImpl switchBoard;
+
+	private ServiceListener mbeanServerConnectionServiceListener;
 
 	private ServiceListener mbeanServerServiceListener;
 
@@ -73,7 +84,9 @@ public class Activator implements BundleActivator {
 		if (logger.isInfoEnabled()) {
 			logger.info("Starting maexo switch board");
 		}
-		this.mbeanExporter = new SwitchBoardImpl();
+		this.switchBoard = new SwitchBoardImpl();
+		this.mbeanServerConnectionServiceListener = this
+				.registerMBeanServerConnectionServiceListener(bundleContext);
 		this.mbeanServerServiceListener = this
 				.registerMBeanServerServiceListener(bundleContext);
 		this.mbeanServiceListener = this
@@ -92,33 +105,95 @@ public class Activator implements BundleActivator {
 		if (logger.isInfoEnabled()) {
 			logger.info("Stopping maexo switch board");
 		}
+		// remove service listener for mbean server connections s and clean up
+		if (this.mbeanServerConnectionServiceListener != null) {
+			bundleContext
+					.removeServiceListener(this.mbeanServerConnectionServiceListener);
+		}
+		for (MBeanServerConnectionRegistration mbeanServerConnectionRegistration : this.switchBoard
+				.getMBeanServerConnections()) {
+			this.switchBoard
+					.unregisterMBeanServerConnection(mbeanServerConnectionRegistration);
+		}
 		// remove service listener for mbean servers and clean up
 		if (this.mbeanServerServiceListener != null) {
 			bundleContext
 					.removeServiceListener(this.mbeanServerServiceListener);
 		}
-		for (MBeanServerRegistration mbeanServerRegistration : this.mbeanExporter
+		for (MBeanServerRegistration mbeanServerRegistration : this.switchBoard
 				.getMBeanServers()) {
-			this.mbeanExporter.unregisterMBeanServer(mbeanServerRegistration);
+			this.switchBoard.unregisterMBeanServer(mbeanServerRegistration);
 		}
 		// remove service listener for mbeans and clean up
 		if (this.mbeanServiceListener != null) {
 			bundleContext.removeServiceListener(this.mbeanServiceListener);
 		}
-		for (MBeanRegistration mbeanRegistration : this.mbeanExporter
-				.getMBeans()) {
-			this.mbeanExporter.unregisterMBean(mbeanRegistration);
+		for (MBeanRegistration mbeanRegistration : this.switchBoard.getMBeans()) {
+			this.switchBoard.unregisterMBean(mbeanRegistration);
 		}
 		// remove service listener for mbeans and clean up
 		if (this.notificationListenerServiceListener != null) {
 			bundleContext
 					.removeServiceListener(this.notificationListenerServiceListener);
 		}
-		for (NotificationListenerRegistration notificationListenerRegistration : this.mbeanExporter
+		for (NotificationListenerRegistration notificationListenerRegistration : this.switchBoard
 				.getNotificationListeners()) {
-			this.mbeanExporter
+			this.switchBoard
 					.removeNotificationListener(notificationListenerRegistration);
 		}
+	}
+
+	/**
+	 * Registers a service listener for MBean server connections
+	 * 
+	 * @param bundleContext
+	 *            the bundle context
+	 * @return the service listener
+	 * @throws InvalidSyntaxException
+	 */
+	private ServiceListener registerMBeanServerConnectionServiceListener(
+			final BundleContext bundleContext) throws InvalidSyntaxException {
+		ServiceListener mbeanServerConnectionServiceListener = new ServiceListener() {
+
+			/*
+			 * (non-Javadoc)
+			 * 
+			 * @see
+			 * org.osgi.framework.ServiceListener#serviceChanged(org.osgi.framework
+			 * .ServiceEvent)
+			 */
+			public void serviceChanged(ServiceEvent serviceEvent) {
+				ServiceReference serviceReference = serviceEvent
+						.getServiceReference();
+				MBeanServerConnectionRegistration mbeanServerConnectionRegistration = new MBeanServerConnectionRegistration(
+						bundleContext, serviceReference);
+				switch (serviceEvent.getType()) {
+				case ServiceEvent.REGISTERED: {
+					Activator.this.switchBoard
+							.registerMBeanServerConnection(mbeanServerConnectionRegistration);
+				}
+					break;
+				case ServiceEvent.UNREGISTERING: {
+					Activator.this.switchBoard
+							.unregisterMBeanServerConnection(mbeanServerConnectionRegistration);
+				}
+					break;
+				default:
+					break;
+				}
+			}
+
+		};
+		bundleContext.addServiceListener(mbeanServerConnectionServiceListener,
+				FILTER_MBEANSERVERCONNECTION);
+		// do initial registration of MBeanServerConnections
+		if (logger.isDebugEnabled()) {
+			logger
+					.debug("performing initial registration of mbean server connections");
+		}
+		this.registerExistingServices(FILTER_MBEANSERVERCONNECTION,
+				bundleContext, mbeanServerConnectionServiceListener);
+		return mbeanServerConnectionServiceListener;
 	}
 
 	/**
@@ -147,12 +222,12 @@ public class Activator implements BundleActivator {
 						bundleContext, serviceReference);
 				switch (serviceEvent.getType()) {
 				case ServiceEvent.REGISTERED: {
-					Activator.this.mbeanExporter
+					Activator.this.switchBoard
 							.registerMBeanServer(mBeanServerRegistration);
 				}
 					break;
 				case ServiceEvent.UNREGISTERING: {
-					Activator.this.mbeanExporter
+					Activator.this.switchBoard
 							.unregisterMBeanServer(mBeanServerRegistration);
 				}
 					break;
@@ -208,12 +283,12 @@ public class Activator implements BundleActivator {
 				if (mbeanRegistration != null) {
 					switch (serviceEvent.getType()) {
 					case ServiceEvent.REGISTERED: {
-						Activator.this.mbeanExporter
+						Activator.this.switchBoard
 								.registerMBean(mbeanRegistration);
 					}
 						break;
 					case ServiceEvent.UNREGISTERING: {
-						Activator.this.mbeanExporter
+						Activator.this.switchBoard
 								.unregisterMBean(mbeanRegistration);
 					}
 						break;
@@ -269,12 +344,12 @@ public class Activator implements BundleActivator {
 				if (notificationListenerRegistration != null) {
 					switch (serviceEvent.getType()) {
 					case ServiceEvent.REGISTERED: {
-						Activator.this.mbeanExporter
+						Activator.this.switchBoard
 								.addNotificationListener(notificationListenerRegistration);
 					}
 						break;
 					case ServiceEvent.UNREGISTERING: {
-						Activator.this.mbeanExporter
+						Activator.this.switchBoard
 								.removeNotificationListener(notificationListenerRegistration);
 					}
 						break;
