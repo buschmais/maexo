@@ -24,8 +24,11 @@ import javax.management.InstanceAlreadyExistsException;
 import javax.management.InstanceNotFoundException;
 import javax.management.MBeanRegistrationException;
 import javax.management.MBeanServer;
+import javax.management.MBeanServerConnection;
 import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
+import javax.management.NotificationFilter;
+import javax.management.NotificationListener;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
@@ -174,7 +177,8 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceNotFoundException, InstanceAlreadyExistsException,
 			MBeanRegistrationException, NotCompliantMBeanException {
 		// create a mbean
-		ClassicMBean mbean = (ClassicMBean) EasyMock.createMock(ClassicMBean.class);
+		ClassicMBean mbean = (ClassicMBean) EasyMock
+				.createMock(ClassicMBean.class);
 		this.test_registerMBeanOnExistingServer(this.objectName, mbean,
 				ClassicMBean.class);
 	}
@@ -215,7 +219,8 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceAlreadyExistsException, MBeanRegistrationException,
 			NotCompliantMBeanException, InstanceNotFoundException {
 		// create a mbean
-		ClassicMBean mbean = (ClassicMBean) EasyMock.createMock(ClassicMBean.class);
+		ClassicMBean mbean = (ClassicMBean) EasyMock
+				.createMock(ClassicMBean.class);
 		this.test_registerMBeanOnNewServer(this.objectName, mbean,
 				ClassicMBean.class);
 	}
@@ -239,5 +244,86 @@ public class SwitchBoardTest extends MaexoTests {
 				.createMock(DynamicMBean.class);
 		this.test_registerMBeanOnNewServer(this.objectName, mbean,
 				DynamicMBean.class);
+	}
+
+	/**
+	 * First registers the mbean server connection and afterwards registers the
+	 * notification listener as services
+	 */
+	public void test_addNotificationListenerOnOnExistingServerConnection()
+			throws Exception {
+		ObjectName objectName = new ObjectName(OBJECTNAME_TESTMBEAN);
+		NotificationListener notificationListener = EasyMock
+				.createMock(NotificationListener.class);
+		NotificationFilter notificationFilter = EasyMock
+				.createMock(NotificationFilter.class);
+		Object handback = "handbackObject";
+		// create mock for mbean server connection
+		MBeanServerConnection serverConnectionMock = EasyMock
+				.createMock(MBeanServerConnection.class);
+		serverConnectionMock.addNotificationListener(objectName,
+				notificationListener, notificationFilter, handback);
+		serverConnectionMock.removeNotificationListener(objectName,
+				notificationListener, notificationFilter, handback);
+
+		// do test
+		EasyMock.replay(serverConnectionMock);
+		// register mbean server connection
+		ServiceRegistration serverConnectionServiceRegistration = super.bundleContext
+				.registerService(MBeanServerConnection.class.getName(),
+						serverConnectionMock, null);
+		// register/unregister notification listener
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		properties.put(ObjectName.class.getName(), objectName);
+		properties.put(NotificationFilter.class.getName(), notificationFilter);
+		properties.put("handback", handback);
+		ServiceRegistration notificationListenerServiceRegistration = this.bundleContext
+				.registerService(NotificationListener.class.getName(),
+						notificationListener, properties);
+		notificationListenerServiceRegistration.unregister();
+		// verify mbean server connection
+		EasyMock.verify(serverConnectionMock);
+		serverConnectionServiceRegistration.unregister();
+	}
+
+	/**
+	 * First registers the notification listener and afterwards the mbean server
+	 * connection as services
+	 */
+	public void test_addNotificationListenerOnNewServerConnection()
+			throws Exception {
+		// create mock for mbean server connection
+		MBeanServerConnection serverConnectionMock = EasyMock
+				.createMock(MBeanServerConnection.class);
+		ObjectName objectName = new ObjectName(OBJECTNAME_TESTMBEAN);
+		NotificationListener notificationListener = EasyMock
+				.createMock(NotificationListener.class);
+		NotificationFilter notificationFilter = EasyMock
+				.createMock(NotificationFilter.class);
+		Object handback = "handbackObject";
+		serverConnectionMock.addNotificationListener(objectName,
+				notificationListener, notificationFilter, handback);
+		serverConnectionMock.removeNotificationListener(objectName,
+				notificationListener, notificationFilter, handback);
+
+		// do test
+		EasyMock.replay(serverConnectionMock);
+		// register notification listener
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		properties.put(ObjectName.class.getName(), objectName);
+		properties.put(NotificationFilter.class.getName(), notificationFilter);
+		properties.put("handback", handback);
+		ServiceRegistration notificationListenerServiceRegistration = this.bundleContext
+				.registerService(NotificationListener.class.getName(),
+						notificationListener, properties);
+		// register/unregister mbean server connection
+		ServiceRegistration serverServiceRegistration = super.bundleContext
+				.registerService(MBeanServerConnection.class.getName(),
+						serverConnectionMock, null);
+		serverServiceRegistration.unregister();
+		// verify mbean server connection
+		EasyMock.verify(serverConnectionMock);
+		// unregister notification listener
+		notificationListenerServiceRegistration.unregister();
 	}
 }
