@@ -82,23 +82,24 @@ public class MBeanLifecycleSupport {
 	 */
 	public void registerMBeanService(Class<?> mbeanInterface,
 			ObjectName objectName, Object mbean) {
-		try {
-			Dictionary<String, Object> serviceProperties = new Hashtable<String, Object>();
-			serviceProperties.put(ObjectName.class.getName(), objectName);
-			ServiceRegistration serviceRegistration = this.bundleContext
-					.registerService(mbeanInterface.getName(), mbean,
-							serviceProperties);
-			this.mbeanRegistrations.put(objectName, serviceRegistration);
-		} catch (Exception e) {
-			logger.error("cannot register mbean", e);
+		Dictionary<String, Object> serviceProperties = new Hashtable<String, Object>();
+		serviceProperties.put(ObjectName.class.getName(), objectName);
+		if (logger.isDebugEnabled()) {
+			logger.debug("registering mbean with object name '" + objectName
+					+ "' as service with interface "
+					+ mbeanInterface.getClass().getName());
 		}
+		ServiceRegistration serviceRegistration = this.bundleContext
+				.registerService(mbeanInterface.getName(), mbean,
+						serviceProperties);
+		this.mbeanRegistrations.put(objectName, serviceRegistration);
 	}
 
 	/**
 	 * Unregisters a previously registered mbean
 	 * 
-	 * @param key
-	 *            the key, which identifies the mbean
+	 * @param objectName
+	 *            the objectName which identifies the mbean to be unregistered
 	 */
 	public void unregisterMBeanService(ObjectName objectName) {
 		// lookup serviceRegistration
@@ -108,7 +109,7 @@ public class MBeanLifecycleSupport {
 			// unregister service
 			serviceRegistration.unregister();
 		} else {
-			logger.warn("mbean service with object name '" + objectName
+			logger.debug("mbean service with object name '" + objectName
 					+ "' not found, skipping unregistration");
 		}
 	}
