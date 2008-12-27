@@ -136,20 +136,20 @@ public class Service extends DynamicMBeanSupport implements DynamicMBean,
 					SimpleType.STRING, true, false, false));
 			// properties
 			this.propertiesRowType = new CompositeType(
-					ServiceConstants.COMPOSITETYPE_PROPERTIES_ENTRY,
-					ServiceConstants.COMPOSITETYPE_PROPERTIES_ENTRY_DESCRIPTION,
+					ServiceConstants.COMPOSITETYPE_PROPERTY_ENTRY,
+					ServiceConstants.COMPOSITETYPE_PROPERTY_ENTRY_DESCRIPTION,
 					new String[] {
-							ServiceConstants.COMPOSITETYPE_PROPERTIES_NAME,
-							ServiceConstants.COMPOSITETYPE_PROPERTIES_VALUE },
+							ServiceConstants.COMPOSITETYPE_PROPERTY_NAME,
+							ServiceConstants.COMPOSITETYPE_PROPERTY_VALUE },
 					new String[] {
-							ServiceConstants.COMPOSITETYPE_PROPERTIES_NAME,
-							ServiceConstants.COMPOSITETYPE_PROPERTIES_VALUE },
+							ServiceConstants.COMPOSITETYPE_PROPERTY_NAME,
+							ServiceConstants.COMPOSITETYPE_PROPERTY_VALUE },
 					new OpenType[] { SimpleType.STRING, SimpleType.STRING });
 			this.propertiesType = new TabularType(
 					ServiceConstants.TABULARTYPE_PROPERTIES_NAME,
 					ServiceConstants.TABULARTYPE_PROPERTIES_DESCRIPTION,
 					this.propertiesRowType,
-					new String[] { ServiceConstants.COMPOSITETYPE_PROPERTIES_NAME });
+					new String[] { ServiceConstants.COMPOSITETYPE_PROPERTY_NAME });
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
 					ServiceConstants.ATTRIBUTE_PROPERTIES_NAME,
 					ServiceConstants.ATTRIBUTE_PROPERTIES_DESCRIPTION,
@@ -256,8 +256,8 @@ public class Service extends DynamicMBeanSupport implements DynamicMBean,
 					CompositeDataSupport row = new CompositeDataSupport(
 							this.propertiesRowType,
 							new String[] {
-									ServiceConstants.COMPOSITETYPE_PROPERTIES_NAME,
-									ServiceConstants.COMPOSITETYPE_PROPERTIES_VALUE },
+									ServiceConstants.COMPOSITETYPE_PROPERTY_NAME,
+									ServiceConstants.COMPOSITETYPE_PROPERTY_VALUE },
 							new Object[] { key, stringRepresentation });
 					tabularProperties.put(row);
 				} catch (OpenDataException e) {

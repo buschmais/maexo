@@ -18,6 +18,7 @@ package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -86,7 +87,7 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 
 	private ObjectNameHelper objectNameHelper;
 
-	private CompositeType headersRowType;
+	private CompositeType headerType;
 
 	private TabularType headersType;
 
@@ -127,28 +128,50 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 					BundleConstants.ATTRIBUTE_STATENAME_DESCRIPTION,
 					SimpleType.STRING, true, false, false));
 			// header
-			this.headersRowType = new CompositeType(
-					BundleConstants.COMPOSITETYPE_HEADERS_ENTRY,
-					BundleConstants.COMPOSITETYPE_HEADERS_ENTRY_DESCRIPTION,
-					new String[] { BundleConstants.COMPOSITETYPE_HEADERS_NAME,
-							BundleConstants.COMPOSITETYPE_HEADERS_VALUE },
-					new String[] { BundleConstants.COMPOSITETYPE_HEADERS_NAME,
-							BundleConstants.COMPOSITETYPE_HEADERS_VALUE },
+			this.headerType = new CompositeType(
+					BundleConstants.COMPOSITETYPE_HEADER_ENTRY,
+					BundleConstants.COMPOSITETYPE_HEADER_ENTRY_DESCRIPTION,
+					new String[] { BundleConstants.COMPOSITETYPE_HEADER_NAME,
+							BundleConstants.COMPOSITETYPE_HEADER_VALUE },
+					new String[] { BundleConstants.COMPOSITETYPE_HEADER_NAME,
+							BundleConstants.COMPOSITETYPE_HEADER_VALUE },
 					new OpenType[] { SimpleType.STRING, SimpleType.STRING });
 			this.headersType = new TabularType(
 					BundleConstants.TABULARTYPE_HEADERS_NAME,
 					BundleConstants.TABULARTYPE_HEADERS_DESCRIPTION,
-					this.headersRowType,
-					new String[] { BundleConstants.COMPOSITETYPE_HEADERS_NAME });
+					this.headerType,
+					new String[] { BundleConstants.COMPOSITETYPE_HEADER_NAME });
 			attributeList.add(new OpenMBeanAttributeInfoSupport(
 					BundleConstants.ATTRIBUTE_HEADERS_NAME,
 					BundleConstants.ATTRIBUTE_HEADERS_DESCRIPTION,
 					this.headersType, true, false, false));
+			// lastModified
+			attributeList.add(new OpenMBeanAttributeInfoSupport(
+					BundleConstants.ATTRIBUTE_LASTMODIFIED_NAME,
+					BundleConstants.ATTRIBUTE_LASTMODIFIED_DESCRIPTION,
+					SimpleType.LONG, true, false, false));
+			// lastModifiedAsDate
+			attributeList.add(new OpenMBeanAttributeInfoSupport(
+					BundleConstants.ATTRIBUTE_LASTMODIFIEDASDATE_NAME,
+					BundleConstants.ATTRIBUTE_LASTMODIFIEDASDATE_DESCRIPTION,
+					SimpleType.DATE, true, false, false));
+			// location
+			attributeList.add(new OpenMBeanAttributeInfoSupport(
+					BundleConstants.ATTRIBUTE_LOCATION_NAME,
+					BundleConstants.ATTRIBUTE_LOCATION_DESCRIPTION,
+					SimpleType.STRING, true, false, false));
 			// registered services
 			attributeList
 					.add(new OpenMBeanAttributeInfoSupport(
 							BundleConstants.ATTRIBUTE_REGISTEREDSERVICES_NAME,
 							BundleConstants.ATTRIBUTE_REGISTEREDSERVICES_DESCRIPTION,
+							new ArrayType(1, SimpleType.OBJECTNAME), true,
+							false, false));
+			// servicesInUse
+			attributeList
+					.add(new OpenMBeanAttributeInfoSupport(
+							BundleConstants.ATTRIBUTE_SERVICESINUSE_NAME,
+							BundleConstants.ATTRIBUTE_SERVICESINUSE_DESCRIPTION,
 							new ArrayType(1, SimpleType.OBJECTNAME), true,
 							false, false));
 			OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = attributeList
@@ -202,7 +225,7 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-	public Long getId() {
+	public Long getBundleId() {
 		return Long.valueOf(this.bundle.getBundleId());
 	}
 
@@ -250,12 +273,12 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 			String key = keys.nextElement();
 			String value = headers.get(key);
 			try {
-				CompositeDataSupport row = new CompositeDataSupport(
-						this.headersRowType, new String[] {
-								BundleConstants.COMPOSITETYPE_HEADERS_NAME,
-								BundleConstants.COMPOSITETYPE_HEADERS_VALUE },
+				CompositeDataSupport header = new CompositeDataSupport(
+						this.headerType, new String[] {
+								BundleConstants.COMPOSITETYPE_HEADER_NAME,
+								BundleConstants.COMPOSITETYPE_HEADER_VALUE },
 						new Object[] { key, value });
-				tabularHeaders.put(row);
+				tabularHeaders.put(header);
 			} catch (Exception e) {
 				throw new MBeanException(e);
 			}
@@ -329,5 +352,54 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		} catch (Exception e) {
 			throw new MBeanException(e);
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean#getLastModified()
+	 */
+	public Long getLastModified() {
+		return Long.valueOf(this.bundle.getLastModified());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean#getLastModifiedAsDate
+	 * ()
+	 */
+	public Date getLastModifiedAsDate() {
+		return new Date(this.bundle.getLastModified());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean#getLocation()
+	 */
+	public String getLocation() {
+		return this.bundle.getLocation();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean#getServicesInUse()
+	 */
+	public ObjectName[] getServicesInUse() {
+		ServiceReference[] servicesInUse = this.bundle.getServicesInUse();
+		if (servicesInUse == null) {
+			return null;
+		}
+		ObjectName[] objectNames = new ObjectName[servicesInUse.length];
+		for (int i = 0; i < servicesInUse.length; i++) {
+			objectNames[i] = this.objectNameHelper.getObjectName(
+					servicesInUse[i], ServiceReference.class);
+		}
+		return objectNames;
 	}
 }

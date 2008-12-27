@@ -23,68 +23,75 @@ import javax.management.openmbean.TabularData;
 public interface ServiceMBean {
 
 	/**
-	 * Returns the bundle which registered this service
+	 * Returns the object name of the bundle which registered this service.
 	 * 
-	 * @return the bundle
+	 * @return The object name of the bundle that registered the service; null
+	 *         if that service has already been unregistered.
 	 */
 	public ObjectName getBundle();
 
 	/**
-	 * Returns the id of this service
+	 * Returns the service property named "service.id" identifying a service's
+	 * registration number.
 	 * 
-	 * @return the id
+	 * @return The service property named "service.id".
 	 */
 	public Long getId();
 
 	/**
-	 * Returns the description of this service
+	 * Returns the service property named "service.description" identifying a
+	 * service's description.
 	 * 
-	 * @return the description
+	 * @return The service property named "service.description".
 	 */
 	public String getDescription();
 
-
 	/**
-	 * Returns the object class(es) of this service
+	 * Returns the service property named "objectClass" identifying all of the
+	 * class names under which a service was registered in the Framework.
 	 * 
-	 * @return the object class(es)
+	 * @return The service property named "objectClass".
 	 */
 	public String[] getObjectClass();
 
-
 	/**
-	 * Returns the persistent id of this services
+	 * Returns the service property named "service.pid" identifying a service's
+	 * persistent identifier.
 	 * 
-	 * @return the persistent id
+	 * @return The service property named "service.pid".
 	 */
 	public String getPid();
 
 	/**
-	 * Returns the properties of this service
+	 * Returns the properties of the Dictionary object of the service.
 	 * 
-	 * @return the properties
+	 * @return The properties of the Dictionary object of the service.
 	 * @throws MBeanException
 	 */
 	public TabularData getProperties() throws MBeanException;
 
 	/**
-	 * Returns the ranking of this service
+	 * Returns the service property named "service.ranking" identifying a
+	 * service's ranking number (of type java.lang.Integer).
 	 * 
-	 * @return the ranking
+	 * @return The service property named "service.ranking".
 	 */
 	public Integer getRanking();
 
 	/**
-	 * Returns the bundles which are using this service
+	 * Returns the bundles that are using the service.
 	 * 
-	 * @return the using bundles
+	 * @return An array of bundle's object names whose usage count for the
+	 *         service referenced object is greater than zero; null if no
+	 *         bundles are currently using that service.
 	 */
 	public ObjectName[] getUsingBundles();
 
 	/**
-	 * Returns the vendor of this service
+	 * Returns the service property named "service.vendor" identifying a
+	 * service's vendor.
 	 * 
-	 * @return the vendor
+	 * @return The service property named "service.vendor".
 	 */
 	public String getVendor();
 

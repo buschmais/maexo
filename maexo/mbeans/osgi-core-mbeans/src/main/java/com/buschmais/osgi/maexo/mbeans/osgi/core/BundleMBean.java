@@ -16,42 +16,66 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
+import java.util.Date;
+
 import javax.management.MBeanException;
 import javax.management.ObjectName;
 import javax.management.openmbean.TabularData;
 
 public interface BundleMBean {
 
-
 	/**
-	 * Returns the id of the bundle
+	 * Returns this bundle's unique identifier.
 	 * 
-	 * @return the id
+	 * @return The unique identifier of this bundle.
 	 */
-	public Long getId();
+	public Long getBundleId();
 
 	/**
-	 * Returns the numeric representation of the bundle state
+	 * Returns this bundle's current state.
 	 * 
-	 * @return the state
+	 * @return An element of UNINSTALLED,INSTALLED, RESOLVED,STARTING,
+	 *         STOPPING,ACTIVE.
 	 */
 	public Integer getState();
 
 	/**
-	 * Returns the human readable representation of the bundle state
+	 * Returns this bundle's current state.
 	 * 
-	 * @return the state
+	 * @return An element of UNINSTALLED,INSTALLED, RESOLVED,STARTING,
+	 *         STOPPING,ACTIVE.
 	 */
 	public String getStateAsName();
 
-
 	/**
-	 * Returns the bundle's headers
+	 * Returns this bundle's Manifest headers and values.
 	 * 
-	 * @return the headers
+	 * @return A TabularData object containing this bundle's Manifest headers
+	 *         and values.
 	 * @throws MBeanException
 	 */
 	public TabularData getHeaders() throws MBeanException;
+
+	/**
+	 * Returns the time when this bundle was last modified.
+	 * 
+	 * @return The time when this bundle was last modified.
+	 */
+	public Long getLastModified();
+
+	/**
+	 * Returns the time when this bundle was last modified.
+	 * 
+	 * @return The time when this bundle was last modified.
+	 */
+	public Date getLastModifiedAsDate();
+
+	/**
+	 * Returns this bundle's location identifier.
+	 * 
+	 * @return The string representation of this bundle's location identifier.
+	 */
+	public String getLocation();
 
 	/**
 	 * Returns the services which have been registered by this bundle
@@ -59,6 +83,14 @@ public interface BundleMBean {
 	 * @return the services
 	 */
 	public ObjectName[] getRegisteredServices();
+
+	/**
+	 * Returns this bundle's ServiceReference list for all services it is using
+	 * or returns null if this bundle is not using any services.
+	 * 
+	 * @return An array of object names or null.
+	 */
+	public ObjectName[] getServicesInUse();
 
 	/**
 	 * Start the bundle
