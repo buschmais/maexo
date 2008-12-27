@@ -16,7 +16,6 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
-import org.osgi.framework.ServiceReference;
 
 public class ServiceConstants {
 
@@ -31,8 +30,7 @@ public class ServiceConstants {
 	/**
 	 * value of the type property
 	 */
-	public static final String OBJECTNAME_TYPE_VALUE = ServiceReference.class
-			.getName();
+	public static final String OBJECTNAME_TYPE_VALUE = "Service";
 
 	/**
 	 * MBean description

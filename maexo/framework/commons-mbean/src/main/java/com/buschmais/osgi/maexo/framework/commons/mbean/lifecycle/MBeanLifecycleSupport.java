@@ -70,7 +70,7 @@ public class MBeanLifecycleSupport {
 	}
 
 	/**
-	 * Registers a managed bean as service and stores it under a provided key
+	 * Registers a managed bean as service and stores it under the object name
 	 * for later unregistration
 	 * 
 	 * @param mbeanInterface
@@ -108,8 +108,8 @@ public class MBeanLifecycleSupport {
 			// unregister service
 			serviceRegistration.unregister();
 		} else {
-			logger.warn("mbean service with key=" + objectName
-					+ " not found, skipping unregistration");
+			logger.warn("mbean service with object name '" + objectName
+					+ "' not found, skipping unregistration");
 		}
 	}
 }

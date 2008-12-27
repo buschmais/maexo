@@ -19,7 +19,6 @@ package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle;
 import javax.management.DynamicMBean;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 
 import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevel;
 
@@ -32,18 +31,6 @@ public final class StartLevelMBeanLifeCycle extends
 
 	public StartLevelMBeanLifeCycle(BundleContext bundleContext) {
 		super(bundleContext);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.
-	 * ServiceMBeanLifeCycleSupport
-	 * #isManageable(org.osgi.framework.ServiceReference)
-	 */
-	@Override
-	public boolean isManageable(ServiceReference serviceReference) {
-		return true;
 	}
 
 	/*

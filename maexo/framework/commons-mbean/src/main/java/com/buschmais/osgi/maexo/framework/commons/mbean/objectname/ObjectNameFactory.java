@@ -16,6 +16,8 @@
  */
 package com.buschmais.osgi.maexo.framework.commons.mbean.objectname;
 
+import java.util.Dictionary;
+
 import javax.management.ObjectName;
 
 public interface ObjectNameFactory {
@@ -25,8 +27,13 @@ public interface ObjectNameFactory {
 	 * 
 	 * @param resource
 	 *            the resource
+	 * @param properties
+	 *            additional properties which are not available from the
+	 *            resource itself but which may be required to construct unique
+	 *            object names (e.g. the service id)
 	 * @return the object name
 	 */
-	public ObjectName getObjectName(Object resource);
+	public ObjectName getObjectName(Object resource,
+			Dictionary<String, Object> properties);
 
 }

@@ -16,9 +16,13 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import javax.management.ObjectName;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
@@ -56,7 +60,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 			}
 		}
 		// add the service listener
-		super.getBundleContext().addServiceListener(this);
+		super.getBundleContext().addServiceListener(this, this.getServiceFilter());
 	}
 
 	/**
@@ -87,11 +91,21 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * @throws InvalidSyntaxException
 	 */
 	private ServiceReference[] getServices() throws InvalidSyntaxException {
+		return super.getBundleContext().getServiceReferences(null,
+				this.getServiceFilter());
+	}
+
+	/**
+	 * Returns a filter representing using the service interface as object class
+	 * 
+	 * @return the filter
+	 */
+	private String getServiceFilter() {
 		Class<?> serviceInterface = this.getServiceInterface();
-		String serviceInterfaceName = serviceInterface == null ? null
-				: serviceInterface.getName();
-		return super.getBundleContext().getServiceReferences(
-				serviceInterfaceName, null);
+		if (serviceInterface == null) {
+			return null;
+		}
+		return ("(objectClass=" + serviceInterface.getName() + ")");
 	}
 
 	/*
@@ -105,7 +119,10 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 		ServiceReference serviceReference = serviceEvent.getServiceReference();
 		if (this.isManageable(serviceReference)) {
 			Object service = this.getService(serviceReference);
-			ObjectName objectName = this.getObjectName(service);
+			Dictionary<String, Object> properties = new Hashtable<String, Object>();
+			properties.put(Constants.SERVICE_ID, serviceReference
+					.getProperty(Constants.SERVICE_ID));
+			ObjectName objectName = this.getObjectName(service, properties);
 			switch (serviceEvent.getType()) {
 			case ServiceEvent.REGISTERED: {
 				super.registerMBeanService(this.getMBeanInterface(),
@@ -173,11 +190,15 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * 
 	 * @param service
 	 *            the service
+	 * @param properties
+	 *            additional properties which may be required to construct
+	 *            unique object names
 	 * @return the object name
 	 */
-	public ObjectName getObjectName(Object service) {
+	public ObjectName getObjectName(Object service,
+			Dictionary<String, Object> properties) {
 		return super.getObjectNameHelper().getObjectName(service,
-				this.getServiceInterface());
+				this.getServiceInterface(), properties);
 	}
 
 	/**

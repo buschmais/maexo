@@ -18,8 +18,8 @@ package com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor;
 
 public class Constants {
 
-	public static final String HTTP_ADAPTOR_OBJECTNAME = "com.buschmais.osgi.maexo:type=adaptor,name=mx4j_http_adaptor";
-	public static final String XSLT_PROCESSOR_OBJECTNAME = "com.buschmais.osgi.maexo:type=adaptor,name=mx4j_xslt_processor";
+	public static final String HTTP_ADAPTOR_OBJECTNAME = "com.buschmais.osgi.maexo:type=Adaptor,name=Mx4jHttpAdaptor";
+	public static final String XSLT_PROCESSOR_OBJECTNAME = "com.buschmais.osgi.maexo:type=Adaptor,name=Mx4jXsltProcessor";
 
 	public static final String HOST_PROPERTY = "com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.host";
 	public static final String HOST_DEFAULT_VALUE = "localhost";

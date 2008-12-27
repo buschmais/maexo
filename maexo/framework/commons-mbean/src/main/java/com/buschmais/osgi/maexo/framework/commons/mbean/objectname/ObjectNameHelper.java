@@ -55,8 +55,26 @@ public class ObjectNameHelper {
 	 * @return the object name
 	 */
 	public ObjectName getObjectName(Object resource) {
-		return this
-				.getObjectName(resource, resource.getClass().getInterfaces());
+		return this.getObjectName(resource,
+				resource.getClass().getInterfaces(), null);
+	}
+
+	/**
+	 * Creates an object name from the given resource by looking up an object
+	 * name factory, which handles one of the interfaces implemented by the
+	 * resource's class.
+	 * 
+	 * @param resource
+	 *            the resource
+	 * @param properties
+	 *            additional properties which will be passed to the object name
+	 *            factory
+	 * @return the object name
+	 */
+	public ObjectName getObjectName(Object resource,
+			Dictionary<String, Object> properties) {
+		return this.getObjectName(resource,
+				resource.getClass().getInterfaces(), properties);
 	}
 
 	/**
@@ -71,7 +89,26 @@ public class ObjectNameHelper {
 	 */
 	public ObjectName getObjectName(Object resource, Class<?> resourceInterface) {
 		return this.getObjectName(resource,
-				new Class<?>[] { resourceInterface });
+				new Class<?>[] { resourceInterface }, null);
+	}
+
+	/**
+	 * Creates an object name from the given resource by looking up the
+	 * corresponding object name factory
+	 * 
+	 * @param resource
+	 *            the resource
+	 * @param resourceInterface
+	 *            the interface to use for looking up the object name factor
+	 * @param properties
+	 *            additional properties which will be passed to the object name
+	 *            factory
+	 * @return the object name
+	 */
+	public ObjectName getObjectName(Object resource,
+			Class<?> resourceInterface, Dictionary<String, Object> properties) {
+		return this.getObjectName(resource,
+				new Class<?>[] { resourceInterface }, properties);
 	}
 
 	/**
@@ -86,6 +123,24 @@ public class ObjectNameHelper {
 	 */
 	public ObjectName getObjectName(Object resource,
 			Class<?>[] resourceInterfaces) {
+		return this.getObjectName(resource, resourceInterfaces, null);
+	}
+
+	/**
+	 * Creates an object name from the given resource by looking up the
+	 * corresponding object name factory
+	 * 
+	 * @param resource
+	 *            the resource
+	 * @param resourceInterfaces
+	 *            the interfaces to use for looking up the object name factor
+	 * @param properties
+	 *            additional properties which will be passed to the object name
+	 *            factory
+	 * @return the object name
+	 */
+	public ObjectName getObjectName(Object resource,
+			Class<?>[] resourceInterfaces, Dictionary<String, Object> properties) {
 		if (resource == null || resourceInterfaces == null
 				|| resourceInterfaces.length == 0) {
 			throw new IllegalArgumentException(
@@ -127,7 +182,8 @@ public class ObjectNameHelper {
 							logger.debug("using object name factory "
 									+ objectNameFactory);
 						}
-						return objectNameFactory.getObjectName(resource);
+						return objectNameFactory.getObjectName(resource,
+								properties);
 					}
 				} finally {
 					this.bundleContext.ungetService(serviceReference);
@@ -147,6 +203,9 @@ public class ObjectNameHelper {
 	 *            the object name factory
 	 * @param resourceInterface
 	 *            the class of the resources which are supported
+	 * @param properties
+	 *            additional properties which will be passed to the object name
+	 *            factory
 	 * @return the service reference
 	 */
 	public ServiceRegistration registerObjectNameFactory(

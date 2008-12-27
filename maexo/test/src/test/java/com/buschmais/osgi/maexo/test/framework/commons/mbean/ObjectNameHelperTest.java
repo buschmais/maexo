@@ -101,9 +101,11 @@ public class ObjectNameHelperTest extends MaexoTests {
 	public void test_getObjectNameFromInterface()
 			throws MalformedObjectNameException, NullPointerException {
 		// expect calls to object name factories
-		EasyMock.expect(this.objectNameFactoryA.getObjectName(this.resourceA))
+		EasyMock.expect(
+				this.objectNameFactoryA.getObjectName(this.resourceA, null))
 				.andReturn(this.objectNameA);
-		EasyMock.expect(this.objectNameFactoryB.getObjectName(this.resourceB))
+		EasyMock.expect(
+				this.objectNameFactoryB.getObjectName(this.resourceB, null))
 				.andReturn(this.objectNameB);
 		// replay
 		EasyMock.replay(this.objectNameFactoryA);
@@ -119,9 +121,11 @@ public class ObjectNameHelperTest extends MaexoTests {
 
 	public void test_getObjectNameFromResource() {
 		// expect calls to object name factories
-		EasyMock.expect(this.objectNameFactoryA.getObjectName(this.resourceA))
+		EasyMock.expect(
+				this.objectNameFactoryA.getObjectName(this.resourceA, null))
 				.andReturn(this.objectNameA);
-		EasyMock.expect(this.objectNameFactoryB.getObjectName(this.resourceB))
+		EasyMock.expect(
+				this.objectNameFactoryB.getObjectName(this.resourceB, null))
 				.andReturn(this.objectNameB);
 		// replay
 		EasyMock.replay(this.objectNameFactoryA);

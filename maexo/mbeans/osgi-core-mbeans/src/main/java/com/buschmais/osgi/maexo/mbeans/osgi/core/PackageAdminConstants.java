@@ -16,20 +16,19 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
-import org.osgi.service.packageadmin.PackageAdmin;
 
 public class PackageAdminConstants {
 
 	/**
-	 * object name properties: type and name
+	 * object name properties: type and id
 	 */
 	public static final String OBJECTNAME_TYPE_PROPERTY = "type";
+	public static final String OBJECTNAME_ID_PROPERTY = "id";
 
 	/**
 	 * value of the type property
 	 */
-	public static final String OBJECTNAME_TYPE_VALUE = PackageAdmin.class
-			.getName();
+	public static final String OBJECTNAME_TYPE_VALUE = "PackageAdmin";
 
 	/**
 	 * MBean description

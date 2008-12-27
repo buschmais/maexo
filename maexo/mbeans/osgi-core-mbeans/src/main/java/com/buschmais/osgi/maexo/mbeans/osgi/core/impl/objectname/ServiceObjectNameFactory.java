@@ -16,6 +16,7 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname;
 
+import java.util.Dictionary;
 import java.util.Properties;
 
 import javax.management.ObjectName;
@@ -43,9 +44,10 @@ public class ServiceObjectNameFactory implements ObjectNameFactory {
 	 * 
 	 * @see
 	 * com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory
-	 * #getObjectName(java.lang.Object)
+	 * #getObjectName(java.lang.Object, java.util.Dictionary)
 	 */
-	public ObjectName getObjectName(Object resource) {
+	public ObjectName getObjectName(Object resource,
+			Dictionary<String, Object> properties) {
 		ServiceReference serviceReference = (ServiceReference) resource;
 		Properties objectNameProperties = new Properties();
 		// type

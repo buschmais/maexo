@@ -16,20 +16,19 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
-import org.osgi.service.startlevel.StartLevel;
 
 public class StartLevelConstants {
 
 	/**
-	 * object name properties: type
+	 * object name properties: type and id
 	 */
 	public static final String OBJECTNAME_TYPE_PROPERTY = "type";
+	public static final String OBJECTNAME_ID_PROPERTY = "id";
 
 	/**
 	 * value of the type property
 	 */
-	public static final String OBJECTNAME_TYPE_VALUE = StartLevel.class
-			.getName();
+	public static final String OBJECTNAME_TYPE_VALUE = "StartLevel";
 
 	/**
 	 * MBean description

@@ -16,13 +16,18 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname;
 
+import java.util.Dictionary;
 import java.util.Properties;
 
 import javax.management.ObjectName;
 
+import org.osgi.framework.Constants;
+
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
+import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryException;
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminConstants;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelConstants;
 
 /**
  * Object name factory implementation which supports the start level service
@@ -34,15 +39,23 @@ public class PackageAdminObjectNameFactory implements ObjectNameFactory {
 	 * 
 	 * @see
 	 * com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory
-	 * #getObjectName(java.lang.Object)
+	 * #getObjectName(java.lang.Object, java.util.Dictionary)
 	 */
-	public ObjectName getObjectName(Object resource) {
+	public ObjectName getObjectName(Object resource,
+			Dictionary<String, Object> properties) {
+		if (properties == null) {
+			throw new ObjectNameFactoryException("properties must not be null");
+		}
 		// create object name properties
 		Properties objectNameProperties = new Properties();
 		// type
 		objectNameProperties.setProperty(
 				PackageAdminConstants.OBJECTNAME_TYPE_PROPERTY,
 				PackageAdminConstants.OBJECTNAME_TYPE_VALUE);
+		// id
+		Long id = (Long) properties.get(Constants.SERVICE_ID);
+		objectNameProperties
+				.put(StartLevelConstants.OBJECTNAME_ID_PROPERTY, id);
 		return ObjectNameHelper.getObjectName(objectNameProperties);
 	}
 }

@@ -16,6 +16,8 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle;
 
+import java.util.Dictionary;
+
 import javax.management.DynamicMBean;
 import javax.management.ObjectName;
 
@@ -73,10 +75,12 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 	 * (non-Javadoc)
 	 * 
 	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.
-	 * ServiceMBeanLifeCycleSupport#getObjectName(java.lang.Object)
+	 * ServiceMBeanLifeCycleSupport#getObjectName(java.lang.Object,
+	 * java.util.Dictionary)
 	 */
 	@Override
-	public ObjectName getObjectName(Object service) {
+	public ObjectName getObjectName(Object service,
+			Dictionary<String, Object> properties) {
 		return super.getObjectNameHelper().getObjectName(service,
 				ServiceReference.class);
 	}

@@ -28,7 +28,7 @@ public class BundleConstants {
 	/**
 	 * value of the type property
 	 */
-	public static final String OBJECTNAME_TYPE_VALUE = org.osgi.framework.Bundle.class.getName();
+	public static final String OBJECTNAME_TYPE_VALUE = "Bundle";
 
 	/**
 	 * MBean description

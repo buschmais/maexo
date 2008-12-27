@@ -298,7 +298,7 @@ public class Service extends DynamicMBeanSupport implements DynamicMBean,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Service#getVendor()
+	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Service#getVendor(
 	 */
 	public String getVendor() {
 		return (String) this.serviceReference

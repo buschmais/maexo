@@ -16,6 +16,7 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname;
 
+import java.util.Dictionary;
 import java.util.Properties;
 
 import javax.management.ObjectName;
@@ -35,16 +36,18 @@ public class BundleObjectNameFactory implements ObjectNameFactory {
 
 	private static final String DEFAULT_BUNDLE_SYMBOLICNAME = "unknown";
 
-	private static final String DEFAULT_BUNDLE_VERSION = Version.emptyVersion.toString();
+	private static final String DEFAULT_BUNDLE_VERSION = Version.emptyVersion
+			.toString();
 
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory
-	 * #getObjectName(java.lang.Object)
+	 * #getObjectName(java.lang.Object, java.util.Dictionary)
 	 */
-	public ObjectName getObjectName(Object resource) {
+	public ObjectName getObjectName(Object resource,
+			Dictionary<String, Object> properties) {
 		Bundle bundle = (Bundle) resource;
 		// create object name properties
 		Properties objectNameProperties = new Properties();
