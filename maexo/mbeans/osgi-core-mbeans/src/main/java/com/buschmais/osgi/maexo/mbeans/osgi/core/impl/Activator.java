@@ -29,11 +29,11 @@ import org.osgi.service.startlevel.StartLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLifeCycleSupport;
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.BundleMBeanLifeCycle;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.PackageAdminMBeanLifeCycle;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.ServiceMBeanLifeCycle;
-import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.ServiceMBeanLifeCycleSupport;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.StartLevelMBeanLifeCycle;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.BundleObjectNameFactory;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.PackageAdminObjectNameFactory;

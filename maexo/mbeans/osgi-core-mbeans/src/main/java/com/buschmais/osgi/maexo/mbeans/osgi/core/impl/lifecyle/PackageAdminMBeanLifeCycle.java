@@ -20,6 +20,7 @@ import javax.management.DynamicMBean;
 
 import org.osgi.framework.BundleContext;
 
+import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLifeCycleSupport;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdmin;
 
 /**
