@@ -26,7 +26,7 @@ public class MaexoTests extends AbstractConfigurableBundleCreatorTests {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @seeorg.springframework.osgi.test.AbstractDependencyManagerTests#
+	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
 	 * getTestFrameworkBundlesNames()
 	 */
 	@Override
