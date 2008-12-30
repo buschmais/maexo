@@ -37,8 +37,10 @@ import org.slf4j.LoggerFactory;
  * The <code>ObjectNameHelper</code> relates to the {@link ObjectNameFactory}s
  * with regard to
  * <ul>
- * <li>their registration: {@link #registerObjectNameFactory(ObjectNameFactory, Class)}</li>
- * <li>object name generation: {@link #getObjectName(Object, Class[], Dictionary)}</li>
+ * <li>their registration:
+ * {@link #registerObjectNameFactory(ObjectNameFactory, Class)}</li>
+ * <li>object name generation:
+ * {@link #getObjectName(Object, Class[], Dictionary)}</li>
  * </ul>
  * 
  * @see ObjectNameFactory
@@ -143,8 +145,10 @@ public class ObjectNameHelper {
 	 * Creates an object name for the given resource.
 	 * <p>
 	 * The object name is actually created by looking up the corresponding
-	 * object name factory and invoking its
-	 * {@link ObjectNameFactory#getObjectName(Object, Dictionary)} method.
+	 * object name factory in the OSGi service registry and invoking its
+	 * {@link ObjectNameFactory#getObjectName(Object, Dictionary)} method. This
+	 * method (and all its overloaded peers) may return <code>null</code> if no
+	 * appropriate <code>ObjectNameFactory</code> can be found.
 	 * 
 	 * @param resource
 	 *            the resource
@@ -153,7 +157,8 @@ public class ObjectNameHelper {
 	 * @param properties
 	 *            additional properties which will be passed to the object name
 	 *            factory
-	 * @return the object name
+	 * @return the object name or <code>null</code> if no appropriate
+	 *         <code>ObjectNameFactory</code> is found
 	 */
 	public ObjectName getObjectName(Object resource,
 			Class<?>[] resourceInterfaces, Dictionary<String, Object> properties) {
