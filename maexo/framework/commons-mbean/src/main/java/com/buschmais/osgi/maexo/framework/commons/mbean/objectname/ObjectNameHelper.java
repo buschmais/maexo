@@ -146,9 +146,7 @@ public class ObjectNameHelper {
 	 * <p>
 	 * The object name is actually created by looking up the corresponding
 	 * object name factory in the OSGi service registry and invoking its
-	 * {@link ObjectNameFactory#getObjectName(Object, Dictionary)} method. This
-	 * method (and all its overloaded peers) may return <code>null</code> if no
-	 * appropriate <code>ObjectNameFactory</code> can be found.
+	 * {@link ObjectNameFactory#getObjectName(Object, Dictionary)} method.
 	 * 
 	 * @param resource
 	 *            the resource
@@ -157,8 +155,10 @@ public class ObjectNameHelper {
 	 * @param properties
 	 *            additional properties which will be passed to the object name
 	 *            factory
-	 * @return the object name or <code>null</code> if no appropriate
-	 *         <code>ObjectNameFactory</code> is found
+	 * @return the object name
+	 * @exception ObjectNameFactoryException
+	 *                if no appropriate <code>ObjectNameFactory</code> is found
+	 *                and therefore no object name can be constructed
 	 */
 	public ObjectName getObjectName(Object resource,
 			Class<?>[] resourceInterfaces, Dictionary<String, Object> properties) {
