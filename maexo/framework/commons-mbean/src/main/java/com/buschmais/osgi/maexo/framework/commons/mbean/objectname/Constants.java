@@ -16,15 +16,18 @@
  */
 package com.buschmais.osgi.maexo.framework.commons.mbean.objectname;
 
+/**
+ * Common constants for object name construction.
+ */
 public class Constants {
 
 	/**
-	 * default domain for object names
+	 * The default domain for object names, i.e. <code>com.buschmais.osgi.maexo</code>.
 	 */
 	public static final String DEFAULT_DOMAIN = "com.buschmais.osgi.maexo";
 
 	/**
-	 * the resource interface property of object name factory services
+	 * The resource interface property of object name factory services.
 	 */
 	public static final String SERVICE_PROPERTY_RESOURCEINTERFACE = "resourceInterface";
 
