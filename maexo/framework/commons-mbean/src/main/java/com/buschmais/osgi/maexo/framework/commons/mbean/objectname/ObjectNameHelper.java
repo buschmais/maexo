@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * The <code>ObjectNameHelper</code> relates to the {@link ObjectNameFactory}s
  * with regard to
  * <ul>
- * <li>its registration: {@link #registerObjectNameFactory(ObjectNameFactory, Class)}</li>
+ * <li>their registration: {@link #registerObjectNameFactory(ObjectNameFactory, Class)}</li>
  * <li>object name generation: {@link #getObjectName(Object, Class[], Dictionary)}</li>
  * </ul>
  * 
