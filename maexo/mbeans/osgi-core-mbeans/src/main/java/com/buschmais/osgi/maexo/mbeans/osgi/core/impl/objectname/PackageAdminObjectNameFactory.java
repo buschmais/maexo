@@ -17,7 +17,8 @@
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname;
 
 import java.util.Dictionary;
-import java.util.Properties;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.management.ObjectName;
 
@@ -30,7 +31,7 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminConstants;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelConstants;
 
 /**
- * Object name factory implementation which supports the start level service
+ * Object name factory implementation for the package admin service.
  */
 public class PackageAdminObjectNameFactory implements ObjectNameFactory {
 
@@ -44,18 +45,19 @@ public class PackageAdminObjectNameFactory implements ObjectNameFactory {
 	public ObjectName getObjectName(Object resource,
 			Dictionary<String, Object> properties) {
 		if (properties == null) {
-			throw new ObjectNameFactoryException("properties must not be null");
+			throw new ObjectNameFactoryException("Parameter properties must not be null");
 		}
-		// create object name properties
-		Properties objectNameProperties = new Properties();
+		// create object name properties as linked hash map to maintain
+		// insertion order
+		Map<String, Object> objectNameProperties = new LinkedHashMap<String, Object>();
 		// type
-		objectNameProperties.setProperty(
+		objectNameProperties.put(
 				PackageAdminConstants.OBJECTNAME_TYPE_PROPERTY,
 				PackageAdminConstants.OBJECTNAME_TYPE_VALUE);
 		// id
 		Long id = (Long) properties.get(Constants.SERVICE_ID);
 		objectNameProperties
 				.put(StartLevelConstants.OBJECTNAME_ID_PROPERTY, id);
-		return ObjectNameHelper.getObjectName(objectNameProperties);
+		return ObjectNameHelper.assembleObjectName(objectNameProperties);
 	}
 }

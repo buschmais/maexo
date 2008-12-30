@@ -19,7 +19,7 @@ package com.buschmais.osgi.maexo.framework.commons.mbean.objectname;
 import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.Properties;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.management.ObjectName;
@@ -32,7 +32,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides common functionality to work with object names
+ * Provides common functionality to work with object names.
+ * <p>
+ * The <code>ObjectNameHelper</code> relates to the {@link ObjectNameFactory}s
+ * with regard to
+ * <ul>
+ * <li>its registration: {@link #registerObjectNameFactory(ObjectNameFactory, Class)}</li>
+ * <li>object name generation: {@link #getObjectName(Object, Class[], Dictionary)}</li>
+ * </ul>
+ * 
+ * @see ObjectNameFactory
  */
 public class ObjectNameHelper {
 
@@ -41,18 +50,23 @@ public class ObjectNameHelper {
 
 	private BundleContext bundleContext;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param bundleContext
+	 *            for service lookups
+	 */
 	public ObjectNameHelper(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
 	}
 
 	/**
-	 * Creates an object name from the given resource by looking up an object
-	 * name factory, which handles one of the interfaces implemented by the
-	 * resource's class.
+	 * Creates an object name for the given resource.
 	 * 
 	 * @param resource
 	 *            the resource
 	 * @return the object name
+	 * @see ObjectNameHelper#getObjectName(Object, Class[], Dictionary)
 	 */
 	public ObjectName getObjectName(Object resource) {
 		return this.getObjectName(resource,
@@ -60,9 +74,7 @@ public class ObjectNameHelper {
 	}
 
 	/**
-	 * Creates an object name from the given resource by looking up an object
-	 * name factory, which handles one of the interfaces implemented by the
-	 * resource's class.
+	 * Creates an object name for the given resource.
 	 * 
 	 * @param resource
 	 *            the resource
@@ -70,6 +82,7 @@ public class ObjectNameHelper {
 	 *            additional properties which will be passed to the object name
 	 *            factory
 	 * @return the object name
+	 * @see ObjectNameHelper#getObjectName(Object, Class[], Dictionary)
 	 */
 	public ObjectName getObjectName(Object resource,
 			Dictionary<String, Object> properties) {
@@ -78,14 +91,14 @@ public class ObjectNameHelper {
 	}
 
 	/**
-	 * Creates an object name from the given resource by looking up the
-	 * corresponding object name factory
+	 * Creates an object name for the given resource.
 	 * 
 	 * @param resource
 	 *            the resource
 	 * @param resourceInterface
-	 *            the interface to use for looking up the object name factor
+	 *            the interface to use for looking up the object name factory
 	 * @return the object name
+	 * @see ObjectNameHelper#getObjectName(Object, Class[], Dictionary)
 	 */
 	public ObjectName getObjectName(Object resource, Class<?> resourceInterface) {
 		return this.getObjectName(resource,
@@ -93,17 +106,17 @@ public class ObjectNameHelper {
 	}
 
 	/**
-	 * Creates an object name from the given resource by looking up the
-	 * corresponding object name factory
+	 * Creates an object name for the given resource.
 	 * 
 	 * @param resource
 	 *            the resource
 	 * @param resourceInterface
-	 *            the interface to use for looking up the object name factor
+	 *            the interface to use for looking up the object name factory
 	 * @param properties
 	 *            additional properties which will be passed to the object name
 	 *            factory
 	 * @return the object name
+	 * @see ObjectNameHelper#getObjectName(Object, Class[], Dictionary)
 	 */
 	public ObjectName getObjectName(Object resource,
 			Class<?> resourceInterface, Dictionary<String, Object> properties) {
@@ -112,14 +125,14 @@ public class ObjectNameHelper {
 	}
 
 	/**
-	 * Creates an object name from the given resource by looking up the
-	 * corresponding object name factory
+	 * Creates an object name for the given resource.
 	 * 
 	 * @param resource
 	 *            the resource
 	 * @param resourceInterfaces
-	 *            the interfaces to use for looking up the object name factor
+	 *            the interfaces to use for looking up the object name factory
 	 * @return the object name
+	 * @see ObjectNameHelper#getObjectName(Object, Class[], Dictionary)
 	 */
 	public ObjectName getObjectName(Object resource,
 			Class<?>[] resourceInterfaces) {
@@ -127,13 +140,16 @@ public class ObjectNameHelper {
 	}
 
 	/**
-	 * Creates an object name from the given resource by looking up the
-	 * corresponding object name factory
+	 * Creates an object name for the given resource.
+	 * <p>
+	 * The object name is actually created by looking up the corresponding
+	 * object name factory and invoking its
+	 * {@link ObjectNameFactory#getObjectName(Object, Dictionary)} method.
 	 * 
 	 * @param resource
 	 *            the resource
 	 * @param resourceInterfaces
-	 *            the interfaces to use for looking up the object name factor
+	 *            the interfaces to use for looking up the object name factory
 	 * @param properties
 	 *            additional properties which will be passed to the object name
 	 *            factory
@@ -144,21 +160,24 @@ public class ObjectNameHelper {
 		if (resource == null || resourceInterfaces == null
 				|| resourceInterfaces.length == 0) {
 			throw new IllegalArgumentException(
-					"resource and resourceInterface must not be null");
+					"Parameters resource and resourceInterface must not be null");
 		}
 		// find the object name factory that handles instances of the resource's
 		// interfaces
 		if (logger.isDebugEnabled()) {
 			logger
 					.debug("looking up object name factory service for interfaces "
-							+ Arrays.asList(resourceInterfaces));
+							+ Arrays.toString(resourceInterfaces));
 		}
 		ServiceReference[] serviceReferences;
 		StringBuilder filter = new StringBuilder();
 		filter.append("(|");
 		for (Class<?> resourceInterface : resourceInterfaces) {
-			filter.append("(" + Constants.SERVICE_PROPERTY_RESOURCEINTERFACE
-					+ "=" + resourceInterface.getName() + ")");
+			filter.append("(");
+			filter.append(Constants.SERVICE_PROPERTY_RESOURCEINTERFACE);
+			filter.append("=");
+			filter.append(resourceInterface.getName());
+			filter.append(")");
 		}
 		filter.append(")");
 		if (logger.isDebugEnabled()) {
@@ -192,12 +211,15 @@ public class ObjectNameHelper {
 		}
 		// throw an exception if the object name could not be constructed
 		throw new ObjectNameFactoryException(
-				"no object name factory found for resource interface "
-						+ Arrays.asList(resourceInterfaces));
+				"No object name factory found for resource interface "
+						+ Arrays.toString(resourceInterfaces));
 	}
 
 	/**
-	 * Registers an object name factory for a given type as service
+	 * Registers an object name factory for a given type as a service.
+	 * <p>
+	 * The object name factory is registered under the class of
+	 * <code>ObjectNameHelper</code>.
 	 * 
 	 * @param objectNameFactory
 	 *            the object name factory
@@ -222,45 +244,54 @@ public class ObjectNameHelper {
 	}
 
 	/**
-	 * Constructs an object name from the provided properties using the default
-	 * domain
+	 * Assembles an object name from the provided properties using the default
+	 * domain.
 	 * 
 	 * @param properties
 	 *            the properties
 	 * @return the object name
+	 * @see Constants#DEFAULT_DOMAIN
 	 */
-	public static ObjectName getObjectName(Properties properties) {
-		return getObjectName(Constants.DEFAULT_DOMAIN, properties);
+	public static ObjectName assembleObjectName(Map<String, Object> properties) {
+		return assembleObjectName(Constants.DEFAULT_DOMAIN, properties);
 	}
 
 	/**
-	 * Constructs an object name from the provided domain and properties
+	 * Assembles an object name from <code>domain</code> and
+	 * <code>properties</code>.
+	 * <p>
+	 * The object name is constructed according JMX requirements as (without
+	 * spaces): <blockquote> <i>domain</i> : <i>properties.key1</i> =
+	 * <i>properties.value1</i>, <i>properties .key2</i> =
+	 * <i>properties.value2</i> </blockquote>
 	 * 
 	 * @param domain
 	 *            the domain
 	 * @param properties
 	 *            the properties
 	 * @return the object name
+	 * @see ObjectName
 	 */
-	public static ObjectName getObjectName(String domain, Properties properties) {
+	public static ObjectName assembleObjectName(String domain,
+			Map<String, Object> properties) {
 		StringBuilder sb = new StringBuilder(domain);
 		sb.append(':');
-		int i = 0;
-		for (Entry<Object, Object> entry : properties.entrySet()) {
-			if (i > 0) {
+		boolean firstEntry = true;
+		for (Entry<String, Object> entry : properties.entrySet()) {
+			if (firstEntry) {
+				firstEntry = false;
+			} else {
 				sb.append(',');
 			}
-			i++;
-			sb.append(entry.getKey().toString());
+			sb.append(entry.getKey());
 			sb.append('=');
-			sb.append(entry.getValue().toString());
+			sb.append(entry.getValue());
 		}
 		try {
 			return new ObjectName(sb.toString());
 		} catch (Exception e) {
-			throw new IllegalArgumentException(
-					"cannot create object name instance, domain=" + domain
-							+ ", properties=" + properties, e);
+			throw new IllegalArgumentException(String.format(
+					"Cannot create object name instance for '%s'", sb), e);
 		}
 	}
 

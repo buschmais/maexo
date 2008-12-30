@@ -17,7 +17,8 @@
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname;
 
 import java.util.Dictionary;
-import java.util.Properties;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.management.ObjectName;
 
@@ -30,7 +31,7 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHel
 import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleConstants;
 
 /**
- * Object name factory implementation which supports bundles
+ * Object name factory implementation for bundles.
  */
 public class BundleObjectNameFactory implements ObjectNameFactory {
 
@@ -49,10 +50,11 @@ public class BundleObjectNameFactory implements ObjectNameFactory {
 	public ObjectName getObjectName(Object resource,
 			Dictionary<String, Object> properties) {
 		Bundle bundle = (Bundle) resource;
-		// create object name properties
-		Properties objectNameProperties = new Properties();
+		// create object name properties as linked hash map to maintain
+		// insertion order
+		Map<String, Object> objectNameProperties = new LinkedHashMap<String, Object>();
 		// type
-		objectNameProperties.setProperty(
+		objectNameProperties.put(
 				BundleConstants.OBJECTNAME_TYPE_PROPERTY,
 				BundleConstants.OBJECTNAME_TYPE_VALUE);
 		// create name property: <symbolic name>
@@ -60,7 +62,7 @@ public class BundleObjectNameFactory implements ObjectNameFactory {
 		if (symbolicName == null) {
 			symbolicName = DEFAULT_BUNDLE_SYMBOLICNAME;
 		}
-		objectNameProperties.setProperty(
+		objectNameProperties.put(
 				BundleConstants.OBJECTNAME_NAME_PROPERTY, symbolicName);
 		// create version property
 		String bundleVersion = (String) bundle.getHeaders().get(
@@ -68,8 +70,8 @@ public class BundleObjectNameFactory implements ObjectNameFactory {
 		if (bundleVersion == null) {
 			bundleVersion = DEFAULT_BUNDLE_VERSION;
 		}
-		objectNameProperties.setProperty(
+		objectNameProperties.put(
 				BundleConstants.OBJECTNAME_VERSION_PROPERTY, bundleVersion);
-		return ObjectNameHelper.getObjectName(objectNameProperties);
+		return ObjectNameHelper.assembleObjectName(objectNameProperties);
 	}
 }

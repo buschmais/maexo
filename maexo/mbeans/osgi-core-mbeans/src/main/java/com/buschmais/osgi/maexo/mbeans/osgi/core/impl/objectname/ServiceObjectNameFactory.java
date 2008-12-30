@@ -17,7 +17,8 @@
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname;
 
 import java.util.Dictionary;
-import java.util.Properties;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.management.ObjectName;
 
@@ -29,7 +30,7 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHel
 import com.buschmais.osgi.maexo.mbeans.osgi.core.ServiceConstants;
 
 /**
- * Object name factory implementation which supports service references
+ * Object name factory implementation for service references.
  */
 public class ServiceObjectNameFactory implements ObjectNameFactory {
 
@@ -49,10 +50,11 @@ public class ServiceObjectNameFactory implements ObjectNameFactory {
 	public ObjectName getObjectName(Object resource,
 			Dictionary<String, Object> properties) {
 		ServiceReference serviceReference = (ServiceReference) resource;
-		Properties objectNameProperties = new Properties();
+		// create object name properties as linked hash map to maintain
+		// insertion order
+		Map<String, Object> objectNameProperties = new LinkedHashMap<String, Object>();
 		// type
-		objectNameProperties.setProperty(
-				ServiceConstants.OBJECTNAME_TYPE_PROPERTY,
+		objectNameProperties.put(ServiceConstants.OBJECTNAME_TYPE_PROPERTY,
 				ServiceConstants.OBJECTNAME_TYPE_VALUE);
 		// id
 		Long id = (Long) serviceReference.getProperty(Constants.SERVICE_ID);
@@ -61,14 +63,18 @@ public class ServiceObjectNameFactory implements ObjectNameFactory {
 		String[] objectClasses = (String[]) serviceReference
 				.getProperty(Constants.OBJECTCLASS);
 		StringBuilder objectClassValue = new StringBuilder();
+		boolean firstItem = true;
 		for (String objectClass : objectClasses) {
-			if (objectClassValue.length() > 0) {
+			if (firstItem) {
+				firstItem = false;
+			}
+			else {
 				objectClassValue.append(SEPARATOR_OBJECTCLASS);
 			}
 			objectClassValue.append(objectClass);
 		}
 		objectNameProperties.put(ServiceConstants.OBJECTNAME_NAME_PROPERTY,
-				objectClassValue);
+				objectClassValue.toString());
 		// pid
 		String pid = (String) serviceReference
 				.getProperty(Constants.SERVICE_PID);
@@ -76,6 +82,6 @@ public class ServiceObjectNameFactory implements ObjectNameFactory {
 			objectNameProperties.put(ServiceConstants.OBJECTNAME_PID_PROPERTY,
 					pid);
 		}
-		return ObjectNameHelper.getObjectName(objectNameProperties);
+		return ObjectNameHelper.assembleObjectName(objectNameProperties);
 	}
 }
