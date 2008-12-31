@@ -24,12 +24,18 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLi
 import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevel;
 
 /**
- * This class implements a service event listener which tracks the lifecycle of
+ * This class implements a service event listener which tracks the life cycle of
  * the start level admin service.
  */
 public final class StartLevelMBeanLifeCycle extends
 		ServiceMBeanLifeCycleSupport {
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param bundleContext
+	 *            the bundle context of the exporting bundle
+	 */
 	public StartLevelMBeanLifeCycle(BundleContext bundleContext) {
 		super(bundleContext);
 	}

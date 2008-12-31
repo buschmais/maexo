@@ -39,8 +39,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class provides implementation of common needed functionality for dynamic
- * mbeans. The invocation of methods and getting/setting attributes is performed
- * via introspection of the mbeans class and using the metadata provided by the
+ * mbeans.
+ * <p>
+ * The invocation of methods and getting/setting attributes is performed via
+ * introspection of the mbeans class and using the metadata provided by the
  * mbean itself.
  */
 public abstract class DynamicMBeanSupport implements DynamicMBean,
@@ -64,7 +66,7 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 	private Map<String, Class<?>> attributeTypes;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	protected DynamicMBeanSupport() {
 		this.attributeTypes = new HashMap<String, Class<?>>();

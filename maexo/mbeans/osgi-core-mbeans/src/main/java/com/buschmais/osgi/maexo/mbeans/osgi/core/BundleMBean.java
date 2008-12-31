@@ -22,6 +22,11 @@ import javax.management.MBeanException;
 import javax.management.ObjectName;
 import javax.management.openmbean.TabularData;
 
+/**
+ * Management interface for an OSGI bundle.
+ * 
+ * @see org.osgi.framework.Bundle
+ */
 public interface BundleMBean {
 
 	/**
@@ -78,7 +83,7 @@ public interface BundleMBean {
 	public String getLocation();
 
 	/**
-	 * Returns the services which have been registered by this bundle
+	 * Returns the services which have been registered by this bundle.
 	 * 
 	 * @return the services
 	 */
@@ -93,14 +98,14 @@ public interface BundleMBean {
 	public ObjectName[] getServicesInUse();
 
 	/**
-	 * Start the bundle
+	 * Start the bundle.
 	 * 
 	 * @throws MBeanException
 	 */
 	public void start() throws MBeanException;
 
 	/**
-	 * Stop the bundle
+	 * Stop the bundle.
 	 * 
 	 * @throws MBeanException
 	 */
@@ -114,7 +119,7 @@ public interface BundleMBean {
 	public void update() throws MBeanException;
 
 	/**
-	 * Update the bundle from the provided url
+	 * Update the bundle from the provided url.
 	 * 
 	 * @param url
 	 *            the url
@@ -123,7 +128,7 @@ public interface BundleMBean {
 	public void update(String url) throws MBeanException;
 
 	/**
-	 * Uninstall the bundle
+	 * Uninstall the bundle.
 	 */
 	public void uninstall() throws MBeanException;
 }

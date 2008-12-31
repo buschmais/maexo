@@ -51,7 +51,7 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupp
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 
 /**
- * Represents a registered service (wrapping a service reference)
+ * Represents a registered service (wrapping a service reference).
  */
 public class Service extends DynamicMBeanSupport implements DynamicMBean,
 		ServiceMBean {

@@ -22,10 +22,15 @@ import javax.management.ObjectName;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
+/**
+ * Represents an mbean which is registered with the switchboard.
+ * 
+ * @see SwitchBoardImpl
+ */
 public class MBeanRegistration {
 
 	/**
-	 * The object name property
+	 * The object name property.
 	 */
 	private static final String SERVICE_PROPERTY_OBJECTNAME = "objectName";
 
@@ -33,17 +38,36 @@ public class MBeanRegistration {
 
 	private Object mbean;
 
+	/**
+	 * Constructor.
+	 * <p>
+	 * The constructor extracts the mbean and its object name from the provided
+	 * service reference and the bundle context.
+	 * <p>
+	 * The service reference must contain either a "
+	 * <code>javax.management.ObjectName</code>" or a "<code>objectName</code>"
+	 * property which contains the mbean object name.
+	 * 
+	 * @param bundleContext
+	 * @param serviceReference
+	 * @throws MalformedObjectNameException
+	 *             if the object name has a syntax error
+	 * @exception NullPointerException
+	 *                if the object name is <code>null</code>
+	 */
 	public MBeanRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference)
-			throws MalformedObjectNameException, NullPointerException {
+			throws MalformedObjectNameException {
 		// get object name from service properties
 		this.objectName = (ObjectName) serviceReference
 				.getProperty(ObjectName.class.getName());
+
 		if (this.objectName == null) {
 			String name = (String) serviceReference
 					.getProperty(SERVICE_PROPERTY_OBJECTNAME);
 			this.objectName = new ObjectName(name);
 		}
+
 		this.mbean = bundleContext.getService(serviceReference);
 	}
 

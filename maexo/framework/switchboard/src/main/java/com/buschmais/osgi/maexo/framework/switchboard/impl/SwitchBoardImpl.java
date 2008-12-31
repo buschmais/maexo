@@ -29,6 +29,25 @@ import javax.management.ObjectName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Provides transparent couplings between mbeans, mbean servers, mbean server
+ * connections and the OSGi service registry.
+ * <p>
+ * The main idea is to register mbeans not to the mbean server directly but to
+ * the OSGi service registry as an OSGi service. The <strong>MAEXO switch
+ * board</strong> will take care of that all mbean services will be registered
+ * (and transparently unregistered) to all known mbean servers.
+ * <p>
+ * Established use cases:
+ * <ul>
+ * <li>Export mbeans, that are found or registered in the OSGi service registry,
+ * to all known mbean servers</li>
+ * <li>Unregister any mbeans, if the providing bundle is stopped.</li>
+ * <li></li>
+ * <li>TODO@DM: Please complete this list</li>
+ * </ul>
+ * 
+ */
 public class SwitchBoardImpl {
 
 	private static Logger logger = LoggerFactory
@@ -43,7 +62,7 @@ public class SwitchBoardImpl {
 	private Set<NotificationListenerRegistration> notificationListeners = new HashSet<NotificationListenerRegistration>();
 
 	/**
-	 * Adds a notification listener on a mbean server connection
+	 * Adds a notification listener on a mbean server connection.
 	 * 
 	 * @param mbeanServerConnection
 	 *            the mbean server connection
@@ -52,7 +71,7 @@ public class SwitchBoardImpl {
 	 * @param notificationListener
 	 *            the notification listener
 	 * @param handback
-	 *            the handback object
+	 *            the handback context object
 	 */
 	private void addNotificationListener(
 			MBeanServerConnection mbeanServerConnection, ObjectName objectName,
@@ -67,14 +86,14 @@ public class SwitchBoardImpl {
 			mbeanServerConnection.addNotificationListener(objectName,
 					notificationListener, notificationFilter, handback);
 		} catch (Exception e) {
-			logger.warn("caught exception while adding notification listener "
+			logger.warn("exception while adding notification listener "
 					+ notificationListener + ", on mbean server connection"
 					+ mbeanServerConnection, e);
 		}
 	}
 
 	/**
-	 * Adds a notification listener
+	 * Adds a notification listener.
 	 * 
 	 * @param notificationListenerRegistration
 	 *            the notification listener registration
@@ -106,7 +125,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Returns the currently registered mbeans
+	 * Returns the currently registered mbeans.
 	 * 
 	 * @return the map of mbeans registrations
 	 */
@@ -115,7 +134,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Returns the registered mbean server connections
+	 * Returns the registered mbean server connections.
 	 * 
 	 * @return the mbean server connection registrations
 	 */
@@ -124,7 +143,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Returns the registered mbean servers
+	 * Returns the registered mbean servers.
 	 * 
 	 * @return the mbean server registrations
 	 */
@@ -133,7 +152,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Returns the currently registered notification listeners
+	 * Returns the currently registered notification listeners.
 	 * 
 	 * @return the set of notification listener registrations
 	 */
@@ -142,12 +161,12 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Registers a mbean on a mbean server
+	 * Registers an mbean on an mbean server.
 	 * 
 	 * @param mbeanServer
 	 *            the mbean server
 	 * @param objectName
-	 *            the name
+	 *            the object name
 	 * @param mbean
 	 *            the mbean
 	 */
@@ -166,7 +185,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Registers a mbean
+	 * Registers a mbean.
 	 * 
 	 * @param mbeanRegistration
 	 *            the mbean registration
@@ -190,7 +209,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Registers a mbean server connection instance
+	 * Registers an mbean server connection instance.
 	 * 
 	 * @param mbeanServerConnectionRegistration
 	 *            the mbean server connection registration
@@ -222,7 +241,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Registers a mbean server instance
+	 * Registers a mbean server instance.
 	 * 
 	 * @param mbeanServerRegistration
 	 *            the mbean server registration
@@ -247,7 +266,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Removes a notification listener from a mbean server
+	 * Removes a notification listener from a mbean server.
 	 * 
 	 * @param mbeanServerConnection
 	 *            the mbean server connection
@@ -258,7 +277,7 @@ public class SwitchBoardImpl {
 	 * @param notificationFilter
 	 *            the notification filter
 	 * @param handback
-	 *            the handback object
+	 *            the handback context object
 	 */
 	private void removeNotificationListener(
 			MBeanServerConnection mbeanServerConnection, ObjectName objectName,
@@ -283,7 +302,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Removes a notification listener
+	 * Removes a notification listener.
 	 * 
 	 * @param notificationListenerRegistration
 	 *            the notification listener registration
@@ -314,7 +333,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Unregisters a mbean from a mbean server
+	 * Unregisters an mbean from a mbean server.
 	 * 
 	 * @param mbeanServer
 	 *            the mbean server
@@ -335,7 +354,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Unregisters a mbean
+	 * Unregisters an mbean.
 	 * 
 	 * @param mbeanRegistration
 	 *            the mbean registration
@@ -355,7 +374,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Unregisters a mbean server connection instance
+	 * Unregisters an mbean server connection instance.
 	 * 
 	 * @param mbeanServerConnectionRegistration
 	 *            the mbean server connection registration
@@ -387,7 +406,7 @@ public class SwitchBoardImpl {
 	}
 
 	/**
-	 * Unregisters a mbean server instance
+	 * Unregisters an mbean server instance.
 	 * 
 	 * @param mbeanServerRegistration
 	 *            the mbean server registration

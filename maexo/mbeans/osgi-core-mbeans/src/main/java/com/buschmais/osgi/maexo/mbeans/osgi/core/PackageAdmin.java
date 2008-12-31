@@ -54,7 +54,7 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupp
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 
 /**
- * MBean which represents the PackageAdmin service.
+ * Represents the OSGi package admin service.
  */
 public class PackageAdmin extends DynamicMBeanSupport implements
 		PackageAdminMBean, MBeanRegistration {

@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 
 /**
- * Provides support to control the life cycle of MBeans.
+ * Provides support to control the life cycle of mbeans.
  */
 public class MBeanLifecycleSupport {
 
@@ -39,17 +39,23 @@ public class MBeanLifecycleSupport {
 			.getLogger(MBeanLifecycleSupport.class);
 
 	/**
-	 * The bundle context of the exporting bundle
+	 * The bundle context of the exporting bundle.
 	 */
 	private BundleContext bundleContext;
 
 	/**
-	 * the object name helper instance
+	 * The object name helper instance.
 	 */
 	private ObjectNameHelper objectNameHelper;
 
 	private Map<Object, ServiceRegistration> mbeanRegistrations = new ConcurrentHashMap<Object, ServiceRegistration>();
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param bundleContext
+	 *            the bundle context of the exporting bundle
+	 */
 	public MBeanLifecycleSupport(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
 		this.objectNameHelper = new ObjectNameHelper(bundleContext);
@@ -70,24 +76,28 @@ public class MBeanLifecycleSupport {
 	}
 
 	/**
-	 * Registers a managed bean as service and stores it under the object name
-	 * for later unregistration
+	 * Registers an mbean as a service in the OSGi service registration.
+	 * <p>
+	 * The mbean is stored under the object name for later unregistration
 	 * 
 	 * @param mbeanInterface
 	 *            the interface to use for registration
 	 * @param objectName
 	 *            the object name
 	 * @param mbean
-	 *            the managed bean
+	 *            the mbean
 	 */
 	public void registerMBeanService(Class<?> mbeanInterface,
 			ObjectName objectName, Object mbean) {
 		Dictionary<String, Object> serviceProperties = new Hashtable<String, Object>();
 		serviceProperties.put(ObjectName.class.getName(), objectName);
 		if (logger.isDebugEnabled()) {
-			logger.debug("registering mbean with object name '" + objectName
-					+ "' as service with interface "
-					+ mbeanInterface.getClass().getName());
+			logger
+					.debug(String
+							.format(
+									"registering mbean with object name '%s' as service with interface %s",
+									objectName, mbeanInterface.getClass()
+											.getName()));
 		}
 		ServiceRegistration serviceRegistration = this.bundleContext
 				.registerService(mbeanInterface.getName(), mbean,
@@ -96,10 +106,11 @@ public class MBeanLifecycleSupport {
 	}
 
 	/**
-	 * Unregisters a previously registered mbean
+	 * Unregisters a previously registered mbean.
 	 * 
 	 * @param objectName
-	 *            the objectName which identifies the mbean to be unregistered
+	 *            the objectName which identifies the mbean to be
+	 *            unregistered
 	 */
 	public void unregisterMBeanService(ObjectName objectName) {
 		// lookup serviceRegistration
@@ -109,8 +120,11 @@ public class MBeanLifecycleSupport {
 			// unregister service
 			serviceRegistration.unregister();
 		} else {
-			logger.debug("mbean service with object name '" + objectName
-					+ "' not found, skipping unregistration");
+			logger
+					.debug(String
+							.format(
+									"mbean service with object name '%s' not found, skipping unregistration",
+									objectName));
 		}
 	}
 }

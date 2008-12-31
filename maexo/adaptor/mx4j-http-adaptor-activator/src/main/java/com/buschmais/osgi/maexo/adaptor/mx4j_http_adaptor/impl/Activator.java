@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 import com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.Constants;
 
 /**
- * Activator for the MX4J HTTP adaptor
+ * Activator for the MX4J HTTP adaptor.
  */
 public class Activator implements BundleActivator {
 
@@ -128,7 +128,7 @@ public class Activator implements BundleActivator {
 
 	/**
 	 * Reads the configuration properties from the bundle context and applies
-	 * default values if necessary
+	 * default values if necessary.
 	 * 
 	 * @param bundleContext
 	 *            the bundle context

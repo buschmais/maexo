@@ -16,15 +16,32 @@
  */
 package com.buschmais.osgi.maexo.framework.switchboard.impl;
 
+import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
+/**
+ * Represents an mbean server connection which is registered with the switchboard.
+ * 
+ * @see SwitchBoardImpl
+ * @see MBeanServerConnection
+ * @see MBeanServer
+ */
 public class MBeanServerConnectionRegistration {
 
 	private MBeanServerConnection mbeanServerConnection;
 
+	/**
+	 * Constructor.
+	 * <p> 
+	 * The constructor extracts the mbean server connection from the provided
+	 * service reference and the bundle context.
+	 * <p>
+	 * @param bundleContext
+	 * @param serviceReference
+	 */
 	public MBeanServerConnectionRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference) {
 		this.mbeanServerConnection = (MBeanServerConnection) bundleContext

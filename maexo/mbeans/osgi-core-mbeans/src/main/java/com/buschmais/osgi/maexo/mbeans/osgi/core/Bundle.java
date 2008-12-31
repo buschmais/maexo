@@ -55,7 +55,7 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupp
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 
 /**
- * Represents a bundle
+ * Represents am OSGi bundle.
  */
 public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		BundleMBean {
@@ -81,7 +81,7 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	}
 
 	/**
-	 * the bundle to manage
+	 * The bundle to manage.
 	 */
 	private org.osgi.framework.Bundle bundle;
 
@@ -92,7 +92,7 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	private TabularType headersType;
 
 	/**
-	 * Constructs the managed bean
+	 * Constructs the managed bean.
 	 * 
 	 * @param bundle
 	 *            the bundle to manage

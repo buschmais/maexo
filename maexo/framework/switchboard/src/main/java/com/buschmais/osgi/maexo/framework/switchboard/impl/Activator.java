@@ -30,36 +30,38 @@ import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * OSGi bundle activator for the switchboard bundle.
+ */
 public class Activator implements BundleActivator {
 
 	/**
-	 * Definition of the filter for mbean server connections
+	 * Filter for mbean server connections.
 	 */
-	private static final String FILTER_MBEANSERVERCONNECTION = "(|(objectClass="
-			+ MBeanServerConnection.class.getName()
-			+ ")(objectClass="
-			+ MBeanServer.class.getName() + "))";
+	private static final String FILTER_MBEANSERVERCONNECTION = String.format(
+			"(|(objectClass=%s)(objectClass=%s))", MBeanServerConnection.class
+					.getName(), MBeanServer.class.getName());
 
 	/**
-	 * Definition of the filter for mbean servers
+	 * Filter for mbean servers.
 	 */
-	private static final String FILTER_MBEANSERVER = "(objectClass="
-			+ MBeanServer.class.getName() + ")";
+	private static final String FILTER_MBEANSERVER = String.format(
+			"(objectClass=%s)", MBeanServer.class.getName());
 
 	/**
-	 * Definition of the filter for mbeans. It contains condition to only accept
-	 * services which have a javax.management.ObjectName or objectName
-	 * attribute.
+	 * Filter for mbeans with either a <code>javax.management.ObjectName</code>
+	 * or objectName attribute.
 	 */
-	private static final String FILTER_MBEAN = "(&(objectClass=*MBean)(|("
-			+ ObjectName.class.getName() + "=*)(objectName=*)))";
+	private static final String FILTER_MBEAN = String.format(
+			"(&(objectClass=*MBean)(|(%s=*)(objectName=*)))", ObjectName.class
+					.getName());
 
 	/**
-	 * Definition of the filter for notification listeners
+	 * Filter for notification listeners.
 	 */
-	private static final String FILTER_NOTIFICATIONLISTENER = "(&(objectClass="
-			+ NotificationListener.class.getName() + ")(|("
-			+ ObjectName.class.getName() + "=*)(objectName=*)))";
+	private static final String FILTER_NOTIFICATIONLISTENER = String.format(
+			"(&(objectClass=%s)(|(%s=*)(objectName=*)))",
+			NotificationListener.class.getName(), ObjectName.class.getName());
 
 	private static Logger logger = LoggerFactory.getLogger(Activator.class);
 
@@ -144,7 +146,7 @@ public class Activator implements BundleActivator {
 	}
 
 	/**
-	 * Registers a service listener for MBean server connections
+	 * Registers a service listener for MBean server connections.
 	 * 
 	 * @param bundleContext
 	 *            the bundle context
@@ -168,15 +170,13 @@ public class Activator implements BundleActivator {
 				MBeanServerConnectionRegistration mbeanServerConnectionRegistration = new MBeanServerConnectionRegistration(
 						bundleContext, serviceReference);
 				switch (serviceEvent.getType()) {
-				case ServiceEvent.REGISTERED: {
+				case ServiceEvent.REGISTERED:
 					Activator.this.switchBoard
 							.registerMBeanServerConnection(mbeanServerConnectionRegistration);
-				}
 					break;
-				case ServiceEvent.UNREGISTERING: {
+				case ServiceEvent.UNREGISTERING:
 					Activator.this.switchBoard
 							.unregisterMBeanServerConnection(mbeanServerConnectionRegistration);
-				}
 					break;
 				default:
 					break;
@@ -197,7 +197,7 @@ public class Activator implements BundleActivator {
 	}
 
 	/**
-	 * Registers a service listener for MBean servers
+	 * Registers a service listener for mbean servers.
 	 * 
 	 * @param bundleContext
 	 *            the bundle context
@@ -221,15 +221,13 @@ public class Activator implements BundleActivator {
 				MBeanServerRegistration mBeanServerRegistration = new MBeanServerRegistration(
 						bundleContext, serviceReference);
 				switch (serviceEvent.getType()) {
-				case ServiceEvent.REGISTERED: {
+				case ServiceEvent.REGISTERED:
 					Activator.this.switchBoard
 							.registerMBeanServer(mBeanServerRegistration);
-				}
 					break;
-				case ServiceEvent.UNREGISTERING: {
+				case ServiceEvent.UNREGISTERING:
 					Activator.this.switchBoard
 							.unregisterMBeanServer(mBeanServerRegistration);
-				}
 					break;
 				default:
 					break;
@@ -249,7 +247,7 @@ public class Activator implements BundleActivator {
 	}
 
 	/**
-	 * Registers a service listener for MBeans
+	 * Registers a service listener for mbeans.
 	 * 
 	 * @param bundleContext
 	 *            the bundle context
@@ -282,15 +280,13 @@ public class Activator implements BundleActivator {
 				}
 				if (mbeanRegistration != null) {
 					switch (serviceEvent.getType()) {
-					case ServiceEvent.REGISTERED: {
+					case ServiceEvent.REGISTERED:
 						Activator.this.switchBoard
 								.registerMBean(mbeanRegistration);
-					}
 						break;
-					case ServiceEvent.UNREGISTERING: {
+					case ServiceEvent.UNREGISTERING:
 						Activator.this.switchBoard
 								.unregisterMBean(mbeanRegistration);
-					}
 						break;
 					default:
 						break;
@@ -310,7 +306,7 @@ public class Activator implements BundleActivator {
 	}
 
 	/**
-	 * Registers a service listener for notification listeners
+	 * Registers a service listener for notification listeners.
 	 * 
 	 * @param bundleContext
 	 *            the bundle context
@@ -343,15 +339,13 @@ public class Activator implements BundleActivator {
 				}
 				if (notificationListenerRegistration != null) {
 					switch (serviceEvent.getType()) {
-					case ServiceEvent.REGISTERED: {
+					case ServiceEvent.REGISTERED:
 						Activator.this.switchBoard
 								.addNotificationListener(notificationListenerRegistration);
-					}
 						break;
-					case ServiceEvent.UNREGISTERING: {
+					case ServiceEvent.UNREGISTERING:
 						Activator.this.switchBoard
 								.removeNotificationListener(notificationListenerRegistration);
-					}
 						break;
 					default:
 						break;
@@ -373,18 +367,16 @@ public class Activator implements BundleActivator {
 	}
 
 	/**
-	 * Registers existing already services that match on a service class and
-	 * filter using a service listener
+	 * Registers already existing services.
 	 * 
-	 * @param serviceClass
-	 *            the service class
 	 * @param filter
-	 *            the filter
+	 *            the filter for the services to match
 	 * @param bundleContext
 	 *            the bundle context
 	 * @param serviceListener
-	 *            the service listener
+	 *            the service listener to effect the registration
 	 * @throws InvalidSyntaxException
+	 *             if the filter has a syntactical error
 	 */
 	private void registerExistingServices(String filter,
 			BundleContext bundleContext, ServiceListener serviceListener)

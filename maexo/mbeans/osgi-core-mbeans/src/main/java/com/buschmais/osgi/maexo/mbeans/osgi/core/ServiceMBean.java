@@ -20,6 +20,11 @@ import javax.management.MBeanException;
 import javax.management.ObjectName;
 import javax.management.openmbean.TabularData;
 
+/**
+ * Management interface for an OSGI service.
+ * 
+ * @see org.osgi.framework.Bundle
+ */
 public interface ServiceMBean {
 
 	/**

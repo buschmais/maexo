@@ -22,10 +22,15 @@ import javax.management.MBeanException;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
 
+/**
+ * Management interface for the OSGI start level service.
+ * 
+ * @see org.osgi.framework.Bundle
+ */
 public interface StartLevelMBean {
 
 	/**
-	 * Return the assigned start level value for the specified Bundle.
+	 * Returns the assigned start level value for the specified Bundle.
 	 * 
 	 * @see org.osgi.service.startlevel.StartLevel#getBundleStartLevel(Bundle)
 	 * 

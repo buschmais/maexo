@@ -16,6 +16,7 @@
  */
 package com.buschmais.osgi.maexo.framework.switchboard.impl;
 
+import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.NotificationFilter;
 import javax.management.NotificationListener;
@@ -24,6 +25,13 @@ import javax.management.ObjectName;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
+/**
+ * Represents an mbean notification listener which is registered with the
+ * switchboard.
+ * 
+ * @see SwitchBoardImpl
+ * @see MBeanServer
+ */
 public class NotificationListenerRegistration {
 
 	/**
@@ -44,20 +52,34 @@ public class NotificationListenerRegistration {
 
 	private Object handback;
 
+	/**
+	 * Constructor.
+	 * <p>
+	 * The constructor extracts the notification listener, the mbean object
+	 * name, the notification filter and the handback context object from the
+	 * provided service reference and the bundle context.
+	 * 
+	 * @param bundleContext
+	 * @param serviceReference
+	 */
 	public NotificationListenerRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference)
 			throws MalformedObjectNameException, NullPointerException {
 		this.notificationListener = (NotificationListener) bundleContext
 				.getService(serviceReference);
+
 		this.objectName = (ObjectName) serviceReference
 				.getProperty(ObjectName.class.getName());
+
 		if (this.objectName == null) {
 			String name = (String) serviceReference
 					.getProperty(SERVICE_PROPERTY_OBJECTNAME);
 			this.objectName = new ObjectName(name);
 		}
+
 		this.notificationFilter = (NotificationFilter) serviceReference
 				.getProperty(NotificationFilter.class.getName());
+
 		this.handback = serviceReference.getProperty(SERVICE_PROPERTY_HANDBACK);
 	}
 
@@ -157,8 +179,9 @@ public class NotificationListenerRegistration {
 	 */
 	@Override
 	public String toString() {
-		return this.objectName + " (" + this.notificationListener + ", "
-				+ this.notificationFilter + ", " + this.handback + ")";
+		return String.format("%s (listener: %s, filter: %s, handback: %s)",
+				this.objectName, this.notificationListener,
+				this.notificationFilter, this.handback);
 	}
 
 }

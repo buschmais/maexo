@@ -41,7 +41,7 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.ServiceObjectNa
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.StartLevelObjectNameFactory;
 
 /**
- * Activator class for the OSGi Core MBeans
+ * OSGi bundle activator for the the OSGi core mbeans bundle.
  */
 public class Activator implements BundleActivator {
 

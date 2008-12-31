@@ -16,8 +16,8 @@
  */
 package com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.management.ObjectName;
 
@@ -32,20 +32,30 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFac
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 
 /**
- * This class represents an abstract service event listener to manage the
- * lifecycle of the associated service mbeans.
+ * Represents an abstract service event listener to manage the life cycle of the
+ * associated service mbeans.
+ * <p>
+ * The <code>ServiceMBeanLifeCycleSupport</code> instance will be registered as
+ * a service listener to receive service-changed-events.
  */
 public abstract class ServiceMBeanLifeCycleSupport extends
 		MBeanLifecycleSupport implements ServiceListener {
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param bundleContext
+	 *            the bundle context of the exporting bundle
+	 */
 	public ServiceMBeanLifeCycleSupport(BundleContext bundleContext) {
 		super(bundleContext);
 	}
 
 	/**
-	 * Starts the life cycle listener. The existing services are looked up,
-	 * published as mbeans and the lifecyle listener is registered with the
-	 * bundle context.
+	 * Starts the life cycle listener.
+	 * <p>
+	 * The existing services are looked up to be published as mbeans. Later the
+	 * life cycle listener is registered with the bundle context.
 	 * 
 	 * @throws InvalidSyntaxException
 	 */
@@ -59,13 +69,15 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 			}
 		}
 		// add the service listener
-		super.getBundleContext().addServiceListener(this, this.getServiceFilter());
+		super.getBundleContext().addServiceListener(this,
+				this.getServiceFilter());
 	}
 
 	/**
-	 * Stops the life cycle listener. The existing services are looked up, their
-	 * mbeans get unpublished and the lifecyle listener is unregistered from the
-	 * bundle context.
+	 * Stops the life cycle listener.
+	 * <p>
+	 * The existing services are looked up, their mbeans get unpublished and the
+	 * life cycle listener is unregistered from the bundle context.
 	 * 
 	 * @throws InvalidSyntaxException
 	 */
@@ -84,7 +96,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 
 	/**
 	 * Returns the currently registered service references for the interface
-	 * provided by {@link #getServiceInterface()}
+	 * provided by {@link #getServiceInterface()}.
 	 * 
 	 * @return the service references
 	 * @throws InvalidSyntaxException
@@ -95,9 +107,11 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	}
 
 	/**
-	 * Returns a filter representing using the service interface as object class
+	 * Returns a filter representing using the service interface as object
+	 * class.
 	 * 
-	 * @return the filter
+	 * @return the filter or <code>null</code> if there is no service interface
+	 *         declared
 	 */
 	private String getServiceFilter() {
 		Class<?> serviceInterface = this.getServiceInterface();
@@ -118,23 +132,21 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 		ServiceReference serviceReference = serviceEvent.getServiceReference();
 		if (this.isManageable(serviceReference)) {
 			Object service = this.getService(serviceReference);
-			Dictionary<String, Object> properties = new Hashtable<String, Object>();
+			Map<String, Object> properties = new HashMap<String, Object>();
 			properties.put(Constants.SERVICE_ID, serviceReference
 					.getProperty(Constants.SERVICE_ID));
 			ObjectName objectName = this.getObjectName(service, properties);
 			switch (serviceEvent.getType()) {
-			case ServiceEvent.REGISTERED: {
+			case ServiceEvent.REGISTERED:
 				super.registerMBeanService(this.getMBeanInterface(),
 						objectName, this.getMBean(service));
-			}
 				break;
-			case ServiceEvent.UNREGISTERING: {
+			case ServiceEvent.UNREGISTERING:
 				try {
 					super.unregisterMBeanService(objectName);
 				} finally {
 					this.ungetService(serviceReference);
 				}
-			}
 				break;
 			}
 		}
@@ -142,19 +154,22 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 
 	/**
 	 * Returns true if the given service reference can be managed by a MBean.
+	 * <p>
 	 * The default implementation returns true.
 	 * 
 	 * @param serviceReference
 	 *            the service reference
-	 * @return true if a MBean can be provided
+	 * @return true if a mbean can be provided
 	 */
 	public boolean isManageable(ServiceReference serviceReference) {
 		return true;
 	}
 
 	/**
-	 * Returns the service instance. The default implementation uses the object
-	 * provided by the service reference.
+	 * Returns the service instance.
+	 * <p>
+	 * The default implementation uses the object provided by the service
+	 * reference.
 	 * 
 	 * @param serviceReference
 	 *            the service reference
@@ -165,7 +180,9 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	}
 
 	/**
-	 * Releases the service reference. The default implementation uses
+	 * Releases the service reference.
+	 * <p>
+	 * The default implementation uses
 	 * {@link BundleContext#ungetService(ServiceReference)}.
 	 * 
 	 * @param serviceReference
@@ -176,16 +193,19 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	}
 
 	/**
-	 * Returns the service interface supported by the lifecycle event listener.
+	 * Returns the service interface supported by the life cycle event listener.
 	 * 
 	 * @return the service interface
 	 */
 	public abstract Class<?> getServiceInterface();
 
 	/**
-	 * Returns the object name of service which will be used for the mbean. The
-	 * default implementation delegates to the @link {@link ObjectNameHelper}
-	 * which will lookup a @link {@link ObjectNameFactory}.
+	 * Returns the object name of service which will be used for the managed
+	 * bean.
+	 * <p>
+	 * The default implementation delegates to the {@link ObjectNameHelper}
+	 * which will lookup an appropriate {@link ObjectNameFactory} to eventually
+	 * construct the object name.
 	 * 
 	 * @param service
 	 *            the service
@@ -195,7 +215,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * @return the object name
 	 */
 	public ObjectName getObjectName(Object service,
-			Dictionary<String, Object> properties) {
+			Map<String, Object> properties) {
 		return super.getObjectNameHelper().getObjectName(service,
 				this.getServiceInterface(), properties);
 	}
@@ -210,7 +230,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	public abstract Object getMBean(Object service);
 
 	/**
-	 * Returns the mbean interface which will be used for registration
+	 * Returns the mbean interface which will be used for registration.
 	 * 
 	 * @return the mbean interface
 	 */

@@ -16,7 +16,6 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname;
 
-import java.util.Dictionary;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -35,7 +34,7 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.ServiceConstants;
 public class ServiceObjectNameFactory implements ObjectNameFactory {
 
 	/**
-	 * the separator token to use if several object classes are implemented by
+	 * The separator token to use if several object classes are implemented by
 	 * the service
 	 */
 	private static final char SEPARATOR_OBJECTCLASS = '|';
@@ -48,10 +47,9 @@ public class ServiceObjectNameFactory implements ObjectNameFactory {
 	 * #getObjectName(java.lang.Object, java.util.Dictionary)
 	 */
 	public ObjectName getObjectName(Object resource,
-			Dictionary<String, Object> properties) {
+			Map<String, Object> properties) {
 		ServiceReference serviceReference = (ServiceReference) resource;
-		// create object name properties as linked hash map to maintain
-		// insertion order
+
 		Map<String, Object> objectNameProperties = new LinkedHashMap<String, Object>();
 		// type
 		objectNameProperties.put(ServiceConstants.OBJECTNAME_TYPE_PROPERTY,

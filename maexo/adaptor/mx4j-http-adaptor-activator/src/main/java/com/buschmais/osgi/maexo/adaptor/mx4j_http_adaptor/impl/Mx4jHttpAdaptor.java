@@ -23,6 +23,9 @@ import mx4j.tools.adaptor.http.HttpAdaptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Represents the MX4J HTTP adaptor.
+ */
 public class Mx4jHttpAdaptor extends HttpAdaptor implements
 		Mx4jHttpAdaptorMBean {
 

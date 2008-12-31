@@ -21,10 +21,25 @@ import javax.management.MBeanServer;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
+/**
+ * Represents an mbean server which is registered with the switchboard.
+ * 
+ * @see SwitchBoardImpl
+ * @see MBeanServer
+ */
 public class MBeanServerRegistration {
 
 	private MBeanServer mbeanServer;
 
+	/**
+	 * Constructor.
+	 * <p> 
+	 * The constructor extracts the mbean server from the provided
+	 * service reference and the bundle context.
+	 * <p>
+	 * @param bundleContext
+	 * @param serviceReference
+	 */
 	public MBeanServerRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference) {
 		this.mbeanServer = (MBeanServer) bundleContext

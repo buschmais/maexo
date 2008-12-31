@@ -16,7 +16,7 @@
  */
 package com.buschmais.osgi.maexo.framework.commons.mbean.objectname;
 
-import java.util.Dictionary;
+import java.util.Map;
 
 import javax.management.ObjectName;
 
@@ -34,6 +34,6 @@ public interface ObjectNameFactory {
 	 * @return the object name
 	 */
 	public ObjectName getObjectName(Object resource,
-			Dictionary<String, Object> properties);
+			Map<String, Object> properties);
 
 }

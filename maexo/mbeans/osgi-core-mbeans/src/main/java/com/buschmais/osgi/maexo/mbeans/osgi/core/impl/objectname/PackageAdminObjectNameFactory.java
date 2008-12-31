@@ -16,7 +16,6 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname;
 
-import java.util.Dictionary;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -35,20 +34,26 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelConstants;
  */
 public class PackageAdminObjectNameFactory implements ObjectNameFactory {
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Returns the object name for the given resource.
 	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory
-	 * #getObjectName(java.lang.Object, java.util.Dictionary)
+	 * @see com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory
+	 *      #getObjectName(java.lang.Object, java.util.Map)
+	 * 
+	 * @param resource
+	 *            the resource
+	 * @param properties
+	 *            must contain a {@link Constants.SERVICE_ID} entry
+	 * @exception ObjectNameFactoryException
+	 *                if the {@link Constants.SERVICE_ID} entry is missing
 	 */
 	public ObjectName getObjectName(Object resource,
-			Dictionary<String, Object> properties) {
+			Map<String, Object> properties) {
 		if (properties == null) {
-			throw new ObjectNameFactoryException("Parameter properties must not be null");
+			throw new IllegalArgumentException(
+					"Parameter properties must not be null");
 		}
-		// create object name properties as linked hash map to maintain
-		// insertion order
+
 		Map<String, Object> objectNameProperties = new LinkedHashMap<String, Object>();
 		// type
 		objectNameProperties.put(
@@ -56,6 +61,9 @@ public class PackageAdminObjectNameFactory implements ObjectNameFactory {
 				PackageAdminConstants.OBJECTNAME_TYPE_VALUE);
 		// id
 		Long id = (Long) properties.get(Constants.SERVICE_ID);
+		if (id == null) {
+			throw new ObjectNameFactoryException("No service id");
+		}
 		objectNameProperties
 				.put(StartLevelConstants.OBJECTNAME_ID_PROPERTY, id);
 		return ObjectNameHelper.assembleObjectName(objectNameProperties);

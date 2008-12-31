@@ -27,6 +27,9 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * OSGi bundle activator for the the platform mbeans server bundle.
+ */
 public class Activator implements BundleActivator {
 
 	private static Logger logger = LoggerFactory.getLogger(Activator.class);

@@ -18,6 +18,9 @@ package com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.impl;
 
 import mx4j.tools.adaptor.http.HttpAdaptorMBean;
 
+/**
+ * Managment interface for the MX4J HTTP adaptor.
+ */
 public interface Mx4jHttpAdaptorMBean extends HttpAdaptorMBean {
 
 	/**

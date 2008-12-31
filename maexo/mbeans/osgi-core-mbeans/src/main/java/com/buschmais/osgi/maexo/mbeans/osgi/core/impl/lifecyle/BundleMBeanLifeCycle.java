@@ -28,12 +28,18 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.Bundle;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean;
 
 /**
- * This class implements a bundle event listener to manage the lifecycle of the
+ * This class implements a bundle event listener to manage the life cycle of the
  * associated bundle mbeans.
  */
 public final class BundleMBeanLifeCycle extends MBeanLifecycleSupport implements
 		BundleListener {
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param bundleContext
+	 *            the bundle context of the exporting bundle
+	 */
 	public BundleMBeanLifeCycle(BundleContext bundleContext) {
 		super(bundleContext);
 	}
@@ -70,16 +76,14 @@ public final class BundleMBeanLifeCycle extends MBeanLifecycleSupport implements
 		ObjectName objectName = super.getObjectNameHelper().getObjectName(
 				bundle, org.osgi.framework.Bundle.class);
 		switch (bundleEvent.getType()) {
-		case BundleEvent.INSTALLED: {
+		case BundleEvent.INSTALLED:
 			BundleMBean bundleMBean = new Bundle(super.getBundleContext(),
 					bundle);
 			super.registerMBeanService(DynamicMBean.class, objectName,
 					bundleMBean);
-		}
 			break;
-		case BundleEvent.UNINSTALLED: {
+		case BundleEvent.UNINSTALLED:
 			super.unregisterMBeanService(objectName);
-		}
 			break;
 		}
 	}

@@ -87,7 +87,7 @@ public class ObjectNameHelper {
 	 * @see ObjectNameHelper#getObjectName(Object, Class[], Dictionary)
 	 */
 	public ObjectName getObjectName(Object resource,
-			Dictionary<String, Object> properties) {
+			Map<String, Object> properties) {
 		return this.getObjectName(resource,
 				resource.getClass().getInterfaces(), properties);
 	}
@@ -121,7 +121,7 @@ public class ObjectNameHelper {
 	 * @see ObjectNameHelper#getObjectName(Object, Class[], Dictionary)
 	 */
 	public ObjectName getObjectName(Object resource,
-			Class<?> resourceInterface, Dictionary<String, Object> properties) {
+			Class<?> resourceInterface, Map<String, Object> properties) {
 		return this.getObjectName(resource,
 				new Class<?>[] { resourceInterface }, properties);
 	}
@@ -158,10 +158,10 @@ public class ObjectNameHelper {
 	 * @return the object name
 	 * @exception ObjectNameFactoryException
 	 *                if no appropriate <code>ObjectNameFactory</code> is found
-	 *                and therefore no object name can be constructed
+	 *                and therefore no object name could be constructed
 	 */
 	public ObjectName getObjectName(Object resource,
-			Class<?>[] resourceInterfaces, Dictionary<String, Object> properties) {
+			Class<?>[] resourceInterfaces, Map<String, Object> properties) {
 		if (resource == null || resourceInterfaces == null
 				|| resourceInterfaces.length == 0) {
 			throw new IllegalArgumentException(
@@ -239,7 +239,7 @@ public class ObjectNameHelper {
 			ObjectNameFactory objectNameFactory, Class<?> resourceInterface) {
 		if (objectNameFactory == null || resourceInterface == null) {
 			throw new IllegalArgumentException(
-					"objectNameFactory and resourceInterface must be provided");
+					"Parameters objectNameFactory and resourceInterface must be provided");
 		}
 		Dictionary<String, String> properties = new Hashtable<String, String>();
 		properties.put(Constants.SERVICE_PROPERTY_RESOURCEINTERFACE,

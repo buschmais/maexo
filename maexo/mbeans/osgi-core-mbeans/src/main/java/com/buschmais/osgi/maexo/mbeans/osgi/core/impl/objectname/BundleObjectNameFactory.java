@@ -16,7 +16,6 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname;
 
-import java.util.Dictionary;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -48,10 +47,9 @@ public class BundleObjectNameFactory implements ObjectNameFactory {
 	 * #getObjectName(java.lang.Object, java.util.Dictionary)
 	 */
 	public ObjectName getObjectName(Object resource,
-			Dictionary<String, Object> properties) {
+			Map<String, Object> properties) {
 		Bundle bundle = (Bundle) resource;
-		// create object name properties as linked hash map to maintain
-		// insertion order
+
 		Map<String, Object> objectNameProperties = new LinkedHashMap<String, Object>();
 		// type
 		objectNameProperties.put(
