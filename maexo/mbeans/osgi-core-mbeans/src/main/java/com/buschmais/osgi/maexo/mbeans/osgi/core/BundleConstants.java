@@ -34,7 +34,7 @@ public class BundleConstants {
 	 */
 	public static final String MBEAN_DESCRIPTION = "Bundle MBean";
 
-	public static final String OBJECTNAME_FORMAT = "com.buschmais.osgi.maexo:type=Bundle,name=%s,version=%s,";
+	public static final String OBJECTNAME_FORMAT = "com.buschmais.osgi.maexo:type=Bundle,name=%s,version=%s";
 
 	/**
 	 * attribute: id
