@@ -189,7 +189,7 @@ public final class StartLevel extends DynamicMBeanSupport implements
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
 		Long id = (Long) super.getMbeanServer().getAttribute(objectName,
-				BundleConstants.ATTRIBUTE_ID_NAME);
+				BundleConstants.ID.getName());
 		return this.getBundleStartLevel(id);
 	}
 
@@ -235,7 +235,7 @@ public final class StartLevel extends DynamicMBeanSupport implements
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
 		Long id = (Long) super.getMbeanServer().getAttribute(objectName,
-				BundleConstants.ATTRIBUTE_ID_NAME);
+				BundleConstants.ID.getName());
 		return this.isBundlePersistentlyStarted(id);
 	}
 
@@ -262,7 +262,7 @@ public final class StartLevel extends DynamicMBeanSupport implements
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
 		Long id = (Long) super.getMbeanServer().getAttribute(objectName,
-				BundleConstants.ATTRIBUTE_ID_NAME);
+				BundleConstants.ID.getName());
 		this.setBundleStartLevel(id, startLevel);
 	}
 

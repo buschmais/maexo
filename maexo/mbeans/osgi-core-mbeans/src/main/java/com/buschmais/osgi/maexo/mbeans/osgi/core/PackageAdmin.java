@@ -415,7 +415,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
 		Long id = (Long) super.getMbeanServer().getAttribute(objectName,
-				BundleConstants.ATTRIBUTE_ID_NAME);
+				BundleConstants.ID.getName());
 		return this.getBundleType(id);
 	}
 
@@ -492,7 +492,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
 		Long id = (Long) super.getMbeanServer().getAttribute(objectName,
-				BundleConstants.ATTRIBUTE_ID_NAME);
+				BundleConstants.ID.getName());
 		return this.getExportedPackages(id);
 	}
 
@@ -532,7 +532,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
 		Long id = (Long) super.getMbeanServer().getAttribute(objectName,
-				BundleConstants.ATTRIBUTE_ID_NAME);
+				BundleConstants.ID.getName());
 		return this.getFragments(id);
 	}
 
@@ -559,7 +559,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 			throws AttributeNotFoundException, InstanceNotFoundException,
 			MBeanException, ReflectionException {
 		Long id = (Long) super.getMbeanServer().getAttribute(objectName,
-				BundleConstants.ATTRIBUTE_ID_NAME);
+				BundleConstants.ID.getName());
 		return this.getHosts(id);
 	}
 
@@ -631,7 +631,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		Long[] ids = new Long[objectNames.length];
 		for (int i = 0; i < objectNames.length; i++) {
 			ids[i] = (Long) super.getMbeanServer().getAttribute(objectNames[i],
-					BundleConstants.ATTRIBUTE_ID_NAME);
+					BundleConstants.ID.getName());
 		}
 		this.refreshPackages(ids);
 	}
@@ -675,7 +675,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		Long[] ids = new Long[objectNames.length];
 		for (int i = 0; i < objectNames.length; i++) {
 			ids[i] = (Long) super.getMbeanServer().getAttribute(objectNames[i],
-					BundleConstants.ATTRIBUTE_ID_NAME);
+					BundleConstants.ID.getName());
 		}
 		return this.resolveBundles(ids);
 	}

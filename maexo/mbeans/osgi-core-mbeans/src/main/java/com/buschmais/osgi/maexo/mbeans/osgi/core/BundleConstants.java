@@ -16,114 +16,174 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
+import javax.management.openmbean.ArrayType;
+import javax.management.openmbean.CompositeType;
+import javax.management.openmbean.OpenDataException;
+import javax.management.openmbean.OpenMBeanAttributeInfoSupport;
+import javax.management.openmbean.OpenMBeanOperationInfoSupport;
+import javax.management.openmbean.OpenMBeanParameterInfo;
+import javax.management.openmbean.OpenMBeanParameterInfoSupport;
+import javax.management.openmbean.OpenType;
+import javax.management.openmbean.SimpleType;
+import javax.management.openmbean.TabularType;
+
 public class BundleConstants {
-
-	/**
-	 * object name properties: type and name
-	 */
-	public static final String OBJECTNAME_TYPE_PROPERTY = "type";
-	public static final String OBJECTNAME_NAME_PROPERTY = "name";
-	public static final String OBJECTNAME_VERSION_PROPERTY = "version";
-
-	/**
-	 * value of the type property
-	 */
-	public static final String OBJECTNAME_TYPE_VALUE = "Bundle";
 
 	/**
 	 * MBean description
 	 */
 	public static final String MBEAN_DESCRIPTION = "Bundle MBean";
 
+	public static final String OBJECTNAME_FORMAT = "com.buschmais.osgi.maexo:type=Bundle,name=%s,version=%s,";
+
 	/**
 	 * attribute: id
 	 */
-	public static final String ATTRIBUTE_ID_NAME = "bundleId";
-	public static final String ATTRIBUTE_ID_DESCRIPTION = "The unique identifier of this bundle.";
+	public static final OpenMBeanAttributeInfoSupport ID = new OpenMBeanAttributeInfoSupport(
+			"bundleId", "The unique identifier of this bundle.",
+			SimpleType.INTEGER, true, false, false);
 
 	/**
 	 * attribute: state
 	 */
-	public static final String ATTRIBUTE_STATE_NAME = "state";
-	public static final String ATTRIBUTE_STATE_DESCRIPTION = "An element of UNINSTALLED,INSTALLED, RESOLVED,STARTING, STOPPING,ACTIVE.";
+	public static final OpenMBeanAttributeInfoSupport STATE = new OpenMBeanAttributeInfoSupport(
+			"state",
+			"An element of UNINSTALLED,INSTALLED,RESOLVED,STARTING,STOPPING,ACTIVE.",
+			SimpleType.INTEGER, true, false, false);
 
 	/**
 	 * attribute: stateName
 	 */
-	public static final String ATTRIBUTE_STATENAME_NAME = "stateAsName";
-	public static final String ATTRIBUTE_STATENAME_DESCRIPTION = "An element of UNINSTALLED,INSTALLED, RESOLVED,STARTING, STOPPING,ACTIVE.";
+	public static final OpenMBeanAttributeInfoSupport STATENAME = new OpenMBeanAttributeInfoSupport(
+			"stateAsName",
+			"An element of UNINSTALLED,INSTALLED,RESOLVED,STARTING,STOPPING,ACTIVE.",
+			SimpleType.STRING, true, false, false);
 
 	/**
 	 * attribute: headers
 	 */
-	public static final String TABULARTYPE_HEADERS_NAME = "headers";
-	public static final String TABULARTYPE_HEADERS_DESCRIPTION = "TabularType representing a bundle's Manifest headers and values.";
-	public static final String COMPOSITETYPE_HEADER_ENTRY = "headerEntry";
-	public static final String COMPOSITETYPE_HEADER_ENTRY_DESCRIPTION = "bundle header entry";
-	public static final String COMPOSITETYPE_HEADER_NAME = "name";
-	public static final String COMPOSITETYPE_HEADER_VALUE = "value";
-	public static final String ATTRIBUTE_HEADERS_NAME = "headers";
-	public static final String ATTRIBUTE_HEADERS_DESCRIPTION = "A TabularData object containing this bundle's Manifest headers and values.";
+	public static final String[] ITEM_NAMES = new String[] { "name", "value" };
+	public static final CompositeType HEADER_TYPE = createCompositeType(
+			"headerEntry", "bundle header entry", ITEM_NAMES, ITEM_NAMES,
+			new OpenType[] { SimpleType.STRING, SimpleType.STRING });
+	public static final TabularType HEADERS_TYPE = createTabularType("headers",
+			"TabularType representing a bundle's Manifest headers and values.",
+			HEADER_TYPE, new String[] { "name" });
+	public static final OpenMBeanAttributeInfoSupport HEADER = new OpenMBeanAttributeInfoSupport(
+			"headers",
+			"A TabularData object containing this bundle's Manifest headers and values.",
+			HEADERS_TYPE, true, false, false);
 
 	/**
 	 * attribute: lastModified
 	 */
-	public static final String ATTRIBUTE_LASTMODIFIED_NAME = "lastModified";
-	public static final String ATTRIBUTE_LASTMODIFIED_DESCRIPTION = "The time when this bundle was last modified.";
+	public static final OpenMBeanAttributeInfoSupport LASTMODIFIED = new OpenMBeanAttributeInfoSupport(
+			"lastModified", "The time when this bundle was last modified.",
+			SimpleType.LONG, true, false, false);
 
 	/**
 	 * attribute: lastModifiedAsDate
 	 */
-	public static final String ATTRIBUTE_LASTMODIFIEDASDATE_NAME = "lastModifiedAsDate";
-	public static final String ATTRIBUTE_LASTMODIFIEDASDATE_DESCRIPTION = "The time when this bundle was last modified.";
+	public static final OpenMBeanAttributeInfoSupport LASTMODIFIEDASDATE = new OpenMBeanAttributeInfoSupport(
+			"lastModifiedAsDate",
+			"The time when this bundle was last modified.", SimpleType.DATE,
+			true, false, false);
 
 	/**
 	 * attribute: location
 	 */
-	public static final String ATTRIBUTE_LOCATION_NAME = "location";
-	public static final String ATTRIBUTE_LOCATION_DESCRIPTION = "The string representation of this bundle's location identifier.";
+	public static final OpenMBeanAttributeInfoSupport LOCATION = new OpenMBeanAttributeInfoSupport(
+			"location",
+			"The string representation of this bundle's location identifier.",
+			SimpleType.STRING, true, false, false);
 
 	/**
 	 * attribute: registeredServices
 	 */
-	public static final String ATTRIBUTE_REGISTEREDSERVICES_NAME = "registeredServices";
-	public static final String ATTRIBUTE_REGISTEREDSERVICES_DESCRIPTION = "This bundle's ObjectName list for all services it has registered or null if this bundle has no registered services.";
+	public static final OpenMBeanAttributeInfoSupport REGISTEREDSERVICES = new OpenMBeanAttributeInfoSupport(
+			"registeredServices",
+			"This bundle's ObjectName list for all services it has registered or null if this bundle has no registered services.",
+			createArrayType(1, SimpleType.OBJECTNAME), true, false, false);
 
 	/**
 	 * attribute: servicesInUse
 	 */
-	public static final String ATTRIBUTE_SERVICESINUSE_NAME = "servicesInUse";
-	public static final String ATTRIBUTE_SERVICESINUSE_DESCRIPTION = "This bundle's ObjectName list for all services it is using or returns null if this bundle is not using any services.";
+	public static final OpenMBeanAttributeInfoSupport SERVICESINUSE = new OpenMBeanAttributeInfoSupport(
+			"servicesInUse",
+			"This bundle's ObjectName list for all services it is using or returns null if this bundle is not using any services.",
+			createArrayType(1, SimpleType.OBJECTNAME), true, false, false);
 
 	/**
 	 * operation: start
 	 */
-	public static final String OPERATION_START_NAME = "start";
-	public static final String OPERATION_START_DESCRIPTION = "Start the bundle";
+	public static final OpenMBeanOperationInfoSupport START = new OpenMBeanOperationInfoSupport(
+			"start", "Start the bundle",
+			new OpenMBeanParameterInfoSupport[] {}, SimpleType.VOID,
+			OpenMBeanOperationInfoSupport.ACTION_INFO);
 
 	/**
 	 * operation: stop
 	 */
-	public static final String OPERATION_STOP_NAME = "stop";
-	public static final String OPERATION_STOP_DESCRIPTION = "Stop the bundle";
+	public static final OpenMBeanOperationInfoSupport STOP = new OpenMBeanOperationInfoSupport(
+			"stop", "Stop the bundle", new OpenMBeanParameterInfoSupport[] {},
+			SimpleType.VOID, OpenMBeanOperationInfoSupport.ACTION_INFO);
 
 	/**
 	 * operation: update
 	 */
-	public static final String OPERATION_UPDATE_NAME = "update";
-	public static final String OPERATION_UPDATE_DESCRIPTION = "Update the bundle";
+	public static final OpenMBeanOperationInfoSupport UPDATE = new OpenMBeanOperationInfoSupport(
+			"update", "Update the bundle",
+			new OpenMBeanParameterInfoSupport[] {}, SimpleType.VOID,
+			OpenMBeanOperationInfoSupport.ACTION_INFO);
 
 	/**
 	 * operation: update from url
 	 */
-	public static final String OPERATION_UPDATEFROMURL_NAME = "update";
-	public static final String OPERATION_UPDATEFROMURL_DESCRIPTION = "Update the bundle from the given url";
-	public static final String OPERATION_UPDATEFROMURL_URL_PARAMETER = "url";
-	public static final String OPERATION_UPDATEFROMURL_URL_DESCRIPTION = "url";
+	public static final OpenMBeanOperationInfoSupport UPDATEFROMURL = new OpenMBeanOperationInfoSupport(
+			"update", "Update the bundle from the given url",
+			new OpenMBeanParameterInfo[] { new OpenMBeanParameterInfoSupport(
+					"url", "URL", SimpleType.STRING) }, SimpleType.VOID,
+			OpenMBeanOperationInfoSupport.ACTION_INFO);
 
 	/**
 	 * operation: uninstall
 	 */
+	// FIXME@DM there is no uninstall operation defined in
+	// com.buschmais.osgi.maexo.mbeans.osgi.core.Bundle
 	public static final String OPERATION_UNINSTALL_NAME = "uninstall";
 	public static final String OPERATION_UNINSTALL_DESCRIPTION = "Uninstall the bundle";
+
+	private static CompositeType createCompositeType(String typeName,
+			String description, String[] itemNames, String[] itemDescriptions,
+			OpenType[] itemTypes) {
+		try {
+			return new CompositeType(typeName, description, itemNames,
+					itemDescriptions, itemTypes);
+		} catch (OpenDataException e) {
+			// let the exception slip as otherwise the user will see a
+			// ClassDefNotFoundException
+		}
+		return null;
+	}
+
+	private static TabularType createTabularType(String typeName,
+			String description, CompositeType rowType, String[] indexNames) {
+		try {
+			return new TabularType(typeName, description, rowType, indexNames);
+		} catch (OpenDataException e) {
+			// let the exception slip as otherwise the user will see a
+			// ClassDefNotFoundException
+		}
+		return null;
+	}
+
+	private static ArrayType createArrayType(int dimension, OpenType elementType) {
+		try {
+			return new ArrayType(dimension, elementType);
+		} catch (OpenDataException e) {
+			// let the exception slip as otherwise the user will see a
+			// ClassDefNotFoundException
+		}
+		return null;
+	}
 }

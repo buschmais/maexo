@@ -16,7 +16,6 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.management.ObjectName;
@@ -26,7 +25,6 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.Version;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleConstants;
 
 /**
@@ -50,26 +48,27 @@ public class BundleObjectNameFactory implements ObjectNameFactory {
 			Map<String, Object> properties) {
 		Bundle bundle = (Bundle) resource;
 
-		Map<String, Object> objectNameProperties = new LinkedHashMap<String, Object>();
-		// type
-		objectNameProperties.put(
-				BundleConstants.OBJECTNAME_TYPE_PROPERTY,
-				BundleConstants.OBJECTNAME_TYPE_VALUE);
 		// create name property: <symbolic name>
 		String symbolicName = bundle.getSymbolicName();
 		if (symbolicName == null) {
 			symbolicName = DEFAULT_BUNDLE_SYMBOLICNAME;
 		}
-		objectNameProperties.put(
-				BundleConstants.OBJECTNAME_NAME_PROPERTY, symbolicName);
 		// create version property
 		String bundleVersion = (String) bundle.getHeaders().get(
 				Constants.BUNDLE_VERSION);
 		if (bundleVersion == null) {
 			bundleVersion = DEFAULT_BUNDLE_VERSION;
 		}
-		objectNameProperties.put(
-				BundleConstants.OBJECTNAME_VERSION_PROPERTY, bundleVersion);
-		return ObjectNameHelper.assembleObjectName(objectNameProperties);
+		
+		String objectName = String.format(BundleConstants.OBJECTNAME_FORMAT,
+				symbolicName, bundleVersion);
+		try {
+			return new ObjectName(objectName);
+		} catch (Exception e) {
+			throw new IllegalArgumentException(String.format(
+					"Cannot create object name instance for '%s'", objectName),
+					e);
+		}
+
 	}
 }
