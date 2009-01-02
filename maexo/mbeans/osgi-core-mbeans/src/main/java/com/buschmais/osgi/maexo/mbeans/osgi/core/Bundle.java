@@ -46,7 +46,7 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupp
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 
 /**
- * Represents am OSGi bundle.
+ * Represents an OSGi bundle.
  */
 public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		BundleMBean {
