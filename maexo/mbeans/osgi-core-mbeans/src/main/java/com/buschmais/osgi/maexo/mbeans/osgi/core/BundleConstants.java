@@ -59,16 +59,17 @@ public class BundleConstants {
 			"An element of UNINSTALLED,INSTALLED,RESOLVED,STARTING,STOPPING,ACTIVE.",
 			SimpleType.STRING, true, false, false);
 
-	/**
-	 * attribute: headers
-	 */
-	public static final String[] ITEM_NAMES = new String[] { "name", "value" };
+	// package visible as the array content can still be changed
+	static final String[] ITEM_NAMES = new String[] { "name", "value" };
 	public static final CompositeType HEADER_TYPE = OpenTypeFactory.createCompositeType(
 			"headerEntry", "bundle header entry", ITEM_NAMES, ITEM_NAMES,
 			new OpenType[] { SimpleType.STRING, SimpleType.STRING });
 	public static final TabularType HEADERS_TYPE = OpenTypeFactory.createTabularType("headers",
 			"TabularType representing a bundle's Manifest headers and values.",
 			HEADER_TYPE, new String[] { "name" });
+	/**
+	 * attribute: headers
+	 */
 	public static final OpenMBeanAttributeInfoSupport HEADER = new OpenMBeanAttributeInfoSupport(
 			"headers",
 			"A TabularData object containing this bundle's Manifest headers and values.",
@@ -145,7 +146,7 @@ public class BundleConstants {
 					"url", "URL", SimpleType.STRING) }, SimpleType.VOID,
 			OpenMBeanOperationInfoSupport.ACTION_INFO);
 
-	/**
+	/*
 	 * operation: uninstall
 	 */
 	// FIXME@DM there is no uninstall operation defined in
