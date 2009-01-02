@@ -16,9 +16,7 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
-import javax.management.openmbean.ArrayType;
 import javax.management.openmbean.CompositeType;
-import javax.management.openmbean.OpenDataException;
 import javax.management.openmbean.OpenMBeanAttributeInfoSupport;
 import javax.management.openmbean.OpenMBeanOperationInfoSupport;
 import javax.management.openmbean.OpenMBeanParameterInfo;
@@ -26,6 +24,8 @@ import javax.management.openmbean.OpenMBeanParameterInfoSupport;
 import javax.management.openmbean.OpenType;
 import javax.management.openmbean.SimpleType;
 import javax.management.openmbean.TabularType;
+
+import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.OpenTypeFactory;
 
 public class BundleConstants {
 
@@ -63,10 +63,10 @@ public class BundleConstants {
 	 * attribute: headers
 	 */
 	public static final String[] ITEM_NAMES = new String[] { "name", "value" };
-	public static final CompositeType HEADER_TYPE = createCompositeType(
+	public static final CompositeType HEADER_TYPE = OpenTypeFactory.createCompositeType(
 			"headerEntry", "bundle header entry", ITEM_NAMES, ITEM_NAMES,
 			new OpenType[] { SimpleType.STRING, SimpleType.STRING });
-	public static final TabularType HEADERS_TYPE = createTabularType("headers",
+	public static final TabularType HEADERS_TYPE = OpenTypeFactory.createTabularType("headers",
 			"TabularType representing a bundle's Manifest headers and values.",
 			HEADER_TYPE, new String[] { "name" });
 	public static final OpenMBeanAttributeInfoSupport HEADER = new OpenMBeanAttributeInfoSupport(
@@ -103,7 +103,7 @@ public class BundleConstants {
 	public static final OpenMBeanAttributeInfoSupport REGISTEREDSERVICES = new OpenMBeanAttributeInfoSupport(
 			"registeredServices",
 			"This bundle's ObjectName list for all services it has registered or null if this bundle has no registered services.",
-			createArrayType(1, SimpleType.OBJECTNAME), true, false, false);
+			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME), true, false, false);
 
 	/**
 	 * attribute: servicesInUse
@@ -111,7 +111,7 @@ public class BundleConstants {
 	public static final OpenMBeanAttributeInfoSupport SERVICESINUSE = new OpenMBeanAttributeInfoSupport(
 			"servicesInUse",
 			"This bundle's ObjectName list for all services it is using or returns null if this bundle is not using any services.",
-			createArrayType(1, SimpleType.OBJECTNAME), true, false, false);
+			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME), true, false, false);
 
 	/**
 	 * operation: start
@@ -153,37 +153,4 @@ public class BundleConstants {
 	public static final String OPERATION_UNINSTALL_NAME = "uninstall";
 	public static final String OPERATION_UNINSTALL_DESCRIPTION = "Uninstall the bundle";
 
-	private static CompositeType createCompositeType(String typeName,
-			String description, String[] itemNames, String[] itemDescriptions,
-			OpenType[] itemTypes) {
-		try {
-			return new CompositeType(typeName, description, itemNames,
-					itemDescriptions, itemTypes);
-		} catch (OpenDataException e) {
-			// let the exception slip as otherwise the user will see a
-			// ClassDefNotFoundException
-		}
-		return null;
-	}
-
-	private static TabularType createTabularType(String typeName,
-			String description, CompositeType rowType, String[] indexNames) {
-		try {
-			return new TabularType(typeName, description, rowType, indexNames);
-		} catch (OpenDataException e) {
-			// let the exception slip as otherwise the user will see a
-			// ClassDefNotFoundException
-		}
-		return null;
-	}
-
-	private static ArrayType createArrayType(int dimension, OpenType elementType) {
-		try {
-			return new ArrayType(dimension, elementType);
-		} catch (OpenDataException e) {
-			// let the exception slip as otherwise the user will see a
-			// ClassDefNotFoundException
-		}
-		return null;
-	}
 }

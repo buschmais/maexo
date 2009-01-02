@@ -32,7 +32,6 @@ import javax.management.MBeanNotificationInfo;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.openmbean.CompositeType;
-import javax.management.openmbean.OpenDataException;
 import javax.management.openmbean.OpenMBeanAttributeInfoSupport;
 import javax.management.openmbean.OpenMBeanConstructorInfoSupport;
 import javax.management.openmbean.OpenMBeanInfoSupport;
@@ -164,7 +163,6 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	 * 
 	 * @return the bundle headers
 	 * @throws MBeanException
-	 * @throws OpenDataException
 	 */
 	@SuppressWarnings("unchecked")
 	public TabularData getHeaders() throws MBeanException {
