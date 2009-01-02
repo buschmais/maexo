@@ -33,7 +33,7 @@
 
 	<properties>
 		<maexo.version>1.0.0-SNAPSHOT</maexo.version>
-		<slf4j.version>1.5.0</slf4j.version>
+		<slf4j.version>1.5.6</slf4j.version>
 		<log4j.version>1.2.15</log4j.version>
 		<spring.maven.artifact.version>2.5.6.A</spring.maven.artifact.version>
 		<spring.osgi.version>1.1.2.A</spring.osgi.version>
@@ -256,19 +256,12 @@ limitations under the License
 
 			<dependency>
 				<groupId>org.slf4j</groupId>
-				<artifactId>com.springsource.slf4j.api</artifactId>
+				<artifactId>slf4j-api</artifactId>
 				<version>${slf4j.version}</version>
 				<scope>compile</scope>
 			</dependency>
-
+			
 			<!-- runtime dependencies -->
-			<dependency>
-				<groupId>org.apache.log4j</groupId>
-				<artifactId>com.springsource.org.apache.log4j</artifactId>
-				<version>${log4j.version}</version>
-				<scope>runtime</scope>
-			</dependency>
-
 			<dependency>
 				<groupId>org.eclipse.osgi</groupId>
 				<artifactId>org.eclipse.osgi</artifactId>
@@ -277,20 +270,20 @@ limitations under the License
 			</dependency>
 
 			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>com.springsource.slf4j.log4j</artifactId>
+			    <groupId>org.slf4j</groupId>
+			    <artifactId>slf4j-jdk14</artifactId>
 				<version>${slf4j.version}</version>
 				<scope>runtime</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>com.springsource.slf4j.org.apache.commons.logging</artifactId>
-				<version>${slf4j.version}</version>
-				<scope>runtime</scope>
-			</dependency>
+			</dependency> 
 
 			<!-- test scoped dependencies -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+				<scope>test</scope>
+			</dependency>
+
 			<dependency>
 				<groupId>org.easymock</groupId>
 				<artifactId>com.springsource.org.easymock</artifactId>

@@ -59,12 +59,17 @@
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>com.springsource.slf4j.log4j</artifactId>
-		</dependency>
+			<artifactId>slf4j-api</artifactId>
+		</dependency> 
+
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-jdk14</artifactId>
+		</dependency> 
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>com.springsource.slf4j.org.apache.commons.logging</artifactId>
+			<artifactId>jcl-over-slf4j</artifactId>
 		</dependency>
 
 		<dependency>

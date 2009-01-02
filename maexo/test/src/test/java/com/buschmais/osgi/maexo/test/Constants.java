@@ -19,7 +19,7 @@ package com.buschmais.osgi.maexo.test;
 public class Constants {
 
 	public static final String MAEXO_VERSION = "1.0.0-SNAPSHOT";
-	public static final String SLF4J_VERSION = "1.5.0";
+	public static final String SLF4J_VERSION = "1.5.6";
 	public static final String SPRING_VERSION = "2.5.6.A";
 	public static final String SPRING_OSGI_VERSION = "1.1.2.A";
 
@@ -40,15 +40,13 @@ public class Constants {
 
 	public static final String ARTIFACT_JUNIT = "org.junit, com.springsource.junit, 3.8.2";
 
-	public static final String ARTIFACT_LOG4J = " org.apache.log4j, com.springsource.org.apache.log4j, 1.2.15";
-
-	public static final String ARTIFACT_SLF4J_API = " org.slf4j,com.springsource.slf4j.api, "
+	public static final String ARTIFACT_SLF4J_API = " org.slf4j,slf4j-api, "
 			+ SLF4J_VERSION;
 
-	public static final String ARTIFACT_SLF4J_JCL = " org.slf4j,com.springsource.slf4j.org.apache.commons.logging, "
+	public static final String ARTIFACT_SLF4J_JDK14 = " org.slf4j,slf4j-jdk14, "
 			+ SLF4J_VERSION;
 
-	public static final String ARTIFACT_SLF4J_LOG4J = " org.slf4j,com.springsource.slf4j.log4j, "
+	public static final String ARTIFACT_SLF4J_JCL = " org.slf4j,jcl-over-slf4j, "
 			+ SLF4J_VERSION;
 
 	public static final String ARTIFACT_SPRING_AOP = "org.springframework, org.springframework.aop, "
@@ -74,8 +72,8 @@ public class Constants {
 			+ SPRING_OSGI_VERSION;
 
 	public static final String[] TEST_FRAMEWORK_BUNDLES_NAMES = new String[] {
-			ARTIFACT_ASM, ARTIFACT_AOPALLIANCE, ARTIFACT_JUNIT, ARTIFACT_LOG4J,
-			ARTIFACT_SLF4J_API, ARTIFACT_SLF4J_JCL, ARTIFACT_SLF4J_LOG4J,
+			ARTIFACT_ASM, ARTIFACT_AOPALLIANCE, ARTIFACT_JUNIT,
+			ARTIFACT_SLF4J_JDK14, ARTIFACT_SLF4J_API, ARTIFACT_SLF4J_JCL,
 			ARTIFACT_SPRING_AOP, ARTIFACT_SPRING_BEANS,
 			ARTIFACT_SPRING_CONTEXT, ARTIFACT_SPRING_CORE,
 			ARTIFACT_SPRING_TEST, ARTIFACT_SPRING_OSGI_ANNOTATION,
