@@ -31,14 +31,12 @@ import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeDataSupport;
-import javax.management.openmbean.CompositeType;
 import javax.management.openmbean.OpenMBeanAttributeInfoSupport;
 import javax.management.openmbean.OpenMBeanConstructorInfoSupport;
 import javax.management.openmbean.OpenMBeanInfoSupport;
 import javax.management.openmbean.OpenMBeanOperationInfoSupport;
 import javax.management.openmbean.TabularData;
 import javax.management.openmbean.TabularDataSupport;
-import javax.management.openmbean.TabularType;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
@@ -79,10 +77,6 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	private org.osgi.framework.Bundle bundle;
 
 	private ObjectNameHelper objectNameHelper;
-
-	private CompositeType headerType;
-
-	private TabularType headersType;
 
 	/**
 	 * Constructs the managed bean.
@@ -167,7 +161,7 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	@SuppressWarnings("unchecked")
 	public TabularData getHeaders() throws MBeanException {
 		TabularDataSupport tabularHeaders = new TabularDataSupport(
-				this.headersType);
+				BundleConstants.HEADERS_TYPE);
 		Dictionary<String, String> headers = this.bundle.getHeaders();
 		Enumeration<String> keys = headers.keys();
 		while (keys.hasMoreElements()) {
@@ -175,8 +169,8 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 			String value = headers.get(key);
 			try {
 				CompositeDataSupport header = new CompositeDataSupport(
-						this.headerType, BundleConstants.ITEM_NAMES,
-						new Object[] { key, value });
+						BundleConstants.HEADER_TYPE,
+						BundleConstants.ITEM_NAMES, new Object[] { key, value });
 				tabularHeaders.put(header);
 			} catch (Exception e) {
 				throw new MBeanException(e);
