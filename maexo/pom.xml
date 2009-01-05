@@ -276,14 +276,14 @@ limitations under the License
 				<scope>runtime</scope>
 			</dependency> 
 
-			<!-- test scoped dependencies -->
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
 				<version>${slf4j.version}</version>
-				<scope>test</scope>
+				<scope>runtime</scope>
 			</dependency>
 
+			<!-- test scoped dependencies -->
 			<dependency>
 				<groupId>org.easymock</groupId>
 				<artifactId>com.springsource.org.easymock</artifactId>

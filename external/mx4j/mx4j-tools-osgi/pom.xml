@@ -50,6 +50,8 @@
 							javax.servlet.*;resolution:=optional,
 							javax.xml.rpc.*;resolution:=optional,
 							org.apache.axis.*;resolution:=optional,
+							org.apache.commons.logging.*;resolution:=optional,
+							org.apache.log4j.*;resolution:=optional,
 							org.mortbay.http.*;resolution:=optional,
 							org.mortbay.jetty.*;resolution:=optional,
 							org.python.*;resolution:=optional,
