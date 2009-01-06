@@ -39,12 +39,8 @@ public final class Activator implements BundleActivator {
 	 */
 	private ServiceRegistration mbeanServerRegistration;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext
-	 * )
+	/**
+	 * {@inheritDoc}
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		logger.info("Starting maexo Platform MBean Server");
@@ -56,11 +52,8 @@ public final class Activator implements BundleActivator {
 				null);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	/**
+	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		logger.info("Stopping maexo Platform MBean Server");
