@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class Activator implements BundleActivator {
 
-	private final static Logger logger = LoggerFactory.getLogger(Activator.class);
+	private static final Logger logger = LoggerFactory.getLogger(Activator.class);
 
 	/**
 	 * Represents the platform mbean server.
