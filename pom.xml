@@ -31,6 +31,10 @@
 		<url>http://www.buschmais.com</url>
 	</organization>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<modules>
 		<module>external</module>
 		<module>maexo</module>
