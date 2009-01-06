@@ -30,10 +30,13 @@ import org.slf4j.LoggerFactory;
 /**
  * OSGi bundle activator for the the platform mbeans server bundle.
  */
-public class Activator implements BundleActivator {
+public final class Activator implements BundleActivator {
 
 	private static Logger logger = LoggerFactory.getLogger(Activator.class);
 
+	/**
+	 * Represents the platform mbean server.
+	 */
 	private ServiceRegistration mbeanServerRegistration;
 
 	/*
@@ -44,12 +47,9 @@ public class Activator implements BundleActivator {
 	 * )
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
-		if (logger.isInfoEnabled()) {
-			logger.info("Starting maexo Platform MBean Server");
-		}
+		logger.info("Starting maexo Platform MBean Server");
 		MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
-		if (logger.isDebugEnabled())
-			logger.debug("registering instance " + mbeanServer + " as service");
+		logger.debug("registering instance {} as service", mbeanServer);
 		this.mbeanServerRegistration = bundleContext.registerService(
 				new String[] { MBeanServer.class.getName(),
 						MBeanServerConnection.class.getName() }, mbeanServer,
@@ -63,9 +63,7 @@ public class Activator implements BundleActivator {
 	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
-		if (logger.isInfoEnabled()) {
-			logger.info("Stopping maexo Platform MBean Server");
-		}
+		logger.info("Stopping maexo Platform MBean Server");
 		this.mbeanServerRegistration.unregister();
 	}
 
