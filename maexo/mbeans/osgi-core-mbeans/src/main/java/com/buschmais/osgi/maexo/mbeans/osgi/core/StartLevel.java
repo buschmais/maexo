@@ -16,9 +16,6 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.management.AttributeNotFoundException;
 import javax.management.DynamicMBean;
 import javax.management.InstanceNotFoundException;
@@ -31,8 +28,6 @@ import javax.management.openmbean.OpenMBeanAttributeInfoSupport;
 import javax.management.openmbean.OpenMBeanConstructorInfoSupport;
 import javax.management.openmbean.OpenMBeanInfoSupport;
 import javax.management.openmbean.OpenMBeanOperationInfoSupport;
-import javax.management.openmbean.OpenMBeanParameterInfoSupport;
-import javax.management.openmbean.SimpleType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -77,95 +72,20 @@ public final class StartLevel extends DynamicMBeanSupport implements
 	public MBeanInfo getMBeanInfo() {
 		String className = StartLevel.class.getName();
 		// attributes
-		List<OpenMBeanAttributeInfoSupport> attributeList = new ArrayList<OpenMBeanAttributeInfoSupport>();
-		// startLevel
-		attributeList.add(new OpenMBeanAttributeInfoSupport(
-				StartLevelConstants.ATTRIBUTE_STARTLEVEL_NAME,
-				StartLevelConstants.ATTRIBUTE_STARTLEVEL_DESCRIPTION,
-				SimpleType.INTEGER, true, true, false));
-		// initialBundleStartLevel
-		attributeList
-				.add(new OpenMBeanAttributeInfoSupport(
-						StartLevelConstants.ATTRIBUTE_INITIALBUNDLESTARTLEVEL_NAME,
-						StartLevelConstants.ATTRIBUTE_INITIALBUNDLESTARTLEVEL_DESCRIPTION,
-						SimpleType.INTEGER, true, true, false));
-		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = attributeList
-				.toArray(new OpenMBeanAttributeInfoSupport[attributeList.size()]);
+		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[] {
+				StartLevelConstants.STARTLEVEL,
+				StartLevelConstants.INITIALBUNDLE_STARTLEVEL };
 
 		// operations
-		List<OpenMBeanOperationInfoSupport> operationList = new ArrayList<OpenMBeanOperationInfoSupport>();
-		// int getBundleStartLevel(ObjectName)
-		operationList
-				.add(new OpenMBeanOperationInfoSupport(
-						StartLevelConstants.OPERATION_GETBUNDLESTARTLEVEL_NAME,
-						StartLevelConstants.OPERATION_GETBUNDLESTARTLEVEL_DESCRIPTION,
-						new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-								StartLevelConstants.OPERATION_GETBUNDLESTARTLEVEL_OBJECTNAME_PARAMETER,
-								StartLevelConstants.OPERATION_GETBUNDLESTARTLEVEL_OBJECTNAME_DESCRIPTION,
-								SimpleType.OBJECTNAME) }, SimpleType.INTEGER,
-						OpenMBeanOperationInfoSupport.INFO));
-		// void setBundleStartLevel(ObjectName, int)
-		operationList
-				.add(new OpenMBeanOperationInfoSupport(
-						StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_NAME,
-						StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_DESCRIPTION,
-						new OpenMBeanParameterInfoSupport[] {
-								new OpenMBeanParameterInfoSupport(
-										StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_OBJECTNAME_PARAMETER,
-										StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_OBJECTNAME_DESCRIPTION,
-										SimpleType.OBJECTNAME),
-								new OpenMBeanParameterInfoSupport(
-										StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_STARTLEVEL_PARAMETER,
-										StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_STARTLEVEL_DESCRIPTION,
-										SimpleType.INTEGER) }, SimpleType.VOID,
-						OpenMBeanOperationInfoSupport.ACTION));
-		// int getBundleStartLevel(long)
-		operationList
-				.add(new OpenMBeanOperationInfoSupport(
-						StartLevelConstants.OPERATION_GETBUNDLESTARTLEVEL_NAME,
-						StartLevelConstants.OPERATION_GETBUNDLESTARTLEVEL_DESCRIPTION,
-						new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-								StartLevelConstants.OPERATION_GETBUNDLESTARTLEVEL_ID_PARAMETER,
-								StartLevelConstants.OPERATION_GETBUNDLESTARTLEVEL_ID_DESCRIPTION,
-								SimpleType.LONG) }, SimpleType.INTEGER,
-						OpenMBeanOperationInfoSupport.INFO));
-		// void setBundleStartLevel(long, int)
-		operationList
-				.add(new OpenMBeanOperationInfoSupport(
-						StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_NAME,
-						StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_DESCRIPTION,
-						new OpenMBeanParameterInfoSupport[] {
-								new OpenMBeanParameterInfoSupport(
-										StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_ID_PARAMETER,
-										StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_ID_DESCRIPTION,
-										SimpleType.LONG),
-								new OpenMBeanParameterInfoSupport(
-										StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_STARTLEVEL_PARAMETER,
-										StartLevelConstants.OPERATION_SETBUNDLESTARTLEVEL_STARTLEVEL_DESCRIPTION,
-										SimpleType.INTEGER) }, SimpleType.VOID,
-						OpenMBeanOperationInfoSupport.ACTION));
-		// boolean isBundlePersistentlyStarted(ObjectName)
-		operationList
-				.add(new OpenMBeanOperationInfoSupport(
-						StartLevelConstants.OPERATION_ISBUNDLEPERSISTENTLYSTARTED_NAME,
-						StartLevelConstants.OPERATION_ISBUNDLEPERSISTENTLYSTARTED_DESCRIPTION,
-						new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-								StartLevelConstants.OPERATION_ISBUNDLEPERSISTENTLYSTARTED_OBJECTNAME_PARAMETER,
-								StartLevelConstants.OPERATION_ISBUNDLEPERSISTENTLYSTARTED_OBJECTNAME_DESCRIPTION,
-								SimpleType.OBJECTNAME) }, SimpleType.BOOLEAN,
-						OpenMBeanOperationInfoSupport.INFO));
-		// boolean isBundlePersistentlyStarted(long)
-		operationList
-				.add(new OpenMBeanOperationInfoSupport(
-						StartLevelConstants.OPERATION_ISBUNDLEPERSISTENTLYSTARTED_NAME,
-						StartLevelConstants.OPERATION_ISBUNDLEPERSISTENTLYSTARTED_DESCRIPTION,
-						new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-								StartLevelConstants.OPERATION_ISBUNDLEPERSISTENTLYSTARTED_ID_PARAMETER,
-								StartLevelConstants.OPERATION_ISBUNDLEPERSISTENTLYSTARTED_ID_DESCRIPTION,
-								SimpleType.LONG) }, SimpleType.BOOLEAN,
-						OpenMBeanOperationInfoSupport.INFO));
-		OpenMBeanOperationInfoSupport[] mbeanOperationInfos = operationList
-				.toArray(new OpenMBeanOperationInfoSupport[0]);
+		OpenMBeanOperationInfoSupport[] mbeanOperationInfos = new OpenMBeanOperationInfoSupport[] {
+				StartLevelConstants.GETBUNDLESTARTLEVEL_BY_OBJECTNAME,
+				StartLevelConstants.SETBUNDLESTARTLEVEL_BY_OBJECTNAME,
+				StartLevelConstants.GETBUNDLESTARTLEVEL_BY_ID,
+				StartLevelConstants.SETBUNDLESTARTLEVEL_BY_ID,
+				StartLevelConstants.ISBUNDLEPERSISTENTLYSTARTED_BY_OBJECTNAME,
+				StartLevelConstants.ISBUNDLEPERSISTENTLYSTARTED_BY_ID
+		};
+
 		// constructors
 		OpenMBeanConstructorInfoSupport[] mbeanConstructorInfos = new OpenMBeanConstructorInfoSupport[] {};
 		// notifications

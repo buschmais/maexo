@@ -16,9 +16,7 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.management.AttributeNotFoundException;
@@ -29,7 +27,6 @@ import javax.management.MBeanNotificationInfo;
 import javax.management.MBeanRegistration;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
-import javax.management.openmbean.ArrayType;
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.openmbean.CompositeType;
@@ -38,9 +35,6 @@ import javax.management.openmbean.OpenMBeanAttributeInfoSupport;
 import javax.management.openmbean.OpenMBeanConstructorInfoSupport;
 import javax.management.openmbean.OpenMBeanInfoSupport;
 import javax.management.openmbean.OpenMBeanOperationInfoSupport;
-import javax.management.openmbean.OpenMBeanParameterInfoSupport;
-import javax.management.openmbean.OpenType;
-import javax.management.openmbean.SimpleType;
 import javax.management.openmbean.TabularData;
 import javax.management.openmbean.TabularDataSupport;
 import javax.management.openmbean.TabularType;
@@ -115,293 +109,31 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 	 * @see javax.management.DynamicMBean#getMBeanInfo()
 	 */
 	public MBeanInfo getMBeanInfo() {
-		try {
-			this.exportedPackageType = new CompositeType(
-					PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_ENTRY,
-					PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_ENTRY_DESCRIPTION,
-					new String[] {
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_EXPORTINGBUNDLE,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_IMPORTINGBUNDLES,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_NAME,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_SPECIFICATIONVERSION,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_VERSION,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_REMOVALPENDING },
-					new String[] {
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_EXPORTINGBUNDLE,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_IMPORTINGBUNDLES,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_NAME,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_SPECIFICATIONVERSION,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_VERSION,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_REMOVALPENDING },
-					new OpenType[] { SimpleType.OBJECTNAME,
-							new ArrayType(1, SimpleType.OBJECTNAME),
-							SimpleType.STRING, SimpleType.STRING,
-							SimpleType.STRING, SimpleType.BOOLEAN });
-			this.exportedPackagesType = new TabularType(
-					PackageAdminConstants.TABULARTYPE_EXPORTEDPACKAGES_NAME,
-					PackageAdminConstants.TABULARTYPE_EXPORTEDPACKAGES_DESCRIPTION,
-					this.exportedPackageType,
-					new String[] { PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_NAME });
-			this.requiredBundleType = new CompositeType(
-					PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_ENTRY,
-					PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_ENTRY_DESCRIPTION,
-					new String[] {
-							PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_BUNDLE,
-							PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_REQUIRINGBUNDLES,
-							PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_SYMBOLICNAME,
-							PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_VERSION,
-							PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_REMOVALPENDING },
-					new String[] {
-							PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_BUNDLE,
-							PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_REQUIRINGBUNDLES,
-							PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_SYMBOLICNAME,
-							PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_VERSION,
-							PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_REMOVALPENDING },
-					new OpenType[] { SimpleType.OBJECTNAME,
-							new ArrayType(1, SimpleType.OBJECTNAME),
-							SimpleType.STRING, SimpleType.STRING,
-							SimpleType.BOOLEAN });
-			this.requiredBundlesType = new TabularType(
-					PackageAdminConstants.TABULARTYPE_REQUIREDBUNDLES_NAME,
-					PackageAdminConstants.TABULARTYPE_REQUIREDBUNDLES_DESCRIPTION,
-					this.requiredBundleType,
-					new String[] { PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_SYMBOLICNAME });
-			String className = org.osgi.service.packageadmin.PackageAdmin.class
-					.getName();
-			// attributes
-			OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[0];
-			// operations
-			List<OpenMBeanOperationInfoSupport> operationList = new ArrayList<OpenMBeanOperationInfoSupport>();
-			// ObjectName[] getBundles(String symbolicName, String versionRange)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETBUNDLES_NAME,
-							PackageAdminConstants.OPERATION_GETBUNDLES_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] {
-									new OpenMBeanParameterInfoSupport(
-											PackageAdminConstants.OPERATION_GETBUNDLES_SYMBOLICNAME_PARAMETER,
-											PackageAdminConstants.OPERATION_GETBUNDLES_SYMBOLICNAME_DESCRIPTION,
-											SimpleType.STRING),
-									new OpenMBeanParameterInfoSupport(
-											PackageAdminConstants.OPERATION_GETBUNDLES_VERSIONRANGE_PARAMETER,
-											PackageAdminConstants.OPERATION_GETBUNDLES_VERSIONRANGE_DESCRIPTION,
-											SimpleType.STRING) },
-							new ArrayType(1, SimpleType.OBJECTNAME),
-							OpenMBeanOperationInfoSupport.INFO));
-			// Integer getBundleType(Long id)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETBUNDLETYPE_NAME,
-							PackageAdminConstants.OPERATION_GETBUNDLETYPE_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETBUNDLETYPE_ID_PARAMETER,
-									PackageAdminConstants.OPERATION_GETBUNDLETYPE_ID_DESCRIPTION,
-									SimpleType.LONG) }, SimpleType.INTEGER,
-							OpenMBeanOperationInfoSupport.INFO));
-			// Integer getBundleType(ObjectName objectName)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETBUNDLETYPE_NAME,
-							PackageAdminConstants.OPERATION_GETBUNDLETYPE_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETBUNDLETYPE_OBJECTNAME_PARAMETER,
-									PackageAdminConstants.OPERATION_GETBUNDLETYPE_OBJECTNAME_DESCRIPTION,
-									SimpleType.OBJECTNAME) },
-							SimpleType.INTEGER,
-							OpenMBeanOperationInfoSupport.INFO));
-			// String getBundleTypeAsName(Long id)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETBUNDLETYPEASNAME_NAME,
-							PackageAdminConstants.OPERATION_GETBUNDLETYPEASNAME_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETBUNDLETYPE_ID_PARAMETER,
-									PackageAdminConstants.OPERATION_GETBUNDLETYPE_ID_DESCRIPTION,
-									SimpleType.LONG) }, SimpleType.STRING,
-							OpenMBeanOperationInfoSupport.INFO));
-			// String getBundleTypeAsName(ObjectName objectName)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETBUNDLETYPEASNAME_NAME,
-							PackageAdminConstants.OPERATION_GETBUNDLETYPEASNAME_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETBUNDLETYPE_OBJECTNAME_PARAMETER,
-									PackageAdminConstants.OPERATION_GETBUNDLETYPE_OBJECTNAME_DESCRIPTION,
-									SimpleType.OBJECTNAME) },
-							SimpleType.STRING,
-							OpenMBeanOperationInfoSupport.INFO));
-			// CompositeType getExportedPackage(String name)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGE_NAME,
-							PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGE_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGE_NAME_PARAMETER,
-									PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGE_NAME_DESCRIPTION,
-									SimpleType.STRING) },
-							this.exportedPackageType,
-							OpenMBeanOperationInfoSupport.INFO));
-			// TabularData getExportedPackages(Long id)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGES_NAME,
-							PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGES_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGES_ID_PARAMETER,
-									PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGES_ID_DESCRIPTION,
-									SimpleType.LONG) },
-							this.exportedPackagesType,
-							OpenMBeanOperationInfoSupport.INFO));
-			// TabularData getExportedPackages(ObjectName objectName)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGES_NAME,
-							PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGES_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGES_OBJECTNAME_PARAMETER,
-									PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGES_OBJECTNAME_DESCRIPTION,
-									SimpleType.OBJECTNAME) },
-							this.exportedPackagesType,
-							OpenMBeanOperationInfoSupport.INFO));
-			// TabularData getExportedPackages(String name)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGES_NAME,
-							PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGES_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGES_NAME_PARAMETER,
-									PackageAdminConstants.OPERATION_GETEXPORTEDPACKAGES_NAME_DESCRIPTION,
-									SimpleType.STRING) },
-							this.exportedPackagesType,
-							OpenMBeanOperationInfoSupport.ACTION_INFO));
-			// ObjectName[] getFragments(Long id)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETFRAGMENTS_NAME,
-							PackageAdminConstants.OPERATION_GETFRAGMENTS_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETFRAGMENTS_ID_PARAMETER,
-									PackageAdminConstants.OPERATION_GETFRAGMENTS_ID_DESCRIPTION,
-									SimpleType.LONG) }, new ArrayType(1,
-									SimpleType.OBJECTNAME),
-							OpenMBeanOperationInfoSupport.INFO));
-			// ObjectName[] getFragments(ObjectName objectName)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETFRAGMENTS_NAME,
-							PackageAdminConstants.OPERATION_GETFRAGMENTS_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETFRAGMENTS_OBJECTNAME_PARAMETER,
-									PackageAdminConstants.OPERATION_GETFRAGMENTS_OBJECTNAME_DESCRIPTION,
-									SimpleType.OBJECTNAME) }, new ArrayType(1,
-									SimpleType.OBJECTNAME),
-							OpenMBeanOperationInfoSupport.INFO));
-			// ObjectName[] getHosts(Long id)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETHOSTS_NAME,
-							PackageAdminConstants.OPERATION_GETHOSTS_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETHOSTS_ID_PARAMETER,
-									PackageAdminConstants.OPERATION_GETHOSTS_ID_DESCRIPTION,
-									SimpleType.LONG) }, new ArrayType(1,
-									SimpleType.OBJECTNAME),
-							OpenMBeanOperationInfoSupport.INFO));
-			// ObjectName[] getHosts(ObjectName objectName)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETHOSTS_NAME,
-							PackageAdminConstants.OPERATION_GETHOSTS_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETHOSTS_OBJECTNAME_PARAMETER,
-									PackageAdminConstants.OPERATION_GETHOSTS_OBJECTNAME_DESCRIPTION,
-									SimpleType.OBJECTNAME) }, new ArrayType(1,
-									SimpleType.OBJECTNAME),
-							OpenMBeanOperationInfoSupport.INFO));
-			// TabularData getRequiredBundles(String symbolicName)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_GETREQUIREDBUNDLES_NAME,
-							PackageAdminConstants.OPERATION_GETREQUIREDBUNDLES_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_GETREQUIREDBUNDLES_SYMBOLICNAME_PARAMETER,
-									PackageAdminConstants.OPERATION_GETREQUIREDBUNDLES_SYMBOLICNAME_DESCRIPTION,
-									SimpleType.STRING) },
-							this.requiredBundlesType,
-							OpenMBeanOperationInfoSupport.INFO));
-			// void refreshPackages(Long[] ids)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_REFRESHPACKAGES_NAME,
-							PackageAdminConstants.OPERATION_REFRESHPACKAGES_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_REFRESHPACKAGES_IDS_PARAMETER,
-									PackageAdminConstants.OPERATION_REFRESHPACKAGES_IDS_DESCRIPTION,
-									new ArrayType(1, SimpleType.LONG)) },
-							SimpleType.VOID,
-							OpenMBeanOperationInfoSupport.ACTION));
-			// void refreshPackages(ObjectName[] objectName)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_REFRESHPACKAGES_NAME,
-							PackageAdminConstants.OPERATION_REFRESHPACKAGES_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_REFRESHPACKAGES_OBJECTNAMES_PARAMETER,
-									PackageAdminConstants.OPERATION_REFRESHPACKAGES_OBJECTNAMES_DESCRIPTION,
-									new ArrayType(1, SimpleType.OBJECTNAME)) },
-							SimpleType.VOID,
-							OpenMBeanOperationInfoSupport.ACTION));
-			// void refreshPackages()
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_REFRESHPACKAGES_NAME,
-							PackageAdminConstants.OPERATION_REFRESHPACKAGES_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[0],
-							SimpleType.VOID,
-							OpenMBeanOperationInfoSupport.ACTION));
-			// void resolveBundles(Long[] ids)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_RESOLVEBUNDLES_NAME,
-							PackageAdminConstants.OPERATION_RESOLVEBUNDLES_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_RESOLVEBUNDLES_IDS_PARAMETER,
-									PackageAdminConstants.OPERATION_RESOLVEBUNDLES_IDS_DESCRIPTION,
-									new ArrayType(1, SimpleType.LONG)) },
-							SimpleType.BOOLEAN,
-							OpenMBeanOperationInfoSupport.ACTION_INFO));
-			// void resolveBundles(ObjectName[] objectName)
-			operationList
-					.add(new OpenMBeanOperationInfoSupport(
-							PackageAdminConstants.OPERATION_RESOLVEBUNDLES_NAME,
-							PackageAdminConstants.OPERATION_RESOLVEBUNDLES_DESCRIPTION,
-							new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
-									PackageAdminConstants.OPERATION_RESOLVEBUNDLES_OBJECTNAMES_PARAMETER,
-									PackageAdminConstants.OPERATION_RESOLVEBUNDLES_OBJECTNAMES_DESCRIPTION,
-									new ArrayType(1, SimpleType.OBJECTNAME)) },
-							SimpleType.BOOLEAN,
-							OpenMBeanOperationInfoSupport.ACTION_INFO));
-			// void resolveBundles()
-			operationList.add(new OpenMBeanOperationInfoSupport(
-					PackageAdminConstants.OPERATION_RESOLVEBUNDLES_NAME,
-					PackageAdminConstants.OPERATION_RESOLVEBUNDLES_DESCRIPTION,
-					new OpenMBeanParameterInfoSupport[0], SimpleType.BOOLEAN,
-					OpenMBeanOperationInfoSupport.ACTION_INFO));
-			OpenMBeanOperationInfoSupport[] mbeanOperationInfos = operationList
-					.toArray(new OpenMBeanOperationInfoSupport[0]);
-			// constructors
-			OpenMBeanConstructorInfoSupport[] mbeanConstructorInfos = new OpenMBeanConstructorInfoSupport[] {};
-			// notifications
-			MBeanNotificationInfo[] mbeanNotificationInfos = new MBeanNotificationInfo[] {};
-			// mbean info
-			OpenMBeanInfoSupport mbeanInfo = new OpenMBeanInfoSupport(
-					className, PackageAdminConstants.MBEAN_DESCRIPTION,
-					mbeanAttributeInfos, mbeanConstructorInfos,
-					mbeanOperationInfos, mbeanNotificationInfos);
-			return mbeanInfo;
-		} catch (OpenDataException e) {
-			throw new RuntimeException("cannot construct mbean info", e);
-		}
+			String className = org.osgi.service.packageadmin.PackageAdmin.class.getName();
+		// attributes
+		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[0];
+		// operations
+		OpenMBeanOperationInfoSupport[] mbeanOperationInfos = new OpenMBeanOperationInfoSupport[] {
+				PackageAdminConstants.GETBUNDLES, PackageAdminConstants.GETBUNDLETYPE_BY_ID,
+				PackageAdminConstants.GETBUNDLETYPE_BY_OBJECTNAME, PackageAdminConstants.GETBUNDLETYPEASNAME_BY_ID,
+				PackageAdminConstants.GETBUNDLETYPEASNAME_BY_OBJECTNAME,
+				PackageAdminConstants.EXPORTEDPACKAGE_BY_OBJECTNAME, PackageAdminConstants.EXPORTEDPACKAGES_BY_ID,
+				PackageAdminConstants.EXPORTEDPACKAGES_BY_OBJECTNAME, PackageAdminConstants.EXPORTEDPACKAGES_BY_NAME,
+				PackageAdminConstants.FRAGMENTS_BY_ID, PackageAdminConstants.FRAGMENTS_BY_OBJECTNAME,
+				PackageAdminConstants.HOSTS_BY_ID, PackageAdminConstants.HOSTS_BY_OBJECTNAME,
+				PackageAdminConstants.REQUIREDBUNDLES_BY_SYMBOLICNAME, PackageAdminConstants.REFRESHPACKAGES_BY_IDS,
+				PackageAdminConstants.REFRESHPACKAGES_BY_OBJECTNAME, PackageAdminConstants.REFRESHPACKAGES,
+				PackageAdminConstants.RESOLVEBUNDLES_BY_ID, PackageAdminConstants.RESOLVEBUNDLES_BY_OBJECTNAME,
+				PackageAdminConstants.RESOLVEBUNDLES };
+
+		// constructors
+		OpenMBeanConstructorInfoSupport[] mbeanConstructorInfos = new OpenMBeanConstructorInfoSupport[] {};
+		// notifications
+		MBeanNotificationInfo[] mbeanNotificationInfos = new MBeanNotificationInfo[] {};
+		// mbean info
+		OpenMBeanInfoSupport mbeanInfo = new OpenMBeanInfoSupport(className, PackageAdminConstants.MBEAN_DESCRIPTION,
+				mbeanAttributeInfos, mbeanConstructorInfos, mbeanOperationInfos, mbeanNotificationInfos);
+		return mbeanInfo;
 	}
 
 	/*
@@ -595,12 +327,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 				tabularData
 						.put(new CompositeDataSupport(
 								this.requiredBundleType,
-								new String[] {
-										PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_BUNDLE,
-										PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_REQUIRINGBUNDLES,
-										PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_SYMBOLICNAME,
-										PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_VERSION,
-										PackageAdminConstants.COMPOSITETYPE_REQUIREDBUNDLE_REMOVALPENDING },
+								PackageAdminConstants.REQUIREDBUNDLE_ITEM_NAMES,
 								new Object[] {
 										this.objectNameHelper.getObjectName(
 												requiredBundle.getBundle(),
@@ -738,13 +465,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		try {
 			return new CompositeDataSupport(
 					this.exportedPackageType,
-					new String[] {
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_EXPORTINGBUNDLE,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_IMPORTINGBUNDLES,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_NAME,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_SPECIFICATIONVERSION,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_VERSION,
-							PackageAdminConstants.COMPOSITETYPE_EXPORTEDPACKAGE_REMOVALPENDING },
+					PackageAdminConstants.EXPORTEDPACKAGE_ITEM_NAMES,
 					new Object[] {
 							this.objectNameHelper.getObjectName(exportedPackage
 									.getExportingBundle(), Bundle.class),
