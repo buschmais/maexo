@@ -71,7 +71,7 @@
         <module name="MethodName"/>
         <module name="PackageName"/>
         <module name="ParameterName"/>
-        <module name="StaticVariableName"/>
+        <module name="StaticVariableName" applyToPrivate="false" />
         <module name="TypeName"/>
 
 
