@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * 
  */
-public class SwitchBoardImpl {
+public final class SwitchBoardImpl {
 
 	private static Logger logger = LoggerFactory
 			.getLogger(SwitchBoardImpl.class);
@@ -70,6 +70,8 @@ public class SwitchBoardImpl {
 	 *            the object name
 	 * @param notificationListener
 	 *            the notification listener
+	 * @param notificationFilter
+	 *            the notification filter
 	 * @param handback
 	 *            the handback context object
 	 */

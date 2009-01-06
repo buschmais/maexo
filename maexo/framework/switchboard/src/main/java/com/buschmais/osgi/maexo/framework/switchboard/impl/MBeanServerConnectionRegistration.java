@@ -16,31 +16,34 @@
  */
 package com.buschmais.osgi.maexo.framework.switchboard.impl;
 
-import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
- * Represents an mbean server connection which is registered with the switchboard.
+ * Represents an mbean server connection which is registered with the
+ * switchboard.
  * 
  * @see SwitchBoardImpl
  * @see MBeanServerConnection
- * @see MBeanServer
+ * @see javax.management.MBeanServer
  */
-public class MBeanServerConnectionRegistration {
+public final class MBeanServerConnectionRegistration {
 
 	private MBeanServerConnection mbeanServerConnection;
 
 	/**
 	 * Constructor.
-	 * <p> 
+	 * <p>
 	 * The constructor extracts the mbean server connection from the provided
 	 * service reference and the bundle context.
 	 * <p>
+	 * 
 	 * @param bundleContext
+	 *            the bundle context
 	 * @param serviceReference
+	 *            the service reference
 	 */
 	public MBeanServerConnectionRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference) {
@@ -48,39 +51,42 @@ public class MBeanServerConnectionRegistration {
 				.getService(serviceReference);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((mbeanServerConnection == null) ? 0 : mbeanServerConnection.hashCode());
+		result = prime
+				* result
+				+ ((mbeanServerConnection == null) ? 0 : mbeanServerConnection
+						.hashCode());
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		MBeanServerConnectionRegistration other = (MBeanServerConnectionRegistration) obj;
 		if (mbeanServerConnection == null) {
-			if (other.mbeanServerConnection != null)
+			if (other.mbeanServerConnection != null) {
 				return false;
-		} else if (!mbeanServerConnection.equals(other.mbeanServerConnection))
+			}
+		} else if (!mbeanServerConnection.equals(other.mbeanServerConnection)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -91,10 +97,8 @@ public class MBeanServerConnectionRegistration {
 		return mbeanServerConnection;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {

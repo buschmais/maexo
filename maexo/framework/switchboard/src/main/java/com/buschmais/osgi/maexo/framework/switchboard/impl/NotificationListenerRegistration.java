@@ -16,7 +16,6 @@
  */
 package com.buschmais.osgi.maexo.framework.switchboard.impl;
 
-import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.NotificationFilter;
 import javax.management.NotificationListener;
@@ -30,17 +29,17 @@ import org.osgi.framework.ServiceReference;
  * switchboard.
  * 
  * @see SwitchBoardImpl
- * @see MBeanServer
+ * @see javax.management.MBeanServer
  */
-public class NotificationListenerRegistration {
+public final class NotificationListenerRegistration {
 
 	/**
-	 * the object name property
+	 * The object name property.
 	 */
 	private static final String SERVICE_PROPERTY_OBJECTNAME = "objectName";
 
 	/**
-	 * the handback property
+	 * The handback property.
 	 */
 	private static final String SERVICE_PROPERTY_HANDBACK = "handback";
 
@@ -60,7 +59,13 @@ public class NotificationListenerRegistration {
 	 * provided service reference and the bundle context.
 	 * 
 	 * @param bundleContext
+	 *            the bundle context
 	 * @param serviceReference
+	 *            the service reference
+	 * @throws MalformedObjectNameException
+	 *             if the object name has a syntax error
+	 * @exception NullPointerException
+	 *                if the object name is <code>null</code>
 	 */
 	public NotificationListenerRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference)
@@ -83,10 +88,8 @@ public class NotificationListenerRegistration {
 		this.handback = serviceReference.getProperty(SERVICE_PROPERTY_HANDBACK);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {
@@ -107,40 +110,49 @@ public class NotificationListenerRegistration {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		NotificationListenerRegistration other = (NotificationListenerRegistration) obj;
 		if (handback == null) {
-			if (other.handback != null)
+			if (other.handback != null) {
 				return false;
-		} else if (!handback.equals(other.handback))
+			}
+		} else if (!handback.equals(other.handback)) {
 			return false;
+		}
 		if (notificationFilter == null) {
-			if (other.notificationFilter != null)
+			if (other.notificationFilter != null) {
 				return false;
-		} else if (!notificationFilter.equals(other.notificationFilter))
+			}
+		} else if (!notificationFilter.equals(other.notificationFilter)) {
 			return false;
+		}
 		if (notificationListener == null) {
-			if (other.notificationListener != null)
+			if (other.notificationListener != null) {
 				return false;
-		} else if (!notificationListener.equals(other.notificationListener))
+			}
+		} else if (!notificationListener.equals(other.notificationListener)) {
 			return false;
+		}
 		if (objectName == null) {
-			if (other.objectName != null)
+			if (other.objectName != null) {
 				return false;
-		} else if (!objectName.equals(other.objectName))
+			}
+		} else if (!objectName.equals(other.objectName)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -172,10 +184,8 @@ public class NotificationListenerRegistration {
 		return handback;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {

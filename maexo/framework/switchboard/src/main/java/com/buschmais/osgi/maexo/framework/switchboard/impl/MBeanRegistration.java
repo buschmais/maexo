@@ -27,7 +27,7 @@ import org.osgi.framework.ServiceReference;
  * 
  * @see SwitchBoardImpl
  */
-public class MBeanRegistration {
+public final class MBeanRegistration {
 
 	/**
 	 * The object name property.
@@ -49,7 +49,9 @@ public class MBeanRegistration {
 	 * property which contains the mbean object name.
 	 * 
 	 * @param bundleContext
+	 *            the bundle context
 	 * @param serviceReference
+	 *            the service reference
 	 * @throws MalformedObjectNameException
 	 *             if the object name has a syntax error
 	 * @exception NullPointerException
@@ -57,7 +59,7 @@ public class MBeanRegistration {
 	 */
 	public MBeanRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference)
-			throws MalformedObjectNameException {
+			throws MalformedObjectNameException, NullPointerException {
 		// get object name from service properties
 		this.objectName = (ObjectName) serviceReference
 				.getProperty(ObjectName.class.getName());
@@ -71,10 +73,8 @@ public class MBeanRegistration {
 		this.mbean = bundleContext.getService(serviceReference);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {
@@ -86,30 +86,35 @@ public class MBeanRegistration {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		MBeanRegistration other = (MBeanRegistration) obj;
 		if (mbean == null) {
-			if (other.mbean != null)
+			if (other.mbean != null) {
 				return false;
-		} else if (!mbean.equals(other.mbean))
+			}
+		} else if (!mbean.equals(other.mbean)) {
 			return false;
+		}
 		if (objectName == null) {
-			if (other.objectName != null)
+			if (other.objectName != null) {
 				return false;
-		} else if (!objectName.equals(other.objectName))
+			}
+		} else if (!objectName.equals(other.objectName)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -127,10 +132,8 @@ public class MBeanRegistration {
 		return mbean;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {

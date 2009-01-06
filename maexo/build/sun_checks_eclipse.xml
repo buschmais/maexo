@@ -110,7 +110,7 @@
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
         <module name="FileLength"/>
 		<module name="LineLength">
-		    <property name="max" value="120"/>
+		    <property name="max" value="160"/>
 		</module>
         <module name="MethodLength"/>
         <module name="ParameterNumber"/>
@@ -153,7 +153,6 @@
 
         <!-- Checks for common coding problems               -->
         <!-- See http://checkstyle.sf.net/config_coding.html -->
-        <module name="AvoidInlineConditionals"/>
         <module name="DoubleCheckedLocking"/>    <!-- MY FAVOURITE -->
         <module name="EmptyStatement"/>
         <module name="EqualsHashCode"/>
@@ -163,6 +162,7 @@
         <module name="MagicNumber"/>
         <module name="MissingSwitchDefault"/>
         <module name="RedundantThrows">
+        	<property name="allowUnchecked" value="true"/>
             <property name="logLoadErrors" value="true"/>
             <property name="suppressLoadErrors" value="true"/>
         </module>
@@ -193,6 +193,7 @@
         
         <!-- disabled
         <module name="FinalParameters"/>
+        <module name="AvoidInlineConditionals"/>
         -->
 
     </module>

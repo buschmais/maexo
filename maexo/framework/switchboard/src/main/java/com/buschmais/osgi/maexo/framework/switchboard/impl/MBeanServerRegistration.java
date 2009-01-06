@@ -27,18 +27,21 @@ import org.osgi.framework.ServiceReference;
  * @see SwitchBoardImpl
  * @see MBeanServer
  */
-public class MBeanServerRegistration {
+public final class MBeanServerRegistration {
 
 	private MBeanServer mbeanServer;
 
 	/**
 	 * Constructor.
-	 * <p> 
-	 * The constructor extracts the mbean server from the provided
-	 * service reference and the bundle context.
 	 * <p>
+	 * The constructor extracts the mbean server from the provided service
+	 * reference and the bundle context.
+	 * <p>
+	 * 
 	 * @param bundleContext
+	 *            the bundle context
 	 * @param serviceReference
+	 *            the service reference
 	 */
 	public MBeanServerRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference) {
@@ -46,10 +49,8 @@ public class MBeanServerRegistration {
 				.getService(serviceReference);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {
@@ -60,25 +61,28 @@ public class MBeanServerRegistration {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		MBeanServerRegistration other = (MBeanServerRegistration) obj;
 		if (mbeanServer == null) {
-			if (other.mbeanServer != null)
+			if (other.mbeanServer != null) {
 				return false;
-		} else if (!mbeanServer.equals(other.mbeanServer))
+			}
+		} else if (!mbeanServer.equals(other.mbeanServer)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -89,10 +93,8 @@ public class MBeanServerRegistration {
 		return mbeanServer;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {

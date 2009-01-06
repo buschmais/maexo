@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 /**
  * OSGi bundle activator for the switchboard bundle.
  */
-public class Activator implements BundleActivator {
+public final class Activator implements BundleActivator {
 
 	/**
 	 * Filter for mbean server connections.
@@ -75,12 +75,8 @@ public class Activator implements BundleActivator {
 
 	private ServiceListener notificationListenerServiceListener;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext
-	 * )
+	/**
+	 * {@inheritDoc}
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {
@@ -97,11 +93,8 @@ public class Activator implements BundleActivator {
 				.registerNotificationListenerServiceListener(bundleContext);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	/**
+	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {
@@ -152,10 +145,11 @@ public class Activator implements BundleActivator {
 	 *            the bundle context
 	 * @return the service listener
 	 * @throws InvalidSyntaxException
+	 *             if the registering fails
 	 */
 	private ServiceListener registerMBeanServerConnectionServiceListener(
 			final BundleContext bundleContext) throws InvalidSyntaxException {
-		ServiceListener mbeanServerConnectionServiceListener = new ServiceListener() {
+		mbeanServerConnectionServiceListener = new ServiceListener() {
 
 			/*
 			 * (non-Javadoc)
@@ -203,10 +197,11 @@ public class Activator implements BundleActivator {
 	 *            the bundle context
 	 * @return the service listener
 	 * @throws InvalidSyntaxException
+	 *             if the registering fails
 	 */
 	private ServiceListener registerMBeanServerServiceListener(
 			final BundleContext bundleContext) throws InvalidSyntaxException {
-		ServiceListener mbeanServerServiceListener = new ServiceListener() {
+		mbeanServerServiceListener = new ServiceListener() {
 
 			/*
 			 * (non-Javadoc)
@@ -253,10 +248,11 @@ public class Activator implements BundleActivator {
 	 *            the bundle context
 	 * @return the service listener
 	 * @throws InvalidSyntaxException
+	 *             if the registering fails
 	 */
 	private ServiceListener registerMBeanServiceListener(
 			final BundleContext bundleContext) throws InvalidSyntaxException {
-		ServiceListener mbeanServiceListener = new ServiceListener() {
+		mbeanServiceListener = new ServiceListener() {
 
 			/*
 			 * (non-Javadoc)
@@ -312,10 +308,11 @@ public class Activator implements BundleActivator {
 	 *            the bundle context
 	 * @return the service listener
 	 * @throws InvalidSyntaxException
+	 *             if the registering fails
 	 */
 	private ServiceListener registerNotificationListenerServiceListener(
 			final BundleContext bundleContext) throws InvalidSyntaxException {
-		ServiceListener notificationListenerServiceListener = new ServiceListener() {
+		notificationListenerServiceListener = new ServiceListener() {
 
 			/*
 			 * (non-Javadoc)

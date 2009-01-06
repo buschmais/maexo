@@ -66,17 +66,17 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 	}
 
 	/**
-	 * The bundle context
+	 * The bundle context.
 	 */
 	private BundleContext bundleContext;
 
 	/**
-	 * The package admin service
+	 * The package admin service.
 	 */
 	private org.osgi.service.packageadmin.PackageAdmin packageAdmin;
 
 	/**
-	 * The object name helper
+	 * The object name helper.
 	 */
 	private ObjectNameHelper objectNameHelper;
 
@@ -89,7 +89,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 	private CompositeType requiredBundleType;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * 
 	 * @param bundleContext
 	 *            The bundle context.
@@ -103,10 +103,8 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		this.objectNameHelper = new ObjectNameHelper(bundleContext);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.DynamicMBean#getMBeanInfo()
+	/**
+	 * {@inheritDoc}
 	 */
 	public MBeanInfo getMBeanInfo() {
 			String className = org.osgi.service.packageadmin.PackageAdmin.class.getName();
@@ -136,12 +134,8 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return mbeanInfo;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#getBundleType
-	 * (javax.management.ObjectName)
+	/**
+	 * {@inheritDoc}
 	 */
 	public Integer getBundleType(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
@@ -151,12 +145,8 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return this.getBundleType(id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#getBundleType
-	 * (java.lang.Long)
+	/**
+	 * {@inheritDoc}
 	 */
 	public Integer getBundleType(Long id) {
 		org.osgi.framework.Bundle bundle = this.bundleContext.getBundle(id
@@ -164,11 +154,8 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return Integer.valueOf(this.packageAdmin.getBundleType(bundle));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#
-	 * getBundleTypeAsName(javax.management.ObjectName)
+	/**
+	 * {@inheritDoc}
 	 */
 	public String getBundleTypeAsName(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
@@ -176,22 +163,15 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return bundleTypes.get(this.getBundleType(objectName));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#
-	 * getBundleTypeAsName(java.lang.Long)
+	/**
+	 * {@inheritDoc}
 	 */
 	public String getBundleTypeAsName(Long id) {
 		return bundleTypes.get(this.getBundleType(id));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#getBundles
-	 * (java.lang.String, java.lang.String)
+	/**
+	 * {@inheritDoc}
 	 */
 	public ObjectName[] getBundles(String symbolicName, String versionRange) {
 		org.osgi.framework.Bundle[] bundles = this.packageAdmin.getBundles(
@@ -202,11 +182,8 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return this.getObjectNames(bundles);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#
-	 * getExportedPackage(java.lang.String)
+	/**
+	 * {@inheritDoc}
 	 */
 	public CompositeData getExportedPackage(String name) throws MBeanException {
 		ExportedPackage exportedPackage = this.packageAdmin
@@ -214,11 +191,8 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return this.convertExportedPackage(exportedPackage);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#
-	 * getExportedPackages(javax.management.ObjectName)
+	/**
+	 * {@inheritDoc}
 	 */
 	public TabularData getExportedPackages(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
@@ -228,11 +202,8 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return this.getExportedPackages(id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#
-	 * getExportedPackages(java.lang.Long)
+	/**
+	 * {@inheritDoc}
 	 */
 	public TabularData getExportedPackages(Long id) throws MBeanException {
 		Bundle bundle = this.bundleContext.getBundle(id.longValue());
@@ -241,11 +212,8 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return this.convertExportedPackages(exportedPackages);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#
-	 * getExportedPackages(java.lang.String)
+	/**
+	 * {@inheritDoc}
 	 */
 	public TabularData getExportedPackages(String name) throws MBeanException {
 		ExportedPackage[] exportedPackages = this.packageAdmin
@@ -253,12 +221,8 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return this.convertExportedPackages(exportedPackages);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#getFragments
-	 * (javax.management.ObjectName)
+	/**
+	 * {@inheritDoc}
 	 */
 	public ObjectName[] getFragments(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
@@ -268,24 +232,16 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return this.getFragments(id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#getFragments
-	 * (java.lang.Long)
+	/**
+	 * {@inheritDoc}
 	 */
 	public ObjectName[] getFragments(Long id) {
 		Bundle bundle = this.bundleContext.getBundle(id.longValue());
 		return this.getObjectNames(this.packageAdmin.getFragments(bundle));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#getHosts(
-	 * javax.management.ObjectName)
+	/**
+	 * {@inheritDoc}
 	 */
 	public ObjectName[] getHosts(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
@@ -295,23 +251,16 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return this.getHosts(id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#getHosts(
-	 * java.lang.Long)
+	/**
+	 * {@inheritDoc}
 	 */
 	public ObjectName[] getHosts(Long id) {
 		Bundle bundle = this.bundleContext.getBundle(id.longValue());
 		return this.getObjectNames(this.packageAdmin.getHosts(bundle));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#
-	 * getRequiredBundles(java.lang.String)
+	/**
+	 * {@inheritDoc}
 	 */
 	public TabularData getRequiredBundles(String symbolicName)
 			throws MBeanException {
@@ -345,12 +294,8 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return tabularData;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#refreshPackages
-	 * (javax.management.ObjectName[])
+	/**
+	 * {@inheritDoc}
 	 */
 	public void refreshPackages(ObjectName[] objectNames)
 			throws AttributeNotFoundException, InstanceNotFoundException,
@@ -363,12 +308,8 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		this.refreshPackages(ids);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#refreshPackages
-	 * (java.lang.Long[])
+	/**
+	 * {@inheritDoc}
 	 */
 	public void refreshPackages(Long[] ids) {
 		Bundle[] bundles = new Bundle[ids.length];
@@ -378,23 +319,15 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		this.packageAdmin.refreshPackages(bundles);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#refreshPackages
-	 * ()
+	/**
+	 * {@inheritDoc}
 	 */
 	public void refreshPackages() {
 		this.packageAdmin.refreshPackages(null);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#resolveBundles
-	 * (javax.management.ObjectName[])
+	/**
+	 * {@inheritDoc}
 	 */
 	public Boolean resolveBundles(ObjectName[] objectNames)
 			throws AttributeNotFoundException, InstanceNotFoundException,
@@ -407,12 +340,8 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return this.resolveBundles(ids);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#resolveBundles
-	 * (java.lang.Long[])
+	/**
+	 * {@inheritDoc}
 	 */
 	public Boolean resolveBundles(Long[] ids) {
 		Bundle[] bundles = new Bundle[ids.length];
@@ -422,19 +351,15 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		return Boolean.valueOf(this.packageAdmin.resolveBundles(bundles));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean#resolveBundles
-	 * ()
+	/**
+	 * {@inheritDoc}
 	 */
 	public Boolean resolveBundles() {
 		return Boolean.valueOf(this.packageAdmin.resolveBundles(null));
 	}
 
 	/**
-	 * Converts exported packages to tabular data
+	 * Converts exported packages to tabular data.
 	 * 
 	 * @param exportedPackages
 	 *            the exported packages
@@ -452,7 +377,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 	}
 
 	/**
-	 * Converts an exported package to composite data
+	 * Converts an exported package to composite data.
 	 * 
 	 * @param exportedPackage
 	 *            the exported package
@@ -481,7 +406,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 	}
 
 	/**
-	 * Converts the given bundles to object names
+	 * Converts the given bundles to object names.
 	 * 
 	 * @param bundles
 	 *            the bundles
@@ -491,7 +416,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 		if (bundles == null) {
 			return null;
 		}
-		ObjectName objectNames[] = new ObjectName[bundles.length];
+		ObjectName[] objectNames = new ObjectName[bundles.length];
 		for (int i = 0; i < bundles.length; i++) {
 			objectNames[i] = this.objectNameHelper.getObjectName(bundles[i],
 					org.osgi.framework.Bundle.class);
