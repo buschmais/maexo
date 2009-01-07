@@ -48,7 +48,7 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHel
 /**
  * Represents an OSGi bundle.
  */
-public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
+public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		BundleMBean {
 
 	// translation map for bundle states
@@ -81,6 +81,8 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	/**
 	 * Constructs the managed bean.
 	 * 
+	 * @param bundleContext
+	 *            the bundleContext
 	 * @param bundle
 	 *            the bundle to manage
 	 */
@@ -89,10 +91,9 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		this.objectNameHelper = new ObjectNameHelper(bundleContext);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.DynamicMBean#getMBeanInfo()
+
+	/** 
+	 * {@inheritDoc}
 	 */
 	public MBeanInfo getMBeanInfo() {
 		String className = Bundle.class.getName();
@@ -108,7 +109,8 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		// operations
 		OpenMBeanOperationInfoSupport[] mbeanOperationInfos = new OpenMBeanOperationInfoSupport[] {
 				BundleConstants.START, BundleConstants.STOP,
-				BundleConstants.UPDATE, BundleConstants.UPDATEFROMURL };
+				BundleConstants.UPDATE, BundleConstants.UPDATEFROMURL,
+				BundleConstants.UNINSTALL };
 		// constructors
 		OpenMBeanConstructorInfoSupport[] mbeanConstructorInfos = new OpenMBeanConstructorInfoSupport[] {};
 		// notifications
@@ -121,21 +123,30 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		return mbeanInfo;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public Long getBundleId() {
 		return Long.valueOf(this.bundle.getBundleId());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public Integer getState() {
 		return Integer.valueOf(this.bundle.getState());
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getStateAsName() {
 		return bundleStates.get(Integer.valueOf(this.bundle.getState()));
 	}
 
 	/**
 	 * Returns an array of object names representing the services which were
-	 * registered by this bundle
+	 * registered by this bundle.
 	 * 
 	 * @return the array of object names
 	 */
@@ -152,11 +163,9 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		return registeredServicesList.toArray(new ObjectName[0]);
 	}
 
+
 	/**
-	 * Returns the bundle headers as tabular data
-	 * 
-	 * @return the bundle headers
-	 * @throws MBeanException
+	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	public TabularData getHeaders() throws MBeanException {
@@ -180,10 +189,9 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		return tabularHeaders;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Bundle#start()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void start() throws MBeanException {
 		try {
@@ -193,10 +201,9 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Bundle#stop()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void stop() throws MBeanException {
 		try {
@@ -206,10 +213,9 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Bundle#uninstall()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void uninstall() throws MBeanException {
 		try {
@@ -219,10 +225,9 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Bundle#update()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void update() throws MBeanException {
 		try {
@@ -232,11 +237,9 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.Bundle#update(java.lang.String)
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void update(String url) throws MBeanException {
 		try {
@@ -247,41 +250,33 @@ public class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean#getLastModified()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public Long getLastModified() {
 		return Long.valueOf(this.bundle.getLastModified());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean#getLastModifiedAsDate
-	 * ()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public Date getLastModifiedAsDate() {
 		return new Date(this.bundle.getLastModified());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean#getLocation()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public String getLocation() {
 		return this.bundle.getLocation();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean#getServicesInUse()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public ObjectName[] getServicesInUse() {
 		ServiceReference[] servicesInUse = this.bundle.getServicesInUse();

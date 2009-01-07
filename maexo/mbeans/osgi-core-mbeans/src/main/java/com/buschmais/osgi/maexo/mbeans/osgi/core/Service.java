@@ -28,7 +28,6 @@ import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeDataSupport;
-import javax.management.openmbean.CompositeType;
 import javax.management.openmbean.OpenDataException;
 import javax.management.openmbean.OpenMBeanAttributeInfoSupport;
 import javax.management.openmbean.OpenMBeanConstructorInfoSupport;
@@ -36,7 +35,6 @@ import javax.management.openmbean.OpenMBeanInfoSupport;
 import javax.management.openmbean.OpenMBeanOperationInfoSupport;
 import javax.management.openmbean.TabularData;
 import javax.management.openmbean.TabularDataSupport;
-import javax.management.openmbean.TabularType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -49,40 +47,30 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHel
 /**
  * Represents a registered service (wrapping a service reference).
  */
-public class Service extends DynamicMBeanSupport implements DynamicMBean,
+public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 		ServiceMBean {
 
 	/**
-	 * the set of constants defined by the framework
+	 * The set of constants defined by the framework.
 	 */
-	private static Set<String> FRAMEWORK_PROPERTIES = new HashSet<String>(
+	private static final Set<String> FRAMEWORK_PROPERTIES = new HashSet<String>(
 			Arrays.asList(new String[] { Constants.SERVICE_DESCRIPTION,
 					Constants.SERVICE_ID, Constants.OBJECTCLASS,
 					Constants.SERVICE_PID, Constants.SERVICE_RANKING,
 					Constants.SERVICE_VENDOR }));
 
 	/**
-	 * the service reference to manage
+	 * The service reference to manage.
 	 */
-	private ServiceReference serviceReference;
+	private final ServiceReference serviceReference;
 
 	/**
-	 * the object name helper
+	 * The object name helper.
 	 */
-	private ObjectNameHelper objectNameHelper;
+	private final ObjectNameHelper objectNameHelper;
 
 	/**
-	 * the composite type for the service properties
-	 */
-	private CompositeType propertiesRowType;
-
-	/**
-	 * the tabular type for the service properties
-	 */
-	private TabularType propertiesType;
-
-	/**
-	 * Constructs the service mbean
+	 * Constructs the service mbean.
 	 * 
 	 * @param bundleContext
 	 *            the bundle context
@@ -95,10 +83,8 @@ public class Service extends DynamicMBeanSupport implements DynamicMBean,
 		this.objectNameHelper = new ObjectNameHelper(bundleContext);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.DynamicMBean#getMBeanInfo()
+	/**
+	 * {@inheritDoc}
 	 */
 	public MBeanInfo getMBeanInfo() {
 			String className = Service.class.getName();
@@ -120,63 +106,57 @@ public class Service extends DynamicMBeanSupport implements DynamicMBean,
 		return mbeanInfo;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Service#getBundle()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public ObjectName getBundle() {
 		return this.objectNameHelper.getObjectName(this.serviceReference
 				.getBundle(), Bundle.class);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Service#getDescription()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public String getDescription() {
 		return (String) this.serviceReference
 				.getProperty(Constants.SERVICE_DESCRIPTION);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Service#getId()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public Long getId() {
 		return (Long) this.serviceReference.getProperty(Constants.SERVICE_ID);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Service#getObjectClass()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public String[] getObjectClass() {
 		return (String[]) this.serviceReference
 				.getProperty(Constants.OBJECTCLASS);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Service#getPid()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public String getPid() {
 		return (String) this.serviceReference
 				.getProperty(Constants.SERVICE_PID);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Service#getProperties()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public TabularData getProperties() throws MBeanException {
 		TabularDataSupport tabularProperties = new TabularDataSupport(
-				this.propertiesType);
+				ServiceConstants.PROPERTIES_TYPE);
 		String[] keys = this.serviceReference.getPropertyKeys();
 		for (String key : keys) {
 			if (!FRAMEWORK_PROPERTIES.contains(key)) {
@@ -187,7 +167,7 @@ public class Service extends DynamicMBeanSupport implements DynamicMBean,
 				}
 				try {
 					CompositeDataSupport row = new CompositeDataSupport(
-							this.propertiesRowType,
+							ServiceConstants.PROPERTIES_ROW_TYPE,
 							ServiceConstants.ITEM_NAMES,
 							new Object[] { key, stringRepresentation });
 					tabularProperties.put(row);
@@ -199,20 +179,18 @@ public class Service extends DynamicMBeanSupport implements DynamicMBean,
 		return tabularProperties;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Service#getRanking()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public Integer getRanking() {
 		return (Integer) this.serviceReference
 				.getProperty(Constants.SERVICE_RANKING);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Service#getUsingBundles()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public ObjectName[] getUsingBundles() {
 		List<ObjectName> objectNames = new LinkedList<ObjectName>();
@@ -226,10 +204,9 @@ public class Service extends DynamicMBeanSupport implements DynamicMBean,
 		return objectNames.toArray(new ObjectName[0]);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.Service#getVendor(
+ 
+	/**
+	 * {@inheritDoc}
 	 */
 	public String getVendor() {
 		return (String) this.serviceReference

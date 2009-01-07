@@ -43,7 +43,7 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname.StartLevelObjec
 /**
  * OSGi bundle activator for the the OSGi core mbeans bundle.
  */
-public class Activator implements BundleActivator {
+public final class Activator implements BundleActivator {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(Activator.class);
@@ -58,12 +58,9 @@ public class Activator implements BundleActivator {
 
 	private ServiceMBeanLifeCycleSupport packageAdminServiceLifecycle;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext
-	 * )
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void start(final BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {
@@ -103,11 +100,9 @@ public class Activator implements BundleActivator {
 		this.packageAdminServiceLifecycle.start();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {

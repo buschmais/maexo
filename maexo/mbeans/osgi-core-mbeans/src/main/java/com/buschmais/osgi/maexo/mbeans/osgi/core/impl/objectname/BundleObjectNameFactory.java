@@ -30,19 +30,16 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleConstants;
 /**
  * Object name factory implementation for bundles.
  */
-public class BundleObjectNameFactory implements ObjectNameFactory {
+public final class BundleObjectNameFactory implements ObjectNameFactory {
 
 	private static final String DEFAULT_BUNDLE_SYMBOLICNAME = "unknown";
 
 	private static final String DEFAULT_BUNDLE_VERSION = Version.emptyVersion
 			.toString();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory
-	 * #getObjectName(java.lang.Object, java.util.Dictionary)
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public ObjectName getObjectName(Object resource,
 			Map<String, Object> properties) {

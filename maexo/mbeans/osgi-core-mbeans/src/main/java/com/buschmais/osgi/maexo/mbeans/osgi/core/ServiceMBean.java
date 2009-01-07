@@ -33,7 +33,7 @@ public interface ServiceMBean {
 	 * @return The object name of the bundle that registered the service; null
 	 *         if that service has already been unregistered.
 	 */
-	public ObjectName getBundle();
+	ObjectName getBundle();
 
 	/**
 	 * Returns the service property named "service.id" identifying a service's
@@ -41,7 +41,7 @@ public interface ServiceMBean {
 	 * 
 	 * @return The service property named "service.id".
 	 */
-	public Long getId();
+	Long getId();
 
 	/**
 	 * Returns the service property named "service.description" identifying a
@@ -49,7 +49,7 @@ public interface ServiceMBean {
 	 * 
 	 * @return The service property named "service.description".
 	 */
-	public String getDescription();
+	String getDescription();
 
 	/**
 	 * Returns the service property named "objectClass" identifying all of the
@@ -57,7 +57,7 @@ public interface ServiceMBean {
 	 * 
 	 * @return The service property named "objectClass".
 	 */
-	public String[] getObjectClass();
+	String[] getObjectClass();
 
 	/**
 	 * Returns the service property named "service.pid" identifying a service's
@@ -65,7 +65,7 @@ public interface ServiceMBean {
 	 * 
 	 * @return The service property named "service.pid".
 	 */
-	public String getPid();
+	String getPid();
 
 	/**
 	 * Returns the properties of the Dictionary object of the service.
@@ -73,7 +73,7 @@ public interface ServiceMBean {
 	 * @return The properties of the Dictionary object of the service.
 	 * @throws MBeanException
 	 */
-	public TabularData getProperties() throws MBeanException;
+	TabularData getProperties() throws MBeanException;
 
 	/**
 	 * Returns the service property named "service.ranking" identifying a
@@ -81,7 +81,7 @@ public interface ServiceMBean {
 	 * 
 	 * @return The service property named "service.ranking".
 	 */
-	public Integer getRanking();
+	Integer getRanking();
 
 	/**
 	 * Returns the bundles that are using the service.
@@ -90,7 +90,7 @@ public interface ServiceMBean {
 	 *         service referenced object is greater than zero; null if no
 	 *         bundles are currently using that service.
 	 */
-	public ObjectName[] getUsingBundles();
+	ObjectName[] getUsingBundles();
 
 	/**
 	 * Returns the service property named "service.vendor" identifying a
@@ -98,6 +98,6 @@ public interface ServiceMBean {
 	 * 
 	 * @return The service property named "service.vendor".
 	 */
-	public String getVendor();
+	String getVendor();
 
 }

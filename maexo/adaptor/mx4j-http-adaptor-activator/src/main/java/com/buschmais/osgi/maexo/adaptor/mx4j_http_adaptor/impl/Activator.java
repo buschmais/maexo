@@ -40,7 +40,7 @@ import com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.Constants;
 /**
  * Activator for the MX4J HTTP adaptor.
  */
-public class Activator implements BundleActivator {
+public final class Activator implements BundleActivator {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(Activator.class);
@@ -69,12 +69,9 @@ public class Activator implements BundleActivator {
 
 	private ServiceRegistration processorServiceRegistration;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext
-	 * )
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	public void start(BundleContext bundleContext) throws Exception {
@@ -150,11 +147,9 @@ public class Activator implements BundleActivator {
 		return configuration;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {

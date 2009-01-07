@@ -44,6 +44,9 @@ public final class BundleMBeanLifeCycle extends MBeanLifecycleSupport implements
 		super(bundleContext);
 	}
 
+	/**
+	 * Registers all existing bundles as MBeans. Adds bundleListener.
+	 */
 	public void start() {
 		// register all existing bundles as mbeans
 		for (org.osgi.framework.Bundle bundle : super.getBundleContext()
@@ -53,6 +56,9 @@ public final class BundleMBeanLifeCycle extends MBeanLifecycleSupport implements
 		super.getBundleContext().addBundleListener(this);
 	}
 
+	/**
+	 * Removes bundleListener. Unregisters all registered bundle MBeans.
+	 */
 	public void stop() {
 		// remove bundle listener
 		super.getBundleContext().removeBundleListener(this);
@@ -65,11 +71,9 @@ public final class BundleMBeanLifeCycle extends MBeanLifecycleSupport implements
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.osgi.framework.BundleListener#bundleChanged(org.osgi.framework
-	 * .BundleEvent)
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public synchronized void bundleChanged(BundleEvent bundleEvent) {
 		org.osgi.framework.Bundle bundle = bundleEvent.getBundle();
@@ -85,6 +89,8 @@ public final class BundleMBeanLifeCycle extends MBeanLifecycleSupport implements
 		case BundleEvent.UNINSTALLED:
 			super.unregisterMBeanService(objectName);
 			break;
+		default:
+			assert false : "Unexpected BundleEvent";
 		}
 	}
 }

@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @see ObjectNameFactory
  */
-public class ObjectNameHelper {
+public final class ObjectNameHelper {
 
 	private static Logger logger = LoggerFactory
 			.getLogger(ObjectNameHelper.class);
@@ -161,7 +161,8 @@ public class ObjectNameHelper {
 	 *                and therefore no object name could be constructed
 	 */
 	public ObjectName getObjectName(Object resource,
-			Class<?>[] resourceInterfaces, Map<String, Object> properties) {
+			Class<?>[] resourceInterfaces, Map<String, Object> properties)
+			throws ObjectNameFactoryException {
 		if (resource == null || resourceInterfaces == null
 				|| resourceInterfaces.length == 0) {
 			throw new IllegalArgumentException(
@@ -230,9 +231,6 @@ public class ObjectNameHelper {
 	 *            the object name factory
 	 * @param resourceInterface
 	 *            the class of the resources which are supported
-	 * @param properties
-	 *            additional properties which will be passed to the object name
-	 *            factory
 	 * @return the service reference
 	 */
 	public ServiceRegistration registerObjectNameFactory(

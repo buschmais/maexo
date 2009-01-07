@@ -24,74 +24,59 @@ import javax.management.openmbean.TabularType;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.OpenTypeFactory;
 
+/**
+ * Class holding all constants for ServiceMBeans.
+ */
+public final class ServiceConstants {
 
-public class ServiceConstants {
-
+	
 	/**
-	 * object name properties: id, type and name
+	 * Private Constructor.
 	 */
-	public static final String OBJECTNAME_ID_PROPERTY = "id";
-	public static final String OBJECTNAME_TYPE_PROPERTY = "type";
-	public static final String OBJECTNAME_NAME_PROPERTY = "name";
-	public static final String OBJECTNAME_PID_PROPERTY = "pid";
+	private ServiceConstants() {
 
-	/**
-	 * value of the type property
-	 */
-	public static final String OBJECTNAME_TYPE_VALUE = "Service";
+	}
 
-	/**
-	 * MBean description
-	 */
+	/** MBean object name format. */
+	public static final String OBJECTNAME_FORMAT = "com.buschmais.osgi.maexo:type=Service,id=%s,name=%s,pid=%s";
+
+	/** MBean description. */
 	public static final String MBEAN_DESCRIPTION = "Service MBean";
 	
-	static final String[] ITEM_NAMES = new String[] {
-								"name",
-								"value" };
-	
-	/**
-	 * attribute: bundle
-	 */
+	/** Item names. */
+	static final String[] ITEM_NAMES = new String[] { "name", "value" };
+
+	/** Attribute: bundle. */
 	public static final OpenMBeanAttributeInfoSupport BUNDLE = new OpenMBeanAttributeInfoSupport(
 			"bundle",
 			"The object name of the bundle that registered the service; null if that service has already been unregistered.",
 			SimpleType.OBJECTNAME, true, false, false);
 
-	/**
-	 * attribute: description
-	 */
+	/** Attribute: description. */
 	public static final OpenMBeanAttributeInfoSupport DESCRIPTION = new OpenMBeanAttributeInfoSupport(
 			"description",
 			"The service property named \"service.description\" identifying a service's description.",
 			SimpleType.STRING, true, false, false);
 
-	/**
-	 * attribute: id
-	 */
+	/** Attribute: id. */
 	public static final OpenMBeanAttributeInfoSupport ID = new OpenMBeanAttributeInfoSupport(
 			"id",
 			"The service property named \"service.id\" identifying a service's registration number.", SimpleType.LONG, true,
 			false, false);
 
-	/**
-	 * attribute: object class
-	 */
+	/** Attribute: object class. */
 	public static final OpenMBeanAttributeInfoSupport OBJECTCLASS = new OpenMBeanAttributeInfoSupport(
 			"objectClass",
-			"The service property named \"objectClass\" identifying all of the class names under which a service was registered in the Framework.", OpenTypeFactory
-					.createArrayType(1, SimpleType.STRING), true, false, false);
+			"The service property named \"objectClass\" identifying all of the class names under which a service was registered in the Framework.",
+			OpenTypeFactory.createArrayType(1, SimpleType.STRING), true, false, false);
 
-	/**
-	 * attribute: pid
-	 */
+	/** Attribute: pid. */
 	public static final OpenMBeanAttributeInfoSupport PID = new OpenMBeanAttributeInfoSupport(
 			"pid",
 			"The service property named \"service.pid\" identifying a service's persistent identifier.", SimpleType.STRING,
 			true, false, false);
 
-	/**
-	 * propertiesRowType
-	 */
+	/** propertiesRowType. */
 	public static final CompositeType PROPERTIES_ROW_TYPE = OpenTypeFactory
 			.createCompositeType("propertyEntry",
 					"A service property entry",
@@ -99,47 +84,36 @@ public class ServiceConstants {
 					ITEM_NAMES,
 					new OpenType[] { SimpleType.STRING, SimpleType.STRING });
 
-	/**
-	 * propertiesType
-	 */
+	/** propertiesType. */
 	public static final TabularType PROPERTIES_TYPE = OpenTypeFactory
 			.createTabularType(
 					"properties",
 					"The service properties",
 					ServiceConstants.PROPERTIES_ROW_TYPE,
 					new String[] { "name" });
-	/**
-	 * attribute: propertyType
-	 */
+	
+	/** Attribute: propertyType. */
 	public static final OpenMBeanAttributeInfoSupport PROPERTYTYPE = new OpenMBeanAttributeInfoSupport(
 			"properties",
 			"The properties of the Dictionary object of the service.",
 			ServiceConstants.PROPERTIES_TYPE, true, false, false);
 
-	/**
-	 * attribute: ranking
-	 */
+	/** Attribute: ranking. */
 	public static final OpenMBeanAttributeInfoSupport RANKING = new OpenMBeanAttributeInfoSupport(
 			"ranking",
 			"The service property named \"service.ranking\" identifying a service's ranking number.", SimpleType.INTEGER,
 			true, false, false);
 
-	/**
-	 * attribute: using bundles
-	 */
+	/** Attribute: using bundles. */
 	public static final OpenMBeanAttributeInfoSupport USING_BUNDLES = new OpenMBeanAttributeInfoSupport(
 			"usingBundles",
 			"The bundle which are currrently using this service",
 			OpenTypeFactory.createArrayType(
 					1, SimpleType.OBJECTNAME), true, false, false);
 
-	/**
-	 * attribute: vendor
-	 */
+	/** Attribute: vendor. */
 	public static final OpenMBeanAttributeInfoSupport VENDOR = new OpenMBeanAttributeInfoSupport(
 			"vendor",
 			"the service property named \"service.vendor\" identifying a service's vendor.", SimpleType.STRING,
 			true, false, false);
-
-
 }

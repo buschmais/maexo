@@ -43,12 +43,8 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 		super(bundleContext);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.
-	 * ServiceMBeanLifeCycleSupport
-	 * #getService(org.osgi.framework.ServiceReference)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object getService(ServiceReference serviceReference) {
@@ -56,34 +52,24 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 		return serviceReference;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.
-	 * ServiceMBeanLifeCycleSupport#getMBean(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object getMBean(Object service) {
 		return new Service(super.getBundleContext(), (ServiceReference) service);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.
-	 * ServiceMBeanLifeCycleSupport#getMBeanInterface()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Class<?> getMBeanInterface() {
 		return DynamicMBean.class;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.
-	 * ServiceMBeanLifeCycleSupport#getObjectName(java.lang.Object,
-	 * java.util.Dictionary)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public ObjectName getObjectName(Object service,
@@ -92,23 +78,16 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 				ServiceReference.class);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.
-	 * ServiceMBeanLifeCycleSupport#getServiceInterface()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Class<?> getServiceInterface() {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.
-	 * ServiceMBeanLifeCycleSupport
-	 * #isManageable(org.osgi.framework.ServiceReference)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isManageable(ServiceReference serviceReference) {

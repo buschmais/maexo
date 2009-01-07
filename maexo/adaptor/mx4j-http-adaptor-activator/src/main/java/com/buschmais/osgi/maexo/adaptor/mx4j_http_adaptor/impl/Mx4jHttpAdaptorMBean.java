@@ -26,12 +26,12 @@ public interface Mx4jHttpAdaptorMBean extends HttpAdaptorMBean {
 	/**
 	 * @return the startOnRegistration
 	 */
-	public boolean isStartOnRegistration();
+	boolean isStartOnRegistration();
 
 	/**
 	 * @param startOnRegistration
 	 *            the startOnRegistration to set
 	 */
-	public void setStartOnRegistration(boolean startOnRegistration);
+	void setStartOnRegistration(boolean startOnRegistration);
 
 }

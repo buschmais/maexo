@@ -16,7 +16,6 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.management.ObjectName;
@@ -25,38 +24,31 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.ServiceConstants;
 
 /**
  * Object name factory implementation for service references.
  */
-public class ServiceObjectNameFactory implements ObjectNameFactory {
+public final class ServiceObjectNameFactory implements ObjectNameFactory {
 
 	/**
 	 * The separator token to use if several object classes are implemented by
-	 * the service
+	 * the service.
 	 */
 	private static final char SEPARATOR_OBJECTCLASS = '|';
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory
-	 * #getObjectName(java.lang.Object, java.util.Dictionary)
+	/** Value of the type property. */
+	private static final String OBJECTNAME_TYPE_VALUE = "Service";
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public ObjectName getObjectName(Object resource,
 			Map<String, Object> properties) {
 		ServiceReference serviceReference = (ServiceReference) resource;
 
-		Map<String, Object> objectNameProperties = new LinkedHashMap<String, Object>();
-		// type
-		objectNameProperties.put(ServiceConstants.OBJECTNAME_TYPE_PROPERTY,
-				ServiceConstants.OBJECTNAME_TYPE_VALUE);
 		// id
 		Long id = (Long) serviceReference.getProperty(Constants.SERVICE_ID);
-		objectNameProperties.put(ServiceConstants.OBJECTNAME_ID_PROPERTY, id);
 		// object classes
 		String[] objectClasses = (String[]) serviceReference
 				.getProperty(Constants.OBJECTCLASS);
@@ -65,21 +57,20 @@ public class ServiceObjectNameFactory implements ObjectNameFactory {
 		for (String objectClass : objectClasses) {
 			if (firstItem) {
 				firstItem = false;
-			}
-			else {
+			} else {
 				objectClassValue.append(SEPARATOR_OBJECTCLASS);
 			}
 			objectClassValue.append(objectClass);
 		}
-		objectNameProperties.put(ServiceConstants.OBJECTNAME_NAME_PROPERTY,
-				objectClassValue.toString());
 		// pid
 		String pid = (String) serviceReference
 				.getProperty(Constants.SERVICE_PID);
-		if (pid != null) {
-			objectNameProperties.put(ServiceConstants.OBJECTNAME_PID_PROPERTY,
-					pid);
+		String objectName = String.format(ServiceConstants.OBJECTNAME_FORMAT, id, objectClassValue.toString(), pid);
+		try {
+			return new ObjectName(objectName);
+		} catch (Exception e) {
+			throw new IllegalArgumentException(
+					String.format("Cannot create object name instance for '%s'", objectName), e);
 		}
-		return ObjectNameHelper.assembleObjectName(objectNameProperties);
 	}
 }

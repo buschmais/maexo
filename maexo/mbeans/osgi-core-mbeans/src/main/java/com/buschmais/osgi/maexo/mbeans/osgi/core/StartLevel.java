@@ -64,10 +64,9 @@ public final class StartLevel extends DynamicMBeanSupport implements
 		this.startLevel = startLevel;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.DynamicMBean#getMBeanInfo()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public MBeanInfo getMBeanInfo() {
 		String className = StartLevel.class.getName();
@@ -98,12 +97,8 @@ public final class StartLevel extends DynamicMBeanSupport implements
 		return mbeanInfo;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#getBundleStartLevel
-	 * (javax.management.ObjectName)
+	/**
+	 * {@inheritDoc}
 	 */
 	public Integer getBundleStartLevel(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
@@ -113,43 +108,30 @@ public final class StartLevel extends DynamicMBeanSupport implements
 		return this.getBundleStartLevel(id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#getBundleStartLevel
-	 * (java.lang.Long)
+	/**
+	 * {@inheritDoc}
 	 */
 	public Integer getBundleStartLevel(Long id) {
 		Bundle bundle = this.bundleContext.getBundle(id.longValue());
 		return Integer.valueOf(this.startLevel.getBundleStartLevel(bundle));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#
-	 * getInitialBundleStartLevel()
+	/**
+	 * {@inheritDoc}
 	 */
 	public Integer getInitialBundleStartLevel() {
 		return Integer.valueOf(this.startLevel.getInitialBundleStartLevel());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#getStartLevel()
+	/**
+	 * {@inheritDoc}
 	 */
 	public Integer getStartLevel() {
 		return Integer.valueOf(this.startLevel.getStartLevel());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#
-	 * isBundlePersistentlyStarted(javax.management.ObjectName)
+	/**
+	 * {@inheritDoc}
 	 */
 	public Boolean isBundlePersistentlyStarted(ObjectName objectName)
 			throws AttributeNotFoundException, InstanceNotFoundException,
@@ -159,11 +141,8 @@ public final class StartLevel extends DynamicMBeanSupport implements
 		return this.isBundlePersistentlyStarted(id);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#
-	 * isBundlePersistentlyStarted(Long)
+	/**
+	 * {@inheritDoc}
 	 */
 	public Boolean isBundlePersistentlyStarted(Long id) {
 		Bundle bundle = this.bundleContext.getBundle(id.longValue());
@@ -171,12 +150,8 @@ public final class StartLevel extends DynamicMBeanSupport implements
 				.isBundlePersistentlyStarted(bundle));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#setBundleStartLevel
-	 * (javax.management.ObjectName, Integer)
+	/**
+	 * {@inheritDoc}
 	 */
 	public void setBundleStartLevel(ObjectName objectName, Integer startLevel)
 			throws AttributeNotFoundException, InstanceNotFoundException,
@@ -186,34 +161,23 @@ public final class StartLevel extends DynamicMBeanSupport implements
 		this.setBundleStartLevel(id, startLevel);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#setBundleStartLevel
-	 * (Long, Integer)
+	/**
+	 * {@inheritDoc}
 	 */
 	public void setBundleStartLevel(Long id, Integer startLevel) {
 		Bundle bundle = this.bundleContext.getBundle(id.longValue());
 		this.startLevel.setBundleStartLevel(bundle, startLevel.intValue());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seecom.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#
-	 * setInitialBundleStartLevel(Integer)
+	/**
+	 * {@inheritDoc}
 	 */
 	public void setInitialBundleStartLevel(Integer startLevel) {
 		this.startLevel.setInitialBundleStartLevel(startLevel.intValue());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean#setStartLevel
-	 * (Integer)
+	/**
+	 * {@inheritDoc}
 	 */
 	public void setStartLevel(Integer startLevel) {
 		this.startLevel.setStartLevel(startLevel.intValue());

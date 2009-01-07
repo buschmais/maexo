@@ -34,7 +34,7 @@ public interface BundleMBean {
 	 * 
 	 * @return The unique identifier of this bundle.
 	 */
-	public Long getBundleId();
+	Long getBundleId();
 
 	/**
 	 * Returns this bundle's current state.
@@ -42,7 +42,7 @@ public interface BundleMBean {
 	 * @return An element of UNINSTALLED,INSTALLED, RESOLVED,STARTING,
 	 *         STOPPING,ACTIVE.
 	 */
-	public Integer getState();
+	Integer getState();
 
 	/**
 	 * Returns this bundle's current state.
@@ -50,7 +50,7 @@ public interface BundleMBean {
 	 * @return An element of UNINSTALLED,INSTALLED, RESOLVED,STARTING,
 	 *         STOPPING,ACTIVE.
 	 */
-	public String getStateAsName();
+	String getStateAsName();
 
 	/**
 	 * Returns this bundle's Manifest headers and values.
@@ -59,35 +59,35 @@ public interface BundleMBean {
 	 *         and values.
 	 * @throws MBeanException
 	 */
-	public TabularData getHeaders() throws MBeanException;
+	TabularData getHeaders() throws MBeanException;
 
 	/**
 	 * Returns the time when this bundle was last modified.
 	 * 
 	 * @return The time when this bundle was last modified.
 	 */
-	public Long getLastModified();
+	Long getLastModified();
 
 	/**
 	 * Returns the time when this bundle was last modified.
 	 * 
 	 * @return The time when this bundle was last modified.
 	 */
-	public Date getLastModifiedAsDate();
+	Date getLastModifiedAsDate();
 
 	/**
 	 * Returns this bundle's location identifier.
 	 * 
 	 * @return The string representation of this bundle's location identifier.
 	 */
-	public String getLocation();
+	String getLocation();
 
 	/**
 	 * Returns the services which have been registered by this bundle.
 	 * 
 	 * @return the services
 	 */
-	public ObjectName[] getRegisteredServices();
+	ObjectName[] getRegisteredServices();
 
 	/**
 	 * Returns this bundle's ServiceReference list for all services it is using
@@ -95,28 +95,28 @@ public interface BundleMBean {
 	 * 
 	 * @return An array of object names or null.
 	 */
-	public ObjectName[] getServicesInUse();
+	ObjectName[] getServicesInUse();
 
 	/**
 	 * Start the bundle.
 	 * 
 	 * @throws MBeanException
 	 */
-	public void start() throws MBeanException;
+	void start() throws MBeanException;
 
 	/**
 	 * Stop the bundle.
 	 * 
 	 * @throws MBeanException
 	 */
-	public void stop() throws MBeanException;
+	void stop() throws MBeanException;
 
 	/**
-	 * Update the bundle
+	 * Update the bundle.
 	 * 
 	 * @throws MBeanException
 	 */
-	public void update() throws MBeanException;
+	void update() throws MBeanException;
 
 	/**
 	 * Update the bundle from the provided url.
@@ -125,10 +125,10 @@ public interface BundleMBean {
 	 *            the url
 	 * @throws MBeanException
 	 */
-	public void update(String url) throws MBeanException;
+	void update(String url) throws MBeanException;
 
 	/**
 	 * Uninstall the bundle.
 	 */
-	public void uninstall() throws MBeanException;
+	void uninstall() throws MBeanException;
 }

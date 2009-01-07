@@ -64,14 +64,14 @@ public class MBeanLifecycleSupport {
 	/**
 	 * @return the bundleContext
 	 */
-	public BundleContext getBundleContext() {
+	public final BundleContext getBundleContext() {
 		return bundleContext;
 	}
 
 	/**
 	 * @return the objectNameHelper
 	 */
-	public ObjectNameHelper getObjectNameHelper() {
+	public final ObjectNameHelper getObjectNameHelper() {
 		return objectNameHelper;
 	}
 
@@ -87,7 +87,7 @@ public class MBeanLifecycleSupport {
 	 * @param mbean
 	 *            the mbean
 	 */
-	public void registerMBeanService(Class<?> mbeanInterface,
+	public final void registerMBeanService(Class<?> mbeanInterface,
 			ObjectName objectName, Object mbean) {
 		Dictionary<String, Object> serviceProperties = new Hashtable<String, Object>();
 		serviceProperties.put(ObjectName.class.getName(), objectName);
@@ -112,7 +112,7 @@ public class MBeanLifecycleSupport {
 	 *            the objectName which identifies the mbean to be
 	 *            unregistered
 	 */
-	public void unregisterMBeanService(ObjectName objectName) {
+	public final void unregisterMBeanService(ObjectName objectName) {
 		// lookup serviceRegistration
 		ServiceRegistration serviceRegistration = this.mbeanRegistrations
 				.get(objectName);

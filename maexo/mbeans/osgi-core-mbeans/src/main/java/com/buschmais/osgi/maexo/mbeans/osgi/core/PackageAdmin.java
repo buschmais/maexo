@@ -29,7 +29,6 @@ import javax.management.ObjectName;
 import javax.management.ReflectionException;
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.CompositeDataSupport;
-import javax.management.openmbean.CompositeType;
 import javax.management.openmbean.OpenDataException;
 import javax.management.openmbean.OpenMBeanAttributeInfoSupport;
 import javax.management.openmbean.OpenMBeanConstructorInfoSupport;
@@ -37,7 +36,6 @@ import javax.management.openmbean.OpenMBeanInfoSupport;
 import javax.management.openmbean.OpenMBeanOperationInfoSupport;
 import javax.management.openmbean.TabularData;
 import javax.management.openmbean.TabularDataSupport;
-import javax.management.openmbean.TabularType;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -50,7 +48,7 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHel
 /**
  * Represents the OSGi package admin service.
  */
-public class PackageAdmin extends DynamicMBeanSupport implements
+public final class PackageAdmin extends DynamicMBeanSupport implements
 		PackageAdminMBean, MBeanRegistration {
 
 	// translation map for bundle states
@@ -68,25 +66,17 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 	/**
 	 * The bundle context.
 	 */
-	private BundleContext bundleContext;
+	private final BundleContext bundleContext;
 
 	/**
 	 * The package admin service.
 	 */
-	private org.osgi.service.packageadmin.PackageAdmin packageAdmin;
+	private final org.osgi.service.packageadmin.PackageAdmin packageAdmin;
 
 	/**
 	 * The object name helper.
 	 */
-	private ObjectNameHelper objectNameHelper;
-
-	private TabularType exportedPackagesType;
-
-	private CompositeType exportedPackageType;
-
-	private TabularType requiredBundlesType;
-
-	private CompositeType requiredBundleType;
+	private final ObjectNameHelper objectNameHelper;
 
 	/**
 	 * Constructor.
@@ -270,12 +260,12 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 			return null;
 		}
 		TabularData tabularData = new TabularDataSupport(
-				this.requiredBundlesType);
+				PackageAdminConstants.REQUIRED_BUNDLES_TYPE);
 		for (RequiredBundle requiredBundle : requiredBundles) {
 			try {
 				tabularData
 						.put(new CompositeDataSupport(
-								this.requiredBundleType,
+								PackageAdminConstants.REQUIRED_BUNDLE_TYPE,
 								PackageAdminConstants.REQUIREDBUNDLE_ITEM_NAMES,
 								new Object[] {
 										this.objectNameHelper.getObjectName(
@@ -353,7 +343,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 
 	/**
 	 * {@inheritDoc}
-	 */
+	 */ 
 	public Boolean resolveBundles() {
 		return Boolean.valueOf(this.packageAdmin.resolveBundles(null));
 	}
@@ -369,7 +359,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 	private TabularData convertExportedPackages(
 			ExportedPackage[] exportedPackages) throws MBeanException {
 		TabularData tabularData = new TabularDataSupport(
-				this.exportedPackagesType);
+				PackageAdminConstants.EXPORTED_PACKAGES_TYPE);
 		for (ExportedPackage exportedPackage : exportedPackages) {
 			tabularData.put(this.convertExportedPackage(exportedPackage));
 		}
@@ -389,7 +379,7 @@ public class PackageAdmin extends DynamicMBeanSupport implements
 			throws MBeanException {
 		try {
 			return new CompositeDataSupport(
-					this.exportedPackageType,
+					PackageAdminConstants.EXPORTED_PACKAGE_TYPE,
 					PackageAdminConstants.EXPORTEDPACKAGE_ITEM_NAMES,
 					new Object[] {
 							this.objectNameHelper.getObjectName(exportedPackage

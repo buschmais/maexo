@@ -23,7 +23,7 @@ import javax.management.ObjectName;
 public interface ObjectNameFactory {
 
 	/**
-	 * Returns the object name for the given resource
+	 * Returns the object name for the given resource.
 	 * 
 	 * @param resource
 	 *            the resource
@@ -33,7 +33,7 @@ public interface ObjectNameFactory {
 	 *            object names (e.g. the service id)
 	 * @return the object name
 	 */
-	public ObjectName getObjectName(Object resource,
+	ObjectName getObjectName(Object resource,
 			Map<String, Object> properties);
 
 }

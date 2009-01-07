@@ -16,7 +16,6 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.objectname;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.management.ObjectName;
@@ -25,13 +24,12 @@ import org.osgi.framework.Constants;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryException;
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelConstants;
 
 /**
  * Object name factory implementation for the start level service.
  */
-public class StartLevelObjectNameFactory implements ObjectNameFactory {
+public final class StartLevelObjectNameFactory implements ObjectNameFactory {
 
 	/**
 	 * Returns the object name for the given resource.
@@ -45,25 +43,25 @@ public class StartLevelObjectNameFactory implements ObjectNameFactory {
 	 *            must contain a {@link Constants.SERVICE_ID} entry
 	 * @exception ObjectNameFactoryException
 	 *                if the {@link Constants.SERVICE_ID} entry is missing
+	 * @return the object name for the given resource
 	 */
 	public ObjectName getObjectName(Object resource,
-			Map<String, Object> properties) {
+			Map<String, Object> properties) throws ObjectNameFactoryException {
 		if (properties == null) {
 			throw new IllegalArgumentException(
 					"Parameter properties must not be null");
 		}
 
-		Map<String, Object> objectNameProperties = new LinkedHashMap<String, Object>();
-		// type
-		objectNameProperties.put(StartLevelConstants.OBJECTNAME_TYPE_PROPERTY,
-				StartLevelConstants.OBJECTNAME_TYPE_VALUE);
 		// id
 		Long id = (Long) properties.get(Constants.SERVICE_ID);
 		if (id == null) {
 			throw new ObjectNameFactoryException("No service id");
 		}
-		objectNameProperties
-				.put(StartLevelConstants.OBJECTNAME_ID_PROPERTY, id);
-		return ObjectNameHelper.assembleObjectName(objectNameProperties);
+		String objectName = String.format(StartLevelConstants.OBJECTNAME_FORMAT, id);
+		try {
+			return new ObjectName(objectName);
+		} catch (Exception e) {
+			throw new IllegalArgumentException(String.format("Cannot create object name instance for '%s'", objectName), e);
+		}
 	}
 }

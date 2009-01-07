@@ -40,11 +40,8 @@ public final class PackageAdminMBeanLifeCycle extends
 		super(bundleContext);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.
-	 * ServiceMBeanLifeCycleSupport#getMBean(java.lang.Object)
+	/** 
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object getMBean(Object service) {
@@ -52,26 +49,19 @@ public final class PackageAdminMBeanLifeCycle extends
 				(org.osgi.service.packageadmin.PackageAdmin) service);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.
-	 * ServiceMBeanLifeCycleSupport#getMBeanInterface()
+	/** 
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Class<?> getMBeanInterface() {
 		return DynamicMBean.class;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.
-	 * ServiceMBeanLifeCycleSupport#getServiceInterface()
+	/** 
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Class<?> getServiceInterface() {
 		return org.osgi.service.packageadmin.PackageAdmin.class;
 	}
-
 }

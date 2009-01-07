@@ -21,56 +21,50 @@ import javax.management.openmbean.OpenMBeanOperationInfoSupport;
 import javax.management.openmbean.OpenMBeanParameterInfoSupport;
 import javax.management.openmbean.SimpleType;
 
-public class StartLevelConstants {
+/**
+ * Class holding all constants for StartLevelMBeans.
+ */
+public final class StartLevelConstants {
 
 	/**
-	 * object name properties: type and id
+	 * Private Constructor.
 	 */
-	public static final String OBJECTNAME_TYPE_PROPERTY = "type";
-	public static final String OBJECTNAME_ID_PROPERTY = "id";
+	private StartLevelConstants() {
 
-	/**
-	 * value of the type property
-	 */
-	public static final String OBJECTNAME_TYPE_VALUE = "StartLevel";
+	}
 
-	/**
-	 * MBean description
-	 */
+	/** MBean object name format. */
+	public static final String OBJECTNAME_FORMAT = "com.buschmais.osgi.maexo:type=StartLevel,id=%s";
+
+
+	/** MBean description. */
 	public static final String MBEAN_DESCRIPTION = "StartLevel MBean";
 
-	/**
-	 * attribute: startLevel
-	 */
+	/** Attribute: startLevel. */
 	public static final OpenMBeanAttributeInfoSupport STARTLEVEL = new OpenMBeanAttributeInfoSupport("startLevel",
 			"The active start level value of the Framework.", SimpleType.INTEGER, true, true, false);
 
-	/**
-	 * attribute: initialBundleStartLevel
-	 */
+	/** Attribute: initialBundleStartLevel. */
 	public static final OpenMBeanAttributeInfoSupport INITIALBUNDLE_STARTLEVEL = new OpenMBeanAttributeInfoSupport(
 			"initialBundleStartLevel", "The initial start level value for Bundles.", SimpleType.INTEGER, true, true,
 			false);
 
-	/**
-	 * operation: Integer getBundleStartLevel(ObjectName objectName)
-	 */
+	/** Operation: Integer getBundleStartLevel(ObjectName objectName). */
 	public static final OpenMBeanOperationInfoSupport GETBUNDLESTARTLEVEL_BY_OBJECTNAME = new OpenMBeanOperationInfoSupport(
 			"getBundleStartLevel", "Return the assigned start level value for the specified Bundle.",
 			new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport("objectName",
 					"The object name of the bundle", SimpleType.OBJECTNAME) }, SimpleType.INTEGER,
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/**
-	 * operation: Integer getBundleStartLevel(Long id)
-	 */
+	/** Operation: Integer getBundleStartLevel(Long id). */
 	public static final OpenMBeanOperationInfoSupport GETBUNDLESTARTLEVEL_BY_ID = new OpenMBeanOperationInfoSupport(
 			"getBundleStartLevel", "Return the assigned start level value for the specified Bundle.",
 			new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport("id", "The id of the bundle",
 					SimpleType.LONG) }, SimpleType.INTEGER, OpenMBeanOperationInfoSupport.INFO);
 
 	/**
-	 * operation: void setBundleStartLevel(ObjectName objectName, Integer level)
+	 * Operation: void setBundleStartLevel(ObjectName objectName, Integer
+	 * level).
 	 */
 	public static final OpenMBeanOperationInfoSupport SETBUNDLESTARTLEVEL_BY_OBJECTNAME = new OpenMBeanOperationInfoSupport(
 			"setBundleStartLevel", "Assign a start level value to the specified Bundle.",
@@ -80,9 +74,7 @@ public class StartLevelConstants {
 					new OpenMBeanParameterInfoSupport("startLevel", "The new start level for the specified Bundle.",
 							SimpleType.INTEGER) }, SimpleType.VOID, OpenMBeanOperationInfoSupport.ACTION);
 
-	/**
-	 * operation: void setBundleStartLevel(Long id, Integer level)
-	 */
+	/** Operation: void setBundleStartLevel(Long id, Integer level). */
 	public static final OpenMBeanOperationInfoSupport SETBUNDLESTARTLEVEL_BY_ID = new OpenMBeanOperationInfoSupport(
 			"setBundleStartLevel", "Assign a start level value to the specified Bundle.",
 			new OpenMBeanParameterInfoSupport[] {
@@ -90,18 +82,14 @@ public class StartLevelConstants {
 					new OpenMBeanParameterInfoSupport("startLevel", "The new start level for the specified Bundle.",
 							SimpleType.INTEGER) }, SimpleType.VOID, OpenMBeanOperationInfoSupport.ACTION);
 
-	/**
-	 * operation: Boolean isBundlePersistentlyStarted(ObjectName objectName)
-	 */
+	/** Operation: Boolean isBundlePersistentlyStarted(ObjectName objectName). */
 	public static final OpenMBeanOperationInfoSupport ISBUNDLEPERSISTENTLYSTARTED_BY_OBJECTNAME = new OpenMBeanOperationInfoSupport(
 			"isBundlePersistentlyStarted", "Return the persistent state of the specified bundle.",
 			new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport("objectName",
 					"The object name of the bundle", SimpleType.OBJECTNAME) }, SimpleType.BOOLEAN,
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/**
-	 * operation: Boolean isBundlePersistentlyStarted(Long id)
-	 */
+	/** Operation: Boolean isBundlePersistentlyStarted(Long id). */
 	public static final OpenMBeanOperationInfoSupport ISBUNDLEPERSISTENTLYSTARTED_BY_ID = new OpenMBeanOperationInfoSupport(
 			"isBundlePersistentlyStarted", "Return the persistent state of the specified bundle.",
 			new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport("id", "The id of the bundle",

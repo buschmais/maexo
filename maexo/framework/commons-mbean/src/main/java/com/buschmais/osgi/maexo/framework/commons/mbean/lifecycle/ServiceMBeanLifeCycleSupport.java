@@ -28,9 +28,6 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
-
 /**
  * Represents an abstract service event listener to manage the life cycle of the
  * associated service mbeans.
@@ -57,9 +54,11 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * The existing services are looked up to be published as mbeans. Later the
 	 * life cycle listener is registered with the bundle context.
 	 * 
+	 * //TODO@DM: change thrown ExceptionType
+	 * 
 	 * @throws InvalidSyntaxException
 	 */
-	public void start() throws InvalidSyntaxException {
+	public final void start() throws InvalidSyntaxException {
 		// register all existing services as mbeans
 		ServiceReference[] serviceReferences = this.getServices();
 		if (serviceReferences != null) {
@@ -78,6 +77,8 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * <p>
 	 * The existing services are looked up, their mbeans get unpublished and the
 	 * life cycle listener is unregistered from the bundle context.
+	 * 
+	 * //TODO@DM: change thrown ExceptionType
 	 * 
 	 * @throws InvalidSyntaxException
 	 */
@@ -99,6 +100,8 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * provided by {@link #getServiceInterface()}.
 	 * 
 	 * @return the service references
+	 * 
+	 *         // TODO@DM: change thrown ExceptionType
 	 * @throws InvalidSyntaxException
 	 */
 	private ServiceReference[] getServices() throws InvalidSyntaxException {
@@ -121,12 +124,9 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 		return ("(objectClass=" + serviceInterface.getName() + ")");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.ServiceListener#serviceChanged(org.osgi.framework.
-	 * ServiceEvent)
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public final synchronized void serviceChanged(ServiceEvent serviceEvent) {
 		ServiceReference serviceReference = serviceEvent.getServiceReference();
@@ -148,6 +148,8 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 					this.ungetService(serviceReference);
 				}
 				break;
+			default:
+				assert false : "Unexpected ServiceEvent";
 			}
 		}
 	}
@@ -188,7 +190,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * @param serviceReference
 	 *            the service reference
 	 */
-	public void ungetService(ServiceReference serviceReference) {
+	public final void ungetService(ServiceReference serviceReference) {
 		super.getBundleContext().ungetService(serviceReference);
 	}
 

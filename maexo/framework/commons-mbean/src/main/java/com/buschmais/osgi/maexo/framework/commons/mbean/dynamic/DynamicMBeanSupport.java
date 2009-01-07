@@ -61,7 +61,7 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 	private MBeanServer mbeanServer;
 
 	/**
-	 * This map holds the attribute names as keys and the types as values
+	 * This map holds the attribute names as keys and the types as values.
 	 */
 	private Map<String, Class<?>> attributeTypes;
 
@@ -95,12 +95,11 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.DynamicMBean#getAttribute(java.lang.String)
+
+	/**
+	 * {@inheritDoc}
 	 */
-	public Object getAttribute(String attribute)
+	public final Object getAttribute(String attribute)
 			throws AttributeNotFoundException, MBeanException,
 			ReflectionException {
 		if (logger.isDebugEnabled()) {
@@ -125,13 +124,11 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.management.DynamicMBean#setAttribute(javax.management.Attribute)
+
+	/**
+	 * {@inheritDoc}
 	 */
-	public void setAttribute(Attribute attribute)
+	public final void setAttribute(Attribute attribute)
 			throws AttributeNotFoundException, InvalidAttributeValueException,
 			MBeanException, ReflectionException {
 		String attributeName = attribute.getName();
@@ -159,10 +156,9 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.DynamicMBean#getAttributes(java.lang.String[])
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	public final AttributeList getAttributes(String[] attributes) {
@@ -177,12 +173,9 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 		return attributeList;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.management.DynamicMBean#setAttributes(javax.management.AttributeList
-	 * )
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
 	public final AttributeList setAttributes(AttributeList attributes) {
@@ -199,13 +192,11 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 		return attributeList;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.DynamicMBean#invoke(java.lang.String,
-	 * java.lang.Object[], java.lang.String[])
+
+	/**
+	 * {@inheritDoc}
 	 */
-	public Object invoke(String actionName, Object[] params, String[] signature)
+	public final Object invoke(String actionName, Object[] params, String[] signature)
 			throws MBeanException, ReflectionException {
 		Method method;
 		if (logger.isDebugEnabled()) {
@@ -233,7 +224,7 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 
 	/**
 	 * Converts the first letter of an attribute to upper case (for
-	 * getter/setter introspection)
+	 * getter/setter introspection).
 	 * 
 	 * @param attribute
 	 *            the attribute name
@@ -243,38 +234,32 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 		return attribute.substring(0, 1).toUpperCase() + attribute.substring(1);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.MBeanRegistration#postDeregister()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void postDeregister() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.MBeanRegistration#postRegister(java.lang.Boolean)
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void postRegister(Boolean registrationDone) {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.MBeanRegistration#preDeregister()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void preDeregister() throws Exception {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.management.MBeanRegistration#preRegister(javax.management.MBeanServer
-	 * , javax.management.ObjectName)
+
+	/**
+	 * {@inheritDoc}
 	 */
-	public ObjectName preRegister(MBeanServer server, ObjectName name)
+	public final ObjectName preRegister(MBeanServer server, ObjectName name)
 			throws Exception {
 		this.mbeanServer = server;
 		return name;
@@ -283,7 +268,7 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 	/**
 	 * @return the mbeanServer
 	 */
-	protected MBeanServer getMbeanServer() {
+	protected final MBeanServer getMbeanServer() {
 		return mbeanServer;
 	}
 }
