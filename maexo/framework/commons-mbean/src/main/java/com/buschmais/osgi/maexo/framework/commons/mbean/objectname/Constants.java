@@ -19,10 +19,18 @@ package com.buschmais.osgi.maexo.framework.commons.mbean.objectname;
 /**
  * Common constants for object name construction.
  */
-public class Constants {
+public final class Constants {
 
 	/**
-	 * The default domain for object names, i.e. <code>com.buschmais.osgi.maexo</code>.
+	 * Private Constructor.
+	 */
+	private Constants() {
+
+	}
+
+	/**
+	 * The default domain for object names, i.e.
+	 * <code>com.buschmais.osgi.maexo</code>.
 	 */
 	public static final String DEFAULT_DOMAIN = "com.buschmais.osgi.maexo";
 

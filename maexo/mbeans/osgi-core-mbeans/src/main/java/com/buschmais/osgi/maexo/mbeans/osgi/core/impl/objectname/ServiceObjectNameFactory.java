@@ -37,9 +37,6 @@ public final class ServiceObjectNameFactory implements ObjectNameFactory {
 	 */
 	private static final char SEPARATOR_OBJECTCLASS = '|';
 
-	/** Value of the type property. */
-	private static final String OBJECTNAME_TYPE_VALUE = "Service";
-
 	/**
 	 * {@inheritDoc}
 	 */

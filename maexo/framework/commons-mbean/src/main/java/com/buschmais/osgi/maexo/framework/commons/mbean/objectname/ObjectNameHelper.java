@@ -50,7 +50,7 @@ public final class ObjectNameHelper {
 	private static Logger logger = LoggerFactory
 			.getLogger(ObjectNameHelper.class);
 
-	private BundleContext bundleContext;
+	private final BundleContext bundleContext;
 
 	/**
 	 * Constructor.
@@ -255,6 +255,7 @@ public final class ObjectNameHelper {
 	 * @return the object name
 	 * @see Constants#DEFAULT_DOMAIN
 	 */
+	// TODO: dead code
 	public static ObjectName assembleObjectName(Map<String, Object> properties) {
 		return assembleObjectName(Constants.DEFAULT_DOMAIN, properties);
 	}
