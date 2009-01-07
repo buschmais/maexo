@@ -149,14 +149,10 @@ public final class Activator implements BundleActivator {
 	 */
 	private ServiceListener registerMBeanServerConnectionServiceListener(
 			final BundleContext bundleContext) throws InvalidSyntaxException {
-		mbeanServerConnectionServiceListener = new ServiceListener() {
+		ServiceListener serviceListener = new ServiceListener() {
 
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * org.osgi.framework.ServiceListener#serviceChanged(org.osgi.framework
-			 * .ServiceEvent)
+			/** 
+			 * {@inheritDoc}
 			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
 				ServiceReference serviceReference = serviceEvent
@@ -178,7 +174,7 @@ public final class Activator implements BundleActivator {
 			}
 
 		};
-		bundleContext.addServiceListener(mbeanServerConnectionServiceListener,
+		bundleContext.addServiceListener(serviceListener,
 				FILTER_MBEANSERVERCONNECTION);
 		// do initial registration of MBeanServerConnections
 		if (logger.isDebugEnabled()) {
@@ -186,8 +182,8 @@ public final class Activator implements BundleActivator {
 					.debug("performing initial registration of mbean server connections");
 		}
 		this.registerExistingServices(FILTER_MBEANSERVERCONNECTION,
-				bundleContext, mbeanServerConnectionServiceListener);
-		return mbeanServerConnectionServiceListener;
+				bundleContext, serviceListener);
+		return serviceListener;
 	}
 
 	/**
@@ -201,14 +197,10 @@ public final class Activator implements BundleActivator {
 	 */
 	private ServiceListener registerMBeanServerServiceListener(
 			final BundleContext bundleContext) throws InvalidSyntaxException {
-		mbeanServerServiceListener = new ServiceListener() {
+		ServiceListener serviceListener = new ServiceListener() {
 
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * org.osgi.framework.ServiceListener#serviceChanged(org.osgi.framework
-			 * .ServiceEvent)
+			/** 
+			 * {@inheritDoc}
 			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
 				ServiceReference serviceReference = serviceEvent
@@ -230,15 +222,15 @@ public final class Activator implements BundleActivator {
 			}
 
 		};
-		bundleContext.addServiceListener(mbeanServerServiceListener,
+		bundleContext.addServiceListener(serviceListener,
 				FILTER_MBEANSERVER);
 		// do initial registration of MBeanServers
 		if (logger.isDebugEnabled()) {
 			logger.debug("performing initial registration of mbean servers");
 		}
 		this.registerExistingServices(FILTER_MBEANSERVER, bundleContext,
-				mbeanServerServiceListener);
-		return mbeanServerServiceListener;
+				serviceListener);
+		return serviceListener;
 	}
 
 	/**
@@ -252,14 +244,10 @@ public final class Activator implements BundleActivator {
 	 */
 	private ServiceListener registerMBeanServiceListener(
 			final BundleContext bundleContext) throws InvalidSyntaxException {
-		mbeanServiceListener = new ServiceListener() {
+		ServiceListener serviceListener = new ServiceListener() {
 
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * org.osgi.framework.ServiceListener#serviceChanged(org.osgi.framework
-			 * .ServiceEvent)
+			/** 
+			 * {@inheritDoc}
 			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
 				ServiceReference serviceReference = serviceEvent
@@ -291,14 +279,14 @@ public final class Activator implements BundleActivator {
 			}
 
 		};
-		bundleContext.addServiceListener(mbeanServiceListener, FILTER_MBEAN);
+		bundleContext.addServiceListener(serviceListener, FILTER_MBEAN);
 		// do initial registration of MBeans
 		if (logger.isDebugEnabled()) {
 			logger.debug("performing initial registration of mbeans");
 		}
 		this.registerExistingServices(FILTER_MBEAN, bundleContext,
-				mbeanServiceListener);
-		return mbeanServiceListener;
+				serviceListener);
+		return serviceListener;
 	}
 
 	/**
@@ -312,14 +300,10 @@ public final class Activator implements BundleActivator {
 	 */
 	private ServiceListener registerNotificationListenerServiceListener(
 			final BundleContext bundleContext) throws InvalidSyntaxException {
-		notificationListenerServiceListener = new ServiceListener() {
+		ServiceListener serviceListener = new ServiceListener() {
 
-			/*
-			 * (non-Javadoc)
-			 * 
-			 * @see
-			 * org.osgi.framework.ServiceListener#serviceChanged(org.osgi.framework
-			 * .ServiceEvent)
+			/** 
+			 * {@inheritDoc}
 			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
 				ServiceReference serviceReference = serviceEvent
@@ -351,7 +335,7 @@ public final class Activator implements BundleActivator {
 			}
 
 		};
-		bundleContext.addServiceListener(notificationListenerServiceListener,
+		bundleContext.addServiceListener(serviceListener,
 				FILTER_NOTIFICATIONLISTENER);
 		// do initial registration of MBeans
 		if (logger.isDebugEnabled()) {
@@ -359,8 +343,8 @@ public final class Activator implements BundleActivator {
 					.debug("performing initial registration of notification listeners");
 		}
 		this.registerExistingServices(FILTER_NOTIFICATIONLISTENER,
-				bundleContext, notificationListenerServiceListener);
-		return notificationListenerServiceListener;
+				bundleContext, serviceListener);
+		return serviceListener;
 	}
 
 	/**
