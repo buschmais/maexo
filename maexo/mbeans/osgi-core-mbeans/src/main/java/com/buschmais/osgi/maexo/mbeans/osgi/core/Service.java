@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Set;
 
 import javax.management.DynamicMBean;
-import javax.management.MBeanException;
 import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.ObjectName;
@@ -154,7 +153,7 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 	/**
 	 * {@inheritDoc}
 	 */
-	public TabularData getProperties() throws MBeanException {
+	public TabularData getProperties() {
 		TabularDataSupport tabularProperties = new TabularDataSupport(
 				ServiceConstants.PROPERTIES_TYPE);
 		String[] keys = this.serviceReference.getPropertyKeys();
@@ -172,7 +171,7 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 							new Object[] { key, stringRepresentation });
 					tabularProperties.put(row);
 				} catch (OpenDataException e) {
-					throw new MBeanException(e);
+					throw new IllegalStateException(e);
 				}
 			}
 		}

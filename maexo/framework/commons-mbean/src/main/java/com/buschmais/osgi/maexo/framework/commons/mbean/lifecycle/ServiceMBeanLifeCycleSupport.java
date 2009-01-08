@@ -82,7 +82,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * 
 	 * @throws InvalidSyntaxException
 	 */
-	public void stop() throws InvalidSyntaxException {
+	public final void stop() throws InvalidSyntaxException {
 		// remove service listener
 		super.getBundleContext().removeServiceListener(this);
 		// unregister all registered service mbeans

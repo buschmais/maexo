@@ -18,7 +18,6 @@ package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
 import java.util.Date;
 
-import javax.management.MBeanException;
 import javax.management.ObjectName;
 import javax.management.openmbean.TabularData;
 
@@ -57,9 +56,8 @@ public interface BundleMBean {
 	 * 
 	 * @return A TabularData object containing this bundle's Manifest headers
 	 *         and values.
-	 * @throws MBeanException
 	 */
-	TabularData getHeaders() throws MBeanException;
+	TabularData getHeaders();
 
 	/**
 	 * Returns the time when this bundle was last modified.
@@ -100,35 +98,31 @@ public interface BundleMBean {
 	/**
 	 * Start the bundle.
 	 * 
-	 * @throws MBeanException
 	 */
-	void start() throws MBeanException;
+	void start();
 
 	/**
 	 * Stop the bundle.
 	 * 
-	 * @throws MBeanException
 	 */
-	void stop() throws MBeanException;
+	void stop();
 
 	/**
 	 * Update the bundle.
 	 * 
-	 * @throws MBeanException
 	 */
-	void update() throws MBeanException;
+	void update();
 
 	/**
 	 * Update the bundle from the provided url.
 	 * 
 	 * @param url
 	 *            the url
-	 * @throws MBeanException
 	 */
-	void update(String url) throws MBeanException;
+	void update(String url);
 
 	/**
 	 * Uninstall the bundle.
 	 */
-	void uninstall() throws MBeanException;
+	void uninstall();
 }

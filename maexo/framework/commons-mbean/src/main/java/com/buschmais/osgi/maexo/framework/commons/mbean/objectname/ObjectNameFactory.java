@@ -20,6 +20,9 @@ import java.util.Map;
 
 import javax.management.ObjectName;
 
+/**
+ * Declares methods to work with object names.
+ */
 public interface ObjectNameFactory {
 
 	/**

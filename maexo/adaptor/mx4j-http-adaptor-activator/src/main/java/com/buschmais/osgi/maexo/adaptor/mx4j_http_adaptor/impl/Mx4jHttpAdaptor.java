@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents the MX4J HTTP adaptor.
  */
-public class Mx4jHttpAdaptor extends HttpAdaptor implements
+public final class Mx4jHttpAdaptor extends HttpAdaptor implements
 		Mx4jHttpAdaptorMBean {
 
 	private static final Logger logger = LoggerFactory
@@ -34,32 +34,23 @@ public class Mx4jHttpAdaptor extends HttpAdaptor implements
 
 	private boolean startOnRegistration;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.impl.Mx4jHttpAdaptorMBean
-	 * #isStartOnRegistration()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public boolean isStartOnRegistration() {
 		return startOnRegistration;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.osgi.maexo.adaptor.mx4j_http_adaptor.impl.Mx4jHttpAdaptorMBean
-	 * #setStartOnRegistration(boolean)
+	/**
+	 * {@inheritDoc}
 	 */
 	public void setStartOnRegistration(boolean startOnRegistration) {
 		this.startOnRegistration = startOnRegistration;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see mx4j.tools.adaptor.http.HttpAdaptor#postRegister(java.lang.Boolean)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void postRegister(Boolean registrationDone) {

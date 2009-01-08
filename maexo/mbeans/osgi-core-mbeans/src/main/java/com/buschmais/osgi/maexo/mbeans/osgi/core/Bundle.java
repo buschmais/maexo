@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.management.DynamicMBean;
-import javax.management.MBeanException;
 import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.ObjectName;
@@ -74,9 +73,9 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	/**
 	 * The bundle to manage.
 	 */
-	private org.osgi.framework.Bundle bundle;
+	private final org.osgi.framework.Bundle bundle;
 
-	private ObjectNameHelper objectNameHelper;
+	private final ObjectNameHelper objectNameHelper;
 
 	/**
 	 * Constructs the managed bean.
@@ -168,7 +167,7 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	 * {@inheritDoc}
 	 */
 	@SuppressWarnings("unchecked")
-	public TabularData getHeaders() throws MBeanException {
+	public TabularData getHeaders() {
 		TabularDataSupport tabularHeaders = new TabularDataSupport(
 				BundleConstants.HEADERS_TYPE);
 		Dictionary<String, String> headers = this.bundle.getHeaders();
@@ -182,7 +181,7 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 						BundleConstants.ITEM_NAMES, new Object[] { key, value });
 				tabularHeaders.put(header);
 			} catch (Exception e) {
-				throw new MBeanException(e);
+				throw new IllegalStateException(e);
 			}
 
 		}
@@ -193,11 +192,11 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	/**
 	 * {@inheritDoc}
 	 */
-	public void start() throws MBeanException {
+	public void start() {
 		try {
 			this.bundle.start();
 		} catch (BundleException e) {
-			throw new MBeanException(e);
+			throw new RuntimeException(e.toString());
 		}
 	}
 
@@ -205,11 +204,11 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	/**
 	 * {@inheritDoc}
 	 */
-	public void stop() throws MBeanException {
-		try {
+	public void stop() {
+		 try {
 			this.bundle.stop();
 		} catch (BundleException e) {
-			throw new MBeanException(e);
+			throw new RuntimeException(e.toString());
 		}
 	}
 
@@ -217,11 +216,11 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	/**
 	 * {@inheritDoc}
 	 */
-	public void uninstall() throws MBeanException {
+	public void uninstall() {
 		try {
 			this.bundle.uninstall();
 		} catch (BundleException e) {
-			throw new MBeanException(e);
+			throw new RuntimeException(e.toString());
 		}
 	}
 
@@ -229,11 +228,11 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	/**
 	 * {@inheritDoc}
 	 */
-	public void update() throws MBeanException {
+	public void update() {
 		try {
 			this.bundle.update();
 		} catch (BundleException e) {
-			throw new MBeanException(e);
+			throw new RuntimeException(e.toString());
 		}
 	}
 
@@ -241,12 +240,12 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	/**
 	 * {@inheritDoc}
 	 */
-	public void update(String url) throws MBeanException {
+	public void update(String url) {
 		try {
 			URL updateUrl = new URL(url);
 			this.bundle.update(updateUrl.openStream());
 		} catch (Exception e) {
-			throw new MBeanException(e);
+			throw new RuntimeException(e.toString());
 		}
 	}
 

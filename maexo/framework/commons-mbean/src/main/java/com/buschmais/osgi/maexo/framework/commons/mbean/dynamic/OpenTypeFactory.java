@@ -135,7 +135,13 @@ public final class OpenTypeFactory {
 	 * exception whatsoever will be thrown.
 	 * 
 	 * @param dimension
+	 *            the dimension of arrays described by this <tt>ArrayType</tt>
+	 *            instance; must be greater than or equal to 1.
 	 * @param elementType
+	 *            the <i>open type</i> of element values contained in the arrays
+	 *            described by this <tt>ArrayType</tt> instance; must be an
+	 *            instance of either <tt>SimpleType</tt>, <tt>CompositeType</tt>
+	 *            or <tt>TabularType</tt>.
 	 * @return an array type built by {@link ArrayType#ArrayType(int, OpenType)}
 	 */
 	public static ArrayType createArrayType(int dimension, OpenType elementType) {

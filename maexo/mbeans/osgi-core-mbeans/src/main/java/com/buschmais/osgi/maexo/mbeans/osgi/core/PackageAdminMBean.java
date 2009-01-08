@@ -16,11 +16,7 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
-import javax.management.AttributeNotFoundException;
-import javax.management.InstanceNotFoundException;
-import javax.management.MBeanException;
 import javax.management.ObjectName;
-import javax.management.ReflectionException;
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.TabularData;
 
@@ -37,14 +33,8 @@ public interface PackageAdminMBean {
 	 * @param objectName
 	 *            The object name of the bundle.
 	 * @return the special type of the bundle
-	 * @throws ReflectionException
-	 * @throws MBeanException
-	 * @throws InstanceNotFoundException
-	 * @throws AttributeNotFoundException
 	 */
-	Integer getBundleType(ObjectName objectName)
-			throws AttributeNotFoundException, InstanceNotFoundException,
-			MBeanException, ReflectionException;
+	Integer getBundleType(ObjectName objectName);
 
 	/**
 	 * Returns the special type of the specified bundle.
@@ -65,14 +55,8 @@ public interface PackageAdminMBean {
 	 * @param objectName
 	 *            The object name of the bundle.
 	 * @return the special type of the bundle
-	 * @throws ReflectionException
-	 * @throws MBeanException
-	 * @throws InstanceNotFoundException
-	 * @throws AttributeNotFoundException
 	 */
-	String getBundleTypeAsName(ObjectName objectName)
-			throws AttributeNotFoundException, InstanceNotFoundException,
-			MBeanException, ReflectionException;
+	String getBundleTypeAsName(ObjectName objectName);
 
 	/**
 	 * Returns the special type of the specified bundle as name.
@@ -110,9 +94,8 @@ public interface PackageAdminMBean {
 	 *            The name of the exported package to be returned.
 	 * @return The exported package, or null if no exported package with the
 	 *         specified name exists.
-	 * @throws MBeanException
 	 */
-	CompositeData getExportedPackage(String name) throws MBeanException;
+	CompositeData getExportedPackage(String name);
 
 	/**
 	 * Gets the exported packages for the specified bundle.
@@ -123,14 +106,8 @@ public interface PackageAdminMBean {
 	 *            The object name of the bundle.
 	 * @return The exported packages, or null if the specified bundle has no
 	 *         exported packages.
-	 * @throws ReflectionException
-	 * @throws MBeanException
-	 * @throws InstanceNotFoundException
-	 * @throws AttributeNotFoundException
 	 */
-	TabularData getExportedPackages(ObjectName objectName)
-			throws AttributeNotFoundException, InstanceNotFoundException,
-			MBeanException, ReflectionException;
+	TabularData getExportedPackages(ObjectName objectName);
 
 	/**
 	 * Gets the exported packages for the specified bundle.
@@ -141,9 +118,8 @@ public interface PackageAdminMBean {
 	 *            The id of the bundle.
 	 * @return The exported packages, or null if the specified bundle has no
 	 *         exported packages.
-	 * @throws MBeanException
 	 */
-	TabularData getExportedPackages(Long id) throws MBeanException;
+	TabularData getExportedPackages(Long id);
 
 	/**
 	 * Gets the exported packages for the specified package name.
@@ -154,9 +130,8 @@ public interface PackageAdminMBean {
 	 *            The name of the exported packages to be returned.
 	 * @return The exported packages, or null if no exported packages with the
 	 *         specified name exists.
-	 * @throws MBeanException
 	 */
-	TabularData getExportedPackages(String name) throws MBeanException;
+	TabularData getExportedPackages(String name);
 
 	/**
 	 * Returns the of attached fragment bundles for the specified bundle.
@@ -167,14 +142,8 @@ public interface PackageAdminMBean {
 	 *            The object name of the bundle.
 	 * @return The array of fragment bundles or null if the bundle does not have
 	 *         any attached fragment bundles or the bundle is not resolved.
-	 * @throws ReflectionException
-	 * @throws MBeanException
-	 * @throws InstanceNotFoundException
-	 * @throws AttributeNotFoundException
 	 */
-	ObjectName[] getFragments(ObjectName objectName)
-			throws AttributeNotFoundException, InstanceNotFoundException,
-			MBeanException, ReflectionException;
+	ObjectName[] getFragments(ObjectName objectName);
 
 	/**
 	 * Returns the of attached fragment bundles for the specified bundle.
@@ -199,14 +168,8 @@ public interface PackageAdminMBean {
 	 *            The object name of the bundle.
 	 * @return An array containing the host bundle or null if the bundle does
 	 *         not have a host bundle.
-	 * @throws ReflectionException
-	 * @throws MBeanException
-	 * @throws InstanceNotFoundException
-	 * @throws AttributeNotFoundException
 	 */
-	ObjectName[] getHosts(ObjectName objectName)
-			throws AttributeNotFoundException, InstanceNotFoundException,
-			MBeanException, ReflectionException;
+	ObjectName[] getHosts(ObjectName objectName);
 
 	/**
 	 * Returns the containing the host bundle to which the specified fragment
@@ -231,10 +194,8 @@ public interface PackageAdminMBean {
 	 *            The bundle symbolic name or null for all required bundles.
 	 * @return An array of required bundles or null if no required bundles exist
 	 *         for the specified symbolic name.
-	 * @throws MBeanException
 	 */
-	TabularData getRequiredBundles(String symbolicName)
-			throws MBeanException;
+	TabularData getRequiredBundles(String symbolicName);
 
 	/**
 	 * Forces the update (replacement) or removal of packages exported by the
@@ -246,14 +207,8 @@ public interface PackageAdminMBean {
 	 *            The object names of the bundles whose exported packages are to
 	 *            be updated or removed, or null for all bundles updated or
 	 *            uninstalled since the last call to this method.
-	 * @throws ReflectionException
-	 * @throws MBeanException
-	 * @throws InstanceNotFoundException
-	 * @throws AttributeNotFoundException
 	 */
-	void refreshPackages(ObjectName[] objectNames)
-			throws AttributeNotFoundException, InstanceNotFoundException,
-			MBeanException, ReflectionException;
+	void refreshPackages(ObjectName[] objectNames);
 
 	/**
 	 * Forces the update (replacement) or removal of packages exported by the
@@ -286,14 +241,8 @@ public interface PackageAdminMBean {
 	 *            The object names of the bundles to resolve or null to resolve
 	 *            all unresolved bundles installed in the Framework.
 	 * @return true if all specified bundles are resolved;
-	 * @throws ReflectionException
-	 * @throws MBeanException
-	 * @throws InstanceNotFoundException
-	 * @throws AttributeNotFoundException
 	 */
-	Boolean resolveBundles(ObjectName[] objectNames)
-			throws AttributeNotFoundException, InstanceNotFoundException,
-			MBeanException, ReflectionException;
+	Boolean resolveBundles(ObjectName[] objectNames);
 
 	/**
 	 * Resolve the specified bundles.
@@ -312,6 +261,7 @@ public interface PackageAdminMBean {
 	 * methods {@link #resolveBundles(Long[])} or
 	 * {@link #resolveBundles(ObjectName[])} with empty arrays.
 	 * 
+	 * @return TRUE if all specified bundles are resolved
 	 * @see org.osgi.service.packageadmin.PackageAdmin#resolveBundles(org.osgi.framework.Bundle[])
 	 */
 	Boolean resolveBundles();

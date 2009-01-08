@@ -16,11 +16,7 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
-import javax.management.AttributeNotFoundException;
-import javax.management.InstanceNotFoundException;
-import javax.management.MBeanException;
 import javax.management.ObjectName;
-import javax.management.ReflectionException;
 
 /**
  * Management interface for the OSGI start level service.
@@ -37,14 +33,8 @@ public interface StartLevelMBean {
 	 * @param objectName
 	 *            the object name of the bundle
 	 * @return The start level value of the specified Bundle.
-	 * @throws AttributeNotFoundException
-	 * @throws InstanceNotFoundException
-	 * @throws MBeanException
-	 * @throws ReflectionException
 	 */
-	Integer getBundleStartLevel(ObjectName objectName)
-			throws AttributeNotFoundException, InstanceNotFoundException,
-			MBeanException, ReflectionException;
+	Integer getBundleStartLevel(ObjectName objectName);
 
 	/**
 	 * Return the assigned start level value for the specified Bundle.
@@ -87,14 +77,8 @@ public interface StartLevelMBean {
 	 *            the object name of the bundle
 	 * @return true if the bundle is persistently marked to be started, false if
 	 *         the bundle is not persistently marked to be started.
-	 * @throws AttributeNotFoundException
-	 * @throws InstanceNotFoundException
-	 * @throws MBeanException
-	 * @throws ReflectionException
 	 */
-	Boolean isBundlePersistentlyStarted(ObjectName objectName)
-			throws AttributeNotFoundException, InstanceNotFoundException,
-			MBeanException, ReflectionException;
+	Boolean isBundlePersistentlyStarted(ObjectName objectName);
 
 	/**
 	 * Return the persistent state of the specified bundle.
@@ -118,14 +102,8 @@ public interface StartLevelMBean {
 	 *            the object name of the bundle
 	 * @param startLevel
 	 *            The new start level for the specified Bundle.
-	 * @throws AttributeNotFoundException
-	 * @throws InstanceNotFoundException
-	 * @throws MBeanException
-	 * @throws ReflectionException
 	 */
-	void setBundleStartLevel(ObjectName objectName, Integer startLevel)
-			throws AttributeNotFoundException, InstanceNotFoundException,
-			MBeanException, ReflectionException;
+	void setBundleStartLevel(ObjectName objectName, Integer startLevel);
 
 	/**
 	 * Assign a start level value to the specified Bundle.

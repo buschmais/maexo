@@ -16,7 +16,6 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
-import javax.management.MBeanException;
 import javax.management.ObjectName;
 import javax.management.openmbean.TabularData;
 
@@ -71,9 +70,8 @@ public interface ServiceMBean {
 	 * Returns the properties of the Dictionary object of the service.
 	 * 
 	 * @return The properties of the Dictionary object of the service.
-	 * @throws MBeanException
 	 */
-	TabularData getProperties() throws MBeanException;
+	TabularData getProperties();
 
 	/**
 	 * Returns the service property named "service.ranking" identifying a

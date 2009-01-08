@@ -63,7 +63,7 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 	/**
 	 * This map holds the attribute names as keys and the types as values.
 	 */
-	private Map<String, Class<?>> attributeTypes;
+	private final Map<String, Class<?>> attributeTypes;
 
 	/**
 	 * Constructor.
