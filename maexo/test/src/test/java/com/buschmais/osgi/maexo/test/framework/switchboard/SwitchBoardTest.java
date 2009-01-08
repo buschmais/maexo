@@ -48,10 +48,9 @@ public class SwitchBoardTest extends MaexoTests {
 
 	private ObjectName objectName;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.test.AbstractSingleSpringContextTests#onSetUp()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void onSetUp() throws Exception {
@@ -59,23 +58,20 @@ public class SwitchBoardTest extends MaexoTests {
 		this.objectName = new ObjectName(OBJECTNAME_TESTMBEAN);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.springframework.test.AbstractSingleSpringContextTests#onTearDown()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void onTearDown() throws Exception {
 		super.onTearDown();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
-	 * getTestBundlesNames()
+
+	/**
+	 * {@inheritDoc}
 	 */
+	@Override
 	protected String[] getTestBundlesNames() {
 		return new String[] { Constants.ARTIFACT_SWITCHBOARD,
 				Constants.ARTIFACT_EASYMOCK };
@@ -177,7 +173,7 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceNotFoundException, InstanceAlreadyExistsException,
 			MBeanRegistrationException, NotCompliantMBeanException {
 		// create a mbean
-		ClassicMBean mbean = (ClassicMBean) EasyMock
+		ClassicMBean mbean = EasyMock
 				.createMock(ClassicMBean.class);
 		this.test_registerMBeanOnExistingServer(this.objectName, mbean,
 				ClassicMBean.class);
@@ -198,7 +194,7 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceNotFoundException, InstanceAlreadyExistsException,
 			MBeanRegistrationException, NotCompliantMBeanException {
 		// create a mbean
-		DynamicMBean mbean = (DynamicMBean) EasyMock
+		DynamicMBean mbean = EasyMock
 				.createMock(DynamicMBean.class);
 		this.test_registerMBeanOnExistingServer(this.objectName, mbean,
 				DynamicMBean.class);
@@ -219,7 +215,7 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceAlreadyExistsException, MBeanRegistrationException,
 			NotCompliantMBeanException, InstanceNotFoundException {
 		// create a mbean
-		ClassicMBean mbean = (ClassicMBean) EasyMock
+		ClassicMBean mbean = EasyMock
 				.createMock(ClassicMBean.class);
 		this.test_registerMBeanOnNewServer(this.objectName, mbean,
 				ClassicMBean.class);
@@ -240,7 +236,7 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceAlreadyExistsException, MBeanRegistrationException,
 			NotCompliantMBeanException, InstanceNotFoundException {
 		// create a mbean
-		DynamicMBean mbean = (DynamicMBean) EasyMock
+		DynamicMBean mbean = EasyMock
 				.createMock(DynamicMBean.class);
 		this.test_registerMBeanOnNewServer(this.objectName, mbean,
 				DynamicMBean.class);
