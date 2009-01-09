@@ -68,18 +68,10 @@ public final class Activator implements BundleActivator {
 		}
 		ObjectNameHelper objectNameHelper = new ObjectNameHelper(bundleContext);
 		this.serviceRegistrations = new LinkedList<ServiceRegistration>();
-		this.serviceRegistrations.add(objectNameHelper
-				.registerObjectNameFactory(new BundleObjectNameFactory(),
-						Bundle.class));
-		this.serviceRegistrations.add(objectNameHelper
-				.registerObjectNameFactory(new ServiceObjectNameFactory(),
-						ServiceReference.class));
-		this.serviceRegistrations.add(objectNameHelper
-				.registerObjectNameFactory(new StartLevelObjectNameFactory(),
-						StartLevel.class));
-		this.serviceRegistrations.add(objectNameHelper
-				.registerObjectNameFactory(new PackageAdminObjectNameFactory(),
-						PackageAdmin.class));
+		this.serviceRegistrations.add(objectNameHelper.registerObjectNameFactory(new BundleObjectNameFactory(), Bundle.class));
+		this.serviceRegistrations.add(objectNameHelper.registerObjectNameFactory(new ServiceObjectNameFactory(), ServiceReference.class));
+		this.serviceRegistrations.add(objectNameHelper.registerObjectNameFactory(new StartLevelObjectNameFactory(), StartLevel.class));
+		this.serviceRegistrations.add(objectNameHelper.registerObjectNameFactory(new PackageAdminObjectNameFactory(), PackageAdmin.class));
 
 		// create bundle listener
 		this.bundleLifecyle = new BundleMBeanLifeCycle(bundleContext);
@@ -90,13 +82,11 @@ public final class Activator implements BundleActivator {
 		this.serviceLifecycle.start();
 
 		// create start level service listener
-		this.startLevelServiceLifecycle = new StartLevelMBeanLifeCycle(
-				bundleContext);
+		this.startLevelServiceLifecycle = new StartLevelMBeanLifeCycle(bundleContext);
 		this.startLevelServiceLifecycle.start();
 
 		// create package admin service listener
-		this.packageAdminServiceLifecycle = new PackageAdminMBeanLifeCycle(
-				bundleContext);
+		this.packageAdminServiceLifecycle = new PackageAdminMBeanLifeCycle(bundleContext);
 		this.packageAdminServiceLifecycle.start();
 	}
 
