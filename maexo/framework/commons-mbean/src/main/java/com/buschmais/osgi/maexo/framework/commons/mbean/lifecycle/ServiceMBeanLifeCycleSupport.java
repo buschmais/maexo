@@ -16,13 +16,9 @@
  */
 package com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.management.ObjectName;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
@@ -53,12 +49,8 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * <p>
 	 * The existing services are looked up to be published as mbeans. Later the
 	 * life cycle listener is registered with the bundle context.
-	 * 
-	 * //TODO@DM: change thrown ExceptionType
-	 * 
-	 * @throws InvalidSyntaxException
 	 */
-	public final void start() throws InvalidSyntaxException {
+	public final void start() {
 		// register all existing services as mbeans
 		ServiceReference[] serviceReferences = this.getServices();
 		if (serviceReferences != null) {
@@ -67,9 +59,15 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 						serviceReference));
 			}
 		}
-		// add the service listener
-		super.getBundleContext().addServiceListener(this,
-				this.getServiceFilter());
+		try {
+			// add the service listener
+			super.getBundleContext().addServiceListener(this,
+					this.getServiceFilter());
+		} catch (InvalidSyntaxException e) {
+			throw new IllegalStateException(
+					"cannot add service listener to bundle context using service filter "
+							+ this.getServiceFilter(), e);
+		}
 	}
 
 	/**
@@ -77,12 +75,8 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * <p>
 	 * The existing services are looked up, their mbeans get unpublished and the
 	 * life cycle listener is unregistered from the bundle context.
-	 * 
-	 * //TODO@DM: change thrown ExceptionType
-	 * 
-	 * @throws InvalidSyntaxException
 	 */
-	public final void stop() throws InvalidSyntaxException {
+	public final void stop() {
 		// remove service listener
 		super.getBundleContext().removeServiceListener(this);
 		// unregister all registered service mbeans
@@ -100,13 +94,16 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * provided by {@link #getServiceInterface()}.
 	 * 
 	 * @return the service references
-	 * 
-	 *         // TODO@DM: change thrown ExceptionType
-	 * @throws InvalidSyntaxException
 	 */
-	private ServiceReference[] getServices() throws InvalidSyntaxException {
-		return super.getBundleContext().getServiceReferences(null,
-				this.getServiceFilter());
+	private ServiceReference[] getServices() {
+		try {
+			return super.getBundleContext().getServiceReferences(null,
+					this.getServiceFilter());
+		} catch (InvalidSyntaxException e) {
+			throw new IllegalStateException(
+					"cannot get services from bundle context using service filter "
+							+ this.getServiceFilter(), e);
+		}
 	}
 
 	/**
@@ -124,28 +121,26 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 		return ("(objectClass=" + serviceInterface.getName() + ")");
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	public final synchronized void serviceChanged(ServiceEvent serviceEvent) {
 		ServiceReference serviceReference = serviceEvent.getServiceReference();
 		if (this.isManageable(serviceReference)) {
-			Object service = this.getService(serviceReference);
-			Map<String, Object> properties = new HashMap<String, Object>();
-			properties.put(Constants.SERVICE_ID, serviceReference
-					.getProperty(Constants.SERVICE_ID));
-			ObjectName objectName = this.getObjectName(service, properties);
+			Object service = super.getBundleContext().getService(
+					serviceReference);
+			ObjectName objectName = this.getObjectName(serviceReference,
+					service);
 			switch (serviceEvent.getType()) {
 			case ServiceEvent.REGISTERED:
 				super.registerMBeanService(this.getMBeanInterface(),
-						objectName, this.getMBean(service));
+						objectName, this.getMBean(serviceReference, service));
 				break;
 			case ServiceEvent.UNREGISTERING:
 				try {
 					super.unregisterMBeanService(objectName);
 				} finally {
-					this.ungetService(serviceReference);
+					super.getBundleContext().ungetService(serviceReference);
 				}
 				break;
 			default:
@@ -168,33 +163,6 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	}
 
 	/**
-	 * Returns the service instance.
-	 * <p>
-	 * The default implementation uses the object provided by the service
-	 * reference.
-	 * 
-	 * @param serviceReference
-	 *            the service reference
-	 * @return the service instance
-	 */
-	public Object getService(ServiceReference serviceReference) {
-		return super.getBundleContext().getService(serviceReference);
-	}
-
-	/**
-	 * Releases the service reference.
-	 * <p>
-	 * The default implementation uses
-	 * {@link BundleContext#ungetService(ServiceReference)}.
-	 * 
-	 * @param serviceReference
-	 *            the service reference
-	 */
-	public final void ungetService(ServiceReference serviceReference) {
-		super.getBundleContext().ungetService(serviceReference);
-	}
-
-	/**
 	 * Returns the service interface supported by the life cycle event listener.
 	 * 
 	 * @return the service interface
@@ -204,32 +172,27 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	/**
 	 * Returns the object name of service which will be used for the managed
 	 * bean.
-	 * <p>
-	 * The default implementation delegates to the {@link ObjectNameHelper}
-	 * which will lookup an appropriate {@link ObjectNameFactory} to eventually
-	 * construct the object name.
 	 * 
+	 * @param serviceReference
+	 *            the service reference
 	 * @param service
-	 *            the service
-	 * @param properties
-	 *            additional properties which may be required to construct
-	 *            unique object names
+	 *            the service instance
 	 * @return the object name
 	 */
-	public ObjectName getObjectName(Object service,
-			Map<String, Object> properties) {
-		return super.getObjectNameHelper().getObjectName(service,
-				this.getServiceInterface(), properties);
-	}
+	public abstract ObjectName getObjectName(ServiceReference serviceReference,
+			Object service);
 
 	/**
 	 * Returns the mbean instance for the given service.
 	 * 
+	 * @param serviceReference
+	 *            the service reference
 	 * @param service
-	 *            the service
+	 *            the service instance
 	 * @return the mbean instance
 	 */
-	public abstract Object getMBean(Object service);
+	public abstract Object getMBean(ServiceReference serviceReference,
+			Object service);
 
 	/**
 	 * Returns the mbean interface which will be used for registration.
