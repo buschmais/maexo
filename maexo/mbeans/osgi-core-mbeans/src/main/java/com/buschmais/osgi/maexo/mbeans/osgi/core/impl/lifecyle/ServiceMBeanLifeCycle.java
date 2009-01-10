@@ -16,8 +16,6 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle;
 
-import java.util.Map;
-
 import javax.management.DynamicMBean;
 import javax.management.ObjectName;
 
@@ -28,10 +26,11 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLi
 import com.buschmais.osgi.maexo.mbeans.osgi.core.Service;
 
 /**
- * This class implements a service event listener to manage the life cycle of the
- * associated service mbeans.
+ * This class implements a service event listener to manage the life cycle of
+ * the associated service mbeans.
  */
-public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
+public final class ServiceMBeanLifeCycle extends
+		ServiceMBeanLifeCycleSupport {
 
 	/**
 	 * Constructor.
@@ -47,17 +46,8 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object getService(ServiceReference serviceReference) {
-		// the service reference itself will be managed by the mbean
-		return serviceReference;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Object getMBean(Object service) {
-		return new Service(super.getBundleContext(), (ServiceReference) service);
+	public Object getMBean(ServiceReference serviceReference, Object service) {
+		return new Service(super.getBundleContext(), serviceReference);
 	}
 
 	/**
@@ -72,9 +62,9 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ObjectName getObjectName(Object service,
-			Map<String, Object> properties) {
-		return super.getObjectNameHelper().getObjectName(service,
+	public ObjectName getObjectName(ServiceReference serviceReference,
+			Object service) {
+		return super.getObjectNameHelper().getObjectName(serviceReference,
 				ServiceReference.class);
 	}
 

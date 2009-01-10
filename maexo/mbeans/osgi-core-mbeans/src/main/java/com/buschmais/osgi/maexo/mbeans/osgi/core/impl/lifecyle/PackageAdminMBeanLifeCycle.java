@@ -19,8 +19,9 @@ package com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle;
 import javax.management.DynamicMBean;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
-import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLifeCycleSupport;
+import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.DefaultServiceMBeanLifeCycleSupport;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdmin;
 
 /**
@@ -28,7 +29,7 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdmin;
  * the packageAdmin admin service.
  */
 public final class PackageAdminMBeanLifeCycle extends
-		ServiceMBeanLifeCycleSupport {
+		DefaultServiceMBeanLifeCycleSupport {
 
 	/**
 	 * Constructor.
@@ -40,16 +41,16 @@ public final class PackageAdminMBeanLifeCycle extends
 		super(bundleContext);
 	}
 
-	/** 
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object getMBean(Object service) {
+	public Object getMBean(ServiceReference serviceReference, Object service) {
 		return new PackageAdmin(super.getBundleContext(),
 				(org.osgi.service.packageadmin.PackageAdmin) service);
 	}
 
-	/** 
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -57,7 +58,7 @@ public final class PackageAdminMBeanLifeCycle extends
 		return DynamicMBean.class;
 	}
 
-	/** 
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
