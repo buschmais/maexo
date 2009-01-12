@@ -29,8 +29,7 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.Service;
  * This class implements a service event listener to manage the life cycle of
  * the associated service mbeans.
  */
-public final class ServiceMBeanLifeCycle extends
-		ServiceMBeanLifeCycleSupport {
+public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 
 	/**
 	 * Constructor.
@@ -80,9 +79,12 @@ public final class ServiceMBeanLifeCycle extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isManageable(ServiceReference serviceReference) {
-		return !super.getBundleContext().getBundle().equals(
-				serviceReference.getBundle());
+	public String getServiceFilter() {
+		// do not create MBeans for services which themselves represent
+		// services, e.g. the MBean services which were registered by this
+		// bundle
+		return String.format(
+				"(!(&(objectClass=*MBean)(|(%s=*)(objectName=*))))",
+				ObjectName.class.getName());
 	}
-
 }

@@ -62,12 +62,18 @@ public final class ServiceObjectNameFactory implements ObjectNameFactory {
 		// pid
 		String pid = (String) serviceReference
 				.getProperty(Constants.SERVICE_PID);
-		String objectName = String.format(ServiceConstants.OBJECTNAME_FORMAT, id, objectClassValue.toString(), pid);
+		String objectName;
+		if (pid == null) {
+			pid = "none";
+		}
+		objectName = String.format(ServiceConstants.OBJECTNAME_FORMAT, id,
+				objectClassValue.toString(), pid);
 		try {
 			return new ObjectName(objectName);
 		} catch (Exception e) {
-			throw new IllegalArgumentException(
-					String.format("Cannot create object name instance for '%s'", objectName), e);
+			throw new IllegalArgumentException(String.format(
+					"Cannot create object name instance for '%s'", objectName),
+					e);
 		}
 	}
 }

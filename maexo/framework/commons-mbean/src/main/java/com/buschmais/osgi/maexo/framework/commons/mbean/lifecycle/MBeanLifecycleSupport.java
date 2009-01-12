@@ -28,12 +28,12 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
+import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 
 /**
  * Provides support to control the life cycle of mbeans.
  */
-public class MBeanLifecycleSupport {
+public abstract class MBeanLifecycleSupport {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(MBeanLifecycleSupport.class);
@@ -46,7 +46,7 @@ public class MBeanLifecycleSupport {
 	/**
 	 * The object name helper instance.
 	 */
-	private ObjectNameHelper objectNameHelper;
+	private ObjectNameFactoryHelper objectNameFactoryHelper;
 
 	private Map<Object, ServiceRegistration> mbeanRegistrations = new ConcurrentHashMap<Object, ServiceRegistration>();
 
@@ -58,7 +58,7 @@ public class MBeanLifecycleSupport {
 	 */
 	public MBeanLifecycleSupport(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
-		this.objectNameHelper = new ObjectNameHelper(bundleContext);
+		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(bundleContext);
 	}
 
 	/**
@@ -69,10 +69,10 @@ public class MBeanLifecycleSupport {
 	}
 
 	/**
-	 * @return the objectNameHelper
+	 * @return the objectNameFactoryHelper
 	 */
-	public final ObjectNameHelper getObjectNameHelper() {
-		return objectNameHelper;
+	public final ObjectNameFactoryHelper getObjectNameHelper() {
+		return objectNameFactoryHelper;
 	}
 
 	/**

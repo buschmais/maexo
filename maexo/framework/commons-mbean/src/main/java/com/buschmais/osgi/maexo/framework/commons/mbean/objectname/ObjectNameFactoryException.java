@@ -17,21 +17,43 @@
 package com.buschmais.osgi.maexo.framework.commons.mbean.objectname;
 
 /**
- * Indicates that an object name cannot be constructed by an object name factory.
+ * Indicates that an object name cannot be constructed by an object name
+ * factory.
  */
-//FIXME FS: the purpose of this exception is unclear, maybe an IllegalStateException is better
+// FIXME FS: the purpose of this exception is unclear, maybe an
+// IllegalStateException is better
 public class ObjectNameFactoryException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructs the exception using a message.
+	 * 
+	 * @param message
+	 *            The detail message.
+	 */
 	public ObjectNameFactoryException(String message) {
 		super(message);
 	}
 
+	/**
+	 * Constructs the exception using a {@link Throwable}.
+	 * 
+	 * @param throwable
+	 *            The throwable which will be nested in this exception.
+	 */
 	public ObjectNameFactoryException(Throwable throwable) {
 		super(throwable);
 	}
 
+	/**
+	 * Constructs the exception using a {@link Throwable}.
+	 * 
+	 * @param message
+	 *            The detail message.
+	 * @param throwable
+	 *            The throwable which will be nested in this exception.
+	 */
 	public ObjectNameFactoryException(String message, Throwable throwable) {
 		super(message, throwable);
 	}

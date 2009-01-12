@@ -37,14 +37,14 @@ import org.osgi.framework.ServiceRegistration;
 
 import com.buschmais.osgi.maexo.test.Constants;
 import com.buschmais.osgi.maexo.test.MaexoTests;
-import com.buschmais.osgi.maexo.test.common.mbeans.ClassicMBean;
+import com.buschmais.osgi.maexo.test.common.mbeans.StandardMBean;
 
 /**
  * @see MaexoTests
  */
 public class SwitchBoardTest extends MaexoTests {
 
-	private static final String OBJECTNAME_TESTMBEAN = "com.buschmais.osgi.maexo:type=ClassicMBean";
+	private static final String OBJECTNAME_TESTMBEAN = "com.buschmais.osgi.maexo:type=StandardMBean";
 
 	private ObjectName objectName;
 
@@ -173,10 +173,10 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceNotFoundException, InstanceAlreadyExistsException,
 			MBeanRegistrationException, NotCompliantMBeanException {
 		// create a mbean
-		ClassicMBean mbean = EasyMock
-				.createMock(ClassicMBean.class);
+		StandardMBean mbean = EasyMock
+				.createMock(StandardMBean.class);
 		this.test_registerMBeanOnExistingServer(this.objectName, mbean,
-				ClassicMBean.class);
+				StandardMBean.class);
 	}
 
 	/**
@@ -215,10 +215,10 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceAlreadyExistsException, MBeanRegistrationException,
 			NotCompliantMBeanException, InstanceNotFoundException {
 		// create a mbean
-		ClassicMBean mbean = EasyMock
-				.createMock(ClassicMBean.class);
+		StandardMBean mbean = EasyMock
+				.createMock(StandardMBean.class);
 		this.test_registerMBeanOnNewServer(this.objectName, mbean,
-				ClassicMBean.class);
+				StandardMBean.class);
 	}
 
 	/**

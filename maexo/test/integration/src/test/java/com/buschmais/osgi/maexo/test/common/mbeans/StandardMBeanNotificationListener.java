@@ -19,7 +19,7 @@ package com.buschmais.osgi.maexo.test.common.mbeans;
 import javax.management.Notification;
 import javax.management.NotificationListener;
 
-public class ClassicMBeanNotificationListener implements NotificationListener,
+public class StandardMBeanNotificationListener implements NotificationListener,
 		NotificationValidator {
 
 	private Notification lastNotification;

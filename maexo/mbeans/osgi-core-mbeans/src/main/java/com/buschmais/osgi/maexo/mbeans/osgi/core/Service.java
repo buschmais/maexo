@@ -41,7 +41,7 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
+import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 
 /**
  * Represents a registered service (wrapping a service reference).
@@ -66,7 +66,7 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 	/**
 	 * The object name helper.
 	 */
-	private final ObjectNameHelper objectNameHelper;
+	private final ObjectNameFactoryHelper objectNameFactoryHelper;
 
 	/**
 	 * Constructs the service mbean.
@@ -79,7 +79,7 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 	public Service(BundleContext bundleContext,
 			ServiceReference serviceReference) {
 		this.serviceReference = serviceReference;
-		this.objectNameHelper = new ObjectNameHelper(bundleContext);
+		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(bundleContext);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 	 * {@inheritDoc}
 	 */
 	public ObjectName getBundle() {
-		return this.objectNameHelper.getObjectName(this.serviceReference
+		return this.objectNameFactoryHelper.getObjectName(this.serviceReference
 				.getBundle(), Bundle.class);
 	}
 
@@ -196,7 +196,7 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 		Bundle[] usingBundles = this.serviceReference.getUsingBundles();
 		if (usingBundles != null) {
 			for (Bundle usingBundle : usingBundles) {
-				objectNames.add(this.objectNameHelper.getObjectName(
+				objectNames.add(this.objectNameFactoryHelper.getObjectName(
 						usingBundle, Bundle.class));
 			}
 		}

@@ -6,7 +6,7 @@ import javax.management.ObjectName;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
 
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
+import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 import com.buschmais.osgi.maexo.test.Constants;
 import com.buschmais.osgi.maexo.test.MaexoTests;
 
@@ -28,13 +28,13 @@ public class BundleMBeanTest extends MaexoTests {
 	 * Tests if all Bundles are registered on MBeanServer.
 	 */
 	public void test_allBundlesRegisteredAsMBeans() {
-		ObjectNameHelper objectNameHelper = new ObjectNameHelper(this.bundleContext);
+		ObjectNameFactoryHelper ObjectNameFactoryHelper = new ObjectNameFactoryHelper(this.bundleContext);
 		Bundle[] bundles = this.bundleContext.getBundles();
 		ServiceReference serviceReference = super.bundleContext.getServiceReference(MBeanServer.class.getName());
 		try {
 			MBeanServer mbeanServer = (MBeanServer) super.bundleContext.getService(serviceReference);
 			for (Bundle bundle : bundles) {
-				ObjectName objectName = objectNameHelper.getObjectName(bundle, Bundle.class);
+				ObjectName objectName = ObjectNameFactoryHelper.getObjectName(bundle, Bundle.class);
 				assertTrue(String.format("Bundle %s is not registered.", objectName), mbeanServer.isRegistered(objectName));
 			}
 		} finally {

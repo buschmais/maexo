@@ -34,6 +34,7 @@ public class PlatformServerTest extends MaexoTests {
 	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
 	 * getTestBundlesNames()
 	 */
+	@Override
 	protected String[] getTestBundlesNames() {
 		return new String[] { Constants.ARTIFACT_PLATFORM_MBEAN_SERVER };
 	}

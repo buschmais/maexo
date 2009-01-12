@@ -25,8 +25,8 @@ import javax.management.MBeanServer;
 import javax.management.NotificationBroadcasterSupport;
 import javax.management.ObjectName;
 
-public class Classic extends NotificationBroadcasterSupport implements
-		ClassicMBean, MBeanRegistration, MBeanRegistrationValidator {
+public class Standard extends NotificationBroadcasterSupport implements
+		StandardMBean, MBeanRegistration, MBeanRegistrationValidator {
 
 	public static String NOTIFICATION_DESCRIPTION = "value of attribute changed";
 
@@ -42,7 +42,7 @@ public class Classic extends NotificationBroadcasterSupport implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.buschmais.osgi.maexo.test.common.mbeans.ClassicMBean#getAttribute()
+	 * com.buschmais.osgi.maexo.test.common.mbeans.StandardMBean#getAttribute()
 	 */
 	public String getAttribute() {
 		return this.attribute;
@@ -52,7 +52,7 @@ public class Classic extends NotificationBroadcasterSupport implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.buschmais.osgi.maexo.test.common.mbeans.ClassicMBean#setAttribute
+	 * com.buschmais.osgi.maexo.test.common.mbeans.StandardMBean#setAttribute
 	 * (java.lang.String)
 	 */
 	public void setAttribute(String newAttribute) {
@@ -69,7 +69,7 @@ public class Classic extends NotificationBroadcasterSupport implements
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.buschmais.osgi.maexo.test.common.mbeans.ClassicMBean#operation(boolean
+	 * com.buschmais.osgi.maexo.test.common.mbeans.StandardMBean#operation(boolean
 	 * )
 	 */
 	public boolean operation(boolean value) {

@@ -71,7 +71,6 @@ public final class BundleMBeanLifeCycle extends MBeanLifecycleSupport implements
 		}
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */

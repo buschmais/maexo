@@ -61,12 +61,11 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 		}
 		try {
 			// add the service listener
-			super.getBundleContext().addServiceListener(this,
-					this.getServiceFilter());
+			super.getBundleContext().addServiceListener(this, this.getFilter());
 		} catch (InvalidSyntaxException e) {
 			throw new IllegalStateException(
 					"cannot add service listener to bundle context using service filter "
-							+ this.getServiceFilter(), e);
+							+ this.getFilter(), e);
 		}
 	}
 
@@ -98,27 +97,37 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	private ServiceReference[] getServices() {
 		try {
 			return super.getBundleContext().getServiceReferences(null,
-					this.getServiceFilter());
+					this.getFilter());
 		} catch (InvalidSyntaxException e) {
 			throw new IllegalStateException(
 					"cannot get services from bundle context using service filter "
-							+ this.getServiceFilter(), e);
+							+ this.getFilter(), e);
 		}
 	}
 
 	/**
-	 * Returns a filter representing using the service interface as object
-	 * class.
+	 * Returns a filter using the interface from {@link #getServiceInterface()}
+	 * as object class and the service filter obtained from
+	 * {@link #getServiceFilter()}.
 	 * 
 	 * @return the filter or <code>null</code> if there is no service interface
 	 *         declared
 	 */
-	private String getServiceFilter() {
+	private String getFilter() {
 		Class<?> serviceInterface = this.getServiceInterface();
-		if (serviceInterface == null) {
+		String serviceFilter = this.getServiceFilter();
+		StringBuilder filter = new StringBuilder();
+		if (serviceInterface != null) {
+			filter.append(String.format("(objectClass=%s)", serviceInterface
+					.getName()));
+		}
+		if (serviceFilter != null) {
+			filter.append(serviceFilter);
+		}
+		if (filter.length() == 0) {
 			return null;
 		}
-		return ("(objectClass=" + serviceInterface.getName() + ")");
+		return String.format("(&%s)", filter);
 	}
 
 	/**
@@ -126,40 +135,23 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 */
 	public final synchronized void serviceChanged(ServiceEvent serviceEvent) {
 		ServiceReference serviceReference = serviceEvent.getServiceReference();
-		if (this.isManageable(serviceReference)) {
-			Object service = super.getBundleContext().getService(
-					serviceReference);
-			ObjectName objectName = this.getObjectName(serviceReference,
-					service);
-			switch (serviceEvent.getType()) {
-			case ServiceEvent.REGISTERED:
-				super.registerMBeanService(this.getMBeanInterface(),
-						objectName, this.getMBean(serviceReference, service));
-				break;
-			case ServiceEvent.UNREGISTERING:
-				try {
-					super.unregisterMBeanService(objectName);
-				} finally {
-					super.getBundleContext().ungetService(serviceReference);
-				}
-				break;
-			default:
-				assert false : "Unexpected ServiceEvent";
+		Object service = super.getBundleContext().getService(serviceReference);
+		ObjectName objectName = this.getObjectName(serviceReference, service);
+		switch (serviceEvent.getType()) {
+		case ServiceEvent.REGISTERED:
+			super.registerMBeanService(this.getMBeanInterface(), objectName,
+					this.getMBean(serviceReference, service));
+			break;
+		case ServiceEvent.UNREGISTERING:
+			try {
+				super.unregisterMBeanService(objectName);
+			} finally {
+				super.getBundleContext().ungetService(serviceReference);
 			}
+			break;
+		default:
+			assert false : "Unexpected ServiceEvent";
 		}
-	}
-
-	/**
-	 * Returns true if the given service reference can be managed by a MBean.
-	 * <p>
-	 * The default implementation returns true.
-	 * 
-	 * @param serviceReference
-	 *            the service reference
-	 * @return true if a mbean can be provided
-	 */
-	public boolean isManageable(ServiceReference serviceReference) {
-		return true;
 	}
 
 	/**
@@ -168,6 +160,17 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * @return the service interface
 	 */
 	public abstract Class<?> getServiceInterface();
+
+	/**
+	 * Returns the filter which will be used to track services in the OSGi
+	 * service registry.
+	 * <p>
+	 * If <code>null</code> is returned all service instances for the interface
+	 * provided by {@link #getServiceInterface()} will be used to create MBeans.
+	 * 
+	 * @return The service filter or <code>null</code>.
+	 */
+	public abstract String getServiceFilter();
 
 	/**
 	 * Returns the object name of service which will be used for the managed

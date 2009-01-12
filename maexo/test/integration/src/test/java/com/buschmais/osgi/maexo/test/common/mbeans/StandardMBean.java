@@ -16,7 +16,7 @@
  */
 package com.buschmais.osgi.maexo.test.common.mbeans;
 
-public interface ClassicMBean {
+public interface StandardMBean {
 
 	public void setAttribute(String newAttribute);
 	

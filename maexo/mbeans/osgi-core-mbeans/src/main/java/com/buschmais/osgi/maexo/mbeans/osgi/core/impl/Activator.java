@@ -30,7 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLifeCycleSupport;
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
+import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.BundleMBeanLifeCycle;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.PackageAdminMBeanLifeCycle;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.lifecyle.ServiceMBeanLifeCycle;
@@ -66,12 +66,12 @@ public final class Activator implements BundleActivator {
 		if (logger.isInfoEnabled()) {
 			logger.info("Starting maexo OSGi Core MBeans");
 		}
-		ObjectNameHelper objectNameHelper = new ObjectNameHelper(bundleContext);
+		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(bundleContext);
 		this.serviceRegistrations = new LinkedList<ServiceRegistration>();
-		this.serviceRegistrations.add(objectNameHelper.registerObjectNameFactory(new BundleObjectNameFactory(), Bundle.class));
-		this.serviceRegistrations.add(objectNameHelper.registerObjectNameFactory(new ServiceObjectNameFactory(), ServiceReference.class));
-		this.serviceRegistrations.add(objectNameHelper.registerObjectNameFactory(new StartLevelObjectNameFactory(), StartLevel.class));
-		this.serviceRegistrations.add(objectNameHelper.registerObjectNameFactory(new PackageAdminObjectNameFactory(), PackageAdmin.class));
+		this.serviceRegistrations.add(objectNameFactoryHelper.registerObjectNameFactory(new BundleObjectNameFactory(), Bundle.class));
+		this.serviceRegistrations.add(objectNameFactoryHelper.registerObjectNameFactory(new ServiceObjectNameFactory(), ServiceReference.class));
+		this.serviceRegistrations.add(objectNameFactoryHelper.registerObjectNameFactory(new StartLevelObjectNameFactory(), StartLevel.class));
+		this.serviceRegistrations.add(objectNameFactoryHelper.registerObjectNameFactory(new PackageAdminObjectNameFactory(), PackageAdmin.class));
 
 		// create bundle listener
 		this.bundleLifecyle = new BundleMBeanLifeCycle(bundleContext);

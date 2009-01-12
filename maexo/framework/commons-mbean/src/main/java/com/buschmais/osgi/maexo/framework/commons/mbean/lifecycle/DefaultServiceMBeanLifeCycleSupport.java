@@ -33,14 +33,24 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFac
  * <p>
  * The following assumptions are used:
  * <ul>
- * <li>All discovered services can be managed by an mbean</li>
- * <li>The object name may be constructed by using an {@link ObjectNameFactory}
- * which must have been registered for the service interface provided by the method
- * {@link ServiceMBeanLifeCycleSupport#getServiceInterface()}.
+ * <li>No filter is used for tracking services.</li>
+ * <li>The object name may be constructed by using an
+ * {@link com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory}
+ * which must have been registered for the service interface provided by the
+ * method {@link ServiceMBeanLifeCycleSupport#getServiceInterface()}.
  * </ul>
  */
 public abstract class DefaultServiceMBeanLifeCycleSupport extends
 		ServiceMBeanLifeCycleSupport {
+
+	/**
+	 * Defines the service properties which will be passed to the method
+	 * {@link ObjectNameFactory#getObjectName(Object, Map)}.
+	 */
+	private static final String[] OBJECTNAME_PROPERTIES = new String[] {
+			Constants.SERVICE_DESCRIPTION, Constants.SERVICE_ID,
+			Constants.SERVICE_PID, Constants.SERVICE_RANKING,
+			Constants.SERVICE_VENDOR };
 
 	/**
 	 * Constructor.
@@ -56,8 +66,8 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isManageable(ServiceReference serviceReference) {
-		return true;
+	public String getServiceFilter() {
+		return null;
 	}
 
 	/**
@@ -67,10 +77,10 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 	public ObjectName getObjectName(ServiceReference serviceReference,
 			Object service) {
 		Map<String, Object> properties = new HashMap<String, Object>();
-		properties.put(Constants.SERVICE_ID, serviceReference
-				.getProperty(Constants.SERVICE_ID));
+		for (String property : OBJECTNAME_PROPERTIES) {
+			properties.put(property, serviceReference.getProperty(property));
+		}
 		return super.getObjectNameHelper().getObjectName(service,
 				this.getServiceInterface(), properties);
 	}
-
 }

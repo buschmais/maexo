@@ -26,8 +26,8 @@ import javax.management.ObjectName;
 
 import com.buschmais.osgi.maexo.test.Constants;
 import com.buschmais.osgi.maexo.test.MaexoTests;
-import com.buschmais.osgi.maexo.test.common.mbeans.Classic;
-import com.buschmais.osgi.maexo.test.common.mbeans.ClassicMBeanNotificationListener;
+import com.buschmais.osgi.maexo.test.common.mbeans.Standard;
+import com.buschmais.osgi.maexo.test.common.mbeans.StandardMBeanNotificationListener;
 
 /**
  * @see MaexoTests
@@ -49,9 +49,9 @@ public class SpringTest extends MaexoTests {
 
 	private MBeanServer mbeanServer;
 
-	private Classic classicMBean;
+	private Standard classicMBean;
 
-	private ClassicMBeanNotificationListener notificationListener;
+	private StandardMBeanNotificationListener notificationListener;
 
 	/*
 	 * (non-Javadoc)
@@ -59,6 +59,7 @@ public class SpringTest extends MaexoTests {
 	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
 	 * getTestBundlesNames()
 	 */
+	@Override
 	protected String[] getTestBundlesNames() {
 		return new String[] { Constants.ARTIFACT_SWITCHBOARD };
 	}
@@ -82,6 +83,7 @@ public class SpringTest extends MaexoTests {
 	 * org.springframework.osgi.test.AbstractOnTheFlyBundleCreatorTests#getManifest
 	 * ()
 	 */
+	@Override
 	protected Manifest getManifest() {
 		// let the testing framework create/load the manifest
 		Manifest mf = super.getManifest();
@@ -103,14 +105,15 @@ public class SpringTest extends MaexoTests {
 	 * 
 	 * @see org.springframework.test.AbstractSingleSpringContextTests#onSetUp()
 	 */
+	@Override
 	protected void onSetUp() {
 		this.mbeanServer = (MBeanServer) super.getApplicationContext().getBean(
 				BEAN_MBEANSERVER);
 		assertNotNull(this.mbeanServer);
-		this.classicMBean = (Classic) super.getApplicationContext().getBean(
+		this.classicMBean = (Standard) super.getApplicationContext().getBean(
 				BEAN_CLASSICMBEAN);
 		assertNotNull(this.classicMBean);
-		this.notificationListener = (ClassicMBeanNotificationListener) super
+		this.notificationListener = (StandardMBeanNotificationListener) super
 				.getApplicationContext().getBean(BEAN_NOTIFICATIONLISTENER);
 	}
 

@@ -42,7 +42,7 @@ import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
+import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 
 /**
  * Represents an OSGi bundle.
@@ -75,7 +75,7 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	 */
 	private final org.osgi.framework.Bundle bundle;
 
-	private final ObjectNameHelper objectNameHelper;
+	private final ObjectNameFactoryHelper objectNameFactoryHelper;
 
 	/**
 	 * Constructs the managed bean.
@@ -87,7 +87,7 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	 */
 	public Bundle(BundleContext bundleContext, org.osgi.framework.Bundle bundle) {
 		this.bundle = bundle;
-		this.objectNameHelper = new ObjectNameHelper(bundleContext);
+		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(bundleContext);
 	}
 
 
@@ -155,7 +155,7 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 				.getRegisteredServices();
 		if (registeredServices != null) {
 			for (ServiceReference registeredService : registeredServices) {
-				registeredServicesList.add(this.objectNameHelper.getObjectName(
+				registeredServicesList.add(this.objectNameFactoryHelper.getObjectName(
 						registeredService, ServiceReference.class));
 			}
 		}
@@ -284,7 +284,7 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		}
 		ObjectName[] objectNames = new ObjectName[servicesInUse.length];
 		for (int i = 0; i < servicesInUse.length; i++) {
-			objectNames[i] = this.objectNameHelper.getObjectName(
+			objectNames[i] = this.objectNameFactoryHelper.getObjectName(
 					servicesInUse[i], ServiceReference.class);
 		}
 		return objectNames;

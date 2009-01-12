@@ -39,7 +39,7 @@ import org.osgi.service.packageadmin.ExportedPackage;
 import org.osgi.service.packageadmin.RequiredBundle;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
+import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 
 /**
  * Represents the OSGi package admin service.
@@ -72,7 +72,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	/**
 	 * The object name helper.
 	 */
-	private final ObjectNameHelper objectNameHelper;
+	private final ObjectNameFactoryHelper objectNameFactoryHelper;
 
 	/**
 	 * Constructor.
@@ -86,7 +86,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 			org.osgi.service.packageadmin.PackageAdmin packageAdmin) {
 		this.bundleContext = bundleContext;
 		this.packageAdmin = packageAdmin;
-		this.objectNameHelper = new ObjectNameHelper(bundleContext);
+		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(bundleContext);
 	}
 
 	/**
@@ -269,7 +269,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 								PackageAdminConstants.REQUIRED_BUNDLE_TYPE,
 								PackageAdminConstants.REQUIREDBUNDLE_ITEM_NAMES,
 								new Object[] {
-										this.objectNameHelper.getObjectName(
+										this.objectNameFactoryHelper.getObjectName(
 												requiredBundle.getBundle(),
 												Bundle.class),
 										this.getObjectNames(requiredBundle
@@ -381,7 +381,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 					PackageAdminConstants.EXPORTED_PACKAGE_TYPE,
 					PackageAdminConstants.EXPORTEDPACKAGE_ITEM_NAMES,
 					new Object[] {
-							this.objectNameHelper.getObjectName(exportedPackage
+							this.objectNameFactoryHelper.getObjectName(exportedPackage
 									.getExportingBundle(), Bundle.class),
 							this.getObjectNames(exportedPackage
 									.getImportingBundles()),
@@ -407,7 +407,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 		}
 		ObjectName[] objectNames = new ObjectName[bundles.length];
 		for (int i = 0; i < bundles.length; i++) {
-			objectNames[i] = this.objectNameHelper.getObjectName(bundles[i],
+			objectNames[i] = this.objectNameFactoryHelper.getObjectName(bundles[i],
 					org.osgi.framework.Bundle.class);
 		}
 		return objectNames;

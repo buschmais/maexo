@@ -23,19 +23,19 @@ import org.easymock.EasyMock;
 import org.osgi.framework.ServiceRegistration;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameHelper;
+import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 import com.buschmais.osgi.maexo.test.Constants;
 import com.buschmais.osgi.maexo.test.MaexoTests;
 
 /**
  * @see MaexoTests
  */
-public class ObjectNameHelperTest extends MaexoTests {
+public class ObjectNameFactoryHelperTest extends MaexoTests {
 
 	private static final String OBJECTNAME_RESOURCE_A = "com.buschmais.osgi.maexo:type=ResourceA";
 	private static final String OBJECTNAME_RESOURCE_B = "com.buschmais.osgi.maexo:type=ResourceB";
 
-	private ObjectNameHelper objectNameHelper;
+	private ObjectNameFactoryHelper objectNameFactoryHelper;
 
 	private ObjectNameFactory objectNameFactoryA;
 	private ServiceRegistration serviceRegistrationA;
@@ -57,14 +57,15 @@ public class ObjectNameHelperTest extends MaexoTests {
 	protected void onSetUp() throws Exception {
 		super.onSetUp();
 		// create helper
-		this.objectNameHelper = new ObjectNameHelper(super.bundleContext);
+		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(
+				super.bundleContext);
 		// create and register factory mocks
 		this.objectNameFactoryA = EasyMock.createMock(ObjectNameFactory.class);
-		this.serviceRegistrationA = this.objectNameHelper
+		this.serviceRegistrationA = this.objectNameFactoryHelper
 				.registerObjectNameFactory(this.objectNameFactoryA,
 						ResourceInterfaceA.class);
 		this.objectNameFactoryB = EasyMock.createMock(ObjectNameFactory.class);
-		this.serviceRegistrationB = this.objectNameHelper
+		this.serviceRegistrationB = this.objectNameFactoryHelper
 				.registerObjectNameFactory(this.objectNameFactoryB,
 						ResourceInterfaceB.class);
 		// create resource mocks
@@ -93,6 +94,7 @@ public class ObjectNameHelperTest extends MaexoTests {
 	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
 	 * getTestBundlesNames()
 	 */
+	@Override
 	protected String[] getTestBundlesNames() {
 		return new String[] { Constants.ARTIFACT_COMMONS_MBEAN,
 				Constants.ARTIFACT_EASYMOCK };
@@ -110,32 +112,13 @@ public class ObjectNameHelperTest extends MaexoTests {
 		// replay
 		EasyMock.replay(this.objectNameFactoryA);
 		EasyMock.replay(this.objectNameFactoryB);
-		assertEquals(this.objectNameA, this.objectNameHelper.getObjectName(
-				this.resourceA, ResourceInterfaceA.class));
-		assertEquals(this.objectNameB, this.objectNameHelper.getObjectName(
-				this.resourceB, ResourceInterfaceB.class));
+		assertEquals(this.objectNameA, this.objectNameFactoryHelper
+				.getObjectName(this.resourceA, ResourceInterfaceA.class));
+		assertEquals(this.objectNameB, this.objectNameFactoryHelper
+				.getObjectName(this.resourceB, ResourceInterfaceB.class));
 		// verify
 		EasyMock.verify(this.objectNameFactoryA);
 		EasyMock.verify(this.objectNameFactoryB);
 	}
 
-	public void test_getObjectNameFromResource() {
-		// expect calls to object name factories
-		EasyMock.expect(
-				this.objectNameFactoryA.getObjectName(this.resourceA, null))
-				.andReturn(this.objectNameA);
-		EasyMock.expect(
-				this.objectNameFactoryB.getObjectName(this.resourceB, null))
-				.andReturn(this.objectNameB);
-		// replay
-		EasyMock.replay(this.objectNameFactoryA);
-		EasyMock.replay(this.objectNameFactoryB);
-		assertEquals(this.objectNameA, this.objectNameHelper
-				.getObjectName(this.resourceA));
-		assertEquals(this.objectNameB, this.objectNameHelper
-				.getObjectName(this.resourceB));
-		// verify
-		EasyMock.verify(this.objectNameFactoryA);
-		EasyMock.verify(this.objectNameFactoryB);
-	}
 }

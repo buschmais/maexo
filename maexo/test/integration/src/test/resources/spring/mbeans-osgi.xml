@@ -22,10 +22,10 @@
 	-->
 
 	<!-- register a classic mbean instance -->
-	<bean id="classicMBean" class="com.buschmais.osgi.maexo.test.common.mbeans.Classic" />
+	<bean id="classicMBean" class="com.buschmais.osgi.maexo.test.common.mbeans.Standard" />
 
 	<osgi:service ref="classicMBean"
-		interface="com.buschmais.osgi.maexo.test.common.mbeans.ClassicMBean">
+		interface="com.buschmais.osgi.maexo.test.common.mbeans.StandardMBean">
 		<osgi:service-properties>
 			<entry key="objectName" value="com.buschmais.osgi.maexo:type=classicMBean" />
 		</osgi:service-properties>
@@ -34,7 +34,7 @@
 
 	<!-- register a notification listener for the classic mbean -->
 	<bean id="classicMBeanNotificationListener"
-		class="com.buschmais.osgi.maexo.test.common.mbeans.ClassicMBeanNotificationListener" />
+		class="com.buschmais.osgi.maexo.test.common.mbeans.StandardMBeanNotificationListener" />
 
 	<osgi:service ref="classicMBeanNotificationListener"
 		interface="javax.management.NotificationListener">
