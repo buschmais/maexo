@@ -190,6 +190,8 @@
         </module>
         <module name="UpperEll"/>
         
+        <module name="FileContentsHolder"/>
+        
         <!-- disabled
         <module name="FinalParameters"/>
         <module name="AvoidInlineConditionals"/>

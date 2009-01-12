@@ -25,8 +25,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-
 /**
  * Provides an abstract default implementation for the
  * {@link ServiceMBeanLifeCycleSupport}.
@@ -45,7 +43,8 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 
 	/**
 	 * Defines the service properties which will be passed to the method
-	 * {@link ObjectNameFactory#getObjectName(Object, Map)}.
+	 * {@link com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory#getObjectName(Object, Map)}
+	 * .
 	 */
 	public static final String[] OBJECTNAME_PROPERTIES = new String[] {
 			Constants.SERVICE_DESCRIPTION, Constants.SERVICE_ID,
@@ -64,16 +63,21 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @return <code>null</code> as default
 	 */
+	// CSOFF: DesignForExtensionCheck
 	@Override
 	public String getServiceFilter() {
 		return null;
 	}
 
+	// CSON: DesignForExtensionCheck
+
 	/**
 	 * {@inheritDoc}
 	 */
-	//CSOFF:DesignForExtensionCheck
+	// CSOFF: DesignForExtensionCheck
 	@Override
 	public ObjectName getObjectName(ServiceReference serviceReference,
 			Object service) {
@@ -84,5 +88,5 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 		return super.getObjectNameHelper().getObjectName(service,
 				this.getServiceInterface(), properties);
 	}
-	//CSON:DesignForExtensionCheck
+	// CSON: DesignForExtensionCheck
 }
