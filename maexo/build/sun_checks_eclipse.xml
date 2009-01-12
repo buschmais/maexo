@@ -190,13 +190,6 @@
         </module>
         <module name="UpperEll"/>
         
-        <!-- Disable Checkstyle via comment -->
-		<module name="SuppressionCommentFilter">
-		    <property name="offCommentFormat" value="CSOFF\: ([\w\|]+)"/>
-		    <property name="onCommentFormat" value="CSON\: ([\w\|]+)"/>
-		    <property name="checkFormat" value="$1"/>
-		</module>
-
         <!-- disabled
         <module name="FinalParameters"/>
         <module name="AvoidInlineConditionals"/>
@@ -204,7 +197,13 @@
 		    <property name="max" value="160"/>
 		</module>
         -->
-
     </module>
+
+    <!-- Disable Checkstyle via comment -->
+	<module name="SuppressionCommentFilter">
+	    <property name="offCommentFormat" value="CSOFF\: ([\w\|]+)"/>
+	    <property name="onCommentFormat" value="CSON\: ([\w\|]+)"/>
+	    <property name="checkFormat" value="$1"/>
+	</module>
 
 </module>
