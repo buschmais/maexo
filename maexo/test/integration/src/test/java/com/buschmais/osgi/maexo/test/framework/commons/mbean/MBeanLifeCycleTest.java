@@ -234,9 +234,10 @@ public class MBeanLifeCycleTest extends MaexoTests {
 		// create the map of properties which are expected to be passed to the
 		// object name factory
 		Map<String, Object> expectedProperties = new HashMap<String, Object>();
-		expectedProperties.put(org.osgi.framework.Constants.SERVICE_ID,
-				serviceRegistrationA.getReference().getProperty(
-						org.osgi.framework.Constants.SERVICE_ID));
+		for (String expectedProperty : DefaultServiceMBeanLifeCycleSupport.OBJECTNAME_PROPERTIES) {
+			expectedProperties.put(expectedProperty, serviceRegistrationA
+					.getReference().getProperty(expectedProperty));
+		}
 		ObjectNameFactory objectNameFactory = EasyMock
 				.createMock(ObjectNameFactory.class);
 		// the object name factory will be used on registration and

@@ -123,7 +123,7 @@ public final class ObjectNameFactoryHelper {
 		}
 		try {
 			serviceReferences = this.bundleContext.getServiceReferences(
-					ObjectNameFactory.class.getName(), filter.toString());
+					ObjectNameFactory.class.getName(), filter);
 		} catch (InvalidSyntaxException e) {
 			throw new IllegalArgumentException(e);
 		}

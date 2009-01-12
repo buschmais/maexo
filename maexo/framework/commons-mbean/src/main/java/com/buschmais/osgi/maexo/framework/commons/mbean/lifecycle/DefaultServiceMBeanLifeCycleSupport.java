@@ -47,7 +47,7 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 	 * Defines the service properties which will be passed to the method
 	 * {@link ObjectNameFactory#getObjectName(Object, Map)}.
 	 */
-	private static final String[] OBJECTNAME_PROPERTIES = new String[] {
+	public static final String[] OBJECTNAME_PROPERTIES = new String[] {
 			Constants.SERVICE_DESCRIPTION, Constants.SERVICE_ID,
 			Constants.SERVICE_PID, Constants.SERVICE_RANKING,
 			Constants.SERVICE_VENDOR };
