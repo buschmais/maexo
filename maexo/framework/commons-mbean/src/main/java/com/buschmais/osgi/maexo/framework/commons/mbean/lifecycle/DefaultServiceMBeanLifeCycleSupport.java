@@ -74,6 +74,7 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 	 * {@inheritDoc}
 	 */
 	@Override
+	//CSOFF:DesignForExtensionCheck
 	public ObjectName getObjectName(ServiceReference serviceReference,
 			Object service) {
 		Map<String, Object> properties = new HashMap<String, Object>();
@@ -83,4 +84,5 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 		return super.getObjectNameHelper().getObjectName(service,
 				this.getServiceInterface(), properties);
 	}
+	//CSON:DesignForExtensionCheck
 }
