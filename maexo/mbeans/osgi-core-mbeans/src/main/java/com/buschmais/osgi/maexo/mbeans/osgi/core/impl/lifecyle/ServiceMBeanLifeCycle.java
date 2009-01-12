@@ -45,7 +45,7 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object getMBean(ServiceReference serviceReference, Object service) {
+	protected Object getMBean(ServiceReference serviceReference, Object service) {
 		return new Service(super.getBundleContext(), serviceReference);
 	}
 
@@ -53,7 +53,7 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Class<?> getMBeanInterface() {
+	protected Class<?> getMBeanInterface() {
 		return DynamicMBean.class;
 	}
 
@@ -61,7 +61,7 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ObjectName getObjectName(ServiceReference serviceReference,
+	protected ObjectName getObjectName(ServiceReference serviceReference,
 			Object service) {
 		return super.getObjectNameHelper().getObjectName(serviceReference,
 				ServiceReference.class);
@@ -71,7 +71,7 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Class<?> getServiceInterface() {
+	protected Class<?> getServiceInterface() {
 		return null;
 	}
 

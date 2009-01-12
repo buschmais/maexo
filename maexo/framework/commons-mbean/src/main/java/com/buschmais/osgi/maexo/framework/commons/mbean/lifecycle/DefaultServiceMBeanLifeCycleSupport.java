@@ -37,16 +37,21 @@ import org.osgi.framework.ServiceReference;
  * which must have been registered for the service interface provided by the
  * method {@link ServiceMBeanLifeCycleSupport#getServiceInterface()}.
  * </ul>
+ * <p>
+ * The following information will be used to create an object name for the OSGi service mbean
+ * {@link #getObjectName(ServiceReference, Object)}:
+ * <ul>
+ * <li>{@link Constants#SERVICE_DESCRIPTION}</li>
+ * <li>{@link Constants#SERVICE_ID}</li>
+ * <li>{@link Constants#SERVICE_PID}</li>
+ * <li>{@link Constants#SERVICE_RANKING}</li>
+ * <li>{@link Constants#SERVICE_VENDOR}</li>
+ * </ul>
  */
 public abstract class DefaultServiceMBeanLifeCycleSupport extends
 		ServiceMBeanLifeCycleSupport {
 
-	/**
-	 * Defines the service properties which will be passed to the method
-	 * {@link com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory#getObjectName(Object, Map)}
-	 * .
-	 */
-	public static final String[] OBJECTNAME_PROPERTIES = new String[] {
+	private static final String[] OBJECTNAME_PROPERTIES = new String[] {
 			Constants.SERVICE_DESCRIPTION, Constants.SERVICE_ID,
 			Constants.SERVICE_PID, Constants.SERVICE_RANKING,
 			Constants.SERVICE_VENDOR };
@@ -79,11 +84,12 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 	 */
 	// CSOFF: DesignForExtensionCheck
 	@Override
-	public ObjectName getObjectName(ServiceReference serviceReference,
+	protected ObjectName getObjectName(ServiceReference serviceReference,
 			Object service) {
 		Map<String, Object> properties = new HashMap<String, Object>();
-		for (String property : OBJECTNAME_PROPERTIES) {
-			properties.put(property, serviceReference.getProperty(property));
+		for (String propertyName : OBJECTNAME_PROPERTIES) {
+			properties.put(propertyName, serviceReference
+					.getProperty(propertyName));
 		}
 		return super.getObjectNameHelper().getObjectName(service,
 				this.getServiceInterface(), properties);

@@ -159,7 +159,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * 
 	 * @return the service interface
 	 */
-	public abstract Class<?> getServiceInterface();
+	protected abstract Class<?> getServiceInterface();
 
 	/**
 	 * Returns the filter which will be used to track services in the OSGi
@@ -170,7 +170,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * 
 	 * @return The service filter or <code>null</code>.
 	 */
-	public abstract String getServiceFilter();
+	protected abstract String getServiceFilter();
 
 	/**
 	 * Returns the object name of service which will be used for the managed
@@ -182,7 +182,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 *            the service instance
 	 * @return the object name
 	 */
-	public abstract ObjectName getObjectName(ServiceReference serviceReference,
+	protected abstract ObjectName getObjectName(ServiceReference serviceReference,
 			Object service);
 
 	/**
@@ -194,7 +194,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 *            the service instance
 	 * @return the mbean instance
 	 */
-	public abstract Object getMBean(ServiceReference serviceReference,
+	protected abstract Object getMBean(ServiceReference serviceReference,
 			Object service);
 
 	/**
@@ -202,6 +202,6 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * 
 	 * @return the mbean interface
 	 */
-	public abstract Class<?> getMBeanInterface();
+	protected abstract Class<?> getMBeanInterface();
 
 }

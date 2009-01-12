@@ -45,7 +45,7 @@ public final class PackageAdminMBeanLifeCycle extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object getMBean(ServiceReference serviceReference, Object service) {
+	protected Object getMBean(ServiceReference serviceReference, Object service) {
 		return new PackageAdmin(super.getBundleContext(),
 				(org.osgi.service.packageadmin.PackageAdmin) service);
 	}
@@ -54,7 +54,7 @@ public final class PackageAdminMBeanLifeCycle extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Class<?> getMBeanInterface() {
+	protected Class<?> getMBeanInterface() {
 		return DynamicMBean.class;
 	}
 
@@ -62,7 +62,7 @@ public final class PackageAdminMBeanLifeCycle extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Class<?> getServiceInterface() {
+	protected Class<?> getServiceInterface() {
 		return org.osgi.service.packageadmin.PackageAdmin.class;
 	}
 }

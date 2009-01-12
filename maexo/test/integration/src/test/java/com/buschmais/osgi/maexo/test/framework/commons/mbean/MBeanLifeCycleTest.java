@@ -129,7 +129,7 @@ public class MBeanLifeCycleTest extends MaexoTests {
 			 * {@inheritDoc}
 			 */
 			@Override
-			public Object getMBean(ServiceReference serviceReference,
+			protected Object getMBean(ServiceReference serviceReference,
 					Object service) {
 				return new Standard();
 			}
@@ -138,7 +138,7 @@ public class MBeanLifeCycleTest extends MaexoTests {
 			 * {@inheritDoc}
 			 */
 			@Override
-			public Class<?> getMBeanInterface() {
+			protected Class<?> getMBeanInterface() {
 				return StandardMBean.class;
 			}
 
@@ -146,8 +146,8 @@ public class MBeanLifeCycleTest extends MaexoTests {
 			 * {@inheritDoc}
 			 */
 			@Override
-			public ObjectName getObjectName(ServiceReference serviceReference,
-					Object service) {
+			protected ObjectName getObjectName(
+					ServiceReference serviceReference, Object service) {
 				try {
 					return new ObjectName(OBJECTNAME_STANDARDMBEAN);
 				} catch (Exception e) {
@@ -159,7 +159,7 @@ public class MBeanLifeCycleTest extends MaexoTests {
 			 * {@inheritDoc}
 			 */
 			@Override
-			public String getServiceFilter() {
+			protected String getServiceFilter() {
 				return "(name=validService)";
 			}
 
@@ -167,7 +167,7 @@ public class MBeanLifeCycleTest extends MaexoTests {
 			 * {@inheritDoc}
 			 */
 			@Override
-			public Class<?> getServiceInterface() {
+			protected Class<?> getServiceInterface() {
 				return ResourceInterfaceA.class;
 			}
 		};
@@ -234,9 +234,16 @@ public class MBeanLifeCycleTest extends MaexoTests {
 		// create the map of properties which are expected to be passed to the
 		// object name factory
 		Map<String, Object> expectedProperties = new HashMap<String, Object>();
-		for (String expectedProperty : DefaultServiceMBeanLifeCycleSupport.OBJECTNAME_PROPERTIES) {
-			expectedProperties.put(expectedProperty, serviceRegistrationA
-					.getReference().getProperty(expectedProperty));
+		// see DefaultServiceMBeanLifeCycleSupport.OBJECTNAME_PROPERTIES
+		String[] objectnamePropertyNames = new String[] {
+				org.osgi.framework.Constants.SERVICE_DESCRIPTION,
+				org.osgi.framework.Constants.SERVICE_ID,
+				org.osgi.framework.Constants.SERVICE_PID,
+				org.osgi.framework.Constants.SERVICE_RANKING,
+				org.osgi.framework.Constants.SERVICE_VENDOR };
+		for (String expectedPropertyName : objectnamePropertyNames) {
+			expectedProperties.put(expectedPropertyName, serviceRegistrationA
+					.getReference().getProperty(expectedPropertyName));
 		}
 		ObjectNameFactory objectNameFactory = EasyMock
 				.createMock(ObjectNameFactory.class);
@@ -253,7 +260,7 @@ public class MBeanLifeCycleTest extends MaexoTests {
 			 * {@inheritDoc}
 			 */
 			@Override
-			public Object getMBean(ServiceReference serviceReference,
+			protected Object getMBean(ServiceReference serviceReference,
 					Object service) {
 				return new Standard();
 			}
@@ -262,7 +269,7 @@ public class MBeanLifeCycleTest extends MaexoTests {
 			 * {@inheritDoc}
 			 */
 			@Override
-			public Class<?> getMBeanInterface() {
+			protected Class<?> getMBeanInterface() {
 				return StandardMBean.class;
 			}
 
@@ -270,7 +277,7 @@ public class MBeanLifeCycleTest extends MaexoTests {
 			 * {@inheritDoc}
 			 */
 			@Override
-			public Class<?> getServiceInterface() {
+			protected Class<?> getServiceInterface() {
 				return ResourceInterfaceA.class;
 			}
 
