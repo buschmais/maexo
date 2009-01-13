@@ -216,7 +216,7 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 		assertTrue(bundleEvents.contains(BundleEvent.UPDATED));
 		// test uninstall bundle
 		bundleMBean.uninstall();
-		assertTrue(bundle.getState() == bundleMBean.getState() && bundle.getState() == Bundle.UNINSTALLED);
+		assertTrue(bundle.getState() == Bundle.UNINSTALLED);
 		this.bundleContext.removeBundleListener(this);
 	}
 	
