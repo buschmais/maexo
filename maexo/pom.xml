@@ -247,6 +247,18 @@ limitations under the License
 			</dependency>
 
 			<dependency>
+				<groupId>com.buschmais.osgi.maexo.test</groupId>
+				<artifactId>testbundle</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.osgi.maexo.test</groupId>
+				<artifactId>integration</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
 				<groupId>com.buschmais.osgi.maexo.adaptor</groupId>
 				<artifactId>mx4j-http-adaptor-activator</artifactId>
 				<version>${maexo.version}</version>

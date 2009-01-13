@@ -37,8 +37,30 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.buschmais.osgi.maexo.test</groupId>
+			<artifactId>testbundle</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>org.apache.felix</artifactId>
+					<groupId>org.osgi.core</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
 			<groupId>com.buschmais.osgi.maexo.framework</groupId>
 			<artifactId>commons-mbean</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>org.apache.felix</artifactId>
+					<groupId>org.osgi.core</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.buschmais.osgi.maexo.mbeans</groupId>
+			<artifactId>osgi-core-mbeans</artifactId>
 			<exclusions>
 				<exclusion>
 					<artifactId>org.apache.felix</artifactId>

@@ -29,6 +29,8 @@ public class Constants {
 	public static final String ARTIFACT_COMMONS_MBEAN = "com.buschmais.osgi.maexo.framework, commons-mbean, "
 			+ MAEXO_VERSION;
 
+	public static final String ARTIFACT_TESTBUNDLE = "com.buschmais.osgi.maexo.test, testbundle, " + MAEXO_VERSION;
+
 	public static final String ARTIFACT_OSGI_CORE_MBEAN = "com.buschmais.osgi.maexo.mbeans, osgi-core-mbeans, " + MAEXO_VERSION;
 	
 	public static final String ARTIFACT_PLATFORM_MBEAN_SERVER = "com.buschmais.osgi.maexo.server, platform-mbean-server, "

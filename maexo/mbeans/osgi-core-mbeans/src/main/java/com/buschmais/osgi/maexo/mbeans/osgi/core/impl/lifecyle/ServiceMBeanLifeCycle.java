@@ -26,6 +26,10 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLi
 import com.buschmais.osgi.maexo.mbeans.osgi.core.Service;
 
 /**
+ * 
+ * TODO@DM: complete javadoc (exclusion of services)
+ * 
+ * 
  * This class implements a service event listener to manage the life cycle of
  * the associated service mbeans.
  */

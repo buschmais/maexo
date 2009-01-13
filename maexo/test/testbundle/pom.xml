@@ -38,11 +38,11 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-						<Export-Package />
-						<Private-Package>com.buschmais.osgi.maexo.test.testbundle</Private-Package>
+						<Export-Package>com.buschmais.osgi.maexo.test.testbundle</Export-Package>
+						<Private-Package>com.buschmais.osgi.maexo.test.testbundle.impl.*</Private-Package>
 						<Import-Package>*</Import-Package>
 						<Include-Resource>src/main/resources</Include-Resource>
-						<Bundle-Activator>com.buschmais.osgi.maexo.test.testbundle.Activator</Bundle-Activator>
+						<Bundle-Activator>com.buschmais.osgi.maexo.test.testbundle.impl.Activator</Bundle-Activator>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -50,6 +50,11 @@
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>com.springsource.org.easymock</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.osgi.core</artifactId>

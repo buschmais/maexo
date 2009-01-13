@@ -14,10 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.osgi.maexo.test.testbundle;
+package com.buschmais.osgi.maexo.test.testbundle.impl;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+
+import com.buschmais.osgi.maexo.test.testbundle.TestInterface;
 
 /**
  * OSGi bundle activator for the the platform mbeans server bundle.
@@ -28,12 +30,16 @@ public final class Activator implements BundleActivator {
 	 * {@inheritDoc}
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
+		TestInterface testInterface = new TestClass();
+		bundleContext.registerService(TestInterface.class.getName(), testInterface, null);
+		bundleContext.getService(bundleContext.getServiceReference(TestInterface.class.getName()));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
+		bundleContext.ungetService(bundleContext.getServiceReference(TestInterface.class.getName()));
 	}
 
 }
