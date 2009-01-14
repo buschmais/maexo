@@ -22,13 +22,11 @@ import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean;
 import com.buschmais.osgi.maexo.test.Constants;
 import com.buschmais.osgi.maexo.test.MaexoTests;
 
-
 /**
  * @see MaexoTests
  */
 public class BundleMBeanTest extends MaexoTests implements BundleListener {
 
-	
 	/** Symbolic name for the testbundle. */
 	private static final String TESTBUNDLE_SYMBOLIC_NAME = "com.buschmais.osgi.maexo.test.testbundle";
 
@@ -49,8 +47,11 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 */
 	@Override
 	protected String[] getTestBundlesNames() {
-		return new String[] { Constants.ARTIFACT_SWITCHBOARD, Constants.ARTIFACT_PLATFORM_MBEAN_SERVER, Constants.ARTIFACT_COMMONS_MBEAN,
-				Constants.ARTIFACT_OSGI_CORE_MBEAN, Constants.ARTIFACT_TESTBUNDLE, Constants.ARTIFACT_EASYMOCK };
+		return new String[] { Constants.ARTIFACT_SWITCHBOARD,
+				Constants.ARTIFACT_PLATFORM_MBEAN_SERVER,
+				Constants.ARTIFACT_COMMONS_MBEAN,
+				Constants.ARTIFACT_OSGI_CORE_MBEAN,
+				Constants.ARTIFACT_TESTBUNDLE, Constants.ARTIFACT_EASYMOCK };
 	}
 
 	/**
@@ -62,11 +63,15 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 *             if no PackageAdmin could be found
 	 */
 	private Bundle getTestBundle() throws InvalidSyntaxException {
-		ServiceReference[] serviceReferences = this.bundleContext.getServiceReferences(org.osgi.service.packageadmin.PackageAdmin.class.getName(), null);
+		ServiceReference[] serviceReferences = this.bundleContext
+				.getServiceReferences(
+						org.osgi.service.packageadmin.PackageAdmin.class
+								.getName(), null);
 		assertTrue(serviceReferences.length == 1);
 		final org.osgi.service.packageadmin.PackageAdmin packageAdmin = (org.osgi.service.packageadmin.PackageAdmin) bundleContext
 				.getService(serviceReferences[0]);
-		Bundle[] bundles = packageAdmin.getBundles(TESTBUNDLE_SYMBOLIC_NAME, "0.0.0");
+		Bundle[] bundles = packageAdmin.getBundles(TESTBUNDLE_SYMBOLIC_NAME,
+				"0.0.0");
 		assertTrue(bundles.length == 1);
 		Bundle bundle = bundles[0];
 		return bundle;
@@ -81,11 +86,17 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 */
 	private BundleMBean getTestBundleMBean(Bundle bundle) {
 		// get corresponding BundleMBean
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(this.bundleContext);
-		ObjectName objectName = objectNameFactoryHelper.getObjectName(bundle, Bundle.class);
-		ServiceReference serviceReference = super.bundleContext.getServiceReference(MBeanServer.class.getName());
-		MBeanServerConnection mbeanServer = (MBeanServer) super.bundleContext.getService(serviceReference);
-		final BundleMBean bundleMBean = (BundleMBean) MBeanServerInvocationHandler.newProxyInstance(mbeanServer, objectName, BundleMBean.class, false);
+		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
+				this.bundleContext);
+		ObjectName objectName = objectNameFactoryHelper.getObjectName(bundle,
+				Bundle.class);
+		ServiceReference serviceReference = super.bundleContext
+				.getServiceReference(MBeanServer.class.getName());
+		MBeanServerConnection mbeanServer = (MBeanServer) super.bundleContext
+				.getService(serviceReference);
+		final BundleMBean bundleMBean = (BundleMBean) MBeanServerInvocationHandler
+				.newProxyInstance(mbeanServer, objectName, BundleMBean.class,
+						false);
 		return bundleMBean;
 	}
 
@@ -93,14 +104,19 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 * Tests if all Bundles are registered on MBeanServer.
 	 */
 	public void test_allBundlesRegisteredAsMBeans() throws IOException {
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(this.bundleContext);
+		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
+				this.bundleContext);
 		Bundle[] bundles = this.bundleContext.getBundles();
-		ServiceReference serviceReference = super.bundleContext.getServiceReference(MBeanServer.class.getName());
+		ServiceReference serviceReference = super.bundleContext
+				.getServiceReference(MBeanServer.class.getName());
 		try {
-			MBeanServerConnection mbeanServer = (MBeanServer) super.bundleContext.getService(serviceReference);
+			MBeanServerConnection mbeanServer = (MBeanServer) super.bundleContext
+					.getService(serviceReference);
 			for (Bundle bundle : bundles) {
-				ObjectName objectName = objectNameFactoryHelper.getObjectName(bundle, Bundle.class);
-				assertTrue(String.format("Bundle %s is not registered.", objectName), mbeanServer.isRegistered(objectName));
+				ObjectName objectName = objectNameFactoryHelper.getObjectName(
+						bundle, Bundle.class);
+				assertTrue(String.format("BundleMBean %s is not registered.",
+						objectName), mbeanServer.isRegistered(objectName));
 			}
 		} finally {
 			super.bundleContext.ungetService(serviceReference);
@@ -116,9 +132,11 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	public void test_testBundleAttributes() throws Exception {
 		Bundle bundle = getTestBundle();
 		BundleMBean bundleMBean = getTestBundleMBean(bundle);
-		
-		assertTrue(bundle.getBundleId() == bundleMBean.getBundleId().longValue());
-		assertTrue(bundle.getLastModified() == bundleMBean.getLastModified().longValue());
+
+		assertTrue(bundle.getBundleId() == bundleMBean.getBundleId()
+				.longValue());
+		assertTrue(bundle.getLastModified() == bundleMBean.getLastModified()
+				.longValue());
 		assertEquals(bundle.getLocation(), bundleMBean.getLocation());
 	}
 
@@ -137,11 +155,13 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 		assertTrue(bundleServiceReferences.length == bundleMBeanServicesInUse.length);
 		for (int i = 0; i < bundleServiceReferences.length; i++) {
 			ServiceReference reference = bundleServiceReferences[i];
-			ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(this.bundleContext);
-			ObjectName bundleServiceObjectName = objectNameFactoryHelper.getObjectName(reference, ServiceReference.class);
+			ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
+					this.bundleContext);
+			ObjectName bundleServiceObjectName = objectNameFactoryHelper
+					.getObjectName(reference, ServiceReference.class);
 			assertEquals(bundleServiceObjectName, bundleMBeanServicesInUse[i]);
 		}
-	
+
 	}
 
 	/**
@@ -154,13 +174,18 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 		Bundle bundle = getTestBundle();
 		BundleMBean bundleMBean = getTestBundleMBean(bundle);
 
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(this.bundleContext);
-		final ServiceReference[] registeredBundleServices = bundle.getRegisteredServices();
-		final ObjectName[] objectNameMBeanServices = bundleMBean.getRegisteredServices();
+		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
+				this.bundleContext);
+		final ServiceReference[] registeredBundleServices = bundle
+				.getRegisteredServices();
+		final ObjectName[] objectNameMBeanServices = bundleMBean
+				.getRegisteredServices();
 		assertTrue(registeredBundleServices.length == objectNameMBeanServices.length);
 		for (int i = 0; i < registeredBundleServices.length; i++) {
 			ServiceReference registeredBundleService = registeredBundleServices[i];
-			final ObjectName objectNameBundleService = objectNameFactoryHelper.getObjectName(registeredBundleService, ServiceReference.class);
+			final ObjectName objectNameBundleService = objectNameFactoryHelper
+					.getObjectName(registeredBundleService,
+							ServiceReference.class);
 			assertEquals(objectNameBundleService, objectNameMBeanServices[i]);
 		}
 	}
@@ -183,7 +208,8 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 			bundleHeaderCount++;
 			String key = (String) bundleKeys.nextElement();
 			String value = (String) bundleValues.nextElement();
-			assertTrue(bundleMBeanHeaders.get(new String[] { key }).values().contains(value));
+			assertTrue(bundleMBeanHeaders.get(new String[] { key }).values()
+					.contains(value));
 		}
 		assertTrue(bundleHeaderCount == bundleMBeanHeaders.size());
 	}
@@ -198,28 +224,31 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	public void test_changeEvents() throws Exception {
 		Bundle bundle = getTestBundle();
 		BundleMBean bundleMBean = getTestBundleMBean(bundle);
-		
+
 		this.bundleContext.addBundleListener(this);
 		// make sure bundle is started
 		if (Bundle.ACTIVE != bundle.getState()) {
 			bundleMBean.start();
 		}
-		assertTrue(bundle.getState() == bundleMBean.getState() && bundle.getState() == Bundle.ACTIVE);
+		assertTrue(bundle.getState() == bundleMBean.getState().longValue()
+				&& bundle.getState() == Bundle.ACTIVE);
 		// test stop bundle
 		bundleMBean.stop();
-		assertTrue(bundle.getState() == bundleMBean.getState() && bundle.getState() == Bundle.RESOLVED);
+		assertTrue(bundle.getState() == bundleMBean.getState().longValue()
+				&& bundle.getState() == Bundle.RESOLVED);
 		// test start bundle
 		bundleMBean.start();
-		assertTrue(bundle.getState() == bundleMBean.getState() && bundle.getState() == Bundle.ACTIVE);
+		assertTrue(bundle.getState() == bundleMBean.getState().longValue()
+				&& bundle.getState() == Bundle.ACTIVE);
 		// test update bundle
 		bundleMBean.update();
-		assertTrue(bundleEvents.contains(BundleEvent.UPDATED));
+		assertTrue(bundleEvents.contains(Long.valueOf(BundleEvent.UPDATED)));
 		// test uninstall bundle
 		bundleMBean.uninstall();
 		assertTrue(bundle.getState() == Bundle.UNINSTALLED);
 		this.bundleContext.removeBundleListener(this);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
