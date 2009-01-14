@@ -89,6 +89,34 @@ public final class NotificationListenerRegistration {
 	}
 
 	/**
+	 * @return the objectName
+	 */
+	public ObjectName getObjectName() {
+		return objectName;
+	}
+
+	/**
+	 * @return the notificationListener
+	 */
+	public NotificationListener getNotificationListener() {
+		return notificationListener;
+	}
+
+	/**
+	 * @return the notificationFilter
+	 */
+	public NotificationFilter getNotificationFilter() {
+		return notificationFilter;
+	}
+
+	/**
+	 * @return the handback
+	 */
+	public Object getHandback() {
+		return handback;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -154,34 +182,6 @@ public final class NotificationListenerRegistration {
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * @return the objectName
-	 */
-	public ObjectName getObjectName() {
-		return objectName;
-	}
-
-	/**
-	 * @return the notificationListener
-	 */
-	public NotificationListener getNotificationListener() {
-		return notificationListener;
-	}
-
-	/**
-	 * @return the notificationFilter
-	 */
-	public NotificationFilter getNotificationFilter() {
-		return notificationFilter;
-	}
-
-	/**
-	 * @return the handback
-	 */
-	public Object getHandback() {
-		return handback;
 	}
 
 	/**

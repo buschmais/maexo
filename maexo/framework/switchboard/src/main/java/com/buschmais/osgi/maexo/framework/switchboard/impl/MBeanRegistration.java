@@ -74,6 +74,20 @@ public final class MBeanRegistration {
 	}
 
 	/**
+	 * @return the objectName
+	 */
+	public ObjectName getObjectName() {
+		return objectName;
+	}
+
+	/**
+	 * @return the mbean
+	 */
+	public Object getMbean() {
+		return mbean;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -116,20 +130,6 @@ public final class MBeanRegistration {
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * @return the objectName
-	 */
-	public ObjectName getObjectName() {
-		return objectName;
-	}
-
-	/**
-	 * @return the mbean
-	 */
-	public Object getMbean() {
-		return mbean;
 	}
 
 	/**

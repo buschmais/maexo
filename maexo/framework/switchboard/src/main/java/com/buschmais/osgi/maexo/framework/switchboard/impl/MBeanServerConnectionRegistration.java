@@ -52,6 +52,13 @@ public final class MBeanServerConnectionRegistration {
 	}
 
 	/**
+	 * @return the mbeanServerConnection
+	 */
+	public MBeanServerConnection getMbeanServerConnection() {
+		return mbeanServerConnection;
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -88,13 +95,6 @@ public final class MBeanServerConnectionRegistration {
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * @return the mbeanServerConnection
-	 */
-	public MBeanServerConnection getMbeanServerConnection() {
-		return mbeanServerConnection;
 	}
 
 	/**

@@ -50,6 +50,13 @@ public final class MBeanServerRegistration {
 	}
 
 	/**
+	 * @return the mbeanServer
+	 */
+	public MBeanServer getMbeanServer() {
+		return mbeanServer;
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -84,13 +91,6 @@ public final class MBeanServerRegistration {
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * @return the mbeanServer
-	 */
-	public MBeanServer getMbeanServer() {
-		return mbeanServer;
 	}
 
 	/**
