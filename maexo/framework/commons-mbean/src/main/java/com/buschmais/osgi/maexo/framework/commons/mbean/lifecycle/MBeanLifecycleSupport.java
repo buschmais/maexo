@@ -58,7 +58,8 @@ public abstract class MBeanLifecycleSupport {
 	 */
 	public MBeanLifecycleSupport(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
-		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(bundleContext);
+		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(
+				bundleContext);
 	}
 
 	/**
@@ -93,11 +94,9 @@ public abstract class MBeanLifecycleSupport {
 		serviceProperties.put(ObjectName.class.getName(), objectName);
 		if (logger.isDebugEnabled()) {
 			logger
-					.debug(String
-							.format(
-									"registering mbean with object name '%s' as service with interface %s",
-									objectName, mbeanInterface.getClass()
-											.getName()));
+					.debug(
+							"registering mbean with object name '{}' as service with interface {}",
+							objectName, mbeanInterface.getClass().getName());
 		}
 		ServiceRegistration serviceRegistration = this.bundleContext
 				.registerService(mbeanInterface.getName(), mbean,
@@ -109,8 +108,7 @@ public abstract class MBeanLifecycleSupport {
 	 * Unregisters a previously registered mbean.
 	 * 
 	 * @param objectName
-	 *            the objectName which identifies the mbean to be
-	 *            unregistered
+	 *            the objectName which identifies the mbean to be unregistered
 	 */
 	public final void unregisterMBeanService(ObjectName objectName) {
 		// lookup serviceRegistration
@@ -121,10 +119,9 @@ public abstract class MBeanLifecycleSupport {
 			serviceRegistration.unregister();
 		} else {
 			logger
-					.debug(String
-							.format(
-									"mbean service with object name '%s' not found, skipping unregistration",
-									objectName));
+					.debug(
+							"mbean service with object name '{}' not found, skipping unregistration",
+							objectName);
 		}
 	}
 }
