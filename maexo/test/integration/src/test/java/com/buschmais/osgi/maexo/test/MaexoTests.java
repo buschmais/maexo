@@ -48,10 +48,11 @@ public class MaexoTests extends AbstractConfigurableBundleCreatorTests {
 	 *             if no PackageAdmin could be found
 	 */
 	protected Bundle getTestBundle() throws InvalidSyntaxException {
-		ServiceReference[] serviceReferences = this.bundleContext.getServiceReferences(org.osgi.service.packageadmin.PackageAdmin.class.getName(), null);
-		assertTrue(serviceReferences.length == 1);
+		ServiceReference serviceReference = this.bundleContext
+				.getServiceReference(org.osgi.service.packageadmin.PackageAdmin.class
+						.getName());
 		final org.osgi.service.packageadmin.PackageAdmin packageAdmin = (org.osgi.service.packageadmin.PackageAdmin) bundleContext
-				.getService(serviceReferences[0]);
+				.getService(serviceReference);
 		Bundle[] bundles = packageAdmin.getBundles(TESTBUNDLE_SYMBOLIC_NAME, "0.0.0");
 		assertTrue(bundles.length == 1);
 		Bundle bundle = bundles[0];
