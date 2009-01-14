@@ -54,7 +54,7 @@ public final class Activator implements BundleActivator {
 		// import the service
 		this.serviceReference = bundleContext
 				.getServiceReference(TestInterface.class.getName());
-		//ndleContext.getService(this.serviceReference);
+		bundleContext.getService(this.serviceReference);
 	}
 
 	/**
