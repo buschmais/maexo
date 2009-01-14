@@ -189,7 +189,7 @@ public final class SwitchBoardImpl {
 			NotificationFilter notificationFilter, Object handback) {
 		try {
 			logger.trace(
-					"add notification listener {} on server connection {}",
+					"adding notification listener {} on server connection {}",
 					notificationListener, mbeanServerConnection);
 			mbeanServerConnection.addNotificationListener(objectName,
 					notificationListener, notificationFilter, handback);
@@ -421,7 +421,7 @@ public final class SwitchBoardImpl {
 	 */
 	public synchronized void unregisterMBeanServer(
 			MBeanServerRegistration mbeanServerRegistration) {
-		logger.debug("unregister mbean server {}", mbeanServerRegistration);
+		logger.debug("unregistering mbean server {}", mbeanServerRegistration);
 		if (this.mbeanServers.remove(mbeanServerRegistration)) {
 			logger.debug(
 					"disassociating mbean server {} with all known mbeans",
@@ -446,7 +446,7 @@ public final class SwitchBoardImpl {
 	 */
 	private void unregisterMBean(MBeanServer mbeanServer, ObjectName objectName) {
 		try {
-			logger.trace("unregister mbean {} from server {}", objectName,
+			logger.trace("unregistering mbean {} from server {}", objectName,
 					mbeanServer);
 			mbeanServer.unregisterMBean(objectName);
 		} catch (Exception e) {
