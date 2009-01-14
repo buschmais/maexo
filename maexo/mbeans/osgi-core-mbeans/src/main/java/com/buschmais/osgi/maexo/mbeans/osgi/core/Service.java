@@ -16,11 +16,8 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.management.DynamicMBean;
 import javax.management.MBeanInfo;
@@ -50,15 +47,6 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 		ServiceMBean {
 
 	/**
-	 * The set of constants defined by the framework.
-	 */
-	private static final Set<String> FRAMEWORK_PROPERTIES = new HashSet<String>(
-			Arrays.asList(new String[] { Constants.SERVICE_DESCRIPTION,
-					Constants.SERVICE_ID, Constants.OBJECTCLASS,
-					Constants.SERVICE_PID, Constants.SERVICE_RANKING,
-					Constants.SERVICE_VENDOR }));
-
-	/**
 	 * The service reference to manage.
 	 */
 	private final ServiceReference serviceReference;
@@ -79,14 +67,15 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 	public Service(BundleContext bundleContext,
 			ServiceReference serviceReference) {
 		this.serviceReference = serviceReference;
-		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(bundleContext);
+		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(
+				bundleContext);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public MBeanInfo getMBeanInfo() {
-			String className = Service.class.getName();
+		String className = Service.class.getName();
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[] {
 				ServiceConstants.BUNDLE, ServiceConstants.DESCRIPTION,
@@ -105,7 +94,6 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 		return mbeanInfo;
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -113,7 +101,6 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 		return this.objectNameFactoryHelper.getObjectName(this.serviceReference
 				.getBundle(), Bundle.class);
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -123,14 +110,12 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 				.getProperty(Constants.SERVICE_DESCRIPTION);
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	public Long getId() {
 		return (Long) this.serviceReference.getProperty(Constants.SERVICE_ID);
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -140,7 +125,6 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 				.getProperty(Constants.OBJECTCLASS);
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -148,7 +132,6 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 		return (String) this.serviceReference
 				.getProperty(Constants.SERVICE_PID);
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -158,26 +141,23 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 				ServiceConstants.PROPERTIES_TYPE);
 		String[] keys = this.serviceReference.getPropertyKeys();
 		for (String key : keys) {
-			if (!FRAMEWORK_PROPERTIES.contains(key)) {
-				Object value = this.serviceReference.getProperty(key);
-				String stringRepresentation = null;
-				if (value != null) {
-					stringRepresentation = value.toString();
-				}
-				try {
-					CompositeDataSupport row = new CompositeDataSupport(
-							ServiceConstants.PROPERTIES_ROW_TYPE,
-							ServiceConstants.ITEM_NAMES,
-							new Object[] { key, stringRepresentation });
-					tabularProperties.put(row);
-				} catch (OpenDataException e) {
-					throw new IllegalStateException(e);
-				}
+			Object value = this.serviceReference.getProperty(key);
+			String stringRepresentation = null;
+			if (value != null) {
+				stringRepresentation = value.toString();
+			}
+			try {
+				CompositeDataSupport row = new CompositeDataSupport(
+						ServiceConstants.PROPERTIES_ROW_TYPE,
+						ServiceConstants.ITEM_NAMES, new Object[] { key,
+								stringRepresentation });
+				tabularProperties.put(row);
+			} catch (OpenDataException e) {
+				throw new IllegalStateException(e);
 			}
 		}
 		return tabularProperties;
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -186,7 +166,6 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 		return (Integer) this.serviceReference
 				.getProperty(Constants.SERVICE_RANKING);
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -203,7 +182,6 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 		return objectNames.toArray(new ObjectName[0]);
 	}
 
- 
 	/**
 	 * {@inheritDoc}
 	 */
