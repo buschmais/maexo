@@ -144,7 +144,7 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 		for (String key : keys) {
 			Object value = this.serviceReference.getProperty(key);
 			String stringRepresentation = null;
-			if (value!=null) {
+			if (value != null) {
 				if (value.getClass().isArray()) {
 					stringRepresentation = Arrays.deepToString((Object[]) value);
 				} else {
