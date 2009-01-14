@@ -172,10 +172,8 @@ public final class SwitchBoardImpl {
 	 */
 	private void registerMBean(MBeanServer mbeanServer, ObjectName objectName,
 			Object mbean) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("registering mbean {} on server {}", objectName,
-					mbeanServer);
-		}
+		logger.debug("registering mbean {} on server {}", objectName,
+				mbeanServer);
 		try {
 			mbeanServer.registerMBean(mbean, objectName);
 		} catch (Exception e) {
@@ -336,10 +334,8 @@ public final class SwitchBoardImpl {
 	 */
 	private void unregisterMBean(MBeanServer mbeanServer, ObjectName objectName) {
 		try {
-			if (logger.isDebugEnabled()) {
-				logger.debug("unregistering mbean {} from server {}",
-						objectName, mbeanServer);
-			}
+			logger.debug("unregistering mbean {} from server {}", objectName,
+					mbeanServer);
 			mbeanServer.unregisterMBean(objectName);
 		} catch (Exception e) {
 			logger
