@@ -32,23 +32,25 @@ import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFac
 
 /**
  * Provides support to control the life cycle of mbeans.
+ * 
+ * TODO @DM document export of MBEans as services (e.g. for use by switchboard)
+ * TODO add lifecycle logging
  */
 public abstract class MBeanLifecycleSupport {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(MBeanLifecycleSupport.class);
+	private static final Logger logger = LoggerFactory.getLogger(MBeanLifecycleSupport.class);
 
 	/**
 	 * The bundle context of the exporting bundle.
 	 */
-	private BundleContext bundleContext;
+	private final BundleContext bundleContext;
 
 	/**
 	 * The object name helper instance.
 	 */
-	private ObjectNameFactoryHelper objectNameFactoryHelper;
+	private final ObjectNameFactoryHelper objectNameFactoryHelper;
 
-	private Map<Object, ServiceRegistration> mbeanRegistrations = new ConcurrentHashMap<Object, ServiceRegistration>();
+	private final Map<Object, ServiceRegistration> mbeanRegistrations = new ConcurrentHashMap<Object, ServiceRegistration>();
 
 	/**
 	 * Constructor.
@@ -88,17 +90,14 @@ public abstract class MBeanLifecycleSupport {
 	 * @param mbean
 	 *            the mbean
 	 */
-	public final void registerMBeanService(Class<?> mbeanInterface,
-			ObjectName objectName, Object mbean) {
+	public final void registerMBeanService(Class<?> mbeanInterface, ObjectName objectName, Object mbean) {
 		Dictionary<String, Object> serviceProperties = new Hashtable<String, Object>();
 		serviceProperties.put(ObjectName.class.getName(), objectName);
 		logger
 				.debug(
 						"registering mbean with object name '{}' as service with interface {}",
 						objectName, mbeanInterface.getName());
-		ServiceRegistration serviceRegistration = this.bundleContext
-				.registerService(mbeanInterface.getName(), mbean,
-						serviceProperties);
+		ServiceRegistration serviceRegistration = this.bundleContext.registerService(mbeanInterface.getName(), mbean, serviceProperties);
 		this.mbeanRegistrations.put(objectName, serviceRegistration);
 	}
 
@@ -110,8 +109,7 @@ public abstract class MBeanLifecycleSupport {
 	 */
 	public final void unregisterMBeanService(ObjectName objectName) {
 		// lookup serviceRegistration
-		ServiceRegistration serviceRegistration = this.mbeanRegistrations
-				.get(objectName);
+		ServiceRegistration serviceRegistration = this.mbeanRegistrations.get(objectName);
 		if (serviceRegistration != null) {
 			// unregister service
 			serviceRegistration.unregister();

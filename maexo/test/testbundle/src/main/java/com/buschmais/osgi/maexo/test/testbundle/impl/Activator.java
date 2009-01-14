@@ -16,6 +16,9 @@
  */
 package com.buschmais.osgi.maexo.test.testbundle.impl;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -48,9 +51,11 @@ public final class Activator implements BundleActivator {
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		TestInterface testInterface = new TestClass();
+		Dictionary<String, Object> serviceProperties = new Hashtable<String, Object>();
+		serviceProperties.put("myProp", "myValue");
 		// register an instance of the test service
 		this.testServiceRegistration = bundleContext.registerService(
-				TestInterface.class.getName(), testInterface, null);
+				TestInterface.class.getName(), testInterface, serviceProperties);
 		// import the service
 		this.serviceReference = bundleContext
 				.getServiceReference(TestInterface.class.getName());

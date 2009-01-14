@@ -16,6 +16,7 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -143,8 +144,12 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 		for (String key : keys) {
 			Object value = this.serviceReference.getProperty(key);
 			String stringRepresentation = null;
-			if (value != null) {
-				stringRepresentation = value.toString();
+			if (value!=null) {
+				if (value.getClass().isArray()) {
+					stringRepresentation = Arrays.deepToString((Object[]) value);
+				} else {
+					stringRepresentation = value.toString();
+				}
 			}
 			try {
 				CompositeDataSupport row = new CompositeDataSupport(

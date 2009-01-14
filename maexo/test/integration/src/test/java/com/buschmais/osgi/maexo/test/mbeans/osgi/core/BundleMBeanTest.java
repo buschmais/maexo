@@ -14,7 +14,6 @@ import javax.management.openmbean.TabularData;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
@@ -23,12 +22,11 @@ import com.buschmais.osgi.maexo.test.Constants;
 import com.buschmais.osgi.maexo.test.MaexoTests;
 
 /**
+ * This class tests BundleMBean functionality.
+ * 
  * @see MaexoTests
  */
 public class BundleMBeanTest extends MaexoTests implements BundleListener {
-
-	/** Symbolic name for the testbundle. */
-	private static final String TESTBUNDLE_SYMBOLIC_NAME = "com.buschmais.osgi.maexo.test.testbundle";
 
 	/** Set containing all triggered BundleEvents. */
 	private Set<Integer> bundleEvents;
@@ -54,28 +52,6 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 				Constants.ARTIFACT_TESTBUNDLE, Constants.ARTIFACT_EASYMOCK };
 	}
 
-	/**
-	 * Returns a TestBundle from OSGI container for testing of general Bundle
-	 * functionality.
-	 * 
-	 * @return the bundle
-	 * @throws InvalidSyntaxException
-	 *             if no PackageAdmin could be found
-	 */
-	private Bundle getTestBundle() throws InvalidSyntaxException {
-		ServiceReference[] serviceReferences = this.bundleContext
-				.getServiceReferences(
-						org.osgi.service.packageadmin.PackageAdmin.class
-								.getName(), null);
-		assertTrue(serviceReferences.length == 1);
-		final org.osgi.service.packageadmin.PackageAdmin packageAdmin = (org.osgi.service.packageadmin.PackageAdmin) bundleContext
-				.getService(serviceReferences[0]);
-		Bundle[] bundles = packageAdmin.getBundles(TESTBUNDLE_SYMBOLIC_NAME,
-				"0.0.0");
-		assertTrue(bundles.length == 1);
-		Bundle bundle = bundles[0];
-		return bundle;
-	}
 
 	/**
 	 * Returns a BundleMBean for the given Bundle.
@@ -245,7 +221,7 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 		assertTrue(bundleEvents.contains(Integer.valueOf(BundleEvent.UPDATED)));
 		// test uninstall bundle
 		bundleMBean.uninstall();
-		assertTrue(bundle.getState() == Bundle.UNINSTALLED);
+		assertEquals(Bundle.UNINSTALLED, bundle.getState());
 		this.bundleContext.removeBundleListener(this);
 	}
 
