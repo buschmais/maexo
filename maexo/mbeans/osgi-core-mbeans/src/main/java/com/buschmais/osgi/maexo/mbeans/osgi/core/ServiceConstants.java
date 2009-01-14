@@ -38,7 +38,7 @@ public final class ServiceConstants {
 	}
 
 	/** MBean object name format. */
-	public static final String OBJECTNAME_FORMAT = "com.buschmais.osgi.maexo:type=Service,id=%s,name=%s,pid=%s";
+	public static final String OBJECTNAME_FORMAT = "com.buschmais.osgi.maexo:type=Service,id=%s,name=%s";
 
 	/** MBean description. */
 	public static final String MBEAN_DESCRIPTION = "Service MBean";

@@ -59,15 +59,8 @@ public final class ServiceObjectNameFactory implements ObjectNameFactory {
 			}
 			objectClassValue.append(objectClass);
 		}
-		// pid
-		String pid = (String) serviceReference
-				.getProperty(Constants.SERVICE_PID);
-		String objectName;
-		if (pid == null) {
-			pid = "none";
-		}
-		objectName = String.format(ServiceConstants.OBJECTNAME_FORMAT, id,
-				objectClassValue.toString(), pid);
+		String objectName = String.format(ServiceConstants.OBJECTNAME_FORMAT,
+				id, objectClassValue.toString());
 		try {
 			return new ObjectName(objectName);
 		} catch (Exception e) {
