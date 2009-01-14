@@ -82,20 +82,15 @@ public class MBeanLifeCycleTest extends MaexoTests {
 		serviceTracker.open();
 		// initially no StandardMBean must be registered
 		assertNull(serviceTracker.getService());
-		MBeanLifecycleSupport mbeanLifecycleSupport = new MBeanLifecycleSupport(
-				super.bundleContext) {
-		};
-		StandardMBean standardMBean = new Standard();
-		ObjectName objectName = new ObjectName(OBJECTNAME_STANDARDMBEAN);
-		// register a StandardMBean using the MBeanLifeCycleSupport
-		mbeanLifecycleSupport.registerMBeanService(StandardMBean.class,
-				objectName, standardMBean);
+		TestMBeanLifeCycle testMbeanLifeCycle = new TestMBeanLifeCycle(
+				super.bundleContext, OBJECTNAME_STANDARDMBEAN);
+		// simulate life cycle event: register a resource
+		testMbeanLifeCycle.registeredResource();
 		StandardMBean mbeanFromServiceRegistry = (StandardMBean) serviceTracker
 				.waitForService(TIMEOUT_SERVICETRACKER);
 		assertNotNull(mbeanFromServiceRegistry);
-		// unregister the StandardMBean using the MBeanLifeCycleSupport
-		mbeanLifecycleSupport.unregisterMBeanService(new ObjectName(
-				OBJECTNAME_STANDARDMBEAN));
+		// simulate life cycle event: unregister a resource
+		testMbeanLifeCycle.unregisteredResource();
 		assertNull(serviceTracker.getService());
 		serviceTracker.close();
 	}

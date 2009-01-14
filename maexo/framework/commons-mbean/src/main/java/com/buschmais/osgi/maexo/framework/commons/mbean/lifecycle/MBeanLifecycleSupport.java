@@ -31,14 +31,22 @@ import org.slf4j.LoggerFactory;
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 
 /**
- * Provides support to control the life cycle of mbeans.
- * 
- * TODO @DM document export of MBEans as services (e.g. for use by switchboard)
- * TODO add lifecycle logging
+ * Provides support to control the life cycle of MBeans.
+ * <p>
+ * This class provides support to register MBeans as OSGi services. Other
+ * bundles like the MAEXO SwitchBoard may track the life cycle of these services
+ * for registration on MBeanServer instances.
+ * <p>
+ * A derived class usually implements a life cycle listener interface (e.g.
+ * {@link org.osgi.framwork.ServiceListener}) and uses the methods
+ * {@link #registerMBeanService(Class, ObjectName, Object)} and
+ * {@link #unregisterMBeanService(ObjectName)} to control registration of MBeans
+ * in the OSGi service registry.
  */
 public abstract class MBeanLifecycleSupport {
 
-	private static final Logger logger = LoggerFactory.getLogger(MBeanLifecycleSupport.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(MBeanLifecycleSupport.class);
 
 	/**
 	 * The bundle context of the exporting bundle.
@@ -74,44 +82,58 @@ public abstract class MBeanLifecycleSupport {
 	/**
 	 * @return the objectNameFactoryHelper
 	 */
-	public final ObjectNameFactoryHelper getObjectNameHelper() {
+	protected final ObjectNameFactoryHelper getObjectNameHelper() {
 		return objectNameFactoryHelper;
 	}
 
 	/**
-	 * Registers an mbean as a service in the OSGi service registration.
+	 * Registers an MBean as a service in the OSGi service registration.
 	 * <p>
-	 * The mbean is stored under the object name for later unregistration
+	 * The MBean is registered using the interface provided by the parameter
+	 * <code>mbeanInterface</code> and will have a property named
+	 * "javax.management.ObjectName" with the value of the parameter
+	 * <code>objectName</code>.
 	 * 
 	 * @param mbeanInterface
-	 *            the interface to use for registration
+	 *            The interface for service registration.
 	 * @param objectName
-	 *            the object name
+	 *            The object name which will be be used as service property.
 	 * @param mbean
-	 *            the mbean
+	 *            The mbean instance.
 	 */
-	public final void registerMBeanService(Class<?> mbeanInterface, ObjectName objectName, Object mbean) {
+	protected final void registerMBeanService(Class<?> mbeanInterface,
+			ObjectName objectName, Object mbean) {
 		Dictionary<String, Object> serviceProperties = new Hashtable<String, Object>();
 		serviceProperties.put(ObjectName.class.getName(), objectName);
 		logger
 				.debug(
 						"registering mbean with object name '{}' as service with interface {}",
 						objectName, mbeanInterface.getName());
-		ServiceRegistration serviceRegistration = this.bundleContext.registerService(mbeanInterface.getName(), mbean, serviceProperties);
+		ServiceRegistration serviceRegistration = this.bundleContext
+				.registerService(mbeanInterface.getName(), mbean,
+						serviceProperties);
 		this.mbeanRegistrations.put(objectName, serviceRegistration);
 	}
 
 	/**
-	 * Unregisters a previously registered mbean.
+	 * Unregisters a previously registered MBean.
+	 * <p>
+	 * The MBean is identified by its object name.
 	 * 
 	 * @param objectName
-	 *            the objectName which identifies the mbean to be unregistered
+	 *            The objectName which identifies the MBean to be unregistered.
 	 */
-	public final void unregisterMBeanService(ObjectName objectName) {
+	protected final void unregisterMBeanService(ObjectName objectName) {
 		// lookup serviceRegistration
-		ServiceRegistration serviceRegistration = this.mbeanRegistrations.get(objectName);
+		ServiceRegistration serviceRegistration = this.mbeanRegistrations
+				.get(objectName);
 		if (serviceRegistration != null) {
 			// unregister service
+			if (logger.isDebugEnabled()) {
+				logger.debug(
+						"unregistering mbean service with object name '{}'",
+						objectName);
+			}
 			serviceRegistration.unregister();
 		} else {
 			logger
