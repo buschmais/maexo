@@ -92,12 +92,10 @@ public abstract class MBeanLifecycleSupport {
 			ObjectName objectName, Object mbean) {
 		Dictionary<String, Object> serviceProperties = new Hashtable<String, Object>();
 		serviceProperties.put(ObjectName.class.getName(), objectName);
-		if (logger.isDebugEnabled()) {
-			logger
-					.debug(
-							"registering mbean with object name '{}' as service with interface {}",
-							objectName, mbeanInterface.getClass().getName());
-		}
+		logger
+				.debug(
+						"registering mbean with object name '{}' as service with interface {}",
+						objectName, mbeanInterface.getName());
 		ServiceRegistration serviceRegistration = this.bundleContext
 				.registerService(mbeanInterface.getName(), mbean,
 						serviceProperties);
