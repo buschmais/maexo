@@ -18,28 +18,53 @@ package com.buschmais.osgi.maexo.test.testbundle.impl;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 
 import com.buschmais.osgi.maexo.test.testbundle.TestInterface;
 
 /**
- * OSGi bundle activator for the the platform mbeans server bundle.
+ * Implementation of a bundle that simulates common behavior like registration
+ * and import of services.
+ * <p>
+ * This bundle may be used in test implementations to verify metadata and
+ * execute lifecycle operations (e.g. start/stop/uninstall) without destroying
+ * an existing OSGi container setup.
  */
 public final class Activator implements BundleActivator {
+
+	/**
+	 * The registration of the test service.
+	 */
+	private ServiceRegistration testServiceRegistration;
+
+	/**
+	 * The imported test service reference.
+	 */
+	private ServiceReference serviceReference;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		TestInterface testInterface = new TestClass();
-		bundleContext.registerService(TestInterface.class.getName(), testInterface, null);
-		bundleContext.getService(bundleContext.getServiceReference(TestInterface.class.getName()));
+		// register an instance of the test service
+		this.testServiceRegistration = bundleContext.registerService(
+				TestInterface.class.getName(), testInterface, null);
+		// import the service
+		this.serviceReference = bundleContext
+				.getServiceReference(TestInterface.class.getName());
+		//ndleContext.getService(this.serviceReference);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
-		bundleContext.ungetService(bundleContext.getServiceReference(TestInterface.class.getName()));
+		// unget the service
+		bundleContext.ungetService(this.serviceReference);
+		// unregister the test service
+		this.testServiceRegistration.unregister();
 	}
 
 }
