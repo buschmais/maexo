@@ -16,4 +16,5 @@
 # limitations under the License
 
 echo Starting Equinox, enter "close" to exit
-java -jar org.eclipse.osgi-${equinox.version}.jar -console
+java -Dcom.sun.management.jmxremote -jar org.eclipse.osgi-${equinox.version}.jar -console
+
