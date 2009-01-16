@@ -19,8 +19,6 @@ package com.buschmais.osgi.maexo.mbeans.osgi.core;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.management.JMException;
-import javax.management.MBeanException;
 import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.MBeanRegistration;
@@ -139,7 +137,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public Integer getBundleType(ObjectName objectName) {
-		Long id = resolveId(objectName);
+		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
 		return this.getBundleType(id);
 	}
 
@@ -194,7 +192,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public TabularData getExportedPackages(ObjectName objectName) {
-		Long id = resolveId(objectName);
+		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
 		return this.getExportedPackages(id);
 	}
 
@@ -225,7 +223,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public ObjectName[] getFragments(ObjectName objectName) {
-		Long id = resolveId(objectName);
+		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
 		return this.getFragments(id);
 	}
 
@@ -245,7 +243,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public ObjectName[] getHosts(ObjectName objectName) {
-		Long id = resolveId(objectName);
+		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
 		return this.getHosts(id);
 	}
 
@@ -300,7 +298,8 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	public void refreshPackages(ObjectName[] objectNames) {
 		Long[] ids = new Long[objectNames.length];
 		for (int i = 0; i < objectNames.length; i++) {
-			ids[i] = resolveId(objectNames[i]);
+			ids[i] = (Long) getAttribute(objectNames[i], BundleConstants.ID
+					.getName());
 		}
 		this.refreshPackages(ids);
 	}
@@ -338,7 +337,8 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	public Boolean resolveBundles(ObjectName[] objectNames) {
 		Long[] ids = new Long[objectNames.length];
 		for (int i = 0; i < objectNames.length; i++) {
-			ids[i] = resolveId(objectNames[i]);
+			ids[i] = (Long) getAttribute(objectNames[i], BundleConstants.ID
+					.getName());
 		}
 		return this.resolveBundles(ids);
 	}
@@ -438,27 +438,4 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 		}
 		return objectNames;
 	}
-
-	/**
-	 * Resolves id for object represented by given object name.
-	 * 
-	 * @param objectName
-	 *            object name to be resolved
-	 * @return resolved id
-	 */
-	private Long resolveId(ObjectName objectName) {
-		Long id;
-		try {
-			id = (Long) super.getMbeanServer().getAttribute(objectName,
-					BundleConstants.ID.getName());
-		} catch (MBeanException e) {
-			throw new RuntimeException(e.getTargetException().toString());
-		} catch (JMException e) {
-			throw new IllegalArgumentException(String.format(
-					"cannot get attribute %s from mbean %s", BundleConstants.ID
-							.getName(), objectName), e);
-		}
-		return id;
-	}
-
 }

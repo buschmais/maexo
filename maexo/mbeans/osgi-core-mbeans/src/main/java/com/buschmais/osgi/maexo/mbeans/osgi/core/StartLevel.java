@@ -83,12 +83,7 @@ public final class StartLevel extends DynamicMBeanSupport implements StartLevelM
 	 * {@inheritDoc}
 	 */
 	public Integer getBundleStartLevel(ObjectName objectName) {
-		Long id;
-		try {
-			id = (Long) super.getMbeanServer().getAttribute(objectName, BundleConstants.ID.getName());
-		} catch (Exception e) {
-			throw new RuntimeException(String.format("cannot get attribute %s from mbean %s", BundleConstants.ID.getName(), objectName), e);
-		}
+		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
 		return this.getBundleStartLevel(id);
 	}
 
@@ -97,6 +92,10 @@ public final class StartLevel extends DynamicMBeanSupport implements StartLevelM
 	 */
 	public Integer getBundleStartLevel(Long id) {
 		Bundle bundle = this.bundleContext.getBundle(id.longValue());
+		if (null == bundle) {
+			throw new IllegalArgumentException(String.format(
+					"cannot get bundle for id %s", id));
+		}
 		return Integer.valueOf(this.startLevel.getBundleStartLevel(bundle));
 	}
 
@@ -118,12 +117,7 @@ public final class StartLevel extends DynamicMBeanSupport implements StartLevelM
 	 * {@inheritDoc}
 	 */
 	public Boolean isBundlePersistentlyStarted(ObjectName objectName) {
-		Long id;
-		try {
-			id = (Long) super.getMbeanServer().getAttribute(objectName, BundleConstants.ID.getName());
-		} catch (Exception e) {
-			throw new RuntimeException(String.format("cannot get attribute %s from mbean %s", BundleConstants.ID.getName(), objectName), e);
-		}
+		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
 		return this.isBundlePersistentlyStarted(id);
 	}
 
@@ -132,6 +126,10 @@ public final class StartLevel extends DynamicMBeanSupport implements StartLevelM
 	 */
 	public Boolean isBundlePersistentlyStarted(Long id) {
 		Bundle bundle = this.bundleContext.getBundle(id.longValue());
+		if (null == bundle) {
+			throw new IllegalArgumentException(String.format(
+					"cannot get bundle for id %s", id));
+		}
 		return Boolean.valueOf(this.startLevel.isBundlePersistentlyStarted(bundle));
 	}
 
@@ -139,12 +137,7 @@ public final class StartLevel extends DynamicMBeanSupport implements StartLevelM
 	 * {@inheritDoc}
 	 */
 	public void setBundleStartLevel(ObjectName objectName, Integer startLevel) {
-		Long id;
-		try {
-			id = (Long) super.getMbeanServer().getAttribute(objectName, BundleConstants.ID.getName());
-		} catch (Exception e) {
-			throw new RuntimeException(String.format("cannot get attribute %s from mbean %s", BundleConstants.ID.getName(), objectName), e);
-		}
+		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
 		this.setBundleStartLevel(id, startLevel);
 	}
 
@@ -153,6 +146,10 @@ public final class StartLevel extends DynamicMBeanSupport implements StartLevelM
 	 */
 	public void setBundleStartLevel(Long id, Integer startLevel) {
 		Bundle bundle = this.bundleContext.getBundle(id.longValue());
+		if (null == bundle) {
+			throw new IllegalArgumentException(String.format(
+					"cannot get bundle for id %s", id));
+		}
 		this.startLevel.setBundleStartLevel(bundle, startLevel.intValue());
 	}
 

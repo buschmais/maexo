@@ -27,6 +27,7 @@ import javax.management.AttributeList;
 import javax.management.AttributeNotFoundException;
 import javax.management.DynamicMBean;
 import javax.management.InvalidAttributeValueException;
+import javax.management.JMException;
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanException;
 import javax.management.MBeanRegistration;
@@ -270,5 +271,30 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 	 */
 	protected final MBeanServer getMbeanServer() {
 		return mbeanServer;
+	}
+	
+    /**
+	 * Gets the value of a specific attribute of a named MBean. The MBean is
+	 * identified by its object name.
+	 * 
+	 * @param objectName
+	 *            The object name of the MBean from which the attribute is to be
+	 *            retrieved.
+	 * @param attribute
+	 *            A String specifying the name of the attribute to be retrieved.
+	 * 
+	 * @return The value of the retrieved attribute.
+	 */
+	protected final Object getAttribute(ObjectName objectName, String attribute) {
+		try {
+			return getMbeanServer().getAttribute(objectName, attribute);
+		} catch (MBeanException e) {
+			throw new RuntimeException(e.getTargetException().toString());
+		} catch (JMException e) {
+			throw new IllegalArgumentException(String.format(
+					"cannot get attribute %s from mbean %s", attribute,
+					objectName),
+					e);
+		}
 	}
 }
