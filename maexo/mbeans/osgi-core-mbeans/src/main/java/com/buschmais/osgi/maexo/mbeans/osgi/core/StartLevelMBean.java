@@ -21,7 +21,7 @@ import javax.management.ObjectName;
 /**
  * Management interface for the OSGI start level service.
  * 
- * @see org.osgi.framework.Bundle
+ * @see org.osgi.service.startlevel.StartLevel
  */
 public interface StartLevelMBean {
 

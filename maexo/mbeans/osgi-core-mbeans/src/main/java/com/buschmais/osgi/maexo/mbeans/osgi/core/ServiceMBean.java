@@ -22,7 +22,7 @@ import javax.management.openmbean.TabularData;
 /**
  * Management interface for an OSGI service.
  * 
- * @see org.osgi.framework.Bundle
+ * @see org.osgi.framework.ServiceReference
  */
 public interface ServiceMBean {
 

@@ -22,7 +22,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.DefaultServiceMBeanLifeCycleSupport;
-import com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdmin;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.PackageAdmin;
 
 /**
  * This class implements a service event listener which tracks the life cycle of

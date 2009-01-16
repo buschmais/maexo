@@ -22,6 +22,8 @@ import javax.management.openmbean.TabularData;
 
 /**
  * Management interface for the OSGI package admin service.
+ * 
+ * @see org.osgi.service.PackageAdmin
  */
 public interface PackageAdminMBean {
 

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.osgi.maexo.mbeans.osgi.core;
+package com.buschmais.osgi.maexo.mbeans.osgi.core.impl;
 
 import javax.management.DynamicMBean;
 import javax.management.MBeanInfo;
@@ -29,6 +29,9 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleConstants;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelConstants;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelMBean;
 
 /**
  * Represents the OSGi start level service.

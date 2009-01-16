@@ -160,18 +160,18 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 		// compare name
 		final String exportedPackageName = exportedPackage.getName();
 		final String compositeDataName = (String) exportedPackageCompositeData
-				.get(PackageAdminConstants.EXPORTED_PACKAGE_PROPERTY_NAME);
+				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_NAME);
 		assertEquals(exportedPackageName, compositeDataName);
 		// compare exporting bundle by objectName
 		final Bundle exportingBundle = exportedPackage.getExportingBundle();
 		final ObjectName compositeDataExportingBundle = (ObjectName) exportedPackageCompositeData
-				.get(PackageAdminConstants.EXPORTED_PACKAGE_PROPERTY_EXPORTING_BUNDLE);
+				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_EXPORTINGBUNDLE);
 		assertEquals(objectNameFactoryHelper.getObjectName(exportingBundle,
 				Bundle.class), compositeDataExportingBundle);
 		// compare importing bundles by objectName
 		final Bundle[] importingBundles = exportedPackage.getImportingBundles();
 		final ObjectName[] compositeDataImportingBundles = (ObjectName[]) exportedPackageCompositeData
-				.get(PackageAdminConstants.EXPORTED_PACKAGE_PROPERTY_IMPORTING_BUNDLE);
+				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_IMPORTINGBUNDLE);
 		for (int i = 0; i < importingBundles.length; i++) {
 			assertEquals(objectNameFactoryHelper.getObjectName(
 					importingBundles[i], Bundle.class),
@@ -181,19 +181,19 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 		final String exportedPackageSpecificationVersion = exportedPackage
 				.getSpecificationVersion();
 		final String compositeDateSpecificationVersion = (String) exportedPackageCompositeData
-				.get(PackageAdminConstants.EXPORTED_PACKAGE_PROPERTY_SPECIFICATION_VERSION);
+				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_SPECIFICATIONVERSION);
 		assertEquals(exportedPackageSpecificationVersion,
 				compositeDateSpecificationVersion);
 		// compare version
 		final Version exportedPackageVersion = exportedPackage.getVersion();
 		final String compositeDataVersion = (String) exportedPackageCompositeData
-				.get(PackageAdminConstants.EXPORTED_PACKAGE_PROPERTY_VERSION);
+				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_VERSION);
 		assertEquals(exportedPackageVersion.toString(), compositeDataVersion);
 		// compare isRemovalPending
 		final boolean exportedPackageRemovalPending = exportedPackage
 				.isRemovalPending();
 		final Boolean compositeDateRemovalPending = (Boolean) exportedPackageCompositeData
-				.get(PackageAdminConstants.EXPORTED_PACKAGE_PROPERTY_REMOVAL_PENDING);
+				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_REMOVALPENDING);
 		assertEquals(compositeDateRemovalPending, Boolean
 				.valueOf(exportedPackageRemovalPending));
 	}
@@ -218,30 +218,30 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 		final String requiredBundleSymbolicName = requiredBundle
 				.getSymbolicName();
 		final String compositeDataSymbolicName = (String) requiredBundleCompositeData
-				.get(PackageAdminConstants.REQUIRED_BUNDLE_PROPERTY_SYMBOLIC_NAME);
+				.get(PackageAdminConstants.REQUIREDBUNDLE_ITEM_SYMBOLICNAME);
 		assertEquals(requiredBundleSymbolicName, compositeDataSymbolicName);
 		// compare bundle
 		final Bundle bundle = requiredBundle.getBundle();
 		final ObjectName compositeDataBundleObjectName = (ObjectName) requiredBundleCompositeData
-				.get(PackageAdminConstants.REQUIRED_BUNDLE_PROPERTY_BUNDLE);
+				.get(PackageAdminConstants.REQUIREDBUNDLE_ITEM_BUNDLE);
 		ObjectName bundleObjectName = objectNameFactoryHelper.getObjectName(
 				bundle, Bundle.class);
 		assertEquals(bundleObjectName, compositeDataBundleObjectName);
 		// compare version
 		final Version bundleVersion = requiredBundle.getVersion();
 		final String compositeDataVersion = (String) requiredBundleCompositeData
-				.get(PackageAdminConstants.REQUIRED_BUNDLE_PROPERTY_VERSION);
+				.get(PackageAdminConstants.REQUIREDBUNDLE_ITEM_VERSION);
 		assertEquals(bundleVersion.toString(), compositeDataVersion);
 		// compare isRemovalPending
 		final Boolean removalPending = Boolean.valueOf(requiredBundle
 				.isRemovalPending());
 		final Boolean compositeDataRemovalPending = (Boolean) requiredBundleCompositeData
-				.get(PackageAdminConstants.REQUIRED_BUNDLE_PROPERTY_REMOVAL_PENDING);
+				.get(PackageAdminConstants.REQUIREDBUNDLE_ITEM_REMOVALPENDING);
 		assertEquals(removalPending, compositeDataRemovalPending);
 		// compare requiring bundles
 		final Bundle[] requiringBundles = requiredBundle.getRequiringBundles();
 		final ObjectName[] compositeDataRequiringBundlesObjectNames = (ObjectName[]) requiredBundleCompositeData
-				.get(PackageAdminConstants.REQUIRED_BUNDLE_PROPERTY_REQUIRING_BUNDLES);
+				.get(PackageAdminConstants.REQUIREDBUNDLE_ITEM_REQUIRINGBUNDLES);
 		for (int i = 0; i < requiringBundles.length; i++) {
 			ObjectName requiringBundleObjectname = objectNameFactoryHelper
 					.getObjectName(requiringBundles[i], Bundle.class);

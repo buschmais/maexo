@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.osgi.maexo.mbeans.osgi.core;
+package com.buschmais.osgi.maexo.mbeans.osgi.core.impl;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -40,6 +40,8 @@ import org.osgi.framework.ServiceReference;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.ServiceConstants;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.ServiceMBean;
 
 /**
  * Represents a registered service (wrapping a service reference).
@@ -81,8 +83,8 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[] {
 				ServiceConstants.BUNDLE, ServiceConstants.DESCRIPTION,
 				ServiceConstants.ID, ServiceConstants.OBJECTCLASS,
-				ServiceConstants.PID, ServiceConstants.PROPERTYTYPE,
-				ServiceConstants.RANKING, ServiceConstants.USING_BUNDLES,
+				ServiceConstants.PID, ServiceConstants.PROPERTIES,
+				ServiceConstants.RANKING, ServiceConstants.USINGBUNDLES,
 				ServiceConstants.VENDOR };
 
 		OpenMBeanOperationInfoSupport[] mbeanOperationInfos = new OpenMBeanOperationInfoSupport[] {};
@@ -146,7 +148,8 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 			String stringRepresentation = null;
 			if (value != null) {
 				if (value.getClass().isArray()) {
-					stringRepresentation = Arrays.deepToString((Object[]) value);
+					stringRepresentation = Arrays
+							.deepToString((Object[]) value);
 				} else {
 					stringRepresentation = value.toString();
 				}
@@ -154,8 +157,8 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 			try {
 				CompositeDataSupport row = new CompositeDataSupport(
 						ServiceConstants.PROPERTIES_ROW_TYPE,
-						ServiceConstants.ITEM_NAMES, new Object[] { key,
-								stringRepresentation });
+						ServiceConstants.SERVICEPROPERTY_ITEMS.toArray(new String[0]),
+						new Object[] { key, stringRepresentation });
 				tabularProperties.put(row);
 			} catch (OpenDataException e) {
 				throw new IllegalStateException(e);

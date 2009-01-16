@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.osgi.maexo.mbeans.osgi.core;
+package com.buschmais.osgi.maexo.mbeans.osgi.core.impl;
 
 import java.net.URL;
 import java.util.Date;
@@ -43,6 +43,8 @@ import org.osgi.framework.ServiceReference;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleConstants;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleMBean;
 
 /**
  * Represents an OSGi bundle.
@@ -87,11 +89,11 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	 */
 	public Bundle(BundleContext bundleContext, org.osgi.framework.Bundle bundle) {
 		this.bundle = bundle;
-		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(bundleContext);
+		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(
+				bundleContext);
 	}
 
-
-	/** 
+	/**
 	 * {@inheritDoc}
 	 */
 	public MBeanInfo getMBeanInfo() {
@@ -155,13 +157,13 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 				.getRegisteredServices();
 		if (registeredServices != null) {
 			for (ServiceReference registeredService : registeredServices) {
-				registeredServicesList.add(this.objectNameFactoryHelper.getObjectName(
-						registeredService, ServiceReference.class));
+				registeredServicesList.add(this.objectNameFactoryHelper
+						.getObjectName(registeredService,
+								ServiceReference.class));
 			}
 		}
 		return registeredServicesList.toArray(new ObjectName[0]);
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -177,8 +179,9 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 			String value = headers.get(key);
 			try {
 				CompositeDataSupport header = new CompositeDataSupport(
-						BundleConstants.HEADER_TYPE,
-						BundleConstants.ITEM_NAMES, new Object[] { key, value });
+						BundleConstants.HEADER_TYPE, BundleConstants.HEADER_ITEMS
+								.toArray(new String[0]), new Object[] { key,
+								value });
 				tabularHeaders.put(header);
 			} catch (Exception e) {
 				throw new IllegalStateException(e);
@@ -187,7 +190,6 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		}
 		return tabularHeaders;
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -200,18 +202,16 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	public void stop() {
-		 try {
+		try {
 			this.bundle.stop();
 		} catch (BundleException e) {
 			throw new RuntimeException(e.toString());
 		}
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -224,7 +224,6 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -235,7 +234,6 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 			throw new RuntimeException(e.toString());
 		}
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -249,14 +247,12 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	public Long getLastModified() {
 		return Long.valueOf(this.bundle.getLastModified());
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -265,14 +261,12 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 		return new Date(this.bundle.getLastModified());
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	public String getLocation() {
 		return this.bundle.getLocation();
 	}
-
 
 	/**
 	 * {@inheritDoc}

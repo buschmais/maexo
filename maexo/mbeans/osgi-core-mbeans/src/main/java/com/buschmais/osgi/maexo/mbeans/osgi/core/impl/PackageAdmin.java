@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.osgi.maexo.mbeans.osgi.core;
+package com.buschmais.osgi.maexo.mbeans.osgi.core.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +40,9 @@ import org.osgi.service.packageadmin.RequiredBundle;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.BundleConstants;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminConstants;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.PackageAdminMBean;
 
 /**
  * Represents the OSGi package admin service.
@@ -171,8 +174,8 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public ObjectName[] getBundles(String symbolicName, String versionRange) {
-		Bundle[] bundles = this.packageAdmin.getBundles(
-				symbolicName, versionRange);
+		Bundle[] bundles = this.packageAdmin.getBundles(symbolicName,
+				versionRange);
 		if (bundles == null) {
 			return null;
 		}
@@ -274,8 +277,8 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 			try {
 				tabularData.put(new CompositeDataSupport(
 						PackageAdminConstants.REQUIRED_BUNDLE_TYPE,
-						PackageAdminConstants.REQUIREDBUNDLE_ITEM_NAMES,
-						new Object[] {
+						PackageAdminConstants.REQUIRED_BUNDLE_ITEMS
+								.toArray(new String[0]), new Object[] {
 								this.objectNameFactoryHelper.getObjectName(
 										requiredBundle.getBundle(),
 										Bundle.class),
@@ -404,7 +407,8 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 		try {
 			return new CompositeDataSupport(
 					PackageAdminConstants.EXPORTED_PACKAGE_TYPE,
-					PackageAdminConstants.EXPORTEDPACKAGE_ITEM_NAMES,
+					PackageAdminConstants.EXPORTED_PACKAGE_ITEMS
+							.toArray(new String[0]),
 					new Object[] {
 							this.objectNameFactoryHelper.getObjectName(
 									exportedPackage.getExportingBundle(),

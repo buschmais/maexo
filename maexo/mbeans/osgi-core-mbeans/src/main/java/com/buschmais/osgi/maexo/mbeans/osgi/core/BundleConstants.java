@@ -16,6 +16,9 @@
  */
 package com.buschmais.osgi.maexo.mbeans.osgi.core;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.management.openmbean.CompositeType;
 import javax.management.openmbean.OpenMBeanAttributeInfoSupport;
 import javax.management.openmbean.OpenMBeanOperationInfoSupport;
@@ -62,19 +65,30 @@ public final class BundleConstants {
 			"An element of UNINSTALLED,INSTALLED,RESOLVED,STARTING,STOPPING,ACTIVE.",
 			SimpleType.STRING, true, false, false);
 
-	// package visible as the array content can still be changed
-	/** Item names. */
-	static final String[] ITEM_NAMES = new String[] { "name", "value" };
-	
+	/** Constant name */
+	public static final String HEADER_ITEM_NAME = "name";
+
+	/** Constant value */
+	public static final String HEADER_ITEM_VALUE = "value";
+
+	/** Header properties. */
+	public static final List<String> HEADER_ITEMS = Arrays.asList(new String[] {
+			HEADER_ITEM_NAME, HEADER_ITEM_VALUE });
+
 	/** CompositeType: headerType. */
-	public static final CompositeType HEADER_TYPE = OpenTypeFactory.createCompositeType(
-			"headerEntry", "bundle header entry", ITEM_NAMES, ITEM_NAMES,
-			new OpenType[] { SimpleType.STRING, SimpleType.STRING });
+	public static final CompositeType HEADER_TYPE = OpenTypeFactory
+			.createCompositeType("headerEntry", "bundle header entry",
+					HEADER_ITEMS.toArray(new String[0]), HEADER_ITEMS
+							.toArray(new String[0]), new OpenType[] {
+							SimpleType.STRING, SimpleType.STRING });
 
 	/** TabularType: headersType. */
-	public static final TabularType HEADERS_TYPE = OpenTypeFactory.createTabularType("headers",
-			"TabularType representing a bundle's Manifest headers and values.",
-			HEADER_TYPE, new String[] { "name" });
+	public static final TabularType HEADERS_TYPE = OpenTypeFactory
+			.createTabularType(
+					"headers",
+					"TabularType representing a bundle's Manifest headers and values.",
+					HEADER_TYPE, new String[] { "name" });
+
 	/** Attribute: headers. */
 	public static final OpenMBeanAttributeInfoSupport HEADER = new OpenMBeanAttributeInfoSupport(
 			"headers",
@@ -102,13 +116,15 @@ public final class BundleConstants {
 	public static final OpenMBeanAttributeInfoSupport REGISTEREDSERVICES = new OpenMBeanAttributeInfoSupport(
 			"registeredServices",
 			"This bundle's ObjectName list for all services it has registered or null if this bundle has no registered services.",
-			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME), true, false, false);
+			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME), true,
+			false, false);
 
 	/** Attribute: servicesInUse. */
 	public static final OpenMBeanAttributeInfoSupport SERVICESINUSE = new OpenMBeanAttributeInfoSupport(
 			"servicesInUse",
 			"This bundle's ObjectName list for all services it is using or returns null if this bundle is not using any services.",
-			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME), true, false, false);
+			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME), true,
+			false, false);
 
 	/** Operation: start. */
 	public static final OpenMBeanOperationInfoSupport START = new OpenMBeanOperationInfoSupport(
@@ -128,8 +144,9 @@ public final class BundleConstants {
 			OpenMBeanOperationInfoSupport.ACTION_INFO);
 
 	/** Operation: uninstall. */
-	public static final OpenMBeanOperationInfoSupport UNINSTALL = new OpenMBeanOperationInfoSupport("uninstall",
-			"Uninstall the bundle", new OpenMBeanParameterInfoSupport[] {}, SimpleType.VOID,
+	public static final OpenMBeanOperationInfoSupport UNINSTALL = new OpenMBeanOperationInfoSupport(
+			"uninstall", "Uninstall the bundle",
+			new OpenMBeanParameterInfoSupport[] {}, SimpleType.VOID,
 			OpenMBeanOperationInfoSupport.ACTION_INFO);
 
 	/** Operation: update from url. */

@@ -23,7 +23,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLifeCycleSupport;
-import com.buschmais.osgi.maexo.mbeans.osgi.core.Service;
+import com.buschmais.osgi.maexo.mbeans.osgi.core.impl.Service;
 
 /**
  * 
