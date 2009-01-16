@@ -311,6 +311,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	public void refreshPackages(Long[] ids) {
 		if (null == ids) {
 			refreshPackages();
+			return;
 		}
 		Bundle[] bundles = new Bundle[ids.length];
 		for (int i = 0; i < ids.length; i++) {
