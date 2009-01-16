@@ -43,17 +43,58 @@ public final class PackageAdminConstants {
 
 	/** MBean description. */
 	public static final String MBEAN_DESCRIPTION = "PackageAdmin MBean";
+	
+	/** Constant exportingBundle. */
+	public static final String EXPORTED_PACKAGE_PROPERTY_EXPORTING_BUNDLE = "exportingBundle"; 
 
+	/** Constant importingBundle. */
+	public static final String EXPORTED_PACKAGE_PROPERTY_IMPORTING_BUNDLE = "importingBundle";
+
+	/** Constant name. */
+	public static final String EXPORTED_PACKAGE_PROPERTY_NAME = "name";
+
+	/** Constant specificationVersion. */
+	public static final String EXPORTED_PACKAGE_PROPERTY_SPECIFICATION_VERSION = "specificationVersion";
+
+	/** Constant version. */
+	public static final String EXPORTED_PACKAGE_PROPERTY_VERSION = "version";
+
+	/** Constant removalPending. */
+	public static final String EXPORTED_PACKAGE_PROPERTY_REMOVAL_PENDING = "removalPending"; 
+	
+	/** Constant bundle. */
+	public static final String REQUIRED_BUNDLE_PROPERTY_BUNDLE = "bundle";
+
+	/** Constant removalPending. */
+	public static final String REQUIRED_BUNDLE_PROPERTY_REQUIRING_BUNDLES = "requiringBundles";
+
+	/** Constant symbolicName. */
+	public static final String REQUIRED_BUNDLE_PROPERTY_SYMBOLIC_NAME = "symbolicName";
+
+	/** Constant version. */
+	public static final String REQUIRED_BUNDLE_PROPERTY_VERSION = "version";
+
+	/** Constant removalPending. */
+	public static final String REQUIRED_BUNDLE_PROPERTY_REMOVAL_PENDING = "removalPending"; 
+	
 	// package visible as the array content can still be changed
 	/** Exported package item names. */
-	static final String[] EXPORTEDPACKAGE_ITEM_NAMES = new String[] { "exportingBundle", "importingBundle",
-			"name", "specificationVersion", "version",
-			"removalPending" };
+	static final String[] EXPORTEDPACKAGE_ITEM_NAMES = new String[] {
+			EXPORTED_PACKAGE_PROPERTY_EXPORTING_BUNDLE,
+			EXPORTED_PACKAGE_PROPERTY_IMPORTING_BUNDLE,
+			EXPORTED_PACKAGE_PROPERTY_NAME,
+			EXPORTED_PACKAGE_PROPERTY_SPECIFICATION_VERSION,
+			EXPORTED_PACKAGE_PROPERTY_VERSION,
+			EXPORTED_PACKAGE_PROPERTY_REMOVAL_PENDING };
 
 	// package visible as the array content can still be changed
 	/** Required bundle item names. */
-	static final String[] REQUIREDBUNDLE_ITEM_NAMES = new String[] { "bundle", "requiringBundles",
-			"symbolicName", "version", "removalPending" };
+	static final String[] REQUIREDBUNDLE_ITEM_NAMES = new String[] {
+			REQUIRED_BUNDLE_PROPERTY_BUNDLE,
+			REQUIRED_BUNDLE_PROPERTY_REQUIRING_BUNDLES,
+			REQUIRED_BUNDLE_PROPERTY_SYMBOLIC_NAME,
+			REQUIRED_BUNDLE_PROPERTY_VERSION,
+			REQUIRED_BUNDLE_PROPERTY_REMOVAL_PENDING };
 
 	/** CompositeType: exportedPackageType. */
 	public static final CompositeType EXPORTED_PACKAGE_TYPE = OpenTypeFactory.createCompositeType("exportedPackage",

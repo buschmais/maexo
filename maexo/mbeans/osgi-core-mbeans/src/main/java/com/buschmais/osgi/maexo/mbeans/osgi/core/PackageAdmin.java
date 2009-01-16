@@ -19,6 +19,8 @@ package com.buschmais.osgi.maexo.mbeans.osgi.core;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.management.JMException;
+import javax.management.MBeanException;
 import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.MBeanRegistration;
@@ -137,15 +139,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public Integer getBundleType(ObjectName objectName) {
-		Long id;
-		try {
-			id = (Long) super.getMbeanServer().getAttribute(objectName,
-					BundleConstants.ID.getName());
-		} catch (Exception e) {
-			throw new RuntimeException(String.format(
-					"cannot get attribute %s from mbean %s", BundleConstants.ID
-							.getName(), objectName), e);
-		}
+		Long id = resolveId(objectName);
 		return this.getBundleType(id);
 	}
 
@@ -153,8 +147,11 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public Integer getBundleType(Long id) {
-		org.osgi.framework.Bundle bundle = this.bundleContext.getBundle(id
-				.longValue());
+		Bundle bundle = this.bundleContext.getBundle(id.longValue());
+		if (null == bundle) {
+			throw new IllegalArgumentException(String.format(
+					"cannot get bundle for id %s", id));
+		}
 		return Integer.valueOf(this.packageAdmin.getBundleType(bundle));
 	}
 
@@ -176,7 +173,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public ObjectName[] getBundles(String symbolicName, String versionRange) {
-		org.osgi.framework.Bundle[] bundles = this.packageAdmin.getBundles(
+		Bundle[] bundles = this.packageAdmin.getBundles(
 				symbolicName, versionRange);
 		if (bundles == null) {
 			return null;
@@ -197,15 +194,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public TabularData getExportedPackages(ObjectName objectName) {
-		Long id;
-		try {
-			id = (Long) super.getMbeanServer().getAttribute(objectName,
-					BundleConstants.ID.getName());
-		} catch (Exception e) {
-			throw new RuntimeException(String.format(
-					"cannot get attribute %s from mbean %s", BundleConstants.ID
-							.getName(), objectName), e);
-		}
+		Long id = resolveId(objectName);
 		return this.getExportedPackages(id);
 	}
 
@@ -214,6 +203,10 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 */
 	public TabularData getExportedPackages(Long id) {
 		Bundle bundle = this.bundleContext.getBundle(id.longValue());
+		if (null == bundle) {
+			throw new IllegalArgumentException(String.format(
+					"cannot get bundle for id %s", id));
+		}
 		ExportedPackage[] exportedPackages = this.packageAdmin
 				.getExportedPackages(bundle);
 		return this.convertExportedPackages(exportedPackages);
@@ -232,15 +225,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public ObjectName[] getFragments(ObjectName objectName) {
-		Long id;
-		try {
-			id = (Long) super.getMbeanServer().getAttribute(objectName,
-					BundleConstants.ID.getName());
-		} catch (Exception e) {
-			throw new RuntimeException(String.format(
-					"cannot get attribute %s from mbean %s", BundleConstants.ID
-							.getName(), objectName), e);
-		}
+		Long id = resolveId(objectName);
 		return this.getFragments(id);
 	}
 
@@ -249,6 +234,10 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 */
 	public ObjectName[] getFragments(Long id) {
 		Bundle bundle = this.bundleContext.getBundle(id.longValue());
+		if (null == bundle) {
+			throw new IllegalArgumentException(String.format(
+					"cannot get bundle for id %s", id));
+		}
 		return this.getObjectNames(this.packageAdmin.getFragments(bundle));
 	}
 
@@ -256,15 +245,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public ObjectName[] getHosts(ObjectName objectName) {
-		Long id;
-		try {
-			id = (Long) super.getMbeanServer().getAttribute(objectName,
-					BundleConstants.ID.getName());
-		} catch (Exception e) {
-			throw new RuntimeException(String.format(
-					"cannot get attribute %s from mbean %s", BundleConstants.ID
-							.getName(), objectName), e);
-		}
+		Long id = resolveId(objectName);
 		return this.getHosts(id);
 	}
 
@@ -273,6 +254,10 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 */
 	public ObjectName[] getHosts(Long id) {
 		Bundle bundle = this.bundleContext.getBundle(id.longValue());
+		if (null == bundle) {
+			throw new IllegalArgumentException(String.format(
+					"cannot get bundle for id %s", id));
+		}
 		return this.getObjectNames(this.packageAdmin.getHosts(bundle));
 	}
 
@@ -315,14 +300,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	public void refreshPackages(ObjectName[] objectNames) {
 		Long[] ids = new Long[objectNames.length];
 		for (int i = 0; i < objectNames.length; i++) {
-			try {
-				ids[i] = (Long) super.getMbeanServer().getAttribute(
-						objectNames[i], BundleConstants.ID.getName());
-			} catch (Exception e) {
-				throw new RuntimeException(String.format(
-						"cannot get attribute %s from mbean %s",
-						BundleConstants.ID.getName(), objectNames[i]), e);
-			}
+			ids[i] = resolveId(objectNames[i]);
 		}
 		this.refreshPackages(ids);
 	}
@@ -331,9 +309,17 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public void refreshPackages(Long[] ids) {
+		if (null == ids) {
+			refreshPackages();
+		}
 		Bundle[] bundles = new Bundle[ids.length];
 		for (int i = 0; i < ids.length; i++) {
-			bundles[i] = this.bundleContext.getBundle(ids[i].longValue());
+			Bundle bundle = this.bundleContext.getBundle(ids[i].longValue());
+			if (null == bundle) {
+				throw new IllegalArgumentException(String.format(
+						"cannot get bundle for id %s", ids[i]));
+			}
+			bundles[i] = bundle;
 		}
 		this.packageAdmin.refreshPackages(bundles);
 	}
@@ -351,14 +337,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	public Boolean resolveBundles(ObjectName[] objectNames) {
 		Long[] ids = new Long[objectNames.length];
 		for (int i = 0; i < objectNames.length; i++) {
-			try {
-				ids[i] = (Long) super.getMbeanServer().getAttribute(
-						objectNames[i], BundleConstants.ID.getName());
-			} catch (Exception e) {
-				throw new RuntimeException(String.format(
-						"cannot get attribute %s from mbean %s",
-						BundleConstants.ID.getName(), objectNames[i]), e);
-			}
+			ids[i] = resolveId(objectNames[i]);
 		}
 		return this.resolveBundles(ids);
 	}
@@ -367,9 +346,17 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public Boolean resolveBundles(Long[] ids) {
+		if (null == ids) {
+			return resolveBundles();
+		}
 		Bundle[] bundles = new Bundle[ids.length];
 		for (int i = 0; i < ids.length; i++) {
-			bundles[i] = this.bundleContext.getBundle(ids[i].longValue());
+			Bundle bundle = this.bundleContext.getBundle(ids[i].longValue());
+			if (null == bundle) {
+				throw new IllegalArgumentException(String.format(
+						"cannot get bundle for id %s", ids[i]));
+			}
+			bundles[i] = bundle;
 		}
 		return Boolean.valueOf(this.packageAdmin.resolveBundles(bundles));
 	}
@@ -386,10 +373,13 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * 
 	 * @param exportedPackages
 	 *            the exported packages
-	 * @return the tabular data
+	 * @return the tabular data or null if the exported packages are null
 	 */
 	private TabularData convertExportedPackages(
 			ExportedPackage[] exportedPackages) {
+		if (null == exportedPackages) {
+			return null;
+		}
 		TabularData tabularData = new TabularDataSupport(
 				PackageAdminConstants.EXPORTED_PACKAGES_TYPE);
 		for (ExportedPackage exportedPackage : exportedPackages) {
@@ -403,10 +393,13 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * 
 	 * @param exportedPackage
 	 *            the exported package
-	 * @return the composite data
+	 * @return the composite data or null if the exported package is null
 	 */
 	@SuppressWarnings("deprecation")
 	private CompositeData convertExportedPackage(ExportedPackage exportedPackage) {
+		if (null == exportedPackage) {
+			return null;
+		}
 		try {
 			return new CompositeDataSupport(
 					PackageAdminConstants.EXPORTED_PACKAGE_TYPE,
@@ -444,4 +437,27 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 		}
 		return objectNames;
 	}
+
+	/**
+	 * Resolves id for object represented by given object name.
+	 * 
+	 * @param objectName
+	 *            object name to be resolved
+	 * @return resolved id
+	 */
+	private Long resolveId(ObjectName objectName) {
+		Long id;
+		try {
+			id = (Long) super.getMbeanServer().getAttribute(objectName,
+					BundleConstants.ID.getName());
+		} catch (MBeanException e) {
+			throw new RuntimeException(e.getTargetException().toString());
+		} catch (JMException e) {
+			throw new IllegalArgumentException(String.format(
+					"cannot get attribute %s from mbean %s", BundleConstants.ID
+							.getName(), objectName), e);
+		}
+		return id;
+	}
+
 }
