@@ -65,10 +65,10 @@ public final class BundleConstants {
 			"An element of UNINSTALLED,INSTALLED,RESOLVED,STARTING,STOPPING,ACTIVE.",
 			SimpleType.STRING, true, false, false);
 
-	/** Constant name */
+	/** Constant name. */
 	public static final String HEADER_ITEM_NAME = "name";
 
-	/** Constant value */
+	/** Constant value. */
 	public static final String HEADER_ITEM_VALUE = "value";
 
 	/** Header properties. */

@@ -45,10 +45,10 @@ public final class ServiceConstants {
 	/** MBean description. */
 	public static final String MBEAN_DESCRIPTION = "Service MBean";
 
-	/** Constant name */
+	/** Constant name. */
 	public static final String SERVICEPROPERTY_ITEM_NAME = "name";
 
-	/** Constant value */
+	/** Constant value. */
 	public static final String SERVICEPROPERTY_ITEM_VALUE = "value";
 
 	/** Service property items. */
