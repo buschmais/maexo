@@ -246,7 +246,7 @@ public class SwitchBoardTest extends MaexoTests {
 	 * First registers the mbean server connection and afterwards registers the
 	 * notification listener as services
 	 */
-	public void test_addNotificationListenerOnOnExistingServerConnection()
+	public void test_addNotificationListenerOnExistingServerConnection()
 			throws Exception {
 		ObjectName objectName = new ObjectName(OBJECTNAME_TESTMBEAN);
 		NotificationListener notificationListener = EasyMock
