@@ -72,12 +72,12 @@ public final class ObjectNameFactoryHelper {
 	 * @param resourceInterface
 	 *            the interface to use for looking up the object name factory
 	 * @return the object name
-	 * @exception ObjectNameFactoryException
+	 * @exception IllegalStateException
 	 *                if no appropriate <code>ObjectNameFactory</code> is found
 	 *                and therefore no object name could be constructed
 	 */
 	public ObjectName getObjectName(Object resource, Class<?> resourceInterface)
-			throws ObjectNameFactoryException {
+			throws IllegalStateException {
 		return this.getObjectName(resource, resourceInterface, null);
 	}
 
@@ -96,13 +96,13 @@ public final class ObjectNameFactoryHelper {
 	 *            additional properties which will be passed to the object name
 	 *            factory
 	 * @return the object name
-	 * @exception ObjectNameFactoryException
+	 * @exception IllegalStateException
 	 *                if no appropriate <code>ObjectNameFactory</code> is found
 	 *                and therefore no object name could be constructed
 	 */
 	public ObjectName getObjectName(Object resource,
 			Class<?> resourceInterface, Map<String, Object> properties)
-			throws ObjectNameFactoryException {
+			throws IllegalStateException {
 		if (resource == null) {
 			throw new IllegalArgumentException(
 					"Parameters resource and resourceInterface must not be null");
@@ -148,7 +148,7 @@ public final class ObjectNameFactoryHelper {
 			}
 		}
 		// throw an exception if the object name could not be constructed
-		throw new ObjectNameFactoryException(String.format(
+		throw new IllegalStateException(String.format(
 				"No object name factory found for resource interface %s",
 				resourceInterface.getName()));
 	}

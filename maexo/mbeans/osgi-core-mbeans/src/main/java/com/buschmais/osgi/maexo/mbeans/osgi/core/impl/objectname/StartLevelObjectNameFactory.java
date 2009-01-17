@@ -23,7 +23,6 @@ import javax.management.ObjectName;
 import org.osgi.framework.Constants;
 
 import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-import com.buschmais.osgi.maexo.framework.commons.mbean.objectname.ObjectNameFactoryException;
 import com.buschmais.osgi.maexo.mbeans.osgi.core.StartLevelConstants;
 
 /**
@@ -41,12 +40,12 @@ public final class StartLevelObjectNameFactory implements ObjectNameFactory {
 	 *            the resource
 	 * @param properties
 	 *            must contain a {@link Constants.SERVICE_ID} entry
-	 * @exception ObjectNameFactoryException
+	 * @exception IllegalArgumentException
 	 *                if the {@link Constants.SERVICE_ID} entry is missing
 	 * @return the object name for the given resource
 	 */
 	public ObjectName getObjectName(Object resource,
-			Map<String, Object> properties) throws ObjectNameFactoryException {
+			Map<String, Object> properties) throws IllegalArgumentException {
 		if (properties == null) {
 			throw new IllegalArgumentException(
 					"Parameter properties must not be null");
@@ -55,7 +54,7 @@ public final class StartLevelObjectNameFactory implements ObjectNameFactory {
 		// id
 		Long id = (Long) properties.get(Constants.SERVICE_ID);
 		if (id == null) {
-			throw new ObjectNameFactoryException("No service id");
+			throw new IllegalArgumentException("No service id provided");
 		}
 		String objectName = String.format(StartLevelConstants.OBJECTNAME_FORMAT, id);
 		try {
