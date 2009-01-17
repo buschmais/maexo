@@ -79,9 +79,7 @@ public final class Activator implements BundleActivator {
 	 * {@inheritDoc}
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
-		if (logger.isInfoEnabled()) {
-			logger.info("Starting maexo switch board");
-		}
+		logger.info("Starting maexo switch board");
 		this.switchBoard = new SwitchBoardImpl();
 		this.mbeanServerConnectionServiceListener = this
 				.registerMBeanServerConnectionServiceListener(bundleContext);
@@ -97,9 +95,7 @@ public final class Activator implements BundleActivator {
 	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
-		if (logger.isInfoEnabled()) {
-			logger.info("Stopping maexo switch board");
-		}
+		logger.info("Stopping maexo switch board");
 		// remove service listener for mbean server connections s and clean up
 		if (this.mbeanServerConnectionServiceListener != null) {
 			bundleContext
@@ -151,7 +147,7 @@ public final class Activator implements BundleActivator {
 			final BundleContext bundleContext) throws InvalidSyntaxException {
 		ServiceListener serviceListener = new ServiceListener() {
 
-			/** 
+			/**
 			 * {@inheritDoc}
 			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
@@ -177,10 +173,8 @@ public final class Activator implements BundleActivator {
 		bundleContext.addServiceListener(serviceListener,
 				FILTER_MBEANSERVERCONNECTION);
 		// do initial registration of MBeanServerConnections
-		if (logger.isDebugEnabled()) {
-			logger
-					.debug("performing initial registration of mbean server connections");
-		}
+		logger
+				.debug("performing initial registration of mbean server connections");
 		this.registerExistingServices(FILTER_MBEANSERVERCONNECTION,
 				bundleContext, serviceListener);
 		return serviceListener;
@@ -199,7 +193,7 @@ public final class Activator implements BundleActivator {
 			final BundleContext bundleContext) throws InvalidSyntaxException {
 		ServiceListener serviceListener = new ServiceListener() {
 
-			/** 
+			/**
 			 * {@inheritDoc}
 			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
@@ -222,12 +216,9 @@ public final class Activator implements BundleActivator {
 			}
 
 		};
-		bundleContext.addServiceListener(serviceListener,
-				FILTER_MBEANSERVER);
+		bundleContext.addServiceListener(serviceListener, FILTER_MBEANSERVER);
 		// do initial registration of MBeanServers
-		if (logger.isDebugEnabled()) {
-			logger.debug("performing initial registration of mbean servers");
-		}
+		logger.debug("performing initial registration of mbean servers");
 		this.registerExistingServices(FILTER_MBEANSERVER, bundleContext,
 				serviceListener);
 		return serviceListener;
@@ -246,7 +237,7 @@ public final class Activator implements BundleActivator {
 			final BundleContext bundleContext) throws InvalidSyntaxException {
 		ServiceListener serviceListener = new ServiceListener() {
 
-			/** 
+			/**
 			 * {@inheritDoc}
 			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
@@ -281,9 +272,7 @@ public final class Activator implements BundleActivator {
 		};
 		bundleContext.addServiceListener(serviceListener, FILTER_MBEAN);
 		// do initial registration of MBeans
-		if (logger.isDebugEnabled()) {
-			logger.debug("performing initial registration of mbeans");
-		}
+		logger.debug("performing initial registration of mbeans");
 		this.registerExistingServices(FILTER_MBEAN, bundleContext,
 				serviceListener);
 		return serviceListener;
@@ -302,7 +291,7 @@ public final class Activator implements BundleActivator {
 			final BundleContext bundleContext) throws InvalidSyntaxException {
 		ServiceListener serviceListener = new ServiceListener() {
 
-			/** 
+			/**
 			 * {@inheritDoc}
 			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
@@ -338,10 +327,8 @@ public final class Activator implements BundleActivator {
 		bundleContext.addServiceListener(serviceListener,
 				FILTER_NOTIFICATIONLISTENER);
 		// do initial registration of MBeans
-		if (logger.isDebugEnabled()) {
-			logger
-					.debug("performing initial registration of notification listeners");
-		}
+		logger
+				.debug("performing initial registration of notification listeners");
 		this.registerExistingServices(FILTER_NOTIFICATIONLISTENER,
 				bundleContext, serviceListener);
 		return serviceListener;

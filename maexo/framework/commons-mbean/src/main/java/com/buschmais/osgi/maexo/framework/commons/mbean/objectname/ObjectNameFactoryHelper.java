@@ -109,18 +109,13 @@ public final class ObjectNameFactoryHelper {
 		}
 		// find the object name factory that handles instances of the resource's
 		// interfaces
-		if (logger.isDebugEnabled()) {
-			logger.debug(
-					"looking up object name factory service for interface {}",
-					resourceInterface.getName());
-		}
+		logger.debug("looking up object name factory service for interface {}",
+				resourceInterface.getName());
 		ServiceReference[] serviceReferences;
 		String filter = String.format("(%s=%s)",
 				Constants.SERVICE_PROPERTY_RESOURCEINTERFACE, resourceInterface
 						.getName());
-		if (logger.isDebugEnabled()) {
-			logger.debug("using filter : {}", filter);
-		}
+		logger.debug("using filter : {}", filter);
 		try {
 			serviceReferences = this.bundleContext.getServiceReferences(
 					ObjectNameFactory.class.getName(), filter);
@@ -135,10 +130,8 @@ public final class ObjectNameFactoryHelper {
 					ObjectNameFactory objectNameFactory = (ObjectNameFactory) this.bundleContext
 							.getService(serviceReference);
 					if (objectNameFactory != null) {
-						if (logger.isDebugEnabled()) {
-							logger.debug("using object name factory "
-									+ objectNameFactory);
-						}
+						logger.debug("using object name factory {}",
+								objectNameFactory);
 						return objectNameFactory.getObjectName(resource,
 								properties);
 					}
