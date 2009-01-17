@@ -29,12 +29,6 @@ public final class Constants {
 	}
 
 	/**
-	 * The default domain for object names, i.e.
-	 * <code>com.buschmais.osgi.maexo</code>.
-	 */
-	public static final String DEFAULT_DOMAIN = "com.buschmais.osgi.maexo";
-
-	/**
 	 * The resource interface property of object name factory services.
 	 */
 	public static final String SERVICE_PROPERTY_RESOURCEINTERFACE = "resourceInterface";
