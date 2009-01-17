@@ -197,6 +197,7 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 * @throws Exception
 	 *             on error
 	 */
+	//FIXME race-conditions as bundle-listener is invoked asynchronously
 	public void test_changeEvents() throws Exception {
 		Bundle bundle = getTestBundle();
 		BundleMBean bundleMBean = getTestBundleMBean(bundle);
