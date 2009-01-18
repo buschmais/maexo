@@ -20,19 +20,19 @@
 	-->
 
 	<parent>
-		<groupId>com.buschmais.osgi</groupId>
-		<artifactId>external</artifactId>
+		<groupId>com.buschmais.maexo</groupId>
+		<artifactId>maexo-external</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.buschmais.osgi.external</groupId>
-	<artifactId>mx4j</artifactId>
+	<groupId>com.buschmais.maexo.external</groupId>
+	<artifactId>maexo-external.mx4j</artifactId>
 	<packaging>pom</packaging>
-	<name>External Artifacts - MX4J</name>
+	<name>MAEXO - MX4J</name>
 
 	<modules>
-		<module>mx4j-tools-osgi</module>
+		<module>tools.osgi</module>
 	</modules>
 
 </project>

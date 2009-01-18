@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+	
 	<!-- 
 		Copyright 2008 buschmais GbR
 		 
@@ -20,19 +20,20 @@
 	-->
 
 	<parent>
-		<groupId>com.buschmais</groupId>
-		<artifactId>maexo</artifactId>
+		<groupId>com.buschmais.maexo</groupId>
+		<artifactId>maexo-modules</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-
+	
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.buschmais.maexo</groupId>
-	<artifactId>maexo-external</artifactId>
+	<groupId>com.buschmais.maexo.modules</groupId>
+	<artifactId>maexo-modules.framework</artifactId>
 	<packaging>pom</packaging>
-	<name>MAEXO - External Artifacts</name>
+	<name>MAEXO - Framework</name>
 
 	<modules>
-		<module>mx4j</module>
+		<module>commons.mbean</module>
+		<module>switchboard</module>
 	</modules>
 
 </project>

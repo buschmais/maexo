@@ -21,23 +21,402 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.buschmais</groupId>
-	<artifactId>osgi</artifactId>
+	<artifactId>maexo</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>buschmais OSGi bundles</name>
-
-	<organization>
-		<name>buschmais GbR</name>
-		<url>http://www.buschmais.com</url>
-	</organization>
+	<name>MAEXO - Management Extensions for OSGi</name>
 
 	<modules>
 		<module>external</module>
-		<module>maexo</module>
+		<module>modules</module>
+		<module>test</module>
 	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maexo.version>1.0.0-SNAPSHOT</maexo.version>
+		<slf4j.version>1.5.6</slf4j.version>
+		<log4j.version>1.2.15</log4j.version>
+		<spring.maven.artifact.version>2.5.6.A</spring.maven.artifact.version>
+		<spring.osgi.version>1.1.2.A</spring.osgi.version>
+		<equinox.version>3.4.0.v20080605-1900</equinox.version>
+		<mx4j.tools.version>3.0.1</mx4j.tools.version>
 	</properties>
 
+	<description>Management Extensions for OSGi</description>
+	
+	<url>http://code.google.com/p/maexo</url>
+	
+	<scm>
+		<connection>scm:svn:http://maexo.googlecode.com/svn</connection>
+		<developerConnection>scm:svn:https://maexo.googlecode.com/svn</developerConnection>
+		<url>http://code.google.com/p/maexo/source/browse/</url>
+	</scm>
+	
+	<organization>
+		<name>buschmais GbR</name>
+		<url>http://www.buschmais.com</url>
+	</organization>
+	
+	<inceptionYear>2008</inceptionYear>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+			<comments>
+Copyright 2008-2009 buschmais GbR
+ 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied.
+See the License for the specific language governing permissions and
+limitations under the License			
+			</comments>
+		</license>
+	</licenses>
+
+	<issueManagement>
+		<system>Google</system>
+		<url>http://code.google.com/p/maexo/issues</url>
+	</issueManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.5</source>
+						<target>1.5</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.2-beta-3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<forkMode>always</forkMode>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.5</version>
+				</plugin>
+				<plugin>
+			        <groupId>org.apache.maven.plugins</groupId>
+			        <artifactId>maven-checkstyle-plugin</artifactId>
+			        <version>2.2</version>
+		      	</plugin>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>1.4.3</version>
+					<extensions>true</extensions>
+					<configuration>
+						<instructions>
+							<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+						</instructions>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>1.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-pmd-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<configuration>
+					<xmlOutput>true</xmlOutput>
+					<xmlOutputDirectory>target</xmlOutputDirectory>
+					<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+					<threshold>Normal</threshold>
+					<effort>Default</effort>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<aggregate>true</aggregate>
+					<excludePackageNames>*.impl</excludePackageNames>
+		          	<groups>
+			            <group>
+							<title>MAEXO - Commons MBean</title>
+			              	<packages>com.buschmais.maexo.framework.commons.mbean*</packages>
+			            </group>
+			            <group>
+							<title>MAEXO - OSGi Core MBeans</title>
+			              	<packages>com.buschmais.maexo.mbeans.osgi.core*</packages>
+			            </group>
+			            <group>
+							<title>MAEXO - MX4j HTTP Adaptor Activator</title>
+			              	<packages>com.buschmais.maexo.adaptor.mx4j.http*</packages>
+			            </group>
+					</groups>
+				</configuration>
+			</plugin>
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-checkstyle-plugin</artifactId>
+				<configuration>
+				    <configLocation>build/sun_checks_eclipse.xml</configLocation>
+					<encoding>UTF-8</encoding>
+				</configuration>
+	      	</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<configuration>
+					<targetJdk>1.5</targetJdk>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<configuration>
+					<aggregate>true</aggregate>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>maven-repo</id>
+			<name>maven repo</name>
+			<url>http://repo1.maven.org/maven2/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<repositories>
+		<repository>
+			<id>com.springsource.repository.bundles.release</id>
+			<name>SpringSource Enterprise Bundle Repository - Releases</name>
+			<url>http://repository.springsource.com/maven/bundles/release</url>
+		</repository>
+
+		<repository>
+			<id>com.springsource.repository.bundles.external</id>
+			<name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+			<url>http://repository.springsource.com/maven/bundles/external</url>
+		</repository>
+
+		<repository>
+			<id>maven-repository</id>
+			<name>Maven Repository</name>
+			<url>http://repo1.maven.org</url>
+		</repository>
+
+		<repository>
+			<id>eclipse-repository</id>
+			<name>Eclipse Repository</name>
+			<url>http://repo1.maven.org/eclipse</url>
+		</repository>
+	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.buschmais.maexo.modules.framework</groupId>
+				<artifactId>maexo-framework.commons.mbean</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.modules.framework</groupId>
+				<artifactId>maexo-framework.switchboard</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.modules.mbeans</groupId>
+				<artifactId>maexo-mbeans.osgi.core</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.modules.server</groupId>
+				<artifactId>maexo-server.platform</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.test</groupId>
+				<artifactId>maexo-test.testbundle</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.test</groupId>
+				<artifactId>maexo-test.integration</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.modules.adaptor</groupId>
+				<artifactId>maexo-adaptor.mx4j.http</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.external.mx4j</groupId>
+				<artifactId>maexo-mx4j.tools.osgi</artifactId>
+				<version>${mx4j.tools.version}</version>
+			</dependency>
+
+			<!-- compile time dependencies -->
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.osgi.core</artifactId>
+				<version>1.0.1</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.osgi.compendium</artifactId>
+				<version>1.0.1</version>
+				<scope>compile</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+				<scope>compile</scope>
+			</dependency>
+			
+			<!-- runtime dependencies -->
+			<dependency>
+				<groupId>org.eclipse.osgi</groupId>
+				<artifactId>org.eclipse.osgi</artifactId>
+				<version>${equinox.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+
+			<dependency>
+			    <groupId>org.slf4j</groupId>
+			    <artifactId>slf4j-jdk14</artifactId>
+				<version>${slf4j.version}</version>
+				<scope>runtime</scope>
+			</dependency> 
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+
+			<!-- test scoped dependencies -->
+			<dependency>
+				<groupId>org.easymock</groupId>
+				<artifactId>com.springsource.org.easymock</artifactId>
+				<version>2.3.0</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>com.springsource.junit</artifactId>
+				<version>3.8.2</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.objectweb.asm</groupId>
+				<artifactId>com.springsource.org.objectweb.asm</artifactId>
+				<version>2.2.3</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.aop</artifactId>
+				<version>${spring.maven.artifact.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.beans</artifactId>
+				<version>${spring.maven.artifact.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.context</artifactId>
+				<version>${spring.maven.artifact.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.core</artifactId>
+				<version>${spring.maven.artifact.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.test</artifactId>
+				<version>${spring.maven.artifact.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.osgi</groupId>
+				<artifactId>org.springframework.osgi.test</artifactId>
+				<version>${spring.osgi.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.osgi</groupId>
+				<artifactId>org.springframework.osgi.extender</artifactId>
+				<version>${spring.osgi.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.osgi</groupId>
+				<artifactId>org.springframework.osgi.extensions.annotation</artifactId>
+				<version>${spring.osgi.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
 </project>
