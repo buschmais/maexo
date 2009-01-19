@@ -46,7 +46,7 @@ import com.buschmais.maexo.mbeans.osgi.core.ServiceMBean;
 /**
  * Represents a registered service (wrapping a service reference).
  */
-public final class Service extends DynamicMBeanSupport implements DynamicMBean,
+public final class ServiceMBeanImpl extends DynamicMBeanSupport implements DynamicMBean,
 		ServiceMBean {
 
 	/**
@@ -67,7 +67,7 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 	 * @param serviceReference
 	 *            the service reference
 	 */
-	public Service(BundleContext bundleContext,
+	public ServiceMBeanImpl(BundleContext bundleContext,
 			ServiceReference serviceReference) {
 		this.serviceReference = serviceReference;
 		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(
@@ -78,7 +78,7 @@ public final class Service extends DynamicMBeanSupport implements DynamicMBean,
 	 * {@inheritDoc}
 	 */
 	public MBeanInfo getMBeanInfo() {
-		String className = Service.class.getName();
+		String className = ServiceMBeanImpl.class.getName();
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[] {
 				ServiceConstants.BUNDLE, ServiceConstants.DESCRIPTION,

@@ -22,7 +22,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 import com.buschmais.maexo.framework.commons.mbean.lifecycle.DefaultServiceMBeanLifeCycleSupport;
-import com.buschmais.maexo.mbeans.osgi.core.impl.StartLevel;
+import com.buschmais.maexo.mbeans.osgi.core.impl.StartLevelMBeanImpl;
 
 /**
  * This class implements a service event listener which tracks the life cycle of
@@ -46,7 +46,7 @@ public final class StartLevelMBeanLifeCycle extends
 	 */
 	@Override
 	protected Object getMBean(ServiceReference serviceReference, Object service) {
-		return new StartLevel(super.getBundleContext(),
+		return new StartLevelMBeanImpl(super.getBundleContext(),
 				(org.osgi.service.startlevel.StartLevel) service);
 	}
 

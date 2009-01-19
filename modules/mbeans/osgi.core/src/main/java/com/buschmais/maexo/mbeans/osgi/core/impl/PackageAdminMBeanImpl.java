@@ -47,7 +47,7 @@ import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBean;
 /**
  * Represents the OSGi package admin service.
  */
-public final class PackageAdmin extends DynamicMBeanSupport implements
+public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 		PackageAdminMBean, MBeanRegistration {
 
 	// translation map for bundle states
@@ -85,7 +85,7 @@ public final class PackageAdmin extends DynamicMBeanSupport implements
 	 * @param packageAdmin
 	 *            The package admin service.
 	 */
-	public PackageAdmin(BundleContext bundleContext,
+	public PackageAdminMBeanImpl(BundleContext bundleContext,
 			org.osgi.service.packageadmin.PackageAdmin packageAdmin) {
 		this.bundleContext = bundleContext;
 		this.packageAdmin = packageAdmin;

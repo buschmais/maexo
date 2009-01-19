@@ -23,7 +23,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 import com.buschmais.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLifeCycleSupport;
-import com.buschmais.maexo.mbeans.osgi.core.impl.Service;
+import com.buschmais.maexo.mbeans.osgi.core.impl.ServiceMBeanImpl;
 
 /**
  * 
@@ -50,7 +50,7 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 	 */
 	@Override
 	protected Object getMBean(ServiceReference serviceReference, Object service) {
-		return new Service(super.getBundleContext(), serviceReference);
+		return new ServiceMBeanImpl(super.getBundleContext(), serviceReference);
 	}
 
 	/**

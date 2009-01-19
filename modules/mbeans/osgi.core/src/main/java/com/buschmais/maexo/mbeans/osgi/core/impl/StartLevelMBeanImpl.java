@@ -36,7 +36,7 @@ import com.buschmais.maexo.mbeans.osgi.core.StartLevelMBean;
 /**
  * Represents the OSGi start level service.
  */
-public final class StartLevel extends DynamicMBeanSupport implements StartLevelMBean, DynamicMBean {
+public final class StartLevelMBeanImpl extends DynamicMBeanSupport implements StartLevelMBean, DynamicMBean {
 
 	/** The bundle context. */
 	private final BundleContext bundleContext;
@@ -52,7 +52,7 @@ public final class StartLevel extends DynamicMBeanSupport implements StartLevelM
 	 * @param startLevel
 	 *            the start level service
 	 */
-	public StartLevel(BundleContext bundleContext, org.osgi.service.startlevel.StartLevel startLevel) {
+	public StartLevelMBeanImpl(BundleContext bundleContext, org.osgi.service.startlevel.StartLevel startLevel) {
 		this.bundleContext = bundleContext;
 		this.startLevel = startLevel;
 	}
@@ -61,7 +61,7 @@ public final class StartLevel extends DynamicMBeanSupport implements StartLevelM
 	 * {@inheritDoc}
 	 */
 	public MBeanInfo getMBeanInfo() {
-		String className = StartLevel.class.getName();
+		String className = StartLevelMBeanImpl.class.getName();
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[] { StartLevelConstants.STARTLEVEL,
 				StartLevelConstants.INITIALBUNDLE_STARTLEVEL };

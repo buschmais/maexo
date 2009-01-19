@@ -49,7 +49,7 @@ import com.buschmais.maexo.mbeans.osgi.core.BundleMBean;
 /**
  * Represents an OSGi bundle.
  */
-public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
+public final class BundleMBeanImpl extends DynamicMBeanSupport implements DynamicMBean,
 		BundleMBean {
 
 	// translation map for bundle states
@@ -87,7 +87,7 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	 * @param bundle
 	 *            the bundle to manage
 	 */
-	public Bundle(BundleContext bundleContext, org.osgi.framework.Bundle bundle) {
+	public BundleMBeanImpl(BundleContext bundleContext, org.osgi.framework.Bundle bundle) {
 		this.bundle = bundle;
 		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(
 				bundleContext);
@@ -97,7 +97,7 @@ public final class Bundle extends DynamicMBeanSupport implements DynamicMBean,
 	 * {@inheritDoc}
 	 */
 	public MBeanInfo getMBeanInfo() {
-		String className = Bundle.class.getName();
+		String className = BundleMBeanImpl.class.getName();
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[] {
 				BundleConstants.ID, BundleConstants.STATE,

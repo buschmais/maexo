@@ -22,7 +22,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 import com.buschmais.maexo.framework.commons.mbean.lifecycle.DefaultServiceMBeanLifeCycleSupport;
-import com.buschmais.maexo.mbeans.osgi.core.impl.PackageAdmin;
+import com.buschmais.maexo.mbeans.osgi.core.impl.PackageAdminMBeanImpl;
 
 /**
  * This class implements a service event listener which tracks the life cycle of
@@ -46,7 +46,7 @@ public final class PackageAdminMBeanLifeCycle extends
 	 */
 	@Override
 	protected Object getMBean(ServiceReference serviceReference, Object service) {
-		return new PackageAdmin(super.getBundleContext(),
+		return new PackageAdminMBeanImpl(super.getBundleContext(),
 				(org.osgi.service.packageadmin.PackageAdmin) service);
 	}
 

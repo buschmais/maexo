@@ -25,7 +25,7 @@ import org.osgi.framework.BundleListener;
 
 import com.buschmais.maexo.framework.commons.mbean.lifecycle.MBeanLifecycleSupport;
 import com.buschmais.maexo.mbeans.osgi.core.BundleMBean;
-import com.buschmais.maexo.mbeans.osgi.core.impl.Bundle;
+import com.buschmais.maexo.mbeans.osgi.core.impl.BundleMBeanImpl;
 
 /**
  * This class implements a bundle event listener to manage the life cycle of the
@@ -80,7 +80,7 @@ public final class BundleMBeanLifeCycle extends MBeanLifecycleSupport implements
 				bundle, org.osgi.framework.Bundle.class);
 		switch (bundleEvent.getType()) {
 		case BundleEvent.INSTALLED:
-			BundleMBean bundleMBean = new Bundle(super.getBundleContext(),
+			BundleMBean bundleMBean = new BundleMBeanImpl(super.getBundleContext(),
 					bundle);
 			super.registerMBeanService(DynamicMBean.class, objectName,
 					bundleMBean);
