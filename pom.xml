@@ -27,6 +27,7 @@
 	<name>MAEXO - Management Extensions for OSGi</name>
 
 	<modules>
+		<module>build</module>
 		<module>external</module>
 		<module>modules</module>
 		<module>test</module>
@@ -120,6 +121,13 @@ limitations under the License
 			        <groupId>org.apache.maven.plugins</groupId>
 			        <artifactId>maven-checkstyle-plugin</artifactId>
 			        <version>2.2</version>
+					<dependencies>
+						<dependency>
+							<groupId>com.buschmais.maexo.build</groupId>
+							<artifactId>maexo-build.checkstyle</artifactId>
+							<version>${maexo.version}</version>
+						</dependency>
+					</dependencies>
 		      	</plugin>
 				<plugin>
 					<groupId>org.apache.felix</groupId>
@@ -190,7 +198,7 @@ limitations under the License
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-checkstyle-plugin</artifactId>
 				<configuration>
-				    <configLocation>build/sun_checks_eclipse.xml</configLocation>
+				    <configLocation>sun_checks_eclipse.xml</configLocation>
 					<encoding>UTF-8</encoding>
 				</configuration>
 	      	</plugin>
