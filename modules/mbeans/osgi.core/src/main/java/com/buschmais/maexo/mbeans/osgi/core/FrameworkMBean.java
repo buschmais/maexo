@@ -117,4 +117,14 @@ public interface FrameworkMBean {
 	 */
 	ObjectName installBundle(String location);
 
+	/**
+	 * Installs a bundle from the specified input byte array.
+	 * 
+	 * @param location
+	 *            The location identifier of the bundle to install.
+	 * @param input
+	 *            The byte array from which this bundle will be read.
+	 * @return The {@link ObjectName} representing the installed bundle.
+	 */
+	ObjectName installBundle(String location, byte[] input);
 }

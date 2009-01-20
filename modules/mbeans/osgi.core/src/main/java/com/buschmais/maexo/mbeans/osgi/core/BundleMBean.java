@@ -122,6 +122,14 @@ public interface BundleMBean {
 	void update(String url);
 
 	/**
+	 * Updates the bundle from a byte array.
+	 * 
+	 * @param in
+	 *            the byte array
+	 */
+	void update(byte[] in);
+
+	/**
 	 * Uninstall the bundle.
 	 */
 	void uninstall();

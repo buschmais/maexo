@@ -250,6 +250,14 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements Dynami
 	/**
 	 * {@inheritDoc}
 	 */
+	public void update(byte[] in) {
+		// TODO implement method 
+		// TODO add operation metadata to getMBeanInfo
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	public Long getLastModified() {
 		return Long.valueOf(this.bundle.getLastModified());
 	}
