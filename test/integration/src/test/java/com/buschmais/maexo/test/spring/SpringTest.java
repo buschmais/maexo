@@ -40,16 +40,16 @@ public class SpringTest extends MaexoTests {
 	private static final String IMPORT_PACKAGES = "org.springframework.jmx.support";
 
 	private static final String BEAN_MBEANSERVER = "mbeanServer";
-	private static final String BEAN_CLASSICMBEAN = "classicMBean";
-	private static final String BEAN_NOTIFICATIONLISTENER = "classicMBeanNotificationListener";
+	private static final String BEAN_STANDARDMBEAN = "standardMBean";
+	private static final String BEAN_NOTIFICATIONLISTENER = "standardMBeanNotificationListener";
 
-	private static final String OBJECTNAME = "com.buschmais.osgi.maexo:type=classicMBean";
+	private static final String OBJECTNAME = "com.buschmais.maexo:type=standardMBean";
 
 	private static final String NOTIFICATION_HANDBACK = "handbackObject";
 
 	private MBeanServer mbeanServer;
 
-	private Standard classicMBean;
+	private Standard standardMBean;
 
 	private StandardMBeanNotificationListener notificationListener;
 
@@ -110,24 +110,24 @@ public class SpringTest extends MaexoTests {
 		this.mbeanServer = (MBeanServer) super.getApplicationContext().getBean(
 				BEAN_MBEANSERVER);
 		assertNotNull(this.mbeanServer);
-		this.classicMBean = (Standard) super.getApplicationContext().getBean(
-				BEAN_CLASSICMBEAN);
-		assertNotNull(this.classicMBean);
+		this.standardMBean = (Standard) super.getApplicationContext().getBean(
+				BEAN_STANDARDMBEAN);
+		assertNotNull(this.standardMBean);
 		this.notificationListener = (StandardMBeanNotificationListener) super
 				.getApplicationContext().getBean(BEAN_NOTIFICATIONLISTENER);
 	}
 
 	public void test_mbeanRegistrationDone()
 			throws MalformedObjectNameException, NullPointerException {
-		assertNotNull(this.classicMBean.isRegistrationDone());
-		assertTrue(this.classicMBean.isRegistrationDone().booleanValue());
-		assertEquals(new ObjectName(OBJECTNAME), this.classicMBean
+		assertNotNull(this.standardMBean.isRegistrationDone());
+		assertTrue(this.standardMBean.isRegistrationDone().booleanValue());
+		assertEquals(new ObjectName(OBJECTNAME), this.standardMBean
 				.getObjectName());
 	}
 
 	public void test_notificationListener() throws InterruptedException {
 		String newValue = "a new value";
-		this.classicMBean.setAttribute(newValue);
+		this.standardMBean.setAttribute(newValue);
 		// notifications may be asynchronous, wait some time
 		Thread.sleep(1000);
 		Notification notification = this.notificationListener

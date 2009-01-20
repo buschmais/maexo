@@ -12,17 +12,16 @@ import javax.management.openmbean.TabularData;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.ServiceReference;
 
-import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 import com.buschmais.maexo.mbeans.osgi.core.ServiceMBean;
 import com.buschmais.maexo.test.Constants;
-import com.buschmais.maexo.test.MaexoTests;
+import com.buschmais.maexo.test.common.mbeans.MaexoMBeanTests;
 
 /**
  * This class tests ServiceMBeanFunctionality
  * 
  * @see MaexoTests
  */
-public class ServiceMBeanTest extends MaexoTests {
+public class ServiceMBeanTest extends MaexoMBeanTests {
 
 	/**
 	 * {@inheritDoc}
@@ -48,10 +47,8 @@ public class ServiceMBeanTest extends MaexoTests {
 
 		ObjectName serviceMBeanObjectName = serviceMBean.getBundle();
 
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
-				this.bundleContext);
-		ObjectName serviceObjectName = objectNameFactoryHelper.getObjectName(
-				service.getBundle(), Bundle.class);
+		ObjectName serviceObjectName = getObjectName(service.getBundle(),
+				Bundle.class);
 
 		assertEquals(serviceMBeanObjectName, serviceObjectName);
 	}
@@ -70,12 +67,10 @@ public class ServiceMBeanTest extends MaexoTests {
 				.getUsingBundles();
 
 		Bundle[] usingBundles = service.getUsingBundles();
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
-				this.bundleContext);
 
 		for (int i = 0; i < usingBundles.length; i++) {
-			ObjectName serviceObjectName = objectNameFactoryHelper
-					.getObjectName(usingBundles[i], Bundle.class);
+			ObjectName serviceObjectName = getObjectName(usingBundles[i],
+					Bundle.class);
 			assertEquals(serviceObjectName,
 					serviceMBeanUsingBundlesObjectNames[i]);
 		}
@@ -188,10 +183,7 @@ public class ServiceMBeanTest extends MaexoTests {
 	 */
 	private ServiceMBean getTestServiceMBean(ServiceReference service) {
 		// get ObjectName for ServiceReference
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
-				this.bundleContext);
-		ObjectName objectName = objectNameFactoryHelper.getObjectName(service,
-				ServiceReference.class);
+		ObjectName objectName = getObjectName(service, ServiceReference.class);
 		// get MBeanServer
 		ServiceReference serviceReference = super.bundleContext
 				.getServiceReference(MBeanServer.class.getName());

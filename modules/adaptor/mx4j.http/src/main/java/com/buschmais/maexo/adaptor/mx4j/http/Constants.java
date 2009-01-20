@@ -29,10 +29,10 @@ public final class Constants {
 	}
 	
 	/** The http adapter object name. */
-	public static final String HTTP_ADAPTOR_OBJECTNAME = "com.buschmais.osgi.maexo:type=Adaptor,name=Mx4jHttpAdaptor";
+	public static final String HTTP_ADAPTOR_OBJECTNAME = "com.buschmais.maexo:type=Adaptor,name=Mx4jHttpAdaptor";
 
 	/** The xslt processor object name. */
-	public static final String XSLT_PROCESSOR_OBJECTNAME = "com.buschmais.osgi.maexo:type=Adaptor,name=Mx4jXsltProcessor";
+	public static final String XSLT_PROCESSOR_OBJECTNAME = "com.buschmais.maexo:type=Adaptor,name=Mx4jXsltProcessor";
 
 	/** The host property. */
 	public static final String HOST_PROPERTY = "com.buschmais.maexo.adaptor.mx4j.http.host";

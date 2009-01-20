@@ -16,6 +16,7 @@
  */
 package com.buschmais.maexo.mbeans.osgi.core.impl;
 
+import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.util.Date;
 import java.util.Dictionary;
@@ -111,6 +112,7 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements Dynami
 		OpenMBeanOperationInfoSupport[] mbeanOperationInfos = new OpenMBeanOperationInfoSupport[] {
 				BundleConstants.START, BundleConstants.STOP,
 				BundleConstants.UPDATE, BundleConstants.UPDATEFROMURL,
+				BundleConstants.UPDATEFROMBYTEARRAY,
 				BundleConstants.UNINSTALL };
 		// constructors
 		OpenMBeanConstructorInfoSupport[] mbeanConstructorInfos = new OpenMBeanConstructorInfoSupport[] {};
@@ -251,8 +253,12 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements Dynami
 	 * {@inheritDoc}
 	 */
 	public void update(byte[] in) {
-		// TODO implement method 
-		// TODO add operation metadata to getMBeanInfo
+		ByteArrayInputStream stream = new ByteArrayInputStream(in);
+		try {
+			this.bundle.update(stream);
+		} catch (Exception e) {
+			throw new RuntimeException(e.toString());
+		}
 	}
 
 	/**

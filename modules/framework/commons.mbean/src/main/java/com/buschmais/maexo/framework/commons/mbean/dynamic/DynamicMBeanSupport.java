@@ -45,6 +45,8 @@ import org.slf4j.LoggerFactory;
  * The invocation of methods and getting/setting attributes is performed via
  * introspection of the mbeans class and using the metadata provided by the
  * mbean itself.
+ * 
+ * TODO @DM document assumptions about attribute names (lowerCase/upperCase)
  */
 public abstract class DynamicMBeanSupport implements DynamicMBean,
 		MBeanRegistration {
@@ -96,7 +98,6 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -125,7 +126,6 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 		}
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -139,12 +139,14 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 					+ this.getClass().getName() + ":" + attribute + " to "
 					+ value);
 		}
-		String getterName = SETTER_PREFIX
+		String setterName = SETTER_PREFIX
 				+ this.attributeToUpperCase(attributeName);
 		Method method;
 		try {
-			method = this.getClass().getDeclaredMethod(getterName,
-					new Class<?>[] { this.attributeTypes.get(attributeName) });
+			method = this.getClass().getDeclaredMethod(
+					setterName,
+					new Class<?>[] { this.attributeTypes.get(this
+							.attributeToLowerCase(attributeName)) });
 		} catch (SecurityException e) {
 			throw new ReflectionException(e);
 		} catch (NoSuchMethodException e) {
@@ -156,7 +158,6 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 			throw new MBeanException(e);
 		}
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -173,7 +174,6 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 		}
 		return attributeList;
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -193,12 +193,11 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 		return attributeList;
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
-	public final Object invoke(String actionName, Object[] params, String[] signature)
-			throws MBeanException, ReflectionException {
+	public final Object invoke(String actionName, Object[] params,
+			String[] signature) throws MBeanException, ReflectionException {
 		Method method;
 		if (logger.isDebugEnabled()) {
 			logger.debug("invoking method " + this.getClass().getName() + ":"
@@ -235,6 +234,17 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 		return attribute.substring(0, 1).toUpperCase() + attribute.substring(1);
 	}
 
+	/**
+	 * Converts the first letter of an attribute to lower case (for
+	 * getter/setter introspection).
+	 * 
+	 * @param attribute
+	 *            the attribute name
+	 * @return the converted attribute name
+	 */
+	private String attributeToLowerCase(String attribute) {
+		return attribute.substring(0, 1).toLowerCase() + attribute.substring(1);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -242,20 +252,17 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 	public void postDeregister() {
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	public void postRegister(Boolean registrationDone) {
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
 	public void preDeregister() throws Exception {
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -272,8 +279,8 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 	protected final MBeanServer getMbeanServer() {
 		return mbeanServer;
 	}
-	
-    /**
+
+	/**
 	 * Gets the value of a specific attribute of a named MBean. The MBean is
 	 * identified by its object name.
 	 * 
@@ -293,8 +300,7 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 		} catch (JMException e) {
 			throw new IllegalArgumentException(String.format(
 					"cannot get attribute %s from mbean %s", attribute,
-					objectName),
-					e);
+					objectName), e);
 		}
 	}
 }

@@ -34,7 +34,7 @@ public final class StartLevelConstants {
 	}
 
 	/** MBean object name format. */
-	public static final String OBJECTNAME_FORMAT = "com.buschmais.osgi.maexo:type=StartLevel,id=%s";
+	public static final String OBJECTNAME_FORMAT = "com.buschmais.maexo:type=StartLevel,id=%s";
 
 
 	/** MBean description. */

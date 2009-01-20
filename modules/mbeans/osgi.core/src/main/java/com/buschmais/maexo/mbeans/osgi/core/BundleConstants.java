@@ -46,7 +46,7 @@ public final class BundleConstants {
 	public static final String MBEAN_DESCRIPTION = "Bundle MBean";
 
 	/** MBean object name format. */
-	public static final String OBJECTNAME_FORMAT = "com.buschmais.osgi.maexo:type=Bundle,name=%s,version=%s";
+	public static final String OBJECTNAME_FORMAT = "com.buschmais.maexo:type=Bundle,name=%s,version=%s";
 
 	/** Attribute: id. */
 	public static final OpenMBeanAttributeInfoSupport ID = new OpenMBeanAttributeInfoSupport(
@@ -154,5 +154,13 @@ public final class BundleConstants {
 			"update", "Update the bundle from the given url",
 			new OpenMBeanParameterInfo[] { new OpenMBeanParameterInfoSupport(
 					"url", "URL", SimpleType.STRING) }, SimpleType.VOID,
+			OpenMBeanOperationInfoSupport.ACTION_INFO);
+	
+	/** Operation: update from url. */
+	public static final OpenMBeanOperationInfoSupport UPDATEFROMBYTEARRAY = new OpenMBeanOperationInfoSupport(
+			"update", "Update the bundle from a byte array.",
+			new OpenMBeanParameterInfo[] { new OpenMBeanParameterInfoSupport(
+					"in", "BYTEARRAY", OpenTypeFactory.createArrayType(1,
+							SimpleType.BYTE)) }, SimpleType.VOID,
 			OpenMBeanOperationInfoSupport.ACTION_INFO);
 }

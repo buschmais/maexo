@@ -1,9 +1,14 @@
 package com.buschmais.maexo.test.mbeans.osgi.core;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;
@@ -16,20 +21,25 @@ import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 import org.osgi.framework.ServiceReference;
 
-import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 import com.buschmais.maexo.mbeans.osgi.core.BundleMBean;
 import com.buschmais.maexo.test.Constants;
-import com.buschmais.maexo.test.MaexoTests;
+import com.buschmais.maexo.test.common.mbeans.MaexoMBeanTests;
 
 /**
  * This class tests BundleMBean functionality.
  * 
  * @see MaexoTests
  */
-public class BundleMBeanTest extends MaexoTests implements BundleListener {
+public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 
 	/** Set containing all triggered BundleEvents. */
-	private Set<Integer> bundleEvents;
+	private BlockingQueue<Integer> bundleEvents;
+
+	/** The TestBundle. */
+	private Bundle bundle;
+
+	/** The TestBundleMBean. */
+	private BundleMBean bundleMBean;
 
 	/**
 	 * {@inheritDoc}
@@ -37,7 +47,8 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	@Override
 	protected void onSetUp() throws Exception {
 		super.onSetUp();
-		bundleEvents = new HashSet<Integer>();
+		bundle = getTestBundle();
+		bundleMBean = getTestBundleMBean(bundle);
 	}
 
 	/**
@@ -52,7 +63,6 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 				Constants.ARTIFACT_TESTBUNDLE, Constants.ARTIFACT_EASYMOCK };
 	}
 
-
 	/**
 	 * Returns a BundleMBean for the given Bundle.
 	 * 
@@ -62,10 +72,7 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 */
 	private BundleMBean getTestBundleMBean(Bundle bundle) {
 		// get corresponding BundleMBean
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
-				this.bundleContext);
-		ObjectName objectName = objectNameFactoryHelper.getObjectName(bundle,
-				Bundle.class);
+		ObjectName objectName = getObjectName(bundle, Bundle.class);
 		ServiceReference serviceReference = super.bundleContext
 				.getServiceReference(MBeanServer.class.getName());
 		MBeanServerConnection mbeanServer = (MBeanServer) super.bundleContext
@@ -80,8 +87,6 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 * Tests if all Bundles are registered on MBeanServer.
 	 */
 	public void test_allBundlesRegisteredAsMBeans() throws IOException {
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
-				this.bundleContext);
 		Bundle[] bundles = this.bundleContext.getBundles();
 		ServiceReference serviceReference = super.bundleContext
 				.getServiceReference(MBeanServer.class.getName());
@@ -89,8 +94,7 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 			MBeanServerConnection mbeanServer = (MBeanServer) super.bundleContext
 					.getService(serviceReference);
 			for (Bundle bundle : bundles) {
-				ObjectName objectName = objectNameFactoryHelper.getObjectName(
-						bundle, Bundle.class);
+				ObjectName objectName = getObjectName(bundle, Bundle.class);
 				assertTrue(String.format("BundleMBean %s is not registered.",
 						objectName), mbeanServer.isRegistered(objectName));
 			}
@@ -106,13 +110,10 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 *             on error
 	 */
 	public void test_testBundleAttributes() throws Exception {
-		Bundle bundle = getTestBundle();
-		BundleMBean bundleMBean = getTestBundleMBean(bundle);
-
-		assertTrue(bundle.getBundleId() == bundleMBean.getBundleId()
-				.longValue());
-		assertTrue(bundle.getLastModified() == bundleMBean.getLastModified()
-				.longValue());
+		assertEquals(Long.valueOf(bundle.getBundleId()), bundleMBean
+				.getBundleId());
+		assertEquals(Long.valueOf(bundle.getLastModified()), bundleMBean
+				.getLastModified());
 		assertEquals(bundle.getLocation(), bundleMBean.getLocation());
 	}
 
@@ -123,18 +124,14 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 *             on error
 	 */
 	public void test_getServicesInUse() throws Exception {
-		Bundle bundle = getTestBundle();
-		BundleMBean bundleMBean = getTestBundleMBean(bundle);
-
 		ServiceReference[] bundleServiceReferences = bundle.getServicesInUse();
 		ObjectName[] bundleMBeanServicesInUse = bundleMBean.getServicesInUse();
-		assertTrue(bundleServiceReferences.length == bundleMBeanServicesInUse.length);
+		assertEquals(bundleServiceReferences.length,
+				bundleMBeanServicesInUse.length);
 		for (int i = 0; i < bundleServiceReferences.length; i++) {
 			ServiceReference reference = bundleServiceReferences[i];
-			ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
-					this.bundleContext);
-			ObjectName bundleServiceObjectName = objectNameFactoryHelper
-					.getObjectName(reference, ServiceReference.class);
+			ObjectName bundleServiceObjectName = getObjectName(reference,
+					ServiceReference.class);
 			assertEquals(bundleServiceObjectName, bundleMBeanServicesInUse[i]);
 		}
 
@@ -147,21 +144,16 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 *             on error
 	 */
 	public void test_getRegisteredServices() throws Exception {
-		Bundle bundle = getTestBundle();
-		BundleMBean bundleMBean = getTestBundleMBean(bundle);
-
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
-				this.bundleContext);
 		final ServiceReference[] registeredBundleServices = bundle
 				.getRegisteredServices();
 		final ObjectName[] objectNameMBeanServices = bundleMBean
 				.getRegisteredServices();
-		assertTrue(registeredBundleServices.length == objectNameMBeanServices.length);
+		assertEquals(registeredBundleServices.length,
+				objectNameMBeanServices.length);
 		for (int i = 0; i < registeredBundleServices.length; i++) {
 			ServiceReference registeredBundleService = registeredBundleServices[i];
-			final ObjectName objectNameBundleService = objectNameFactoryHelper
-					.getObjectName(registeredBundleService,
-							ServiceReference.class);
+			final ObjectName objectNameBundleService = getObjectName(
+					registeredBundleService, ServiceReference.class);
 			assertEquals(objectNameBundleService, objectNameMBeanServices[i]);
 		}
 	}
@@ -174,8 +166,6 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 */
 	@SuppressWarnings("unchecked")
 	public void test_getHeaders() throws Exception {
-		Bundle bundle = getTestBundle();
-		BundleMBean bundleMBean = getTestBundleMBean(bundle);
 		final Enumeration bundleKeys = bundle.getHeaders().keys();
 		final Enumeration bundleValues = bundle.getHeaders().elements();
 		final TabularData bundleMBeanHeaders = bundleMBean.getHeaders();
@@ -187,7 +177,7 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 			assertTrue(bundleMBeanHeaders.get(new String[] { key }).values()
 					.contains(value));
 		}
-		assertTrue(bundleHeaderCount == bundleMBeanHeaders.size());
+		assertEquals(bundleHeaderCount, bundleMBeanHeaders.size());
 	}
 
 	/**
@@ -197,32 +187,85 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 * @throws Exception
 	 *             on error
 	 */
-	//FIXME race-conditions as bundle-listener is invoked asynchronously
 	public void test_changeEvents() throws Exception {
-		Bundle bundle = getTestBundle();
-		BundleMBean bundleMBean = getTestBundleMBean(bundle);
 
-		this.bundleContext.addBundleListener(this);
+		String url = bundleMBean.getLocation();
+		// get byte[] for update(byte[] array)
+		String prefix = "file:/";
+		// read file
+		FileInputStream inStream;
+		if (url.startsWith(prefix)) {
+			inStream = new FileInputStream(url.substring(prefix.length()));
+		} else {
+			inStream = new FileInputStream(url);
+		}
+		// convert into OutputStream
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		byte[] tempArray = new byte[4096];
+		int readBytes = 0;
+		do {
+			readBytes = inStream.read(tempArray);
+			outStream.write(tempArray, 0, readBytes);
+		} while (readBytes == 4096);
+		// get byte[]
+		byte[] bundleArray = outStream.toByteArray();
+		
+		bundleContext.addBundleListener(this);
+		
 		// make sure bundle is started
 		if (Bundle.ACTIVE != bundle.getState()) {
 			bundleMBean.start();
+			synchronized (this) {
+				this.wait(5000);
+			}
+			assertTrue(bundleEvents.contains(Integer
+					.valueOf(BundleEvent.STARTED)));
 		}
-		assertTrue(bundle.getState() == bundleMBean.getState().longValue()
-				&& bundle.getState() == Bundle.ACTIVE);
-		// test stop bundle
+		bundleEvents = new ArrayBlockingQueue<Integer>(20);
+		// run methods to test
 		bundleMBean.stop();
-		assertTrue(bundle.getState() == bundleMBean.getState().longValue()
-				&& bundle.getState() == Bundle.RESOLVED);
-		// test start bundle
 		bundleMBean.start();
-		assertTrue(bundle.getState() == bundleMBean.getState().longValue()
-				&& bundle.getState() == Bundle.ACTIVE);
-		// test update bundle
 		bundleMBean.update();
-		assertTrue(bundleEvents.contains(Integer.valueOf(BundleEvent.UPDATED)));
-		// test uninstall bundle
+		bundleMBean.update(url);
+		bundleMBean.update(bundleArray);
 		bundleMBean.uninstall();
-		assertEquals(Bundle.UNINSTALLED, bundle.getState());
+
+		// create Queue containing expected BundleEvents
+		Queue<Integer> expectedEvents = new LinkedList<Integer>();
+		// bundleMBean.stop();
+		expectedEvents.offer(Integer.valueOf(BundleEvent.STOPPED));
+		// bundleMBean.start();
+		expectedEvents.offer(Integer.valueOf(BundleEvent.STARTED));
+		// bundleMBean.update();
+		expectedEvents.offer(Integer.valueOf(BundleEvent.STOPPED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.UNRESOLVED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.UPDATED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.RESOLVED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.STARTED));
+		// bundleMBean.update(url);
+		expectedEvents.offer(Integer.valueOf(BundleEvent.STOPPED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.UNRESOLVED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.UPDATED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.RESOLVED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.STARTED));
+		// bundleMBean.update(bundleArray);
+		expectedEvents.offer(Integer.valueOf(BundleEvent.STOPPED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.UNRESOLVED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.UPDATED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.RESOLVED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.STARTED));
+		// bundleMBean.uninstall();
+		expectedEvents.offer(Integer.valueOf(BundleEvent.STOPPED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.UNRESOLVED));
+		expectedEvents.offer(Integer.valueOf(BundleEvent.UNINSTALLED));
+		
+		// compare expected BundleEvents with fired BundleEvents
+		while (!expectedEvents.isEmpty()) {
+			Integer event = this.bundleEvents.poll(5, TimeUnit.SECONDS);
+			Integer expectedEvent = expectedEvents.poll();
+			assertEquals(expectedEvent, event);
+		}
+
 		this.bundleContext.removeBundleListener(this);
 	}
 
@@ -230,7 +273,8 @@ public class BundleMBeanTest extends MaexoTests implements BundleListener {
 	 * {@inheritDoc}
 	 */
 	public void bundleChanged(BundleEvent event) {
-		bundleEvents.add(Integer.valueOf(event.getType()));
+		final Integer eventType = Integer.valueOf(event.getType());
+		bundleEvents.offer(eventType);
 	}
 
 }

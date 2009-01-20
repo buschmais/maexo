@@ -179,7 +179,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 		if (bundles == null) {
 			return null;
 		}
-		return this.getObjectNames(bundles);
+		return this.getObjectNames(bundles, Bundle.class);
 	}
 
 	/**
@@ -239,7 +239,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 			throw new IllegalArgumentException(String.format(
 					"cannot get bundle for id %s", id));
 		}
-		return this.getObjectNames(this.packageAdmin.getFragments(bundle));
+		return this.getObjectNames(this.packageAdmin.getFragments(bundle),
+				Bundle.class);
 	}
 
 	/**
@@ -259,7 +260,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 			throw new IllegalArgumentException(String.format(
 					"cannot get bundle for id %s", id));
 		}
-		return this.getObjectNames(this.packageAdmin.getHosts(bundle));
+		return this.getObjectNames(this.packageAdmin.getHosts(bundle),
+				Bundle.class);
 	}
 
 	/**
@@ -283,7 +285,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 										requiredBundle.getBundle(),
 										Bundle.class),
 								this.getObjectNames(requiredBundle
-										.getRequiringBundles()),
+										.getRequiringBundles(), Bundle.class),
 								requiredBundle.getSymbolicName(),
 								requiredBundle.getVersion().toString(),
 								Boolean.valueOf(requiredBundle
@@ -414,7 +416,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 									exportedPackage.getExportingBundle(),
 									Bundle.class),
 							this.getObjectNames(exportedPackage
-									.getImportingBundles()),
+									.getImportingBundles(), Bundle.class),
 							exportedPackage.getName(),
 							exportedPackage.getSpecificationVersion(),
 							exportedPackage.getVersion().toString(),
@@ -425,20 +427,22 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	}
 
 	/**
-	 * Converts the given bundles to object names.
+	 * Converts the given objects to object names.
 	 * 
-	 * @param bundles
-	 *            the bundles
+	 * @param objects
+	 *            the objects
+	 * @param clazz
+	 *            the classtype of the given objects
 	 * @return the object names
 	 */
-	private ObjectName[] getObjectNames(Bundle[] bundles) {
-		if (bundles == null) {
+	private ObjectName[] getObjectNames(Object[] objects, Class<?> clazz) {
+		if (objects == null) {
 			return null;
 		}
-		ObjectName[] objectNames = new ObjectName[bundles.length];
-		for (int i = 0; i < bundles.length; i++) {
+		ObjectName[] objectNames = new ObjectName[objects.length];
+		for (int i = 0; i < objects.length; i++) {
 			objectNames[i] = this.objectNameFactoryHelper.getObjectName(
-					bundles[i], org.osgi.framework.Bundle.class);
+					objects[i], clazz);
 		}
 		return objectNames;
 	}

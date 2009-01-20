@@ -32,8 +32,8 @@ import com.buschmais.maexo.test.MaexoTests;
  */
 public class ObjectNameFactoryHelperTest extends MaexoTests {
 
-	private static final String OBJECTNAME_RESOURCE_A = "com.buschmais.osgi.maexo:type=ResourceA";
-	private static final String OBJECTNAME_RESOURCE_B = "com.buschmais.osgi.maexo:type=ResourceB";
+	private static final String OBJECTNAME_RESOURCE_A = "com.buschmais.maexo:type=ResourceA";
+	private static final String OBJECTNAME_RESOURCE_B = "com.buschmais.maexo:type=ResourceB";
 
 	private ObjectNameFactoryHelper objectNameFactoryHelper;
 

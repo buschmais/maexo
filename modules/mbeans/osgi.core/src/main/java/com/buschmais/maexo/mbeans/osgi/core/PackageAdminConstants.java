@@ -41,7 +41,7 @@ public final class PackageAdminConstants {
 	}
 
 	/** MBean object name format. */
-	public static final String OBJECTNAME_FORMAT = "com.buschmais.osgi.maexo:type=PackageAdmin,id=%s";
+	public static final String OBJECTNAME_FORMAT = "com.buschmais.maexo:type=PackageAdmin,id=%s";
 
 	/** MBean description. */
 	public static final String MBEAN_DESCRIPTION = "PackageAdmin MBean";

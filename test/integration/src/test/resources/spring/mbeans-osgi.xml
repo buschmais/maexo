@@ -22,24 +22,24 @@
 	-->
 
 	<!-- register a classic mbean instance -->
-	<bean id="classicMBean" class="com.buschmais.maexo.test.common.mbeans.Standard" />
+	<bean id="standardMBean" class="com.buschmais.maexo.test.common.mbeans.Standard" />
 
-	<osgi:service ref="classicMBean"
+	<osgi:service ref="standardMBean"
 		interface="com.buschmais.maexo.test.common.mbeans.StandardMBean">
 		<osgi:service-properties>
-			<entry key="objectName" value="com.buschmais.osgi.maexo:type=classicMBean" />
+			<entry key="objectName" value="com.buschmais.maexo:type=standardMBean" />
 		</osgi:service-properties>
 	</osgi:service>
 
 
 	<!-- register a notification listener for the classic mbean -->
-	<bean id="classicMBeanNotificationListener"
+	<bean id="standardMBeanNotificationListener"
 		class="com.buschmais.maexo.test.common.mbeans.StandardMBeanNotificationListener" />
 
-	<osgi:service ref="classicMBeanNotificationListener"
+	<osgi:service ref="standardMBeanNotificationListener"
 		interface="javax.management.NotificationListener">
 		<osgi:service-properties>
-			<entry key="objectName" value="com.buschmais.osgi.maexo:type=classicMBean" />
+			<entry key="objectName" value="com.buschmais.maexo:type=standardMBean" />
 			<entry key="handback" value="handbackObject" />
 		</osgi:service-properties>
 	</osgi:service>

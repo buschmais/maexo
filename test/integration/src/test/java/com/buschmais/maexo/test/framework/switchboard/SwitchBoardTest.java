@@ -44,7 +44,7 @@ import com.buschmais.maexo.test.common.mbeans.StandardMBean;
  */
 public class SwitchBoardTest extends MaexoTests {
 
-	private static final String OBJECTNAME_TESTMBEAN = "com.buschmais.osgi.maexo:type=StandardMBean";
+	private static final String OBJECTNAME_TESTMBEAN = "com.buschmais.maexo:type=StandardMBean";
 
 	private ObjectName objectName;
 
@@ -168,7 +168,7 @@ public class SwitchBoardTest extends MaexoTests {
 	 * @throws MBeanRegistrationException
 	 * @throws NotCompliantMBeanException
 	 */
-	public void test_registerClassicMBeanOnExistingServer()
+	public void test_registerStandardMBeanOnExistingServer()
 			throws MalformedObjectNameException, NullPointerException,
 			InstanceNotFoundException, InstanceAlreadyExistsException,
 			MBeanRegistrationException, NotCompliantMBeanException {
@@ -210,7 +210,7 @@ public class SwitchBoardTest extends MaexoTests {
 	 * @throws MBeanRegistrationException
 	 * @throws NotCompliantMBeanException
 	 */
-	public void test_registerClassicMBeanOnNewServer()
+	public void test_registerStandardMBeanOnNewServer()
 			throws MalformedObjectNameException, NullPointerException,
 			InstanceAlreadyExistsException, MBeanRegistrationException,
 			NotCompliantMBeanException, InstanceNotFoundException {

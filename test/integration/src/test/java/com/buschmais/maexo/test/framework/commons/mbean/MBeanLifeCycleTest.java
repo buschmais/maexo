@@ -30,7 +30,6 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
 
 import com.buschmais.maexo.framework.commons.mbean.lifecycle.DefaultServiceMBeanLifeCycleSupport;
-import com.buschmais.maexo.framework.commons.mbean.lifecycle.MBeanLifecycleSupport;
 import com.buschmais.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLifeCycleSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
 import com.buschmais.maexo.test.Constants;
@@ -46,7 +45,7 @@ public class MBeanLifeCycleTest extends MaexoTests {
 	/**
 	 * The object name to use for publishing MBeans.
 	 */
-	private static final String OBJECTNAME_STANDARDMBEAN = "com.buschmais.osgi.maexo:type=StandardMBean";
+	private static final String OBJECTNAME_STANDARDMBEAN = "com.buschmais.maexo:type=StandardMBean";
 
 	/**
 	 * The default timeout to use for the OSGI service tracker.

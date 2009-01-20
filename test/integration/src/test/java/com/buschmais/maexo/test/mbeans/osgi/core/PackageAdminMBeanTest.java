@@ -30,15 +30,15 @@ import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryH
 import com.buschmais.maexo.mbeans.osgi.core.PackageAdminConstants;
 import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBean;
 import com.buschmais.maexo.test.Constants;
-import com.buschmais.maexo.test.MaexoTests;
+import com.buschmais.maexo.test.common.mbeans.MaexoMBeanTests;
 
-public class PackageAdminMBeanTest extends MaexoTests implements
+public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		FrameworkListener, NotificationListener {
 
 	private static final String TESTPACKAGE_NAME = "com.buschmais.maexo.test.testbundle";
 
 	private Set<Integer> frameworkEvents;
-	
+
 	/** The TestBundle. */
 	private Bundle bundle;
 
@@ -59,7 +59,7 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 		packageAdmin = getPackageAdmin();
 		packageAdminMBean = getPackageAdminMBean(packageAdmin);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -69,7 +69,7 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 			this.notify();
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -78,7 +78,7 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 			this.notify();
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -133,7 +133,7 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 				.getServiceReference(MBeanServer.class.getName());
 		MBeanServerConnection mbeanServer = (MBeanServer) super.bundleContext
 				.getService(serviceReference);
-		// get PackageAdminBMean
+		// get PackageAdminMBean
 		final PackageAdminMBean packageAdminMBean = (PackageAdminMBean) MBeanServerInvocationHandler
 				.newProxyInstance(mbeanServer, objectName,
 						PackageAdminMBean.class, false);
@@ -155,8 +155,6 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 			final CompositeData exportedPackageCompositeData,
 			final ExportedPackage exportedPackage) {
 		// We need to compare all properties.
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
-				bundleContext);
 		// compare name
 		final String exportedPackageName = exportedPackage.getName();
 		final String compositeDataName = (String) exportedPackageCompositeData
@@ -166,15 +164,14 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 		final Bundle exportingBundle = exportedPackage.getExportingBundle();
 		final ObjectName compositeDataExportingBundle = (ObjectName) exportedPackageCompositeData
 				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_EXPORTINGBUNDLE);
-		assertEquals(objectNameFactoryHelper.getObjectName(exportingBundle,
-				Bundle.class), compositeDataExportingBundle);
+		assertEquals(getObjectName(exportingBundle, Bundle.class),
+				compositeDataExportingBundle);
 		// compare importing bundles by objectName
 		final Bundle[] importingBundles = exportedPackage.getImportingBundles();
 		final ObjectName[] compositeDataImportingBundles = (ObjectName[]) exportedPackageCompositeData
 				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_IMPORTINGBUNDLE);
 		for (int i = 0; i < importingBundles.length; i++) {
-			assertEquals(objectNameFactoryHelper.getObjectName(
-					importingBundles[i], Bundle.class),
+			assertEquals(getObjectName(importingBundles[i], Bundle.class),
 					compositeDataImportingBundles[i]);
 		}
 		// compare specification version
@@ -212,8 +209,6 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 			final CompositeData requiredBundleCompositeData,
 			final RequiredBundle requiredBundle) {
 		// We need to compare all properties.
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
-				bundleContext);
 		// compare symbolic name
 		final String requiredBundleSymbolicName = requiredBundle
 				.getSymbolicName();
@@ -224,8 +219,7 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 		final Bundle bundle = requiredBundle.getBundle();
 		final ObjectName compositeDataBundleObjectName = (ObjectName) requiredBundleCompositeData
 				.get(PackageAdminConstants.REQUIREDBUNDLE_ITEM_BUNDLE);
-		ObjectName bundleObjectName = objectNameFactoryHelper.getObjectName(
-				bundle, Bundle.class);
+		ObjectName bundleObjectName = getObjectName(bundle, Bundle.class);
 		assertEquals(bundleObjectName, compositeDataBundleObjectName);
 		// compare version
 		final Version bundleVersion = requiredBundle.getVersion();
@@ -243,24 +237,11 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 		final ObjectName[] compositeDataRequiringBundlesObjectNames = (ObjectName[]) requiredBundleCompositeData
 				.get(PackageAdminConstants.REQUIREDBUNDLE_ITEM_REQUIRINGBUNDLES);
 		for (int i = 0; i < requiringBundles.length; i++) {
-			ObjectName requiringBundleObjectname = objectNameFactoryHelper
-					.getObjectName(requiringBundles[i], Bundle.class);
+			ObjectName requiringBundleObjectname = getObjectName(
+					requiringBundles[i], Bundle.class);
 			assertEquals(requiringBundleObjectname,
 					compositeDataRequiringBundlesObjectNames[i]);
 		}
-	}
-	
-	/**
-	 * Returns the object name for the given bundle.
-	 * 
-	 * @return the object name
-	 */
-	private ObjectName getObjectName(Bundle bundle) {
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
-				this.bundleContext);
-		ObjectName objectName = objectNameFactoryHelper.getObjectName(bundle,
-				Bundle.class);
-		return objectName;
 	}
 
 	/**
@@ -286,9 +267,9 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 	 * Tests method <code>getBundleType(Long id)</code>.
 	 */
 	public void test_getBundleTypeLong() {
-		assertEquals(packageAdminMBean.getBundleType(Long.valueOf(bundle
-				.getBundleId())), Integer.valueOf(packageAdmin
-				.getBundleType(bundle)));
+		assertEquals(Integer.valueOf(packageAdmin.getBundleType(bundle)),
+				packageAdminMBean.getBundleType(Long.valueOf(bundle
+						.getBundleId())));
 	}
 
 	/**
@@ -298,9 +279,9 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 	 *             on error
 	 */
 	public void test_getBundleTypeObjectName() throws Exception {
-		ObjectName objectName = getObjectName(bundle);
-		assertEquals(packageAdminMBean.getBundleType(objectName), Integer
-				.valueOf(packageAdmin.getBundleType(bundle)));
+		ObjectName objectName = getObjectName(bundle, Bundle.class);
+		assertEquals(Integer.valueOf(packageAdmin.getBundleType(bundle)),
+				packageAdminMBean.getBundleType(objectName));
 	}
 
 	/**
@@ -318,9 +299,10 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 		final Bundle[] packageAdminBundles = packageAdmin.getBundles(
 				symbolicName, null);
 		for (int i = 0; i < packageAdminBundles.length; i++) {
-			ObjectName packageAdminObjectName = getObjectName(packageAdminBundles[i]);
-			assertEquals(packageAdminMBeanObjectNames[i],
-					packageAdminObjectName);
+			ObjectName packageAdminObjectName = getObjectName(
+					packageAdminBundles[i], Bundle.class);
+			assertEquals(packageAdminObjectName,
+					packageAdminMBeanObjectNames[i]);
 		}
 		// negative test - both methods should return null
 		assertNull(packageAdminMBean.getBundles("murks", null));
@@ -352,7 +334,7 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 	 *             on error
 	 */
 	public void test_getExportedPackagesByBundleName() throws Exception {
-		ObjectName objectName = getObjectName(bundle);
+		ObjectName objectName = getObjectName(bundle, Bundle.class);
 		ExportedPackage[] exportedPackages = packageAdmin
 				.getExportedPackages(bundle);
 		TabularData exportedPackagesMBean = packageAdminMBean
@@ -360,7 +342,6 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 
 		compareAllExportedPackages(exportedPackages, exportedPackagesMBean);
 	}
-
 
 	/**
 	 * Tests method <code>TabularData getExportedPackages(Long id)</code>.
@@ -401,16 +382,17 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 	 *             on error
 	 */
 	public void test_getFragmentsByBundleName() throws Exception {
-		ObjectName bundleName = getObjectName(bundle);
+		ObjectName bundleName = getObjectName(bundle, Bundle.class);
 
 		final ObjectName[] fragmentObjectNames = packageAdminMBean
 				.getFragments(bundleName);
 		Bundle[] fragments = packageAdmin.getFragments(bundle);
 		if (null != fragmentObjectNames && null != fragments) {
-			assertEquals(fragmentObjectNames.length, fragments.length);
+			assertEquals(fragments.length, fragmentObjectNames.length);
 			for (int i = 0; i < fragments.length; i++) {
-				ObjectName fragmentName = getObjectName(fragments[i]);
-				assertEquals(fragmentObjectNames[i], fragmentName);
+				ObjectName fragmentName = getObjectName(fragments[i],
+						Bundle.class);
+				assertEquals(fragmentName, fragmentObjectNames[i]);
 			}
 		}
 	}
@@ -428,10 +410,11 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 		Bundle[] fragments = packageAdmin.getFragments(bundle);
 
 		if (null != fragmentObjectNames && null != fragments) {
-			assertEquals(fragmentObjectNames.length, fragments.length);
+			assertEquals(fragments.length, fragmentObjectNames.length);
 			for (int i = 0; i < fragments.length; i++) {
-				ObjectName fragmentName = getObjectName(fragments[i]);
-				assertEquals(fragmentObjectNames[i], fragmentName);
+				ObjectName fragmentName = getObjectName(fragments[i],
+						Bundle.class);
+				assertEquals(fragmentName, fragmentObjectNames[i]);
 			}
 		}
 	}
@@ -443,16 +426,16 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 	 *             on error
 	 */
 	public void test_getHostsByBundleName() throws Exception {
-		ObjectName bundleName = getObjectName(bundle);
+		ObjectName bundleName = getObjectName(bundle, Bundle.class);
 
 		final ObjectName[] hostObjectNames = packageAdminMBean
 				.getHosts(bundleName);
 		Bundle[] hosts = packageAdmin.getHosts(bundle);
 		if (null != hostObjectNames && null != hosts) {
-			assertEquals(hostObjectNames.length, hosts.length);
+			assertEquals(hosts.length, hostObjectNames.length);
 			for (int i = 0; i < hosts.length; i++) {
-				ObjectName hostName = getObjectName(hosts[i]);
-				assertEquals(hostObjectNames[i], hostName);
+				ObjectName hostName = getObjectName(hosts[i], Bundle.class);
+				assertEquals(hostName, hostObjectNames[i]);
 			}
 		}
 	}
@@ -469,14 +452,14 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 		Bundle[] hosts = packageAdmin.getHosts(bundle);
 
 		if (null != hostObjectNames && null != hosts) {
-			assertEquals(hostObjectNames.length, hosts.length);
+			assertEquals(hosts.length, hostObjectNames.length);
 			for (int i = 0; i < hosts.length; i++) {
-				ObjectName hostName = getObjectName(hosts[i]);
-				assertEquals(hostObjectNames[i], hostName);
+				ObjectName hostName = getObjectName(hosts[i], Bundle.class);
+				assertEquals(hostName, hostObjectNames[i]);
 			}
 		}
 	}
-	
+
 	/**
 	 * Tests method
 	 * <code>TabularData getRequiredBundles(String symbolicName)</code>.
@@ -501,7 +484,7 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 		requiredBundleTabularData = packageAdminMBean
 				.getRequiredBundles(bundleSymbolicName);
 		requiredBundles = packageAdmin.getRequiredBundles(bundleSymbolicName);
-		
+
 		assertEquals(requiredBundles.length, requiredBundleTabularData.size());
 		for (int i = 0; i < requiredBundles.length; i++) {
 			String requiredBundleName = requiredBundles[i].getSymbolicName();
@@ -532,7 +515,7 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 				.valueOf(FrameworkEvent.PACKAGES_REFRESHED)));
 		bundleContext.removeFrameworkListener(this);
 	}
-	
+
 	/**
 	 * Tests method <code>void refreshPackages(ObjectName[] objectNames)</code>.
 	 * 
@@ -540,7 +523,7 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 	 *             on error
 	 */
 	public void test_refreshPackagesByBundleObjectNames() throws Exception {
-		ObjectName objectName = getObjectName(bundle);
+		ObjectName objectName = getObjectName(bundle, Bundle.class);
 		this.bundleContext.addFrameworkListener(this);
 		packageAdminMBean.refreshPackages(new ObjectName[] { objectName });
 		synchronized (this) {
@@ -550,7 +533,7 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 				.valueOf(FrameworkEvent.PACKAGES_REFRESHED)));
 		this.bundleContext.removeFrameworkListener(this);
 	}
-	
+
 	/**
 	 * Tests method <code>Boolean resolveBundles(Long[] ids)</code>.
 	 * 
@@ -560,7 +543,7 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 	public void test_resolveBundlesByBundleIds() throws Exception {
 		String location = bundle.getLocation();
 		bundle.uninstall();
-		
+
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
 		properties.put(ObjectName.class.getName(), new ObjectName(
 				"JMImplementation:type=MBeanServerDelegate"));
@@ -576,7 +559,7 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 				.booleanValue());
 		notificationListenerServiceRegistration.unregister();
 	}
-	
+
 	/**
 	 * Tests method
 	 * <code>Boolean resolveBundles(ObjectName[] objectNames)</code>.
@@ -589,16 +572,17 @@ public class PackageAdminMBeanTest extends MaexoTests implements
 		bundle.uninstall();
 
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
-		properties.put(ObjectName.class.getName(), new ObjectName("JMImplementation:type=MBeanServerDelegate"));
+		properties.put(ObjectName.class.getName(), new ObjectName(
+				"JMImplementation:type=MBeanServerDelegate"));
 		ServiceRegistration notificationListenerServiceRegistration = this.bundleContext
-				.registerService(NotificationListener.class.getName(),
-						this, properties);
+				.registerService(NotificationListener.class.getName(), this,
+						properties);
 
 		Bundle newBundle = bundleContext.installBundle(location);
 		synchronized (this) {
 			this.wait(5000);
 		}
-		ObjectName objectName = getObjectName(newBundle);
+		ObjectName objectName = getObjectName(newBundle, Bundle.class);
 		assertTrue(packageAdminMBean.resolveBundles(
 				new ObjectName[] { objectName }).booleanValue());
 		notificationListenerServiceRegistration.unregister();

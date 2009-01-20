@@ -16,9 +16,6 @@
  */
 package com.buschmais.maexo.test;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
 import org.springframework.osgi.test.AbstractConfigurableBundleCreatorTests;
 
 /**
@@ -27,36 +24,12 @@ import org.springframework.osgi.test.AbstractConfigurableBundleCreatorTests;
 public class MaexoTests extends AbstractConfigurableBundleCreatorTests {
 
 
-	/** Symbolic name for the testbundle. */
-	private static final String TESTBUNDLE_SYMBOLIC_NAME = "maexo-test.testbundle";
-
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected String[] getTestFrameworkBundlesNames() {
 		return Constants.TEST_FRAMEWORK_BUNDLES_NAMES;
-	}
-	
-
-	/**
-	 * Returns a TestBundle from OSGI container for testing of general Bundle
-	 * functionality.
-	 * 
-	 * @return the bundle
-	 * @throws InvalidSyntaxException
-	 *             if no PackageAdmin could be found
-	 */
-	protected Bundle getTestBundle() throws InvalidSyntaxException {
-		ServiceReference serviceReference = this.bundleContext
-				.getServiceReference(org.osgi.service.packageadmin.PackageAdmin.class
-						.getName());
-		final org.osgi.service.packageadmin.PackageAdmin packageAdmin = (org.osgi.service.packageadmin.PackageAdmin) bundleContext
-				.getService(serviceReference);
-		Bundle[] bundles = packageAdmin.getBundles(TESTBUNDLE_SYMBOLIC_NAME, "0.0.0");
-		assertTrue(bundles.length == 1);
-		Bundle bundle = bundles[0];
-		return bundle;
 	}
 
 }
