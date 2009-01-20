@@ -191,7 +191,7 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 
 		String url = bundleMBean.getLocation();
 		// get byte[] for update(byte[] array)
-		String prefix = "file:/";
+		String prefix = "file:";
 		// read file
 		FileInputStream inStream;
 		if (url.startsWith(prefix)) {
