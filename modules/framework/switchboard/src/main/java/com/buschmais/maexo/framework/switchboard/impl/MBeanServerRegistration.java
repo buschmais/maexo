@@ -27,9 +27,8 @@ import org.osgi.framework.ServiceReference;
  * @see SwitchBoardImpl
  * @see MBeanServer
  */
-public final class MBeanServerRegistration {
-
-	private MBeanServer mbeanServer;
+public final class MBeanServerRegistration extends
+		MBeanServerConnectionRegistration {
 
 	/**
 	 * Constructor.
@@ -45,60 +44,13 @@ public final class MBeanServerRegistration {
 	 */
 	public MBeanServerRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference) {
-		this.mbeanServer = (MBeanServer) bundleContext
-				.getService(serviceReference);
+		super(bundleContext, serviceReference);
 	}
 
 	/**
 	 * @return the mbeanServer
 	 */
-	public MBeanServer getMbeanServer() {
-		return mbeanServer;
+	public MBeanServer getMBeanServer() {
+		return (MBeanServer) super.getMBeanServerConnection();
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((mbeanServer == null) ? 0 : mbeanServer.hashCode());
-		return result;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		MBeanServerRegistration other = (MBeanServerRegistration) obj;
-		if (mbeanServer == null) {
-			if (other.mbeanServer != null) {
-				return false;
-			}
-		} else if (!mbeanServer.equals(other.mbeanServer)) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString() {
-		return this.mbeanServer.toString();
-	}
-
 }

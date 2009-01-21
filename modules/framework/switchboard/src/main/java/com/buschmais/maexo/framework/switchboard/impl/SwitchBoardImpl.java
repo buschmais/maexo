@@ -119,7 +119,7 @@ public final class SwitchBoardImpl {
 			this.notificationListeners.add(notificationListenerRegistration);
 			for (MBeanServerConnectionRegistration mbeanServerConnectionRegistration : this.mbeanServerConnections) {
 				this.addNotificationListener(mbeanServerConnectionRegistration
-						.getMbeanServerConnection(),
+						.getMBeanServerConnection(),
 						notificationListenerRegistration.getObjectName(),
 						notificationListenerRegistration
 								.getNotificationListener(),
@@ -155,7 +155,7 @@ public final class SwitchBoardImpl {
 			this.mbeanServerConnections.add(mbeanServerConnectionRegistration);
 			for (NotificationListenerRegistration notificationListenerRegistration : this.notificationListeners) {
 				this.addNotificationListener(mbeanServerConnectionRegistration
-						.getMbeanServerConnection(),
+						.getMBeanServerConnection(),
 						notificationListenerRegistration.getObjectName(),
 						notificationListenerRegistration
 								.getNotificationListener(),
@@ -219,7 +219,7 @@ public final class SwitchBoardImpl {
 					mbeanRegistration);
 			this.mbeans.add(mbeanRegistration);
 			for (MBeanServerRegistration mbeanServerRegistration : this.mbeanServers) {
-				this.registerMBean(mbeanServerRegistration.getMbeanServer(),
+				this.registerMBean(mbeanServerRegistration.getMBeanServer(),
 						mbeanRegistration.getObjectName(), mbeanRegistration
 								.getMbean());
 			}
@@ -244,7 +244,7 @@ public final class SwitchBoardImpl {
 					mbeanServerRegistration);
 			this.mbeanServers.add(mbeanServerRegistration);
 			for (MBeanRegistration mbeanRegistration : this.mbeans) {
-				this.registerMBean(mbeanServerRegistration.getMbeanServer(),
+				this.registerMBean(mbeanServerRegistration.getMBeanServer(),
 						mbeanRegistration.getObjectName(), mbeanRegistration
 								.getMbean());
 			}
@@ -302,7 +302,7 @@ public final class SwitchBoardImpl {
 			for (MBeanServerConnectionRegistration mbeanServerConnectionRegistration : this.mbeanServerConnections) {
 				this.removeNotificationListener(
 						mbeanServerConnectionRegistration
-								.getMbeanServerConnection(),
+								.getMBeanServerConnection(),
 						notificationListenerRegistration.getObjectName(),
 						notificationListenerRegistration
 								.getNotificationListener(),
@@ -338,7 +338,7 @@ public final class SwitchBoardImpl {
 			for (NotificationListenerRegistration notificationListenerRegistration : this.notificationListeners) {
 				this.removeNotificationListener(
 						mbeanServerConnectionRegistration
-								.getMbeanServerConnection(),
+								.getMBeanServerConnection(),
 						notificationListenerRegistration.getObjectName(),
 						notificationListenerRegistration
 								.getNotificationListener(),
@@ -403,7 +403,7 @@ public final class SwitchBoardImpl {
 			logger.debug("unregistering mbean {} from all known mbean servers",
 					mbeanRegistration);
 			for (MBeanServerRegistration mbeanServerRegistration : this.mbeanServers) {
-				this.unregisterMBean(mbeanServerRegistration.getMbeanServer(),
+				this.unregisterMBean(mbeanServerRegistration.getMBeanServer(),
 						mbeanRegistration.getObjectName());
 			}
 		} else {
@@ -427,7 +427,7 @@ public final class SwitchBoardImpl {
 					"disassociating mbean server {} with all known mbeans",
 					mbeanServerRegistration);
 			for (MBeanRegistration mbeanRegistration : this.mbeans) {
-				this.unregisterMBean(mbeanServerRegistration.getMbeanServer(),
+				this.unregisterMBean(mbeanServerRegistration.getMBeanServer(),
 						mbeanRegistration.getObjectName());
 			}
 		} else {

@@ -17,9 +17,14 @@
 package com.buschmais.maexo.server.platform.impl;
 
 import java.lang.management.ManagementFactory;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;
+import javax.management.MBeanServerDelegateMBean;
+import javax.management.MBeanServerInvocationHandler;
+import javax.management.ObjectName;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -32,7 +37,8 @@ import org.slf4j.LoggerFactory;
  */
 public final class Activator implements BundleActivator {
 
-	private static final Logger logger = LoggerFactory.getLogger(Activator.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(Activator.class);
 
 	/**
 	 * Represents the platform mbean server.
@@ -45,11 +51,19 @@ public final class Activator implements BundleActivator {
 	public void start(BundleContext bundleContext) throws Exception {
 		logger.info("Starting maexo Platform MBean Server");
 		MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
-		logger.debug("registering instance {} as service", mbeanServer);
+		MBeanServerDelegateMBean mbeanServerDelegateMBean = (MBeanServerDelegateMBean) MBeanServerInvocationHandler
+				.newProxyInstance(mbeanServer, new ObjectName(
+						"JMImplementation:type=MBeanServerDelegate"),
+						MBeanServerDelegateMBean.class, false);
+		String agentId = mbeanServerDelegateMBean.getMBeanServerId();
+		logger.debug("registering instance {} as service with agentId={}",
+				mbeanServer, agentId);
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		properties.put("agentId", agentId);
 		this.mbeanServerRegistration = bundleContext.registerService(
 				new String[] { MBeanServer.class.getName(),
 						MBeanServerConnection.class.getName() }, mbeanServer,
-				null);
+				properties);
 	}
 
 	/**

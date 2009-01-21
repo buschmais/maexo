@@ -48,7 +48,6 @@ public class SwitchBoardTest extends MaexoTests {
 
 	private ObjectName objectName;
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -58,7 +57,6 @@ public class SwitchBoardTest extends MaexoTests {
 		this.objectName = new ObjectName(OBJECTNAME_TESTMBEAN);
 	}
 
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -66,7 +64,6 @@ public class SwitchBoardTest extends MaexoTests {
 	protected void onTearDown() throws Exception {
 		super.onTearDown();
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -78,7 +75,22 @@ public class SwitchBoardTest extends MaexoTests {
 	}
 
 	/**
-	 * First registers the mbean server and afterwards the mbean as services
+	 * Registers an mbean server instance as OSGi service.
+	 * 
+	 * @param mbeanServer
+	 *            the mbean server
+	 * @return the service registration
+	 */
+	private ServiceRegistration registerMBeanServer(MBeanServer mbeanServer) {
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		// provide an agentId
+		properties.put("agentId", "localhost");
+		return super.bundleContext.registerService(MBeanServer.class.getName(),
+				mbeanServer, properties);
+	}
+
+	/**
+	 * First registers the mbean server and afterwards the mbean as services.
 	 * 
 	 * @param objectName
 	 *            the object name
@@ -104,8 +116,8 @@ public class SwitchBoardTest extends MaexoTests {
 		// do test
 		EasyMock.replay(serverMock);
 		// register mbean server
-		ServiceRegistration serverServiceRegistration = super.bundleContext
-				.registerService(MBeanServer.class.getName(), serverMock, null);
+		ServiceRegistration serverServiceRegistration = this
+				.registerMBeanServer(serverMock);
 		// register/unregister mbean
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
 		properties.put(ObjectName.class.getName(), objectName);
@@ -118,7 +130,7 @@ public class SwitchBoardTest extends MaexoTests {
 	}
 
 	/**
-	 * First registers the mbean and afterwards the mbean server as services
+	 * First registers the mbean and afterwards the mbean server as services.
 	 * 
 	 * @param objectName
 	 *            the object name
@@ -149,8 +161,8 @@ public class SwitchBoardTest extends MaexoTests {
 		ServiceRegistration mbeanServiceRegistration = this.bundleContext
 				.registerService(mbeanInterface.getName(), mbean, properties);
 		// register/unregister mbean server
-		ServiceRegistration serverServiceRegistration = super.bundleContext
-				.registerService(MBeanServer.class.getName(), serverMock, null);
+		ServiceRegistration serverServiceRegistration = this
+				.registerMBeanServer(serverMock);
 		serverServiceRegistration.unregister();
 		// verify mbean server
 		EasyMock.verify(serverMock);
@@ -159,7 +171,7 @@ public class SwitchBoardTest extends MaexoTests {
 	}
 
 	/**
-	 * test mbean server first registration using classic mbeans
+	 * Test mbean server first registration using standard mbeans.
 	 * 
 	 * @throws MalformedObjectNameException
 	 * @throws NullPointerException
@@ -173,14 +185,13 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceNotFoundException, InstanceAlreadyExistsException,
 			MBeanRegistrationException, NotCompliantMBeanException {
 		// create a mbean
-		StandardMBean mbean = EasyMock
-				.createMock(StandardMBean.class);
+		StandardMBean mbean = EasyMock.createMock(StandardMBean.class);
 		this.test_registerMBeanOnExistingServer(this.objectName, mbean,
 				StandardMBean.class);
 	}
 
 	/**
-	 * test mbean server first registration using dynamic mbeans
+	 * Test mbean server first registration using dynamic mbeans.
 	 * 
 	 * @throws MalformedObjectNameException
 	 * @throws NullPointerException
@@ -194,14 +205,13 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceNotFoundException, InstanceAlreadyExistsException,
 			MBeanRegistrationException, NotCompliantMBeanException {
 		// create a mbean
-		DynamicMBean mbean = EasyMock
-				.createMock(DynamicMBean.class);
+		DynamicMBean mbean = EasyMock.createMock(DynamicMBean.class);
 		this.test_registerMBeanOnExistingServer(this.objectName, mbean,
 				DynamicMBean.class);
 	}
 
 	/**
-	 * test mbean first registration using classic mbeans
+	 * Test mbean first registration using standard mbeans.
 	 * 
 	 * @throws MalformedObjectNameException
 	 * @throws NullPointerException
@@ -215,14 +225,13 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceAlreadyExistsException, MBeanRegistrationException,
 			NotCompliantMBeanException, InstanceNotFoundException {
 		// create a mbean
-		StandardMBean mbean = EasyMock
-				.createMock(StandardMBean.class);
+		StandardMBean mbean = EasyMock.createMock(StandardMBean.class);
 		this.test_registerMBeanOnNewServer(this.objectName, mbean,
 				StandardMBean.class);
 	}
 
 	/**
-	 * test mbean first registration using dynamic mbeans
+	 * Test mbean first registration using dynamic mbeans.
 	 * 
 	 * @throws MalformedObjectNameException
 	 * @throws NullPointerException
@@ -236,15 +245,30 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceAlreadyExistsException, MBeanRegistrationException,
 			NotCompliantMBeanException, InstanceNotFoundException {
 		// create a mbean
-		DynamicMBean mbean = EasyMock
-				.createMock(DynamicMBean.class);
+		DynamicMBean mbean = EasyMock.createMock(DynamicMBean.class);
 		this.test_registerMBeanOnNewServer(this.objectName, mbean,
 				DynamicMBean.class);
 	}
 
 	/**
+	 * Registers an mbean server connection instance as OSGi service.
+	 * 
+	 * @param mbeanServer
+	 *            the mbean server connection
+	 * @return the service registration
+	 */
+	private ServiceRegistration registerMBeanServerConnection(
+			MBeanServerConnection mbeanServerConnection) {
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		// provide an agentId
+		properties.put("agentId", "localhost");
+		return super.bundleContext.registerService(MBeanServerConnection.class
+				.getName(), mbeanServerConnection, properties);
+	}
+
+	/**
 	 * First registers the mbean server connection and afterwards registers the
-	 * notification listener as services
+	 * notification listener as services.
 	 */
 	public void test_addNotificationListenerOnExistingServerConnection()
 			throws Exception {
@@ -265,9 +289,8 @@ public class SwitchBoardTest extends MaexoTests {
 		// do test
 		EasyMock.replay(serverConnectionMock);
 		// register mbean server connection
-		ServiceRegistration serverConnectionServiceRegistration = super.bundleContext
-				.registerService(MBeanServerConnection.class.getName(),
-						serverConnectionMock, null);
+		ServiceRegistration serverConnectionServiceRegistration = this
+				.registerMBeanServerConnection(serverConnectionMock);
 		// register/unregister notification listener
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
 		properties.put(ObjectName.class.getName(), objectName);
@@ -284,7 +307,7 @@ public class SwitchBoardTest extends MaexoTests {
 
 	/**
 	 * First registers the notification listener and afterwards the mbean server
-	 * connection as services
+	 * connection as services.
 	 */
 	public void test_addNotificationListenerOnNewServerConnection()
 			throws Exception {
@@ -313,9 +336,8 @@ public class SwitchBoardTest extends MaexoTests {
 				.registerService(NotificationListener.class.getName(),
 						notificationListener, properties);
 		// register/unregister mbean server connection
-		ServiceRegistration serverServiceRegistration = super.bundleContext
-				.registerService(MBeanServerConnection.class.getName(),
-						serverConnectionMock, null);
+		ServiceRegistration serverServiceRegistration = this
+				.registerMBeanServerConnection(serverConnectionMock);
 		serverServiceRegistration.unregister();
 		// verify mbean server connection
 		EasyMock.verify(serverConnectionMock);

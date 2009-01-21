@@ -17,6 +17,9 @@
 package com.buschmais.maexo.framework.switchboard.impl;
 
 import javax.management.MBeanServerConnection;
+import javax.management.MBeanServerDelegateMBean;
+import javax.management.MBeanServerInvocationHandler;
+import javax.management.ObjectName;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -29,9 +32,11 @@ import org.osgi.framework.ServiceReference;
  * @see MBeanServerConnection
  * @see javax.management.MBeanServer
  */
-public final class MBeanServerConnectionRegistration {
+public class MBeanServerConnectionRegistration {
 
 	private MBeanServerConnection mbeanServerConnection;
+
+	private String agentId;
 
 	/**
 	 * Constructor.
@@ -49,15 +54,32 @@ public final class MBeanServerConnectionRegistration {
 			ServiceReference serviceReference) {
 		this.mbeanServerConnection = (MBeanServerConnection) bundleContext
 				.getService(serviceReference);
+		this.agentId = (String) serviceReference.getProperty("agentId");
+		if (this.agentId == null) {
+			MBeanServerDelegateMBean mbeanServerDelegateMBean;
+			try {
+				mbeanServerDelegateMBean = (MBeanServerDelegateMBean) MBeanServerInvocationHandler
+						.newProxyInstance(
+								this.mbeanServerConnection,
+								new ObjectName(
+										"JMImplementation:type=MBeanServerDelegate"),
+								MBeanServerDelegateMBean.class, false);
+				this.agentId = mbeanServerDelegateMBean.getMBeanServerId();
+			} catch (Exception e) {
+				throw new IllegalStateException(
+						"cannot determine agentId for connection "
+								+ this.mbeanServerConnection, e);
+			}
+		}
 	}
 
 	/**
 	 * @return the mbeanServerConnection
 	 */
-	public MBeanServerConnection getMbeanServerConnection() {
+	public MBeanServerConnection getMBeanServerConnection() {
 		return mbeanServerConnection;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -65,10 +87,7 @@ public final class MBeanServerConnectionRegistration {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime
-				* result
-				+ ((mbeanServerConnection == null) ? 0 : mbeanServerConnection
-						.hashCode());
+		result = prime * result + ((agentId == null) ? 0 : agentId.hashCode());
 		return result;
 	}
 
@@ -77,32 +96,19 @@ public final class MBeanServerConnectionRegistration {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		MBeanServerConnectionRegistration other = (MBeanServerConnectionRegistration) obj;
-		if (mbeanServerConnection == null) {
-			if (other.mbeanServerConnection != null) {
+		if (agentId == null) {
+			if (other.agentId != null)
 				return false;
-			}
-		} else if (!mbeanServerConnection.equals(other.mbeanServerConnection)) {
+		} else if (!agentId.equals(other.agentId))
 			return false;
-		}
 		return true;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString() {
-		return this.mbeanServerConnection.toString();
 	}
 
 }
