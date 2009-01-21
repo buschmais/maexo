@@ -2,6 +2,9 @@ package com.buschmais.maexo.test.mbeans.osgi.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import javax.management.ObjectName;
 
@@ -29,6 +32,9 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 	/** The StartLevelMBean. */
 	private StartLevelMBean startLevelMBean;
 
+	/** Queue of events fired by framework. */
+	private BlockingQueue<Integer> frameworkEvents;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -47,6 +53,7 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 		bundle = getTestBundle();
 		startLevel = getStartLevel();
 		startLevelMBean = getStartLevelMBean(startLevel);
+		frameworkEvents = new LinkedBlockingQueue<Integer>();
 	}
 
 	/**
@@ -94,11 +101,7 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 	 * {@inheritDoc}
 	 */
 	public void frameworkEvent(FrameworkEvent event) {
-		synchronized (this) {
-			if (FrameworkEvent.STARTLEVEL_CHANGED == event.getType()) {
-				this.notify();
-			}
-		}
+		frameworkEvents.offer(Integer.valueOf(event.getType()));
 	}
 
 	/**
@@ -226,9 +229,9 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 		Integer newLevel = Integer.valueOf(level + 1);
 		// set new start level
 		startLevelMBean.setStartLevel(newLevel);
-		synchronized (this) {
-			this.wait(timeout);
-		}
+		assertEquals(Integer.valueOf(FrameworkEvent.STARTLEVEL_CHANGED),
+				frameworkEvents.poll(5,
+				TimeUnit.SECONDS));
 		Integer startLevelLevelMBean = startLevelMBean.getStartLevel();
 		int startLevelLevel = startLevel.getStartLevel();
 		// compare new start level

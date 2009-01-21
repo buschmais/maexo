@@ -2,11 +2,13 @@ package com.buschmais.maexo.test.mbeans.osgi.core;
 
 import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
+import javax.management.MBeanServerNotification;
 import javax.management.MalformedObjectNameException;
 import javax.management.Notification;
 import javax.management.NotificationListener;
@@ -15,6 +17,7 @@ import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.TabularData;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
 import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.ServiceReference;
@@ -35,8 +38,8 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 
 	private static final String TESTPACKAGE_NAME = "com.buschmais.maexo.test.testbundle";
 
-	/** Set of events fired by framework. */
-	private Set<Integer> frameworkEvents;
+	/** Queue of events fired by framework. */
+	private BlockingQueue<Integer> frameworkEvents;
 
 	/** The TestBundle. */
 	private Bundle bundle;
@@ -46,6 +49,9 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 
 	/** PackageAdminMBean. */
 	private PackageAdminMBean packageAdminMBean;
+
+	/** Set containing all triggered BundleEvents. */
+	private BlockingQueue<Notification> notifications;
 
 	/**
 	 * Compares all exported packages to information stored in
@@ -195,10 +201,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	 * {@inheritDoc}
 	 */
 	public void frameworkEvent(FrameworkEvent event) {
-		synchronized (this) {
-			frameworkEvents.add(Integer.valueOf(event.getType()));
-			this.notify();
-		}
+		frameworkEvents.offer(Integer.valueOf(event.getType()));
 	}
 
 	/**
@@ -260,9 +263,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	 * {@inheritDoc}
 	 */
 	public void handleNotification(Notification notification, Object handback) {
-		synchronized (this) {
-			this.notify();
-		}
+		notifications.offer(notification);
 	}
 
 	/**
@@ -271,7 +272,8 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	@Override
 	protected void onSetUp() throws Exception {
 		super.onSetUp();
-		frameworkEvents = new HashSet<Integer>();
+		frameworkEvents = new LinkedBlockingQueue<Integer>();
+		notifications = new LinkedBlockingQueue<Notification>();
 		bundle = getTestBundle();
 		packageAdmin = getPackageAdmin();
 		packageAdminMBean = getPackageAdminMBean(packageAdmin);
@@ -516,11 +518,9 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		bundleContext.addFrameworkListener(this);
 		packageAdminMBean.refreshPackages(new Long[] { Long.valueOf(bundle
 				.getBundleId()) });
-		synchronized (this) {
-			this.wait(timeout);
-		}
-		assertTrue(frameworkEvents.contains(Integer
-				.valueOf(FrameworkEvent.PACKAGES_REFRESHED)));
+		assertEquals(Integer.valueOf(FrameworkEvent.PACKAGES_REFRESHED),
+				frameworkEvents.poll(5, TimeUnit.SECONDS));
+		
 		bundleContext.removeFrameworkListener(this);
 	}
 
@@ -534,11 +534,8 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		ObjectName objectName = getObjectName(bundle, Bundle.class);
 		this.bundleContext.addFrameworkListener(this);
 		packageAdminMBean.refreshPackages(new ObjectName[] { objectName });
-		synchronized (this) {
-			this.wait(timeout);
-		}
-		assertTrue(frameworkEvents.contains(Integer
-				.valueOf(FrameworkEvent.PACKAGES_REFRESHED)));
+		assertEquals(Integer.valueOf(FrameworkEvent.PACKAGES_REFRESHED),
+				frameworkEvents.poll(5, TimeUnit.SECONDS));
 		this.bundleContext.removeFrameworkListener(this);
 	}
 
@@ -549,18 +546,46 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	 *             on error
 	 */
 	public void test_resolveBundlesByBundleIds() throws Exception {
-		String location = bundle.getLocation();
-		bundle.uninstall();
-
 		ServiceRegistration notificationListenerServiceRegistration = registerNotificationListener();
-		Bundle newBundle = bundleContext.installBundle(location);
-		synchronized (this) {
-			this.wait(timeout);
-		}
+		Bundle newBundle = reinstallTestBundle();
+		
 		Long bundleId = Long.valueOf(newBundle.getBundleId());
 		assertTrue(packageAdminMBean.resolveBundles(new Long[] { bundleId })
 				.booleanValue());
 		notificationListenerServiceRegistration.unregister();
+	}
+
+	/**
+	 * Uninstalls test bundle, waits for unregister notifications of mbeans,
+	 * reinstalls bundle, waits for register notifications of mbeans and returns
+	 * new bundle.
+	 * 
+	 * @return the new bundle
+	 * @throws BundleException
+	 *             if uninstall or install failed
+	 * @throws InterruptedException
+	 *             if thread was interrupted while waiting for notifications
+	 */
+	private Bundle reinstallTestBundle() throws BundleException,
+			InterruptedException {
+		notifications.clear();
+		String location = bundle.getLocation();
+		final ServiceReference[] servicesInUse = bundle.getServicesInUse();
+		int servicesToUnregister = servicesInUse != null ? servicesInUse.length
+				: 0;
+		bundle.uninstall();
+		// catch notifications from unregistering bundle = 1(the bundle itself)
+		// + number of services
+		for (int i = 0; i <= servicesToUnregister; i++) {
+			notifications.poll(5, TimeUnit.SECONDS);
+		}
+		Bundle newBundle = bundleContext.installBundle(location);
+		// wait for notification "bundle registered"
+		Notification notification = notifications.poll(5, TimeUnit.SECONDS);
+		assertTrue(notification instanceof MBeanServerNotification);
+		assertEquals(MBeanServerNotification.REGISTRATION_NOTIFICATION,
+				notification.getType());
+		return newBundle;
 	}
 
 	/**
@@ -571,14 +596,9 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	 *             on error
 	 */
 	public void test_resolveBundlesByBundleObjectNames() throws Exception {
-		String location = bundle.getLocation();
-		bundle.uninstall();
-
 		ServiceRegistration notificationListenerServiceRegistration = registerNotificationListener();
-		Bundle newBundle = bundleContext.installBundle(location);
-		synchronized (this) {
-			this.wait(timeout);
-		}
+		Bundle newBundle = reinstallTestBundle();
+
 		ObjectName objectName = getObjectName(newBundle, Bundle.class);
 		assertTrue(packageAdminMBean.resolveBundles(
 				new ObjectName[] { objectName }).booleanValue());

@@ -4,7 +4,11 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
+import javax.management.MBeanServerNotification;
 import javax.management.MalformedObjectNameException;
 import javax.management.Notification;
 import javax.management.NotificationListener;
@@ -34,6 +38,9 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 	/** Name of the test service. */
 	private final Class<TestInterface> testService = TestInterface.class;
 
+	/** Set containing all triggered BundleEvents. */
+	private BlockingQueue<Notification> notifications;
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -54,15 +61,14 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 		super.onSetUp();
 		bundle = getTestBundle();
 		frameworkMBean = getFrameworkMBean();
+		notifications = new LinkedBlockingQueue<Notification>();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void handleNotification(Notification notification, Object handback) {
-		synchronized (this) {
-			this.notify();
-		}
+		notifications.offer(notification);
 	}
 
 	/**
@@ -177,18 +183,28 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 	 *             on error
 	 */
 	public void test_installBundleByLocation() throws Exception {
-		ObjectName oldBundleObjectName = getObjectName(bundle, Bundle.class);
-		String location = bundle.getLocation();
-		Long bundleId = Long.valueOf(bundle.getBundleId());
-		// uninstall test bundle
-		bundle.uninstall();
 		ServiceRegistration notificationListenerServiceRegistration = registerNotificationListener();
-		// reinstall test bundle
-		ObjectName newBundleObjectName = frameworkMBean.installBundle(location);
-		// wait for Switchboard to register new BundleMBean on MBeanServer
-		synchronized (this) {
-			this.wait(timeout);
+		ObjectName oldBundleObjectName = getObjectName(bundle, Bundle.class);
+		Long bundleId = Long.valueOf(bundle.getBundleId());
+		String location = bundle.getLocation();
+		// uninstall bundle an registered services
+		final ServiceReference[] servicesInUse = bundle.getServicesInUse();
+		int servicesToUnregister = servicesInUse != null ? servicesInUse.length
+				: 0;
+		notifications.clear();
+		bundle.uninstall();
+		// catch notifications from unregistering bundle = 1(the bundle itself)
+		// + number of services
+		for (int i = 0; i <= servicesToUnregister; i++) {
+			notifications.poll(5, TimeUnit.SECONDS);
 		}
+		ObjectName newBundleObjectName = frameworkMBean.installBundle(location);
+		// wait for notification "bundle registered"
+		Notification notification = notifications.poll(5, TimeUnit.SECONDS);
+		assertTrue(notification instanceof MBeanServerNotification);
+		assertEquals(MBeanServerNotification.REGISTRATION_NOTIFICATION,
+				notification.getType());
+		// get new bundle mbean
 		final BundleMBean bundleMBean = (BundleMBean) getMBean(
 				newBundleObjectName, BundleMBean.class);
 		// assert new bundle has same object name but different id
@@ -205,21 +221,31 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 	 *             on error
 	 */
 	public void test_installBundleByLocationAndByteArray() throws Exception {
+		ServiceRegistration notificationListenerServiceRegistration = registerNotificationListener();
 		ObjectName oldBundleObjectName = getObjectName(bundle, Bundle.class);
-		String location = bundle.getLocation();
 		Long bundleId = Long.valueOf(bundle.getBundleId());
+		String location = bundle.getLocation();
 		// get byte[] from test bundle
 		byte[] bundleArray = getByteArrayForBundleLocation(location);
-		// uninstall test bundle
+		// uninstall bundle an registered services
+		final ServiceReference[] servicesInUse = bundle.getServicesInUse();
+		int servicesToUnregister = servicesInUse != null ? servicesInUse.length
+				: 0;
+		notifications.clear();
 		bundle.uninstall();
-		ServiceRegistration notificationListenerServiceRegistration = registerNotificationListener();
-		// reinstall test bundle
+		// catch notifications from unregistering bundle = 1(the bundle itself)
+		// + number of services
+		for (int i = 0; i <= servicesToUnregister; i++) {
+			notifications.poll(5, TimeUnit.SECONDS);
+		}
 		ObjectName newBundleObjectName = frameworkMBean.installBundle(location,
 				bundleArray);
-		// wait for Switchboard to register new BundleMBean on MBeanServer
-		synchronized (this) {
-			this.wait(timeout);
-		}
+		// wait for notification "bundle registered"
+		Notification notification = notifications.poll(5, TimeUnit.SECONDS);
+		assertTrue(notification instanceof MBeanServerNotification);
+		assertEquals(MBeanServerNotification.REGISTRATION_NOTIFICATION,
+				notification.getType());
+		// get new bundle mbean
 		final BundleMBean bundleMBean = (BundleMBean) getMBean(
 				newBundleObjectName, BundleMBean.class);
 		// assert new bundle has same object name but different id

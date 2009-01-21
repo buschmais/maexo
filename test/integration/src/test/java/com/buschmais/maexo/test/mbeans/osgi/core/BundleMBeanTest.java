@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import javax.management.MBeanServer;
@@ -188,16 +188,7 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 		
 		bundleContext.addBundleListener(this);
 		
-		// make sure bundle is started
-		if (Bundle.ACTIVE != bundle.getState()) {
-			bundleMBean.start();
-			synchronized (this) {
-				this.wait(timeout);
-			}
-			assertTrue(bundleEvents.contains(Integer
-					.valueOf(BundleEvent.STARTED)));
-		}
-		bundleEvents = new ArrayBlockingQueue<Integer>(20);
+		bundleEvents = new LinkedBlockingQueue<Integer>();
 		// run methods to test
 		bundleMBean.stop();
 		bundleMBean.start();
