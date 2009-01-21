@@ -147,6 +147,30 @@ public final class ObjectNameFactoryHelper {
 	}
 
 	/**
+	 * Creates an object names for the given resources.
+	 * <p>
+	 * This method delegates to {@link #getObjectName(Object, Class)} for each
+	 * resource contained in the provided array.
+	 * 
+	 * @param resources
+	 *            The array of resources.
+	 * @param resourceInterface
+	 *           The interface to use for looking up the object name factory.
+	 * @return The object names or <code>null</code> if no resources were provided.
+	 */
+	public ObjectName[] getObjectNames(Object[] resources,
+			Class<?> resourceInterface) {
+		if (resources == null) {
+			return null;
+		}
+		ObjectName[] objectNames = new ObjectName[resources.length];
+		for (int i = 0; i < resources.length; i++) {
+			objectNames[i] = getObjectName(resources[i], resourceInterface);
+		}
+		return objectNames;
+	}
+
+	/**
 	 * Registers an object name factory for a given type as a service.
 	 * <p>
 	 * The object name factory is registered under the class of
@@ -170,25 +194,4 @@ public final class ObjectNameFactoryHelper {
 		return this.bundleContext.registerService(ObjectNameFactory.class
 				.getName(), objectNameFactory, properties);
 	}
-
-	/**
-	 * Converts the given objects to object names.
-	 * 
-	 * @param objects
-	 *            the objects
-	 * @param clazz
-	 *            the class of the given objects
-	 * @return the object names
-	 */
-	public ObjectName[] getObjectNames(Object[] objects, Class<?> clazz) {
-		if (objects == null) {
-			return null;
-		}
-		ObjectName[] objectNames = new ObjectName[objects.length];
-		for (int i = 0; i < objects.length; i++) {
-			objectNames[i] = getObjectName(objects[i], clazz);
-		}
-		return objectNames;
-	}
-
 }
