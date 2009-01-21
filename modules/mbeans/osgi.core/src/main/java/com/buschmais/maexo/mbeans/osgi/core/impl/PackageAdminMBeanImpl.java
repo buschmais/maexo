@@ -36,6 +36,7 @@ import javax.management.openmbean.TabularDataSupport;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.packageadmin.ExportedPackage;
+import org.osgi.service.packageadmin.PackageAdmin;
 import org.osgi.service.packageadmin.RequiredBundle;
 
 import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
@@ -86,7 +87,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 *            The package admin service.
 	 */
 	public PackageAdminMBeanImpl(BundleContext bundleContext,
-			org.osgi.service.packageadmin.PackageAdmin packageAdmin) {
+			PackageAdmin packageAdmin) {
 		this.bundleContext = bundleContext;
 		this.packageAdmin = packageAdmin;
 		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(
@@ -97,8 +98,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public MBeanInfo getMBeanInfo() {
-		String className = org.osgi.service.packageadmin.PackageAdmin.class
-				.getName();
+		String className = PackageAdmin.class.getName();
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[0];
 		// operations
@@ -179,7 +179,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 		if (bundles == null) {
 			return null;
 		}
-		return this.getObjectNames(bundles, Bundle.class);
+		return this.objectNameFactoryHelper.getObjectNames(bundles,
+				Bundle.class);
 	}
 
 	/**
@@ -239,7 +240,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 			throw new IllegalArgumentException(String.format(
 					"cannot get bundle for id %s", id));
 		}
-		return this.getObjectNames(this.packageAdmin.getFragments(bundle),
+		return this.objectNameFactoryHelper.getObjectNames(this.packageAdmin
+				.getFragments(bundle),
 				Bundle.class);
 	}
 
@@ -260,7 +262,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 			throw new IllegalArgumentException(String.format(
 					"cannot get bundle for id %s", id));
 		}
-		return this.getObjectNames(this.packageAdmin.getHosts(bundle),
+		return this.objectNameFactoryHelper.getObjectNames(this.packageAdmin
+				.getHosts(bundle),
 				Bundle.class);
 	}
 
@@ -284,7 +287,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 								this.objectNameFactoryHelper.getObjectName(
 										requiredBundle.getBundle(),
 										Bundle.class),
-								this.getObjectNames(requiredBundle
+								this.objectNameFactoryHelper.getObjectNames(
+										requiredBundle
 										.getRequiringBundles(), Bundle.class),
 								requiredBundle.getSymbolicName(),
 								requiredBundle.getVersion().toString(),
@@ -415,7 +419,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 							this.objectNameFactoryHelper.getObjectName(
 									exportedPackage.getExportingBundle(),
 									Bundle.class),
-							this.getObjectNames(exportedPackage
+							this.objectNameFactoryHelper.getObjectNames(
+									exportedPackage
 									.getImportingBundles(), Bundle.class),
 							exportedPackage.getName(),
 							exportedPackage.getSpecificationVersion(),
@@ -426,24 +431,4 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 		}
 	}
 
-	/**
-	 * Converts the given objects to object names.
-	 * 
-	 * @param objects
-	 *            the objects
-	 * @param clazz
-	 *            the classtype of the given objects
-	 * @return the object names
-	 */
-	private ObjectName[] getObjectNames(Object[] objects, Class<?> clazz) {
-		if (objects == null) {
-			return null;
-		}
-		ObjectName[] objectNames = new ObjectName[objects.length];
-		for (int i = 0; i < objects.length; i++) {
-			objectNames[i] = this.objectNameFactoryHelper.getObjectName(
-					objects[i], clazz);
-		}
-		return objectNames;
-	}
 }

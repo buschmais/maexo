@@ -3,9 +3,6 @@ package com.buschmais.maexo.test.mbeans.osgi.core;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.management.MBeanServer;
-import javax.management.MBeanServerConnection;
-import javax.management.MBeanServerInvocationHandler;
 import javax.management.ObjectName;
 
 import org.osgi.framework.Bundle;
@@ -87,15 +84,9 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 				this.bundleContext);
 		ObjectName objectName = objectNameFactoryHelper.getObjectName(
 				startLevel, StartLevel.class, properties);
-		// get MBeanServer
-		ServiceReference serviceReference = super.bundleContext
-				.getServiceReference(MBeanServer.class.getName());
-		MBeanServerConnection mbeanServer = (MBeanServer) super.bundleContext
-				.getService(serviceReference);
 		// get StartLevelMBean
-		final StartLevelMBean startLevelMBean = (StartLevelMBean) MBeanServerInvocationHandler
-				.newProxyInstance(mbeanServer, objectName,
-						StartLevelMBean.class, false);
+		final StartLevelMBean startLevelMBean = (StartLevelMBean) getMBean(
+				objectName, StartLevelMBean.class);
 		return startLevelMBean;
 	}
 
@@ -236,7 +227,7 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 		// set new start level
 		startLevelMBean.setStartLevel(newLevel);
 		synchronized (this) {
-			this.wait(5000);
+			this.wait(timeout);
 		}
 		Integer startLevelLevelMBean = startLevelMBean.getStartLevel();
 		int startLevelLevel = startLevel.getStartLevel();

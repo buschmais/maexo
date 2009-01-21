@@ -2,6 +2,8 @@ package com.buschmais.maexo.mbeans.osgi.core;
 
 import javax.management.ObjectName;
 
+import org.osgi.framework.BundleException;
+
 /**
  * Management interface for the OSGi framework.
  */
@@ -113,9 +115,11 @@ public interface FrameworkMBean {
 	 * 
 	 * @param location
 	 *            The location identifier of the bundle to install.
+	 * @throws BundleException
+	 *             If the installation failed.
 	 * @return The {@link ObjectName} representing the installed bundle.
 	 */
-	ObjectName installBundle(String location);
+	ObjectName installBundle(String location) throws BundleException;
 
 	/**
 	 * Installs a bundle from the specified input byte array.
@@ -124,7 +128,10 @@ public interface FrameworkMBean {
 	 *            The location identifier of the bundle to install.
 	 * @param input
 	 *            The byte array from which this bundle will be read.
+	 * @throws BundleException
+	 *             If the installation failed.
 	 * @return The {@link ObjectName} representing the installed bundle.
 	 */
-	ObjectName installBundle(String location, byte[] input);
+	ObjectName installBundle(String location, byte[] input)
+			throws BundleException;
 }

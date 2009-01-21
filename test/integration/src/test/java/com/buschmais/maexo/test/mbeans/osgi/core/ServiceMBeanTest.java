@@ -2,9 +2,6 @@ package com.buschmais.maexo.test.mbeans.osgi.core;
 
 import java.util.Arrays;
 
-import javax.management.MBeanServer;
-import javax.management.MBeanServerConnection;
-import javax.management.MBeanServerInvocationHandler;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.TabularData;
@@ -184,15 +181,9 @@ public class ServiceMBeanTest extends MaexoMBeanTests {
 	private ServiceMBean getTestServiceMBean(ServiceReference service) {
 		// get ObjectName for ServiceReference
 		ObjectName objectName = getObjectName(service, ServiceReference.class);
-		// get MBeanServer
-		ServiceReference serviceReference = super.bundleContext
-				.getServiceReference(MBeanServer.class.getName());
-		MBeanServerConnection mbeanServer = (MBeanServer) super.bundleContext
-				.getService(serviceReference);
 		// get ServiceMBean
-		final ServiceMBean serviceMBean = (ServiceMBean) MBeanServerInvocationHandler
-				.newProxyInstance(mbeanServer, objectName, ServiceMBean.class,
-						false);
+		final ServiceMBean serviceMBean = (ServiceMBean) getMBean(objectName,
+				ServiceMBean.class);
 		return serviceMBean;
 	}
 

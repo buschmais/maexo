@@ -7,9 +7,7 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
 
-import javax.management.MBeanServer;
-import javax.management.MBeanServerConnection;
-import javax.management.MBeanServerInvocationHandler;
+import javax.management.MalformedObjectNameException;
 import javax.management.Notification;
 import javax.management.NotificationListener;
 import javax.management.ObjectName;
@@ -37,6 +35,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 
 	private static final String TESTPACKAGE_NAME = "com.buschmais.maexo.test.testbundle";
 
+	/** Set of events fired by framework. */
 	private Set<Integer> frameworkEvents;
 
 	/** The TestBundle. */
@@ -49,95 +48,22 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	private PackageAdminMBean packageAdminMBean;
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void onSetUp() throws Exception {
-		super.onSetUp();
-		frameworkEvents = new HashSet<Integer>();
-		bundle = getTestBundle();
-		packageAdmin = getPackageAdmin();
-		packageAdminMBean = getPackageAdminMBean(packageAdmin);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void frameworkEvent(FrameworkEvent event) {
-		frameworkEvents.add(Integer.valueOf(event.getType()));
-		synchronized (this) {
-			this.notify();
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void handleNotification(Notification notification, Object handback) {
-		synchronized (this) {
-			this.notify();
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected String[] getTestBundlesNames() {
-		return new String[] { Constants.ARTIFACT_SWITCHBOARD,
-				Constants.ARTIFACT_PLATFORM_MBEAN_SERVER,
-				Constants.ARTIFACT_COMMONS_MBEAN,
-				Constants.ARTIFACT_OSGI_CORE_MBEAN,
-				Constants.ARTIFACT_TESTBUNDLE };
-	}
-
-	/**
-	 * Returns a PackageAdmin from OSGI container for testing of general
-	 * PackageAdmin functionality.
+	 * Compares all exported packages to information stored in
+	 * exportedPackagesMBean.
 	 * 
-	 * @return the PackageAdmin
+	 * @param exportedPackages
+	 *            exported packages to compare
+	 * @param exportedPackagesMBean
+	 *            MBean holding information about all exported packages
 	 */
-	private PackageAdmin getPackageAdmin() {
-		ServiceReference serviceReference = this.bundleContext
-				.getServiceReference(org.osgi.service.packageadmin.PackageAdmin.class
-						.getName());
-		final org.osgi.service.packageadmin.PackageAdmin packageAdmin = (org.osgi.service.packageadmin.PackageAdmin) bundleContext
-				.getService(serviceReference);
-		return packageAdmin;
-	}
-
-	/**
-	 * Returns a PackageAdminMBean for the given PackageAdmin.
-	 * 
-	 * @param packageAdmin
-	 *            the PackageAdmin
-	 * @return the PackageAdminMBean
-	 */
-	private PackageAdminMBean getPackageAdminMBean(PackageAdmin packageAdmin) {
-		// get property SERVICE_ID which is needed for ObjectName lookup
-		ServiceRegistration serviceRegistrationPackageAdmin = bundleContext
-				.registerService(PackageAdmin.class.getName(), packageAdmin,
-						null);
-		Object serviceId = serviceRegistrationPackageAdmin.getReference()
-				.getProperty(org.osgi.framework.Constants.SERVICE_ID);
-		// put SERVICE_ID property into properties-Map
-		Map<String, Object> properties = new HashMap<String, Object>();
-		properties.put(org.osgi.framework.Constants.SERVICE_ID, serviceId);
-		// get ObjectName for PackageAdmin
-		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
-				this.bundleContext);
-		ObjectName objectName = objectNameFactoryHelper.getObjectName(
-				packageAdmin, PackageAdmin.class, properties);
-		// get MBeanServer
-		ServiceReference serviceReference = super.bundleContext
-				.getServiceReference(MBeanServer.class.getName());
-		MBeanServerConnection mbeanServer = (MBeanServer) super.bundleContext
-				.getService(serviceReference);
-		// get PackageAdminMBean
-		final PackageAdminMBean packageAdminMBean = (PackageAdminMBean) MBeanServerInvocationHandler
-				.newProxyInstance(mbeanServer, objectName,
-						PackageAdminMBean.class, false);
-		return packageAdminMBean;
+	private void compareAllExportedPackages(ExportedPackage[] exportedPackages,
+			TabularData exportedPackagesMBean) {
+		for (int i = 0; i < exportedPackages.length; i++) {
+			final String exportedPackageName = exportedPackages[i].getName();
+			compareExportedPackageAttributes(exportedPackagesMBean
+					.get(new Object[] { exportedPackageName }),
+					exportedPackages[i]);
+		}
 	}
 
 	/**
@@ -196,6 +122,27 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
+	 * Compares an array of object names to object names of an array of items.
+	 * 
+	 * @param objectNames
+	 *            array of object names
+	 * @param items
+	 *            array of items
+	 * @param clazz
+	 *            class type of the given items
+	 */
+	private void compareItemsObjectNames(final ObjectName[] objectNames,
+			Object[] items, Class<?> clazz) {
+		if (null != objectNames && null != items) {
+			assertEquals(items.length, objectNames.length);
+			for (int i = 0; i < items.length; i++) {
+				ObjectName fragmentName = getObjectName(items[i], clazz);
+				assertEquals(fragmentName, objectNames[i]);
+			}
+		}
+	}
+
+	/**
 	 * Compares all attributes of the requiredBundle to all attributes of
 	 * requiredBundleCompositeData.
 	 * 
@@ -245,43 +192,108 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Compares all exported packages to information stored in
-	 * exportedPackagesMBean.
-	 * 
-	 * @param exportedPackages
-	 *            exported packages to compare
-	 * @param exportedPackagesMBean
-	 *            MBean holding information about all exported packages
+	 * {@inheritDoc}
 	 */
-	private void compareAllExportedPackages(ExportedPackage[] exportedPackages,
-			TabularData exportedPackagesMBean) {
-		for (int i = 0; i < exportedPackages.length; i++) {
-			final String exportedPackageName = exportedPackages[i].getName();
-			compareExportedPackageAttributes(exportedPackagesMBean
-					.get(new Object[] { exportedPackageName }),
-					exportedPackages[i]);
+	public void frameworkEvent(FrameworkEvent event) {
+		frameworkEvents.add(Integer.valueOf(event.getType()));
+		synchronized (this) {
+			this.notify();
 		}
 	}
 
 	/**
-	 * Tests method <code>getBundleType(Long id)</code>.
+	 * Returns a PackageAdmin from OSGI container for testing of general
+	 * PackageAdmin functionality.
+	 * 
+	 * @return the PackageAdmin
 	 */
-	public void test_getBundleTypeLong() {
-		assertEquals(Integer.valueOf(packageAdmin.getBundleType(bundle)),
-				packageAdminMBean.getBundleType(Long.valueOf(bundle
-						.getBundleId())));
+	private PackageAdmin getPackageAdmin() {
+		ServiceReference serviceReference = this.bundleContext
+				.getServiceReference(PackageAdmin.class
+						.getName());
+		final PackageAdmin packageAdmin = (PackageAdmin) this.bundleContext
+				.getService(serviceReference);
+		return packageAdmin;
 	}
 
 	/**
-	 * Tests method <code>getBundleType(ObjectName objectName)</code>.
+	 * Returns a PackageAdminMBean for the given PackageAdmin.
 	 * 
-	 * @throws Exception
-	 *             on error
+	 * @param packageAdmin
+	 *            the PackageAdmin
+	 * @return the PackageAdminMBean
 	 */
-	public void test_getBundleTypeObjectName() throws Exception {
-		ObjectName objectName = getObjectName(bundle, Bundle.class);
-		assertEquals(Integer.valueOf(packageAdmin.getBundleType(bundle)),
-				packageAdminMBean.getBundleType(objectName));
+	private PackageAdminMBean getPackageAdminMBean(PackageAdmin packageAdmin) {
+		// get property SERVICE_ID which is needed for ObjectName lookup
+		ServiceRegistration serviceRegistrationPackageAdmin = bundleContext
+				.registerService(PackageAdmin.class.getName(), packageAdmin,
+						null);
+		Object serviceId = serviceRegistrationPackageAdmin.getReference()
+				.getProperty(org.osgi.framework.Constants.SERVICE_ID);
+		// put SERVICE_ID property into properties-Map
+		Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put(org.osgi.framework.Constants.SERVICE_ID, serviceId);
+		// get ObjectName for PackageAdmin
+		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
+				this.bundleContext);
+		ObjectName objectName = objectNameFactoryHelper.getObjectName(
+				packageAdmin, PackageAdmin.class, properties);
+		// get PackageAdminMBean
+		final PackageAdminMBean packageAdminMBean = (PackageAdminMBean) getMBean(
+				objectName, PackageAdminMBean.class);
+		return packageAdminMBean;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected String[] getTestBundlesNames() {
+		return new String[] { Constants.ARTIFACT_SWITCHBOARD,
+				Constants.ARTIFACT_PLATFORM_MBEAN_SERVER,
+				Constants.ARTIFACT_COMMONS_MBEAN,
+				Constants.ARTIFACT_OSGI_CORE_MBEAN,
+				Constants.ARTIFACT_TESTBUNDLE };
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void handleNotification(Notification notification, Object handback) {
+		synchronized (this) {
+			this.notify();
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void onSetUp() throws Exception {
+		super.onSetUp();
+		frameworkEvents = new HashSet<Integer>();
+		bundle = getTestBundle();
+		packageAdmin = getPackageAdmin();
+		packageAdminMBean = getPackageAdminMBean(packageAdmin);
+	}
+
+	/**
+	 * Registers notification listener which listens to events fired by
+	 * Switchboard.
+	 * 
+	 * @return the Listener
+	 * @throws MalformedObjectNameException
+	 *             If NotificationListeners ObjectName is incorrect
+	 */
+	private ServiceRegistration registerNotificationListener()
+			throws MalformedObjectNameException {
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		properties.put(ObjectName.class.getName(), new ObjectName(
+				SWITCHBOARDNOTIFICATIONLISTENER_OBJECTNAME));
+		ServiceRegistration notificationListenerServiceRegistration = this.bundleContext
+				.registerService(NotificationListener.class.getName(), this,
+						properties);
+		return notificationListenerServiceRegistration;
 	}
 
 	/**
@@ -307,6 +319,27 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		// negative test - both methods should return null
 		assertNull(packageAdminMBean.getBundles("murks", null));
 		assertNull(packageAdmin.getBundles("murks", null));
+	}
+
+	/**
+	 * Tests method <code>getBundleType(Long id)</code>.
+	 */
+	public void test_getBundleTypeLong() {
+		assertEquals(Integer.valueOf(packageAdmin.getBundleType(bundle)),
+				packageAdminMBean.getBundleType(Long.valueOf(bundle
+						.getBundleId())));
+	}
+
+	/**
+	 * Tests method <code>getBundleType(ObjectName objectName)</code>.
+	 * 
+	 * @throws Exception
+	 *             on error
+	 */
+	public void test_getBundleTypeObjectName() throws Exception {
+		ObjectName objectName = getObjectName(bundle, Bundle.class);
+		assertEquals(Integer.valueOf(packageAdmin.getBundleType(bundle)),
+				packageAdminMBean.getBundleType(objectName));
 	}
 
 	/**
@@ -375,6 +408,21 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
+	 * Tests method <code>ObjectName[] getFragments(Long id)</code>.
+	 * 
+	 * @throws Exception
+	 *             on error
+	 */
+	public void test_getFragmentsByBundleId() throws Exception {
+		Long id = Long.valueOf(bundle.getBundleId());
+		final ObjectName[] fragmentObjectNames = packageAdminMBean
+				.getFragments(id);
+		Bundle[] fragments = packageAdmin.getFragments(bundle);
+
+		compareItemsObjectNames(fragmentObjectNames, fragments, Bundle.class);
+	}
+
+	/**
 	 * Tests method
 	 * <code>ObjectName[] getFragments(ObjectName objectName)</code>.
 	 * 
@@ -387,36 +435,22 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		final ObjectName[] fragmentObjectNames = packageAdminMBean
 				.getFragments(bundleName);
 		Bundle[] fragments = packageAdmin.getFragments(bundle);
-		if (null != fragmentObjectNames && null != fragments) {
-			assertEquals(fragments.length, fragmentObjectNames.length);
-			for (int i = 0; i < fragments.length; i++) {
-				ObjectName fragmentName = getObjectName(fragments[i],
-						Bundle.class);
-				assertEquals(fragmentName, fragmentObjectNames[i]);
-			}
-		}
+		
+		compareItemsObjectNames(fragmentObjectNames, fragments, Bundle.class);
 	}
 
 	/**
-	 * Tests method <code>ObjectName[] getFragments(Long id)</code>.
+	 * Tests method <code>ObjectName[] getHosts(Long id)</code>.
 	 * 
 	 * @throws Exception
 	 *             on error
 	 */
-	public void test_getFragmentsByBundleId() throws Exception {
+	public void test_getHostsByBundleId() throws Exception {
 		Long id = Long.valueOf(bundle.getBundleId());
-		final ObjectName[] fragmentObjectNames = packageAdminMBean
-				.getFragments(id);
-		Bundle[] fragments = packageAdmin.getFragments(bundle);
+		final ObjectName[] hostObjectNames = packageAdminMBean.getHosts(id);
+		Bundle[] hosts = packageAdmin.getHosts(bundle);
 
-		if (null != fragmentObjectNames && null != fragments) {
-			assertEquals(fragments.length, fragmentObjectNames.length);
-			for (int i = 0; i < fragments.length; i++) {
-				ObjectName fragmentName = getObjectName(fragments[i],
-						Bundle.class);
-				assertEquals(fragmentName, fragmentObjectNames[i]);
-			}
-		}
+		compareItemsObjectNames(hostObjectNames, hosts, Bundle.class);
 	}
 
 	/**
@@ -431,33 +465,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		final ObjectName[] hostObjectNames = packageAdminMBean
 				.getHosts(bundleName);
 		Bundle[] hosts = packageAdmin.getHosts(bundle);
-		if (null != hostObjectNames && null != hosts) {
-			assertEquals(hosts.length, hostObjectNames.length);
-			for (int i = 0; i < hosts.length; i++) {
-				ObjectName hostName = getObjectName(hosts[i], Bundle.class);
-				assertEquals(hostName, hostObjectNames[i]);
-			}
-		}
-	}
-
-	/**
-	 * Tests method <code>ObjectName[] getHosts(Long id)</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
-	 */
-	public void test_getHostsByBundleId() throws Exception {
-		Long id = Long.valueOf(bundle.getBundleId());
-		final ObjectName[] hostObjectNames = packageAdminMBean.getHosts(id);
-		Bundle[] hosts = packageAdmin.getHosts(bundle);
-
-		if (null != hostObjectNames && null != hosts) {
-			assertEquals(hosts.length, hostObjectNames.length);
-			for (int i = 0; i < hosts.length; i++) {
-				ObjectName hostName = getObjectName(hosts[i], Bundle.class);
-				assertEquals(hostName, hostObjectNames[i]);
-			}
-		}
+		compareItemsObjectNames(hostObjectNames, hosts, Bundle.class);
 	}
 
 	/**
@@ -509,7 +517,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		packageAdminMBean.refreshPackages(new Long[] { Long.valueOf(bundle
 				.getBundleId()) });
 		synchronized (this) {
-			this.wait(5000);
+			this.wait(timeout);
 		}
 		assertTrue(frameworkEvents.contains(Integer
 				.valueOf(FrameworkEvent.PACKAGES_REFRESHED)));
@@ -527,7 +535,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		this.bundleContext.addFrameworkListener(this);
 		packageAdminMBean.refreshPackages(new ObjectName[] { objectName });
 		synchronized (this) {
-			this.wait(5000);
+			this.wait(timeout);
 		}
 		assertTrue(frameworkEvents.contains(Integer
 				.valueOf(FrameworkEvent.PACKAGES_REFRESHED)));
@@ -544,15 +552,10 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		String location = bundle.getLocation();
 		bundle.uninstall();
 
-		Dictionary<String, Object> properties = new Hashtable<String, Object>();
-		properties.put(ObjectName.class.getName(), new ObjectName(
-				"JMImplementation:type=MBeanServerDelegate"));
-		ServiceRegistration notificationListenerServiceRegistration = this.bundleContext
-				.registerService(NotificationListener.class.getName(), this,
-						properties);
+		ServiceRegistration notificationListenerServiceRegistration = registerNotificationListener();
 		Bundle newBundle = bundleContext.installBundle(location);
 		synchronized (this) {
-			this.wait(5000);
+			this.wait(timeout);
 		}
 		Long bundleId = Long.valueOf(newBundle.getBundleId());
 		assertTrue(packageAdminMBean.resolveBundles(new Long[] { bundleId })
@@ -571,20 +574,15 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		String location = bundle.getLocation();
 		bundle.uninstall();
 
-		Dictionary<String, Object> properties = new Hashtable<String, Object>();
-		properties.put(ObjectName.class.getName(), new ObjectName(
-				"JMImplementation:type=MBeanServerDelegate"));
-		ServiceRegistration notificationListenerServiceRegistration = this.bundleContext
-				.registerService(NotificationListener.class.getName(), this,
-						properties);
-
+		ServiceRegistration notificationListenerServiceRegistration = registerNotificationListener();
 		Bundle newBundle = bundleContext.installBundle(location);
 		synchronized (this) {
-			this.wait(5000);
+			this.wait(timeout);
 		}
 		ObjectName objectName = getObjectName(newBundle, Bundle.class);
 		assertTrue(packageAdminMBean.resolveBundles(
 				new ObjectName[] { objectName }).booleanValue());
 		notificationListenerServiceRegistration.unregister();
 	}
+
 }

@@ -32,10 +32,12 @@ import org.slf4j.LoggerFactory;
 import com.buschmais.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLifeCycleSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 import com.buschmais.maexo.mbeans.osgi.core.impl.lifecyle.BundleMBeanLifeCycle;
+import com.buschmais.maexo.mbeans.osgi.core.impl.lifecyle.FrameworkMBeanLifeCycle;
 import com.buschmais.maexo.mbeans.osgi.core.impl.lifecyle.PackageAdminMBeanLifeCycle;
 import com.buschmais.maexo.mbeans.osgi.core.impl.lifecyle.ServiceMBeanLifeCycle;
 import com.buschmais.maexo.mbeans.osgi.core.impl.lifecyle.StartLevelMBeanLifeCycle;
 import com.buschmais.maexo.mbeans.osgi.core.impl.objectname.BundleObjectNameFactory;
+import com.buschmais.maexo.mbeans.osgi.core.impl.objectname.FrameworkObjectNameFactory;
 import com.buschmais.maexo.mbeans.osgi.core.impl.objectname.PackageAdminObjectNameFactory;
 import com.buschmais.maexo.mbeans.osgi.core.impl.objectname.ServiceObjectNameFactory;
 import com.buschmais.maexo.mbeans.osgi.core.impl.objectname.StartLevelObjectNameFactory;
@@ -57,6 +59,8 @@ public final class Activator implements BundleActivator {
 	private ServiceMBeanLifeCycleSupport startLevelServiceLifecycle;
 
 	private ServiceMBeanLifeCycleSupport packageAdminServiceLifecycle;
+	
+	private FrameworkMBeanLifeCycle frameworkLifeCycle;
 
 
 	/**
@@ -72,7 +76,12 @@ public final class Activator implements BundleActivator {
 		this.serviceRegistrations.add(objectNameFactoryHelper.registerObjectNameFactory(new ServiceObjectNameFactory(), ServiceReference.class));
 		this.serviceRegistrations.add(objectNameFactoryHelper.registerObjectNameFactory(new StartLevelObjectNameFactory(), StartLevel.class));
 		this.serviceRegistrations.add(objectNameFactoryHelper.registerObjectNameFactory(new PackageAdminObjectNameFactory(), PackageAdmin.class));
-
+		this.serviceRegistrations.add(objectNameFactoryHelper
+				.registerObjectNameFactory(new FrameworkObjectNameFactory(),
+						BundleContext.class));
+		// create FrameworkMBean
+		this.frameworkLifeCycle = new FrameworkMBeanLifeCycle(bundleContext);
+		this.frameworkLifeCycle.start();
 		// create bundle listener
 		this.bundleLifecyle = new BundleMBeanLifeCycle(bundleContext);
 		this.bundleLifecyle.start();
@@ -98,6 +107,8 @@ public final class Activator implements BundleActivator {
 		if (logger.isInfoEnabled()) {
 			logger.info("Stopping maexo OSGi Core MBeans");
 		}
+		
+		this.frameworkLifeCycle.stop();
 
 		// remove bundle listener
 		this.bundleLifecyle.stop();

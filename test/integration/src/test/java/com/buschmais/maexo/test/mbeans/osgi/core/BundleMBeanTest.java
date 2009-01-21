@@ -1,7 +1,5 @@
 package com.buschmais.maexo.test.mbeans.osgi.core;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.LinkedList;
@@ -12,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;
-import javax.management.MBeanServerInvocationHandler;
 import javax.management.ObjectName;
 import javax.management.openmbean.TabularData;
 
@@ -73,13 +70,8 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 	private BundleMBean getTestBundleMBean(Bundle bundle) {
 		// get corresponding BundleMBean
 		ObjectName objectName = getObjectName(bundle, Bundle.class);
-		ServiceReference serviceReference = super.bundleContext
-				.getServiceReference(MBeanServer.class.getName());
-		MBeanServerConnection mbeanServer = (MBeanServer) super.bundleContext
-				.getService(serviceReference);
-		final BundleMBean bundleMBean = (BundleMBean) MBeanServerInvocationHandler
-				.newProxyInstance(mbeanServer, objectName, BundleMBean.class,
-						false);
+		final BundleMBean bundleMBean = (BundleMBean) getMBean(objectName,
+				BundleMBean.class);
 		return bundleMBean;
 	}
 
@@ -182,33 +174,17 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 
 	/**
 	 * Tests methods causing change Events (
-	 * <code>start(), stop(), update(), uninstall()</code>.
+	 * <code>start(), stop(), update(), update(String location), update(byte[] in), uninstall()</code>
+	 * .
 	 * 
 	 * @throws Exception
 	 *             on error
 	 */
 	public void test_changeEvents() throws Exception {
 
-		String url = bundleMBean.getLocation();
 		// get byte[] for update(byte[] array)
-		String prefix = "file:";
-		// read file
-		FileInputStream inStream;
-		if (url.startsWith(prefix)) {
-			inStream = new FileInputStream(url.substring(prefix.length()));
-		} else {
-			inStream = new FileInputStream(url);
-		}
-		// convert into OutputStream
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-		byte[] tempArray = new byte[4096];
-		int readBytes = 0;
-		do {
-			readBytes = inStream.read(tempArray);
-			outStream.write(tempArray, 0, readBytes);
-		} while (readBytes == 4096);
-		// get byte[]
-		byte[] bundleArray = outStream.toByteArray();
+		String location = bundleMBean.getLocation();
+		byte[] bundleArray = getByteArrayForBundleLocation(location);
 		
 		bundleContext.addBundleListener(this);
 		
@@ -216,7 +192,7 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 		if (Bundle.ACTIVE != bundle.getState()) {
 			bundleMBean.start();
 			synchronized (this) {
-				this.wait(5000);
+				this.wait(timeout);
 			}
 			assertTrue(bundleEvents.contains(Integer
 					.valueOf(BundleEvent.STARTED)));
@@ -226,7 +202,7 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 		bundleMBean.stop();
 		bundleMBean.start();
 		bundleMBean.update();
-		bundleMBean.update(url);
+		bundleMBean.update(location);
 		bundleMBean.update(bundleArray);
 		bundleMBean.uninstall();
 

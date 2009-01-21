@@ -170,5 +170,26 @@ public final class ObjectNameFactoryHelper {
 		return this.bundleContext.registerService(ObjectNameFactory.class
 				.getName(), objectNameFactory, properties);
 	}
+	
+
+	/**
+	 * Converts the given objects to object names.
+	 * 
+	 * @param objects
+	 *            the objects
+	 * @param clazz
+	 *            the classtype of the given objects
+	 * @return the object names
+	 */
+	public ObjectName[] getObjectNames(Object[] objects, Class<?> clazz) {
+		if (objects == null) {
+			return null;
+		}
+		ObjectName[] objectNames = new ObjectName[objects.length];
+		for (int i = 0; i < objects.length; i++) {
+			objectNames[i] = getObjectName(objects[i], clazz);
+		}
+		return objectNames;
+	}
 
 }
