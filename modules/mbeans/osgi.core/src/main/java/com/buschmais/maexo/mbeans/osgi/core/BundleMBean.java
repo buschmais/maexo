@@ -38,16 +38,24 @@ public interface BundleMBean {
 	/**
 	 * Returns this bundle's current state.
 	 * 
-	 * @return An element of UNINSTALLED,INSTALLED, RESOLVED,STARTING,
-	 *         STOPPING,ACTIVE.
+	 * @return An element of {@link org.osgi.framework.Bundle#UNINSTALLED},
+	 *         {@link org.osgi.framework.Bundle#INSTALLED},
+	 *         {@link org.osgi.framework.Bundle#RESOLVED},
+	 *         {@link org.osgi.framework.Bundle#STARTING},
+	 *         {@link org.osgi.framework.Bundle#STOPPING},
+	 *         {@link org.osgi.framework.Bundle#ACTIVE}.
 	 */
 	Integer getState();
 
 	/**
-	 * Returns this bundle's current state.
+	 * Returns this bundle's current state as name.
 	 * 
-	 * @return An element of UNINSTALLED,INSTALLED, RESOLVED,STARTING,
-	 *         STOPPING,ACTIVE.
+	 * @return An element of {@link org.osgi.framework.Bundle#UNINSTALLED},
+	 *         {@link org.osgi.framework.Bundle#INSTALLED},
+	 *         {@link org.osgi.framework.Bundle#RESOLVED},
+	 *         {@link org.osgi.framework.Bundle#STARTING},
+	 *         {@link org.osgi.framework.Bundle#STOPPING},
+	 *         {@link org.osgi.framework.Bundle#ACTIVE}.
 	 */
 	String getStateAsName();
 
@@ -122,7 +130,7 @@ public interface BundleMBean {
 	void update(String url);
 
 	/**
-	 * Updates the bundle from a byte array.
+	 * Update the bundle from a byte array.
 	 * 
 	 * @param in
 	 *            the byte array

@@ -53,8 +53,8 @@ public final class ObjectNameFactoryHelper {
 	 * Constructor.
 	 * 
 	 * @param bundleContext
-	 *            The bundle context. It is required for for service
-	 *            registrations and lookups.
+	 *            The bundle context. It is required for service registrations
+	 *            and lookups.
 	 */
 	public ObjectNameFactoryHelper(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
@@ -170,7 +170,6 @@ public final class ObjectNameFactoryHelper {
 		return this.bundleContext.registerService(ObjectNameFactory.class
 				.getName(), objectNameFactory, properties);
 	}
-	
 
 	/**
 	 * Converts the given objects to object names.
@@ -178,7 +177,7 @@ public final class ObjectNameFactoryHelper {
 	 * @param objects
 	 *            the objects
 	 * @param clazz
-	 *            the classtype of the given objects
+	 *            the class of the given objects
 	 * @return the object names
 	 */
 	public ObjectName[] getObjectNames(Object[] objects, Class<?> clazz) {

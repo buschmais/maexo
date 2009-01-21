@@ -46,37 +46,69 @@ public final class PackageAdminConstants {
 	/** MBean description. */
 	public static final String MBEAN_DESCRIPTION = "PackageAdmin MBean";
 
-	/** Constant exportingBundle. */
+	/**
+	 * <code>org.osgi.service.packageadmin.ExportedPackage</code> attribute
+	 * exportingBundle.
+	 */
 	public static final String EXPORTEDPACKAGE_ITEM_EXPORTINGBUNDLE = "exportingBundle";
 
-	/** Constant importingBundle. */
+	/**
+	 * <code>org.osgi.service.packageadmin.ExportedPackage</code> attribute
+	 * importingBundle.
+	 */
 	public static final String EXPORTEDPACKAGE_ITEM_IMPORTINGBUNDLE = "importingBundle";
 
-	/** Constant name. */
+	/**
+	 * <code>org.osgi.service.packageadmin.ExportedPackage</code> attribute name.
+	 */
 	public static final String EXPORTEDPACKAGE_ITEM_NAME = "name";
 
-	/** Constant specificationVersion. */
+	/**
+	 * <code>org.osgi.service.packageadmin.ExportedPackage</code> attribute
+	 * specificationVersion.
+	 */
 	public static final String EXPORTEDPACKAGE_ITEM_SPECIFICATIONVERSION = "specificationVersion";
 
-	/** Constant version. */
+	/**
+	 * <code>org.osgi.service.packageadmin.ExportedPackage</code> attribute
+	 * version.
+	 */
 	public static final String EXPORTEDPACKAGE_ITEM_VERSION = "version";
 
-	/** Constant removalPending. */
+	/**
+	 * <code>org.osgi.service.packageadmin.ExportedPackage</code> attribute
+	 * removalPending.
+	 */
 	public static final String EXPORTEDPACKAGE_ITEM_REMOVALPENDING = "removalPending";
 
-	/** Constant bundle. */
+	/**
+	 * <code>org.osgi.service.packageadmin.RequiredBundle</code> attribute
+	 * bundle.
+	 */
 	public static final String REQUIREDBUNDLE_ITEM_BUNDLE = "bundle";
 
-	/** Constant removalPending. */
+	/**
+	 * <code>org.osgi.service.packageadmin.RequiredBundle</code> attribute
+	 * requiringBundles.
+	 */
 	public static final String REQUIREDBUNDLE_ITEM_REQUIRINGBUNDLES = "requiringBundles";
 
-	/** Constant symbolicName. */
+	/**
+	 * <code>org.osgi.service.packageadmin.RequiredBundle</code> attribute
+	 * symbolicName.
+	 */
 	public static final String REQUIREDBUNDLE_ITEM_SYMBOLICNAME = "symbolicName";
 
-	/** Constant version. */
+	/**
+	 * <code>org.osgi.service.packageadmin.RequiredBundle</code> attribute
+	 * version.
+	 */
 	public static final String REQUIREDBUNDLE_ITEM_VERSION = "version";
 
-	/** Constant removalPending. */
+	/**
+	 * <code>org.osgi.service.packageadmin.RequiredBundle</code> attribute
+	 * removalPending.
+	 */
 	public static final String REQUIREDBUNDLE_ITEM_REMOVALPENDING = "removalPending";
 
 	/** Exported package properties. */
@@ -96,7 +128,7 @@ public final class PackageAdminConstants {
 					REQUIREDBUNDLE_ITEM_VERSION,
 					REQUIREDBUNDLE_ITEM_REMOVALPENDING });
 
-	/** CompositeType: exportedPackageType. */
+	/** CompositeType representing one exported package. */
 	public static final CompositeType EXPORTED_PACKAGE_TYPE = OpenTypeFactory
 			.createCompositeType("exportedPackage", "exported package",
 					EXPORTED_PACKAGE_ITEMS.toArray(new String[0]),
@@ -108,13 +140,13 @@ public final class PackageAdminConstants {
 							SimpleType.STRING, SimpleType.STRING,
 							SimpleType.BOOLEAN });
 
-	/** TabularType: exportedPackagesType. */
+	/** TabularType containing exported packages as CompositeType. */
 	public static final TabularType EXPORTED_PACKAGES_TYPE = OpenTypeFactory
 			.createTabularType("exportedPackages", "exported packages",
 					PackageAdminConstants.EXPORTED_PACKAGE_TYPE,
 					new String[] { "name" });
 
-	/** CompositeType: requiredBundleType. */
+	/** CompositeType representing one required bundle. */
 	public static final CompositeType REQUIRED_BUNDLE_TYPE = OpenTypeFactory
 			.createCompositeType("requiredBundle", "required bundle",
 					REQUIRED_BUNDLE_ITEMS.toArray(new String[0]),
@@ -125,15 +157,15 @@ public final class PackageAdminConstants {
 									SimpleType.OBJECTNAME), SimpleType.STRING,
 							SimpleType.STRING, SimpleType.BOOLEAN });
 
-	/** TabularType: requiredBundlesType. */
+	/** TabularType containing required bundles as CompositeType. */
 	public static final TabularType REQUIRED_BUNDLES_TYPE = OpenTypeFactory
 			.createTabularType("requiredBundles", "required bundles",
 					PackageAdminConstants.REQUIRED_BUNDLE_TYPE,
 					new String[] { "symbolicName" });
 
 	/**
-	 * Operation: ObjectName[] getBundles(String symbolicName, String
-	 * versionRange).
+	 * MBean operation info for operation Operation
+	 * {@link PackageAdminMBean#getBundles(String, String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETBUNDLES = new OpenMBeanOperationInfoSupport(
 			"getBundles",
@@ -149,7 +181,10 @@ public final class PackageAdminConstants {
 					.createArrayType(1, SimpleType.OBJECTNAME),
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: Integer getBundleType(Long id). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getBundleType(Long)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport GETBUNDLETYPE_BY_ID = new OpenMBeanOperationInfoSupport(
 			"getBundleType",
 			"Returns the special type of the specified bundle.",
@@ -157,7 +192,10 @@ public final class PackageAdminConstants {
 					"id", "The id of the bundle.", SimpleType.LONG) },
 			SimpleType.INTEGER, OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: Integer getBundleType(ObjectName objectName). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getBundleType(javax.management.ObjectName)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport GETBUNDLETYPE_BY_OBJECTNAME = new OpenMBeanOperationInfoSupport(
 			"getBundleType",
 			"Returns the special type of the specified bundle.",
@@ -166,7 +204,10 @@ public final class PackageAdminConstants {
 					SimpleType.OBJECTNAME) }, SimpleType.INTEGER,
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: String getBundleTypeAsName(Long id). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getBundleTypeAsName(Long)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport GETBUNDLETYPEASNAME_BY_ID = new OpenMBeanOperationInfoSupport(
 			"getBundleTypeAsName",
 			"Returns the special type of the specified bundle.",
@@ -174,7 +215,11 @@ public final class PackageAdminConstants {
 					"id", "The id of the bundle.", SimpleType.LONG) },
 			SimpleType.STRING, OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: String getBundleTypeAsName(ObjectName objectName). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getBundleTypeAsName(javax.management.ObjectName)}
+	 * .
+	 */
 	public static final OpenMBeanOperationInfoSupport GETBUNDLETYPEASNAME_BY_OBJECTNAME = new OpenMBeanOperationInfoSupport(
 			"getBundleTypeAsName",
 			"Returns the special type of the specified bundle.",
@@ -183,7 +228,10 @@ public final class PackageAdminConstants {
 					SimpleType.OBJECTNAME) }, SimpleType.STRING,
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: CompositeType getExportedPackage(String name). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getExportedPackage(String)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport EXPORTEDPACKAGE_BY_OBJECTNAME = new OpenMBeanOperationInfoSupport(
 			"getExportedPackage",
 			"Gets the exported package for the specified package name.",
@@ -193,7 +241,10 @@ public final class PackageAdminConstants {
 			PackageAdminConstants.EXPORTED_PACKAGE_TYPE,
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: TabularData getExportedPackages(Long id). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getExportedPackages(Long)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport EXPORTEDPACKAGES_BY_ID = new OpenMBeanOperationInfoSupport(
 			"getExportedPackages",
 			"Gets the exported package for the specified package name.",
@@ -202,7 +253,11 @@ public final class PackageAdminConstants {
 			PackageAdminConstants.EXPORTED_PACKAGES_TYPE,
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: TabularData getExportedPackages(ObjectName objectName). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getExportedPackages(javax.management.ObjectName)}
+	 * .
+	 */
 	public static final OpenMBeanOperationInfoSupport EXPORTEDPACKAGES_BY_OBJECTNAME = new OpenMBeanOperationInfoSupport(
 			"getExportedPackages",
 			"Gets the exported package for the specified package name.",
@@ -212,7 +267,10 @@ public final class PackageAdminConstants {
 			PackageAdminConstants.EXPORTED_PACKAGES_TYPE,
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: TabularData getExportedPackages(String name). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getExportedPackages(String)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport EXPORTEDPACKAGES_BY_NAME = new OpenMBeanOperationInfoSupport(
 			"getExportedPackages",
 			"Gets the exported package for the specified package name.",
@@ -222,7 +280,10 @@ public final class PackageAdminConstants {
 			PackageAdminConstants.EXPORTED_PACKAGES_TYPE,
 			OpenMBeanOperationInfoSupport.ACTION_INFO);
 
-	/** Operation: ObjectName[] getFragments(Long id). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getFragments(Long)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport FRAGMENTS_BY_ID = new OpenMBeanOperationInfoSupport(
 			"getFragments",
 			"Returns the of attached fragment bundles for the specified bundle.",
@@ -231,7 +292,10 @@ public final class PackageAdminConstants {
 			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME),
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: ObjectName[] getFragments(ObjectName objectName). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getFragments(javax.management.ObjectName)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport FRAGMENTS_BY_OBJECTNAME = new OpenMBeanOperationInfoSupport(
 			"getFragments",
 			"Returns the of attached fragment bundles for the specified bundle.",
@@ -241,7 +305,10 @@ public final class PackageAdminConstants {
 					1, SimpleType.OBJECTNAME),
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: ObjectName[] getHosts(Long id). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getHosts(Long)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport HOSTS_BY_ID = new OpenMBeanOperationInfoSupport(
 			"getHosts",
 			"Returns the host bundle to which the specified fragment bundle is attached or null if the specified bundle is not attached to a host or is not a fragment bundle.",
@@ -250,7 +317,10 @@ public final class PackageAdminConstants {
 			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME),
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: ObjectName[] getHosts(ObjectName objectName). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getHosts(javax.management.ObjectName)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport HOSTS_BY_OBJECTNAME = new OpenMBeanOperationInfoSupport(
 			"getHosts",
 			"Returns the host bundle to which the specified fragment bundle is attached or null if the specified bundle is not attached to a host or is not a fragment bundle.",
@@ -260,7 +330,10 @@ public final class PackageAdminConstants {
 					1, SimpleType.OBJECTNAME),
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: TabularData getRequiredBundles(String symbolicName). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#getRequiredBundles(String)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport REQUIREDBUNDLES_BY_SYMBOLICNAME = new OpenMBeanOperationInfoSupport(
 			"getRequiredBundles",
 			"Returns an array of required bundles having the specified symbolic name.",
@@ -271,7 +344,10 @@ public final class PackageAdminConstants {
 			PackageAdminConstants.REQUIRED_BUNDLES_TYPE,
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: void refreshPackages(Long[] ids). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#refreshPackages(Long[])}.
+	 */
 	public static final OpenMBeanOperationInfoSupport REFRESHPACKAGES_BY_IDS = new OpenMBeanOperationInfoSupport(
 			"refreshPackages",
 			"Forces the update (replacement) or removal of packages exported by the specified bundles.",
@@ -281,7 +357,10 @@ public final class PackageAdminConstants {
 					OpenTypeFactory.createArrayType(1, SimpleType.LONG)) },
 			SimpleType.VOID, OpenMBeanOperationInfoSupport.ACTION);
 
-	/** Operation: void refreshPackages(ObjectName[] objectName). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#refreshPackages(javax.management.ObjectName[])}.
+	 */
 	public static final OpenMBeanOperationInfoSupport REFRESHPACKAGES_BY_OBJECTNAME = new OpenMBeanOperationInfoSupport(
 			"refreshPackages",
 			"Forces the update (replacement) or removal of packages exported by the specified bundles.",
@@ -291,14 +370,20 @@ public final class PackageAdminConstants {
 					OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME)) },
 			SimpleType.VOID, OpenMBeanOperationInfoSupport.ACTION);
 
-	/** Operation: void refreshPackages(). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#refreshPackages()}.
+	 */
 	public static final OpenMBeanOperationInfoSupport REFRESHPACKAGES = new OpenMBeanOperationInfoSupport(
 			"refreshPackages",
 			"Forces the update (replacement) or removal of packages exported by the specified bundles.",
 			new OpenMBeanParameterInfoSupport[0], SimpleType.VOID,
 			OpenMBeanOperationInfoSupport.ACTION);
 
-	/** Operation: void resolveBundles(Long[] ids). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#resolveBundles(Long[])}.
+	 */
 	public static final OpenMBeanOperationInfoSupport RESOLVEBUNDLES_BY_ID = new OpenMBeanOperationInfoSupport(
 			"resolveBundles",
 			"Resolve the specified bundles.",
@@ -308,7 +393,10 @@ public final class PackageAdminConstants {
 					OpenTypeFactory.createArrayType(1, SimpleType.LONG)) },
 			SimpleType.BOOLEAN, OpenMBeanOperationInfoSupport.ACTION_INFO);
 
-	/** Operation: void resolveBundles(ObjectName[] objectName). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#resolveBundles(javax.management.ObjectName[])}.
+	 */
 	public static final OpenMBeanOperationInfoSupport RESOLVEBUNDLES_BY_OBJECTNAME = new OpenMBeanOperationInfoSupport(
 			"resolveBundles",
 			"Resolve the specified bundles.",
@@ -318,7 +406,10 @@ public final class PackageAdminConstants {
 					OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME)) },
 			SimpleType.BOOLEAN, OpenMBeanOperationInfoSupport.ACTION_INFO);
 
-	/** Operation: void resolveBundles(). */
+	/**
+	 * MBean operation info for operation
+	 * {@link PackageAdminMBean#resolveBundles()}.
+	 */
 	public static final OpenMBeanOperationInfoSupport RESOLVEBUNDLES = new OpenMBeanOperationInfoSupport(
 			"resolveBundles", "Resolve the specified bundles.",
 			new OpenMBeanParameterInfoSupport[0], SimpleType.BOOLEAN,

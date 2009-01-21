@@ -90,6 +90,10 @@ public interface PackageAdminMBean {
 	/**
 	 * Gets the exported package for the specified package name.
 	 * 
+	 * <p>
+	 * If there are multiple exported packages with specified name, the exported
+	 * package with the highest version will be returned.
+	 * 
 	 * @see org.osgi.service.packageadmin.PackageAdmin#getExportedPackage(String)
 	 * 
 	 * @param name
@@ -136,7 +140,7 @@ public interface PackageAdminMBean {
 	TabularData getExportedPackages(String name);
 
 	/**
-	 * Returns the of attached fragment bundles for the specified bundle.
+	 * Returns the attached fragment bundles for the specified bundle.
 	 * 
 	 * @see org.osgi.service.packageadmin.PackageAdmin#getFragments(org.osgi.framework.Bundle)
 	 * 
@@ -148,7 +152,7 @@ public interface PackageAdminMBean {
 	ObjectName[] getFragments(ObjectName objectName);
 
 	/**
-	 * Returns the of attached fragment bundles for the specified bundle.
+	 * Returns the attached fragment bundles for the specified bundle.
 	 * 
 	 * @see org.osgi.service.packageadmin.PackageAdmin#getFragments(org.osgi.framework.Bundle)
 	 * 
@@ -160,30 +164,30 @@ public interface PackageAdminMBean {
 	ObjectName[] getFragments(Long id);
 
 	/**
-	 * Returns the containing the host bundle to which the specified fragment
-	 * bundle is attached or null if the specified bundle is not attached to a
-	 * host or is not a fragment bundle.
+	 * Returns the host bundles to which the specified fragment bundle is
+	 * attached or null if the specified bundle is not attached to a host or is
+	 * not a fragment bundle.
 	 * 
 	 * @see org.osgi.service.packageadmin.PackageAdmin#getHosts(org.osgi.framework.Bundle)
 	 * 
 	 * @param objectName
 	 *            The object name of the bundle.
-	 * @return An array containing the host bundle or null if the bundle does
-	 *         not have a host bundle.
+	 * @return An array containing the object names of the host bundles or null
+	 *         if the bundle does not have a host bundle.
 	 */
 	ObjectName[] getHosts(ObjectName objectName);
 
 	/**
-	 * Returns the containing the host bundle to which the specified fragment
-	 * bundle is attached or null if the specified bundle is not attached to a
-	 * host or is not a fragment bundle.
+	 * Returns the host bundles to which the specified fragment bundle is
+	 * attached or null if the specified bundle is not attached to a host or is
+	 * not a fragment bundle.
 	 * 
 	 * @see org.osgi.service.packageadmin.PackageAdmin#getHosts(org.osgi.framework.Bundle)
 	 * 
 	 * @param id
 	 *            The id of the bundle.
-	 * @return An array containing the host bundle or null if the bundle does
-	 *         not have a host bundle.
+	 * @return An array containing the object names of the host bundle or null
+	 *         if the bundle does not have a host bundle.
 	 */
 	ObjectName[] getHosts(Long id);
 
@@ -194,7 +198,7 @@ public interface PackageAdminMBean {
 	 * 
 	 * @param symbolicName
 	 *            The bundle symbolic name or null for all required bundles.
-	 * @return An array of required bundles or null if no required bundles exist
+	 * @return An array of required bundles or null if no required bundle exists
 	 *         for the specified symbolic name.
 	 */
 	TabularData getRequiredBundles(String symbolicName);
@@ -242,7 +246,7 @@ public interface PackageAdminMBean {
 	 * @param objectNames
 	 *            The object names of the bundles to resolve or null to resolve
 	 *            all unresolved bundles installed in the Framework.
-	 * @return true if all specified bundles are resolved;
+	 * @return TRUE if all specified bundles are resolved;
 	 */
 	Boolean resolveBundles(ObjectName[] objectNames);
 
@@ -254,7 +258,7 @@ public interface PackageAdminMBean {
 	 * @param ids
 	 *            The ids of the bundles to resolve or null to resolve all
 	 *            unresolved bundles installed in the Framework.
-	 * @return true if all specified bundles are resolved;
+	 * @return TRUE if all specified bundles are resolved;
 	 */
 	Boolean resolveBundles(Long[] ids);
 

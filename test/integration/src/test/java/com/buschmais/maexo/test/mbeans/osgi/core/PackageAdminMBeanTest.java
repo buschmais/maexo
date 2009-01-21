@@ -195,8 +195,8 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	 * {@inheritDoc}
 	 */
 	public void frameworkEvent(FrameworkEvent event) {
-		frameworkEvents.add(Integer.valueOf(event.getType()));
 		synchronized (this) {
+			frameworkEvents.add(Integer.valueOf(event.getType()));
 			this.notify();
 		}
 	}

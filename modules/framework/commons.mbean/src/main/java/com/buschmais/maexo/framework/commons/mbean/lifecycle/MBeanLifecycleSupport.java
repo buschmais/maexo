@@ -73,13 +73,17 @@ public abstract class MBeanLifecycleSupport {
 	}
 
 	/**
-	 * @return the bundleContext
+	 * Returns the bundle context.
+	 * 
+	 * @return the bundle context
 	 */
 	public final BundleContext getBundleContext() {
 		return bundleContext;
 	}
 
 	/**
+	 * Returns the ObjectNameFactoryHelper.
+	 * 
 	 * @return the objectNameFactoryHelper
 	 */
 	protected final ObjectNameFactoryHelper getObjectNameHelper() {
@@ -97,7 +101,8 @@ public abstract class MBeanLifecycleSupport {
 	 * @param mbeanInterface
 	 *            The interface for service registration.
 	 * @param objectName
-	 *            The object name which will be be used as service property.
+	 *            The unique object name which will be be used as service
+	 *            property.
 	 * @param mbean
 	 *            The mbean instance.
 	 */
@@ -121,7 +126,7 @@ public abstract class MBeanLifecycleSupport {
 	 * The MBean is identified by its object name.
 	 * 
 	 * @param objectName
-	 *            The objectName which identifies the MBean to be unregistered.
+	 *            The object name which identifies the MBean to be unregistered.
 	 */
 	protected final void unregisterMBeanService(ObjectName objectName) {
 		// lookup serviceRegistration

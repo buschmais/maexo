@@ -17,7 +17,7 @@
 package com.buschmais.maexo.adaptor.mx4j.http;
 
 /**
- * This class declared several global constants.
+ * This class declares several global constants.
  */
 public final class Constants {
 

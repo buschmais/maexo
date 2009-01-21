@@ -35,34 +35,42 @@ public interface ServiceMBean {
 	ObjectName getBundle();
 
 	/**
-	 * Returns the service property named "service.id" identifying a service's
-	 * registration number.
+	 * Returns the service property
+	 * <code>org.osgi.framework.Constants.SERVICE_ID</code> identifying a
+	 * service's registration number.
 	 * 
-	 * @return The service property named "service.id".
+	 * @return The service property
+	 *         <code>org.osgi.framework.Constants.SERVICE_ID</code>.
 	 */
 	Long getId();
 
 	/**
-	 * Returns the service property named "service.description" identifying a
-	 * service's description.
+	 * Returns the service property
+	 * <code>org.osgi.framework.Constants.SERVICE_DESCRIPTION</code> identifying
+	 * a service's description.
 	 * 
-	 * @return The service property named "service.description".
+	 * @return The service property
+	 *         <code>org.osgi.framework.Constants.SERVICE_DESCRIPTION</code>.
 	 */
 	String getDescription();
 
 	/**
-	 * Returns the service property named "objectClass" identifying all of the
-	 * class names under which a service was registered in the Framework.
+	 * Returns the service property
+	 * <code>org.osgi.framework.Constants.OBJECTCLASS</code> identifying all of
+	 * the class names under which a service was registered in the Framework.
 	 * 
-	 * @return The service property named "objectClass".
+	 * @return The service property
+	 *         <code>org.osgi.framework.Constants.OBJECTCLASS</code>.
 	 */
 	String[] getObjectClass();
 
 	/**
-	 * Returns the service property named "service.pid" identifying a service's
-	 * persistent identifier.
+	 * Returns the service property
+	 * <code>org.osgi.framework.Constants.SERVICE_PID</code> identifying a
+	 * service's persistent identifier.
 	 * 
-	 * @return The service property named "service.pid".
+	 * @return The service property
+	 *         <code>org.osgi.framework.Constants.SERVICE_PID</code>.
 	 */
 	String getPid();
 
@@ -74,10 +82,12 @@ public interface ServiceMBean {
 	TabularData getProperties();
 
 	/**
-	 * Returns the service property named "service.ranking" identifying a
+	 * Returns the service property
+	 * <code>org.osgi.framework.Constants.SERVICE_RANKING</code> identifying a
 	 * service's ranking number (of type java.lang.Integer).
 	 * 
-	 * @return The service property named "service.ranking".
+	 * @return The service property
+	 *         <code>org.osgi.framework.Constants.SERVICE_RANKING</code>.
 	 */
 	Integer getRanking();
 
@@ -91,10 +101,12 @@ public interface ServiceMBean {
 	ObjectName[] getUsingBundles();
 
 	/**
-	 * Returns the service property named "service.vendor" identifying a
+	 * Returns the service property
+	 * <code>org.osgi.framework.Constants.SERVICE_VENDOR</code> identifying a
 	 * service's vendor.
 	 * 
-	 * @return The service property named "service.vendor".
+	 * @return The service property
+	 *         <code>org.osgi.framework.Constants.SERVICE_VENDOR</code>.
 	 */
 	String getVendor();
 

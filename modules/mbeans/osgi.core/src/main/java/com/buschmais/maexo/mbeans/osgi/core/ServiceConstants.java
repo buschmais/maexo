@@ -46,80 +46,80 @@ public final class ServiceConstants {
 	public static final String MBEAN_DESCRIPTION = "Service MBean";
 
 	/** Constant name. */
-	public static final String SERVICEPROPERTY_ITEM_NAME = "name";
+	private static final String SERVICEPROPERTY_ITEM_NAME = "name";
 
 	/** Constant value. */
-	public static final String SERVICEPROPERTY_ITEM_VALUE = "value";
+	private static final String SERVICEPROPERTY_ITEM_VALUE = "value";
 
 	/** Service property items. */
 	public static final List<String> SERVICEPROPERTY_ITEMS = Arrays
 			.asList(new String[] { SERVICEPROPERTY_ITEM_NAME,
 					SERVICEPROPERTY_ITEM_VALUE });
 
-	/** Attribute: bundle. */
+	/** MBean attribute info for {@link ServiceMBean#getBundle()}. */
 	public static final OpenMBeanAttributeInfoSupport BUNDLE = new OpenMBeanAttributeInfoSupport(
 			"bundle",
 			"The object name of the bundle that registered the service; null if that service has already been unregistered.",
 			SimpleType.OBJECTNAME, true, false, false);
 
-	/** Attribute: description. */
+	/** MBean attribute info for {@link ServiceMBean#getDescription()}. */
 	public static final OpenMBeanAttributeInfoSupport DESCRIPTION = new OpenMBeanAttributeInfoSupport(
 			"description",
 			"The service property named \"service.description\" identifying a service's description.",
 			SimpleType.STRING, true, false, false);
 
-	/** Attribute: id. */
+	/** MBean attribute info for {@link ServiceMBean#getId()}. */
 	public static final OpenMBeanAttributeInfoSupport ID = new OpenMBeanAttributeInfoSupport(
 			"id",
 			"The service property named \"service.id\" identifying a service's registration number.",
 			SimpleType.LONG, true, false, false);
 
-	/** Attribute: object class. */
+	/** MBean attribute info for {@link ServiceMBean#getObjectClass()}. */
 	public static final OpenMBeanAttributeInfoSupport OBJECTCLASS = new OpenMBeanAttributeInfoSupport(
 			"objectClass",
 			"The service property named \"objectClass\" identifying all of the class names under which a service was registered in the Framework.",
 			OpenTypeFactory.createArrayType(1, SimpleType.STRING), true, false,
 			false);
 
-	/** Attribute: pid. */
+	/** MBean attribute info for {@link ServiceMBean#getPid()}. */
 	public static final OpenMBeanAttributeInfoSupport PID = new OpenMBeanAttributeInfoSupport(
 			"pid",
 			"The service property named \"service.pid\" identifying a service's persistent identifier.",
 			SimpleType.STRING, true, false, false);
 
-	/** propertiesRowType. */
+	/** CompositeType representing one properties entry. */
 	public static final CompositeType PROPERTIES_ROW_TYPE = OpenTypeFactory
 			.createCompositeType("propertyEntry", "A service property entry",
 					SERVICEPROPERTY_ITEMS.toArray(new String[0]),
 					SERVICEPROPERTY_ITEMS.toArray(new String[0]),
 					new OpenType[] { SimpleType.STRING, SimpleType.STRING });
 
-	/** propertiesType. */
+	/** TabularType containing properties entries. */
 	public static final TabularType PROPERTIES_TYPE = OpenTypeFactory
 			.createTabularType("properties", "The service properties",
 					ServiceConstants.PROPERTIES_ROW_TYPE,
 					new String[] { "name" });
 
-	/** Attribute: propertyType. */
+	/** MBean attribute info for {@link ServiceMBean#getProperties()}. */
 	public static final OpenMBeanAttributeInfoSupport PROPERTIES = new OpenMBeanAttributeInfoSupport(
 			"properties",
 			"The properties of the Dictionary object of the service.",
 			ServiceConstants.PROPERTIES_TYPE, true, false, false);
 
-	/** Attribute: ranking. */
+	/** MBean attribute info for {@link ServiceMBean#getRanking()}. */
 	public static final OpenMBeanAttributeInfoSupport RANKING = new OpenMBeanAttributeInfoSupport(
 			"ranking",
 			"The service property named \"service.ranking\" identifying a service's ranking number.",
 			SimpleType.INTEGER, true, false, false);
 
-	/** Attribute: using bundles. */
+	/** MBean attribute info for {@link ServiceMBean#getUsingBundles()}. */
 	public static final OpenMBeanAttributeInfoSupport USINGBUNDLES = new OpenMBeanAttributeInfoSupport(
 			"usingBundles",
 			"The bundle which are currrently using this service",
 			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME), true,
 			false, false);
 
-	/** Attribute: vendor. */
+	/** MBean attribute info for {@link ServiceMBean#getVendor()}. */
 	public static final OpenMBeanAttributeInfoSupport VENDOR = new OpenMBeanAttributeInfoSupport(
 			"vendor",
 			"the service property named \"service.vendor\" identifying a service's vendor.",

@@ -26,34 +26,34 @@ import javax.management.ObjectName;
 public interface StartLevelMBean {
 
 	/**
-	 * Returns the assigned start level value for the specified Bundle.
+	 * Returns the assigned start level value for the specified bundle.
 	 * 
 	 * @see org.osgi.service.startlevel.StartLevel#getBundleStartLevel(Bundle)
 	 * 
 	 * @param objectName
 	 *            the object name of the bundle
-	 * @return The start level value of the specified Bundle.
+	 * @return The start level value of the specified bundle.
 	 */
 	Integer getBundleStartLevel(ObjectName objectName);
 
 	/**
-	 * Return the assigned start level value for the specified Bundle.
+	 * Return the assigned start level value for the specified bundle.
 	 * 
 	 * @see org.osgi.service.startlevel.StartLevel#getBundleStartLevel(Bundle)
 	 * 
 	 * @param id
 	 *            the id of the bundle
-	 * @return The start level value of the specified Bundle.
+	 * @return The start level value of the specified bundle.
 	 */
 	Integer getBundleStartLevel(Long id);
 
 	/**
-	 * Return the initial start level value that is assigned to a Bundle when it
+	 * Return the initial start level value that is assigned to a bundle when it
 	 * is first installed.
 	 * 
 	 * @see org.osgi.service.startlevel.StartLevel#getInitialBundleStartLevel()
 	 * 
-	 * @return The initial start level value for Bundles.
+	 * @return The initial start level value for bundles.
 	 */
 	Integer getInitialBundleStartLevel();
 
@@ -93,7 +93,7 @@ public interface StartLevelMBean {
 	Boolean isBundlePersistentlyStarted(Long id);
 
 	/**
-	 * Assign a start level value to the specified Bundle.
+	 * Assign a start level value to the specified bundle.
 	 * 
 	 * @see org.osgi.service.startlevel.StartLevel#setBundleStartLevel(Bundle,
 	 *      int)
@@ -101,12 +101,12 @@ public interface StartLevelMBean {
 	 * @param objectName
 	 *            the object name of the bundle
 	 * @param startLevel
-	 *            The new start level for the specified Bundle.
+	 *            The new start level for the specified bundle.
 	 */
 	void setBundleStartLevel(ObjectName objectName, Integer startLevel);
 
 	/**
-	 * Assign a start level value to the specified Bundle.
+	 * Assign a start level value to the specified bundle.
 	 * 
 	 * @see org.osgi.service.startlevel.StartLevel#setBundleStartLevel(Bundle,
 	 *      int)
@@ -114,12 +114,12 @@ public interface StartLevelMBean {
 	 * @param id
 	 *            the id name of the bundle
 	 * @param startLevel
-	 *            The new start level for the specified Bundle.
+	 *            The new start level for the specified bundle.
 	 */
 	void setBundleStartLevel(Long id, Integer startLevel);
 
 	/**
-	 * Set the initial start level value that is assigned to a Bundle when it is
+	 * Set the initial start level value that is assigned to a bundle when it is
 	 * first installed.
 	 * 
 	 * @see org.osgi.service.startlevel.StartLevel#setInitialBundleStartLevel(int)

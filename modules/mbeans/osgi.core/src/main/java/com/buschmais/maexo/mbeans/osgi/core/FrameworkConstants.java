@@ -42,67 +42,73 @@ public final class FrameworkConstants {
 	/** MBean object name format. */
 	public static final String OBJECTNAME_FORMAT = "com.buschmais.maexo:type=Framework";
 
-	/** Attribute: bootDelegation. */
+	/** MBean attribute info for {@link FrameworkMBean#getBootDelegation()}. */
 	public static final OpenMBeanAttributeInfoSupport BOOTDELEGATION = new OpenMBeanAttributeInfoSupport(
 			"bootDelegation",
 			"The value of the framework's boot delegation property.",
 			SimpleType.STRING, true, false, false);
 
-	/** Attribute: executionEnvironment. */
+	/**
+	 * MBean attribute info for {@link FrameworkMBean#getExecutionEnvironment()}
+	 * .
+	 */
 	public static final OpenMBeanAttributeInfoSupport EXECUTIONENVIRONMENT = new OpenMBeanAttributeInfoSupport(
 			"executionEnvironment",
 			"The value of the framework's execution environment property.",
 			SimpleType.STRING, true, false, false);
 	
-	/** Attribute: executionEnvironment. */
+	/** MBean attribute info for {@link FrameworkMBean#getLanguage()}. */
 	public static final OpenMBeanAttributeInfoSupport LANGUAGE = new OpenMBeanAttributeInfoSupport(
 			"language", "The value of the framework's language property.",
 			SimpleType.STRING, true, false, false);
 	
-	/** Attribute: osName. */
+	/** MBean attribute info for {@link FrameworkMBean#getOsName()}. */
 	public static final OpenMBeanAttributeInfoSupport OSNAME = new OpenMBeanAttributeInfoSupport(
 			"osName", "The value of the framework's OS name property.",
 			SimpleType.STRING, true, false, false);
 	
-	/** Attribute: osVersion. */
+	/** MBean attribute info for {@link FrameworkMBean#getOsVersion()}. */
 	public static final OpenMBeanAttributeInfoSupport OSVERSION = new OpenMBeanAttributeInfoSupport(
 			"osVersion", "The value of the framework's OS version property.",
 			SimpleType.STRING, true, false, false);
 	
-	/** Attribute: processor. */
+	/** MBean attribute info for {@link FrameworkMBean#getProcessor()}. */
 	public static final OpenMBeanAttributeInfoSupport PROCESSOR = new OpenMBeanAttributeInfoSupport(
 			"processor", "The value of the framework's processor property.",
 			SimpleType.STRING, true, false, false);
 	
-	/** Attribute: systemPackages. */
+	/** MBean attribute info for {@link FrameworkMBean#getSystemPackages()}. */
 	public static final OpenMBeanAttributeInfoSupport SYSTEMPACKAGES = new OpenMBeanAttributeInfoSupport(
 			"systemPackages",
 			"The value of the framework's system packages property.",
 			SimpleType.STRING, true, false, false);
 	
-	/** Attribute: vendor. */
+	/** MBean attribute info for {@link FrameworkMBean#getVendor()}. */
 	public static final OpenMBeanAttributeInfoSupport VENDOR = new OpenMBeanAttributeInfoSupport(
 			"vendor", "The value of the framework's vendor property.",
 			SimpleType.STRING, true, false, false);
 	
-	/** Attribute: version. */
+	/** MBean attribute info for {@link FrameworkMBean#getVersion()}. */
 	public static final OpenMBeanAttributeInfoSupport VERSION = new OpenMBeanAttributeInfoSupport(
 			"version", "The value of the framework's version property.",
 			SimpleType.STRING, true, false, false);
 	
-	/** Attribute: bundles. */
+	/** MBean attribute info for {@link FrameworkMBean#getBundles()}. */
 	public static final OpenMBeanAttributeInfoSupport BUNDLES = new OpenMBeanAttributeInfoSupport(
 			"bundles", "The array of ObjectName of all installed bundles",
 			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME), true,
 			false, false);
 	
-	/** Attribute: services. */
+	/** MBean attribute info for {@link FrameworkMBean#getServices()}. */
 	public static final OpenMBeanAttributeInfoSupport SERVICES = new OpenMBeanAttributeInfoSupport(
 			"services", "The array of ObjectName of all registered services.",
 			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME), true,
 			false, false);
-	
-	/** Operation: ObjectName[] getServices(String objectClass, String filter). */
+
+	/**
+	 * MBean operation info for operation
+	 * {@link FrameworkMBean#getServices(String, String)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport GETSERVICES_BY_OBJECTCLASS = new OpenMBeanOperationInfoSupport(
 			"getServices",
 			"Returns an array of ObjectName representing services which match the specified criteria.",
@@ -115,7 +121,10 @@ public final class FrameworkConstants {
 							OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME),
 			OpenMBeanOperationInfoSupport.INFO);
 
-	/** Operation: ObjectName installBundle(String location). */
+	/**
+	 * MBean operation info for operation
+	 * {@link FrameworkMBean#installBundle(String)}.
+	 */
 	public static final OpenMBeanOperationInfoSupport INSTALLBUNDLE_BY_LOCATION = new OpenMBeanOperationInfoSupport(
 			"installBundle",
 			"Installs a bundle from the specified location string.",
@@ -124,8 +133,11 @@ public final class FrameworkConstants {
 					"The location identifier of the bundle to install.",
 					SimpleType.STRING) }, SimpleType.OBJECTNAME,
 			OpenMBeanOperationInfoSupport.INFO);
-	
-	/** Operation: ObjectName installBundle(String location, byte[] input). */
+
+	/**
+	 * MBean operation info for operation
+	 * {@link FrameworkMBean#installBundle(String, byte[])}.
+	 */
 	public static final OpenMBeanOperationInfoSupport INSTALLBUNDLE_BY_BYTEARRAY = new OpenMBeanOperationInfoSupport(
 			"installBundle",
 			"Installs a bundle from the specified input byte array.",
