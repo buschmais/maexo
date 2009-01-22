@@ -32,7 +32,7 @@ import org.osgi.framework.ServiceReference;
  * a service listener to receive service-changed-events.
  */
 public abstract class ServiceMBeanLifeCycleSupport extends
-		MBeanLifeCycleSupports implements ServiceListener {
+		MBeanLifeCycleSupport implements ServiceListener {
 
 	/**
 	 * Constructor.

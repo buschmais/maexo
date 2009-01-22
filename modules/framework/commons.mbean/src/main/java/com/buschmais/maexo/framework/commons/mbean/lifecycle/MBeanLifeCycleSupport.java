@@ -43,10 +43,10 @@ import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryH
  * {@link #unregisterMBeanService(ObjectName)} to control registration of MBeans
  * in the OSGi service registry.
  */
-public abstract class MBeanLifeCycleSupports {
+public abstract class MBeanLifeCycleSupport {
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(MBeanLifeCycleSupports.class);
+			.getLogger(MBeanLifeCycleSupport.class);
 
 	/**
 	 * The bundle context of the exporting bundle.
@@ -66,7 +66,7 @@ public abstract class MBeanLifeCycleSupports {
 	 * @param bundleContext
 	 *            the bundle context of the exporting bundle
 	 */
-	public MBeanLifeCycleSupports(BundleContext bundleContext) {
+	public MBeanLifeCycleSupport(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
 		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(
 				bundleContext);
