@@ -25,7 +25,7 @@ import com.buschmais.maexo.framework.commons.mbean.dynamic.OpenTypeFactory;
 
 
 /**
- * Class holding all constants for BundleMBeans.
+ * Class holding all constants for FrameworkMBeans.
  */
 public final class FrameworkConstants {
 

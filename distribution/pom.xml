@@ -55,12 +55,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.buschmais.maexo.modules.samples</groupId>
-			<artifactId>maexo-samples.basic</artifactId>
-			<type>zip</type>
-			<classifier>sample</classifier>
-		</dependency>
-		<dependency>
 			<groupId>com.buschmais.maexo.modules.framework</groupId>
 			<artifactId>maexo-framework.switchboard</artifactId>
 		</dependency>
@@ -69,8 +63,18 @@
 			<artifactId>maexo-framework.commons.mbean</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.buschmais.maexo.modules.framework</groupId>
+			<artifactId>maexo-framework.commons.mbean</artifactId>
+			<classifier>javadoc</classifier>
+		</dependency>
+		<dependency>
 			<groupId>com.buschmais.maexo.modules.mbeans</groupId>
 			<artifactId>maexo-mbeans.osgi.core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.buschmais.maexo.modules.mbeans</groupId>
+			<artifactId>maexo-mbeans.osgi.core</artifactId>
+			<classifier>javadoc</classifier>
 		</dependency>
 		<dependency>
 			<groupId>com.buschmais.maexo.modules.server</groupId>
@@ -81,6 +85,11 @@
 			<artifactId>maexo-adaptor.mx4j.http</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.buschmais.maexo.modules.adaptor</groupId>
+			<artifactId>maexo-adaptor.mx4j.http</artifactId>
+			<classifier>javadoc</classifier>
+		</dependency>
+		<dependency>
 			<groupId>com.buschmais.maexo.external.mx4j</groupId>
 			<artifactId>maexo-mx4j.tools.osgi</artifactId>
 			<exclusions>
@@ -89,10 +98,6 @@
 					<artifactId>mx4j-tools</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.osgi</groupId>
-			<artifactId>org.eclipse.osgi</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -106,5 +111,11 @@
 		    <groupId>org.slf4j</groupId>
 		    <artifactId>jcl-over-slf4j</artifactId>
 		</dependency> 
+		<dependency>
+			<groupId>com.buschmais.maexo.modules.samples</groupId>
+			<artifactId>maexo-samples.basic</artifactId>
+			<type>zip</type>
+			<classifier>sample</classifier>
+		</dependency>
 	</dependencies>
 </project>

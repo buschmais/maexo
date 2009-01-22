@@ -43,7 +43,6 @@
 			<outputDirectory>lib</outputDirectory>
 			<includes>
 				<include>com.buschmais.maexo.external.mx4j:maexo-mx4j.tools.osgi</include>
-				<include>org.eclipse.osgi:org.eclipse.osgi</include>
 				<include>org.slf4j:slf4j-api</include>
 				<include>org.slf4j:slf4j-jdk14</include>
 				<include>org.slf4j:jcl-over-slf4j</include>
@@ -54,6 +53,27 @@
 			<unpack>true</unpack>
 			<includes>
 				<include>com.buschmais.maexo.modules.samples:maexo-samples.basic</include>
+			</includes>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>doc/api/maexo-framework.commons.mbean</outputDirectory>
+			<unpack>true</unpack>
+			<includes>
+				<include>com.buschmais.maexo.modules.framework:maexo-framework.commons.mbean:jar:javadoc</include>
+			</includes>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>doc/api/maexo-mbeans.osgi.core</outputDirectory>
+			<unpack>true</unpack>
+			<includes>
+				<include>com.buschmais.maexo.modules.mbeans:maexo-mbeans.osgi.core:jar:javadoc</include>
+			</includes>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>doc/api/maexo-adaptor.mx4j.http</outputDirectory>
+			<unpack>true</unpack>
+			<includes>
+				<include>com.buschmais.maexo.modules.adaptor:maexo-adaptor.mx4j.http:jar:javadoc</include>
 			</includes>
 		</dependencySet>
 	</dependencySets>
