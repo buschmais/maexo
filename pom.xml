@@ -28,6 +28,7 @@
 
 	<modules>
 		<module>build</module>
+		<module>distribution</module>
 		<module>external</module>
 		<module>modules</module>
 		<module>test</module>
@@ -303,6 +304,14 @@ limitations under the License
 				<groupId>com.buschmais.maexo.modules.adaptor</groupId>
 				<artifactId>maexo-adaptor.mx4j.http</artifactId>
 				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.modules.samples</groupId>
+				<artifactId>maexo-samples.basic</artifactId>
+				<type>zip</type>
+				<version>${maexo.version}</version>
+				<classifier>sample</classifier>
 			</dependency>
 
 			<dependency>
