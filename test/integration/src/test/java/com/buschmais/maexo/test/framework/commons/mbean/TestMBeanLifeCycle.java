@@ -8,14 +8,14 @@ import javax.management.ObjectName;
 
 import org.osgi.framework.BundleContext;
 
-import com.buschmais.maexo.framework.commons.mbean.lifecycle.MBeanLifecycleSupport;
+import com.buschmais.maexo.framework.commons.mbean.lifecycle.MBeanLifeCycleSupport;
 import com.buschmais.maexo.test.common.mbeans.Standard;
 import com.buschmais.maexo.test.common.mbeans.StandardMBean;
 
 /**
  * This class derives from {@link MBeanLifecycleSupport} for test purposes.
  */
-public class TestMBeanLifeCycle extends MBeanLifecycleSupport {
+public class TestMBeanLifeCycle extends MBeanLifeCycleSupport {
 
 	private ObjectName objectName;
 

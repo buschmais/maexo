@@ -4,7 +4,7 @@ import javax.management.ObjectName;
 
 import org.osgi.framework.BundleContext;
 
-import com.buschmais.maexo.framework.commons.mbean.lifecycle.MBeanLifecycleSupport;
+import com.buschmais.maexo.framework.commons.mbean.lifecycle.MBeanLifeCycleSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 import com.buschmais.maexo.mbeans.osgi.core.FrameworkMBean;
 import com.buschmais.maexo.mbeans.osgi.core.impl.FrameworkMBeanImpl;
@@ -12,7 +12,7 @@ import com.buschmais.maexo.mbeans.osgi.core.impl.FrameworkMBeanImpl;
 /**
  * This class manages the life cycle of the BundleContexts MBean.
  */
-public final class FrameworkMBeanLifeCycle extends MBeanLifecycleSupport {
+public final class FrameworkMBeanLifeCycle extends MBeanLifeCycleSupport {
 
 	private ObjectName frameworkMBeanObjectName;
 
