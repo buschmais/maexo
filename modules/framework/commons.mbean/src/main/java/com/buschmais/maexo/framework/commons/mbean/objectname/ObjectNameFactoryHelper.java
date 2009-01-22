@@ -68,13 +68,13 @@ public final class ObjectNameFactoryHelper {
 	 * set to null.
 	 * 
 	 * @param resource
-	 *            the resource
+	 *            The resource.
 	 * @param resourceInterface
-	 *            the interface to use for looking up the object name factory
-	 * @return the object name
+	 *            The interface to use for looking up the object name factory.
+	 * @return The object name.
 	 * @exception IllegalStateException
-	 *                if no appropriate <code>ObjectNameFactory</code> is found
-	 *                and therefore no object name could be constructed
+	 *                If no appropriate <code>ObjectNameFactory</code> is found
+	 *                and therefore no object name could be constructed.
 	 */
 	public ObjectName getObjectName(Object resource, Class<?> resourceInterface)
 			throws IllegalStateException {
@@ -89,16 +89,16 @@ public final class ObjectNameFactoryHelper {
 	 * {@link ObjectNameFactory#getObjectName(Object, Map)} method.
 	 * 
 	 * @param resource
-	 *            the resource
+	 *            The resource.
 	 * @param resourceInterface
-	 *            the interface to use for looking up the object name factory
+	 *            The interface to use for looking up the object name factory.
 	 * @param properties
-	 *            additional properties which will be passed to the object name
-	 *            factory
-	 * @return the object name
+	 *            Additional properties which will be passed to the object name
+	 *            factory.
+	 * @return The object name.
 	 * @exception IllegalStateException
-	 *                if no appropriate <code>ObjectNameFactory</code> is found
-	 *                and therefore no object name could be constructed
+	 *                If no appropriate <code>ObjectNameFactory</code> is found
+	 *                and therefore no object name could be constructed.
 	 */
 	public ObjectName getObjectName(Object resource,
 			Class<?> resourceInterface, Map<String, Object> properties)
@@ -177,10 +177,10 @@ public final class ObjectNameFactoryHelper {
 	 * <code>ObjectNameFactoryHelper</code>.
 	 * 
 	 * @param objectNameFactory
-	 *            the object name factory
+	 *            The object name factory.
 	 * @param resourceInterface
-	 *            the class of the resources which are supported
-	 * @return the service reference
+	 *            The class of the resources which are supported.
+	 * @return The service reference.
 	 */
 	public ServiceRegistration registerObjectNameFactory(
 			ObjectNameFactory objectNameFactory, Class<?> resourceInterface) {

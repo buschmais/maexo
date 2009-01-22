@@ -26,7 +26,7 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * Represents an abstract service event listener to manage the life cycle of the
- * associated service mbeans.
+ * associated service MBeans.
  * <p>
  * The <code>ServiceMBeanLifeCycleSupport</code> instance will be registered as
  * a service listener to receive service-changed-events.
@@ -38,7 +38,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * Constructor.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context of the exporting bundle
+	 *            The bundle context of the exporting bundle.
 	 */
 	public ServiceMBeanLifeCycleSupport(BundleContext bundleContext) {
 		super(bundleContext);
@@ -47,7 +47,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	/**
 	 * Returns the service interface supported by the life cycle event listener.
 	 * 
-	 * @return the service interface
+	 * @return The service interface.
 	 */
 	protected abstract Class<?> getServiceInterface();
 
@@ -63,34 +63,33 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	protected abstract String getServiceFilter();
 
 	/**
-	 * Returns the object name of service which will be used for the managed
-	 * bean.
+	 * Returns the object name of service which will be used for the MBean.
 	 * 
 	 * @param serviceReference
-	 *            the service reference
+	 *            The service reference.
 	 * @param service
-	 *            the service instance
-	 * @return the object name
+	 *            The service instance.
+	 * @return The object name.
 	 */
 	protected abstract ObjectName getObjectName(ServiceReference serviceReference,
 			Object service);
 
 	/**
-	 * Returns the mbean instance for the given service.
+	 * Returns the MBean instance for the given service.
 	 * 
 	 * @param serviceReference
-	 *            the service reference
+	 *            The service reference.
 	 * @param service
-	 *            the service instance
-	 * @return the mbean instance
+	 *            The service instance.
+	 * @return The MBean instance.
 	 */
 	protected abstract Object getMBean(ServiceReference serviceReference,
 			Object service);
 
 	/**
-	 * Returns the mbean interface which will be used for registration.
+	 * Returns the MBean interface which will be used for registration.
 	 * 
-	 * @return the mbean interface
+	 * @return The MBean interface.
 	 */
 	protected abstract Class<?> getMBeanInterface();
 
@@ -99,8 +98,8 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * as object class and the service filter obtained from
 	 * {@link #getServiceFilter()}.
 	 * 
-	 * @return the filter or <code>null</code> if there is no service interface
-	 *         declared
+	 * @return The filter or <code>null</code> if there is no service interface
+	 *         declared.
 	 */
 	private String getFilter() {
 		Class<?> serviceInterface = this.getServiceInterface();
@@ -123,7 +122,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * Returns the currently registered service references for the interface
 	 * provided by {@link #getServiceInterface()}.
 	 * 
-	 * @return the service references
+	 * @return The service references.
 	 */
 	private ServiceReference[] getServices() {
 		try {
@@ -163,7 +162,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	/**
 	 * Starts the life cycle listener.
 	 * <p>
-	 * The existing services are looked up to be published as mbeans. Later the
+	 * The existing services are looked up to be published as MBeans. Later the
 	 * life cycle listener is registered with the bundle context.
 	 */
 	public final void start() {
@@ -188,7 +187,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	/**
 	 * Stops the life cycle listener.
 	 * <p>
-	 * The existing services are looked up, their mbeans get unpublished and the
+	 * The existing services are looked up, their MBeans get unpublished and the
 	 * life cycle listener is unregistered from the bundle context.
 	 */
 	public final void stop() {

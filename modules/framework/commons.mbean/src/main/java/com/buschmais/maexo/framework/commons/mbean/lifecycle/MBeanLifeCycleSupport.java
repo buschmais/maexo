@@ -34,8 +34,8 @@ import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryH
  * Provides support to control the life cycle of MBeans.
  * <p>
  * This class provides support to register MBeans as OSGi services. Other
- * bundles like the MAEXO SwitchBoard may track the life cycle of these services
- * for registration on MBeanServer instances.
+ * bundles like the MAEXO <code>SwitchBoard</code> may track the life cycle of
+ * these services for registration on MBean server instances.
  * <p>
  * A derived class usually implements a life cycle listener interface (e.g.
  * {@link org.osgi.framwork.ServiceListener}) and uses the methods
@@ -64,7 +64,7 @@ public abstract class MBeanLifeCycleSupport {
 	 * Constructor.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context of the exporting bundle
+	 *            The bundle context of the exporting bundle.
 	 */
 	public MBeanLifeCycleSupport(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
@@ -75,16 +75,16 @@ public abstract class MBeanLifeCycleSupport {
 	/**
 	 * Returns the bundle context.
 	 * 
-	 * @return the bundle context
+	 * @return The bundle context.
 	 */
 	public final BundleContext getBundleContext() {
 		return bundleContext;
 	}
 
 	/**
-	 * Returns the ObjectNameFactoryHelper.
+	 * Returns the object name factory helper.
 	 * 
-	 * @return the objectNameFactoryHelper
+	 * @return The object name factory helper.
 	 */
 	protected final ObjectNameFactoryHelper getObjectNameHelper() {
 		return objectNameFactoryHelper;
@@ -104,7 +104,7 @@ public abstract class MBeanLifeCycleSupport {
 	 *            The unique object name which will be be used as service
 	 *            property.
 	 * @param mbean
-	 *            The mbean instance.
+	 *            The MBean instance.
 	 */
 	protected final void registerMBeanService(Class<?> mbeanInterface,
 			ObjectName objectName, Object mbean) {

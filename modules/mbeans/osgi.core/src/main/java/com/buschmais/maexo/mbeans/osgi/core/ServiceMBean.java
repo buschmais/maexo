@@ -57,7 +57,7 @@ public interface ServiceMBean {
 	/**
 	 * Returns the service property
 	 * <code>org.osgi.framework.Constants.OBJECTCLASS</code> identifying all of
-	 * the class names under which a service was registered in the Framework.
+	 * the class names under which a service was registered in the framework.
 	 * 
 	 * @return The service property
 	 *         <code>org.osgi.framework.Constants.OBJECTCLASS</code>.
@@ -75,9 +75,9 @@ public interface ServiceMBean {
 	String getPid();
 
 	/**
-	 * Returns the properties of the Dictionary object of the service.
+	 * Returns the properties of the dictionary object of the service.
 	 * 
-	 * @return The properties of the Dictionary object of the service.
+	 * @return The properties of the dictionary object of the service.
 	 */
 	TabularData getProperties();
 

@@ -35,10 +35,10 @@ import com.buschmais.maexo.framework.commons.mbean.dynamic.OpenTypeFactory;
  */
 public final class BundleConstants {
 
-	/** Constant name. */
+	/** Constant "name". */
 	public static final String HEADER_ITEM_NAME = "name";
 	
-	/** Constant value. */
+	/** Constant "value". */
 	public static final String HEADER_ITEM_VALUE = "value";
 
 	/** Short description of this MBean. */
@@ -47,18 +47,22 @@ public final class BundleConstants {
 	/** MBean object name format. */
 	public static final String OBJECTNAME_FORMAT = "com.buschmais.maexo:type=Bundle,name=%s,version=%s";
 
-	/** Header properties. */
+	/**
+	 * Header properties ({@link HEADER_ITEM_NAME}, {@link HEADER_ITEM_VALUE}).
+	 */
 	public static final List<String> HEADER_ITEMS = Arrays.asList(new String[] {
 			HEADER_ITEM_NAME, HEADER_ITEM_VALUE });
 	
-	/** CompositeType representing one header entry. */
+	/** Composite type representing one header entry. */
 	public static final CompositeType HEADER_TYPE = OpenTypeFactory
 			.createCompositeType("headerEntry", "bundle header entry",
 					HEADER_ITEMS.toArray(new String[0]), HEADER_ITEMS
 							.toArray(new String[0]), new OpenType[] {
 							SimpleType.STRING, SimpleType.STRING });
 
-	/** TabularType containing header entries as CompositeType. */
+	/**
+	 * Tabular type containing header entries as composite type.
+	 */
 	public static final TabularType HEADERS_TYPE = OpenTypeFactory
 			.createTabularType(
 					"headers",

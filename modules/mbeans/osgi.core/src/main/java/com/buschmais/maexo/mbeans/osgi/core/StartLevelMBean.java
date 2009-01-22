@@ -31,7 +31,7 @@ public interface StartLevelMBean {
 	 * @see org.osgi.service.startlevel.StartLevel#getBundleStartLevel(Bundle)
 	 * 
 	 * @param objectName
-	 *            the object name of the bundle
+	 *            The object name of the bundle.
 	 * @return The start level value of the specified bundle.
 	 */
 	Integer getBundleStartLevel(ObjectName objectName);
@@ -42,7 +42,7 @@ public interface StartLevelMBean {
 	 * @see org.osgi.service.startlevel.StartLevel#getBundleStartLevel(Bundle)
 	 * 
 	 * @param id
-	 *            the id of the bundle
+	 *            The id of the bundle.
 	 * @return The start level value of the specified bundle.
 	 */
 	Integer getBundleStartLevel(Long id);
@@ -58,13 +58,13 @@ public interface StartLevelMBean {
 	Integer getInitialBundleStartLevel();
 
 	/**
-	 * Return the active start level value of the Framework. If the Framework is
+	 * Return the active start level value of the framework. If the framework is
 	 * in the process of changing the start level this method must return the
 	 * active start level if this differs from the requested start level.
 	 * 
 	 * @see org.osgi.service.startlevel.StartLevel#getStartLevel()
 	 * 
-	 * @return The active start level value of the Framework.
+	 * @return The active start level value of the framework.
 	 */
 	Integer getStartLevel();
 
@@ -74,9 +74,8 @@ public interface StartLevelMBean {
 	 * @see org.osgi.service.startlevel.StartLevel#isBundlePersistentlyStarted(Bundle)
 	 * 
 	 * @param objectName
-	 *            the object name of the bundle
-	 * @return true if the bundle is persistently marked to be started, false if
-	 *         the bundle is not persistently marked to be started.
+	 *            The object name of the bundle.
+	 * @return TRUE if the bundle is persistently marked to be started.
 	 */
 	Boolean isBundlePersistentlyStarted(ObjectName objectName);
 
@@ -86,9 +85,8 @@ public interface StartLevelMBean {
 	 * @see org.osgi.service.startlevel.StartLevel#isBundlePersistentlyStarted(Bundle)
 	 * 
 	 * @param id
-	 *            the id of the bundle
-	 * @return true if the bundle is persistently marked to be started, false if
-	 *         the bundle is not persistently marked to be started.
+	 *            The id of the bundle.
+	 * @return TRUE if the bundle is persistently marked to be started.
 	 */
 	Boolean isBundlePersistentlyStarted(Long id);
 
@@ -99,7 +97,7 @@ public interface StartLevelMBean {
 	 *      int)
 	 * 
 	 * @param objectName
-	 *            the object name of the bundle
+	 *            The object name of the bundle.
 	 * @param startLevel
 	 *            The new start level for the specified bundle.
 	 */
@@ -112,7 +110,7 @@ public interface StartLevelMBean {
 	 *      int)
 	 * 
 	 * @param id
-	 *            the id name of the bundle
+	 *            The id name of the bundle.
 	 * @param startLevel
 	 *            The new start level for the specified bundle.
 	 */
@@ -130,12 +128,12 @@ public interface StartLevelMBean {
 	void setInitialBundleStartLevel(Integer startLevel);
 
 	/**
-	 * Modify the active start level of the Framework.
+	 * Modify the active start level of the framework.
 	 * 
 	 * @see org.osgi.service.startlevel.StartLevel#setStartLevel(int)
 	 * 
 	 * @param startLevel
-	 *            The requested start level for the Framework.
+	 *            The requested start level for the framework.
 	 */
 	void setStartLevel(Integer startLevel);
 

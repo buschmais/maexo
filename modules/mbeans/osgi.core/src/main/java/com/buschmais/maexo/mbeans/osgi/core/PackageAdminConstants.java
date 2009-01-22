@@ -128,7 +128,7 @@ public final class PackageAdminConstants {
 					REQUIREDBUNDLE_ITEM_VERSION,
 					REQUIREDBUNDLE_ITEM_REMOVALPENDING });
 
-	/** CompositeType representing one exported package. */
+	/** Composite type representing one exported package. */
 	public static final CompositeType EXPORTED_PACKAGE_TYPE = OpenTypeFactory
 			.createCompositeType("exportedPackage", "exported package",
 					EXPORTED_PACKAGE_ITEMS.toArray(new String[0]),
@@ -140,13 +140,13 @@ public final class PackageAdminConstants {
 							SimpleType.STRING, SimpleType.STRING,
 							SimpleType.BOOLEAN });
 
-	/** TabularType containing exported packages as CompositeType. */
+	/** Tabular type containing exported packages as composite type. */
 	public static final TabularType EXPORTED_PACKAGES_TYPE = OpenTypeFactory
 			.createTabularType("exportedPackages", "exported packages",
 					PackageAdminConstants.EXPORTED_PACKAGE_TYPE,
 					new String[] { "name" });
 
-	/** CompositeType representing one required bundle. */
+	/** Composite type representing one required bundle. */
 	public static final CompositeType REQUIRED_BUNDLE_TYPE = OpenTypeFactory
 			.createCompositeType("requiredBundle", "required bundle",
 					REQUIRED_BUNDLE_ITEMS.toArray(new String[0]),
@@ -157,14 +157,14 @@ public final class PackageAdminConstants {
 									SimpleType.OBJECTNAME), SimpleType.STRING,
 							SimpleType.STRING, SimpleType.BOOLEAN });
 
-	/** TabularType containing required bundles as CompositeType. */
+	/** Tabular type containing required bundles as composite type. */
 	public static final TabularType REQUIRED_BUNDLES_TYPE = OpenTypeFactory
 			.createTabularType("requiredBundles", "required bundles",
 					PackageAdminConstants.REQUIRED_BUNDLE_TYPE,
 					new String[] { "symbolicName" });
 
 	/**
-	 * MBean operation info for operation Operation
+	 * MBean operation info for operation
 	 * {@link PackageAdminMBean#getBundles(String, String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETBUNDLES = new OpenMBeanOperationInfoSupport(

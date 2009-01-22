@@ -54,7 +54,7 @@ public final class StartLevelConstants {
 			true, true, false);
 
 	/**
-	 * MBean operation info for operation Operation
+	 * MBean operation info for operation
 	 * {@link StartLevelMBean#getBundleStartLevel(javax.management.ObjectName)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETBUNDLESTARTLEVEL_BY_OBJECTNAME = new OpenMBeanOperationInfoSupport(
@@ -66,7 +66,7 @@ public final class StartLevelConstants {
 			OpenMBeanOperationInfoSupport.INFO);
 
 	/**
-	 * MBean operation info for operation Operation
+	 * MBean operation info for operation
 	 * {@link StartLevelMBean#getBundleStartLevel(Long)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETBUNDLESTARTLEVEL_BY_ID = new OpenMBeanOperationInfoSupport(
@@ -77,7 +77,7 @@ public final class StartLevelConstants {
 			SimpleType.INTEGER, OpenMBeanOperationInfoSupport.INFO);
 
 	/**
-	 * MBean operation info for operation Operation
+	 * MBean operation info for operation
 	 * {@link StartLevelMBean#setBundleStartLevel(javax.management.ObjectName, Integer)}
 	 * .
 	 */
@@ -94,7 +94,7 @@ public final class StartLevelConstants {
 			OpenMBeanOperationInfoSupport.ACTION);
 
 	/**
-	 * MBean operation info for operation Operation
+	 * MBean operation info for operation
 	 * {@link StartLevelMBean#setBundleStartLevel(Long, Integer)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETBUNDLESTARTLEVEL_BY_ID = new OpenMBeanOperationInfoSupport(
@@ -109,7 +109,7 @@ public final class StartLevelConstants {
 			OpenMBeanOperationInfoSupport.ACTION);
 
 	/**
-	 * MBean operation info for operation Operation
+	 * MBean operation info for operation
 	 * {@link StartLevelMBean#isBundlePersistentlyStarted(javax.management.ObjectName)}
 	 * .
 	 */
@@ -122,7 +122,7 @@ public final class StartLevelConstants {
 			OpenMBeanOperationInfoSupport.INFO);
 
 	/**
-	 * MBean operation info for operation Operation
+	 * MBean operation info for operation
 	 * {@link StartLevelMBean#isBundlePersistentlyStarted(Long)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport ISBUNDLEPERSISTENTLYSTARTED_BY_ID = new OpenMBeanOperationInfoSupport(

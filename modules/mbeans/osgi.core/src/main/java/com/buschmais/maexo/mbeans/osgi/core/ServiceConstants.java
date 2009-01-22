@@ -87,14 +87,14 @@ public final class ServiceConstants {
 			"The service property named \"service.pid\" identifying a service's persistent identifier.",
 			SimpleType.STRING, true, false, false);
 
-	/** CompositeType representing one properties entry. */
+	/** Composite type representing one properties entry. */
 	public static final CompositeType PROPERTIES_ROW_TYPE = OpenTypeFactory
 			.createCompositeType("propertyEntry", "A service property entry",
 					SERVICEPROPERTY_ITEMS.toArray(new String[0]),
 					SERVICEPROPERTY_ITEMS.toArray(new String[0]),
 					new OpenType[] { SimpleType.STRING, SimpleType.STRING });
 
-	/** TabularType containing properties entries. */
+	/** Tabular type containing properties entries as composite type. */
 	public static final TabularType PROPERTIES_TYPE = OpenTypeFactory
 			.createTabularType("properties", "The service properties",
 					ServiceConstants.PROPERTIES_ROW_TYPE,

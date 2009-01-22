@@ -34,7 +34,7 @@ public interface PackageAdminMBean {
 	 * 
 	 * @param objectName
 	 *            The object name of the bundle.
-	 * @return the special type of the bundle
+	 * @return The special type of the bundle.
 	 */
 	Integer getBundleType(ObjectName objectName);
 
@@ -45,7 +45,7 @@ public interface PackageAdminMBean {
 	 * 
 	 * @param id
 	 *            The id of the bundle.
-	 * @return the special type of the bundle
+	 * @return The special type of the bundle.
 	 */
 	Integer getBundleType(Long id);
 
@@ -56,7 +56,7 @@ public interface PackageAdminMBean {
 	 * 
 	 * @param objectName
 	 *            The object name of the bundle.
-	 * @return the special type of the bundle
+	 * @return The special type of the bundle.
 	 */
 	String getBundleTypeAsName(ObjectName objectName);
 
@@ -67,7 +67,7 @@ public interface PackageAdminMBean {
 	 * 
 	 * @param id
 	 *            The id of the bundle.
-	 * @return the special type of the bundle
+	 * @return The special type of the bundle.
 	 */
 	String getBundleTypeAsName(Long id);
 
@@ -83,7 +83,7 @@ public interface PackageAdminMBean {
 	 * @param versionRange
 	 *            The version range of the desired bundles, or null if all
 	 *            versions are desired.
-	 * @return An array of bundles object names
+	 * @return An array of bundles object names.
 	 */
 	ObjectName[] getBundles(String symbolicName, String versionRange);
 
@@ -246,7 +246,7 @@ public interface PackageAdminMBean {
 	 * @param objectNames
 	 *            The object names of the bundles to resolve or null to resolve
 	 *            all unresolved bundles installed in the Framework.
-	 * @return TRUE if all specified bundles are resolved;
+	 * @return TRUE if all specified bundles are resolved.
 	 */
 	Boolean resolveBundles(ObjectName[] objectNames);
 
@@ -258,7 +258,7 @@ public interface PackageAdminMBean {
 	 * @param ids
 	 *            The ids of the bundles to resolve or null to resolve all
 	 *            unresolved bundles installed in the Framework.
-	 * @return TRUE if all specified bundles are resolved;
+	 * @return TRUE if all specified bundles are resolved.
 	 */
 	Boolean resolveBundles(Long[] ids);
 
@@ -267,7 +267,7 @@ public interface PackageAdminMBean {
 	 * methods {@link #resolveBundles(Long[])} or
 	 * {@link #resolveBundles(ObjectName[])} with empty arrays.
 	 * 
-	 * @return TRUE if all specified bundles are resolved
+	 * @return TRUE if all specified bundles are resolved.
 	 * @see org.osgi.service.packageadmin.PackageAdmin#resolveBundles(org.osgi.framework.Bundle[])
 	 */
 	Boolean resolveBundles();

@@ -14,6 +14,7 @@ import javax.management.ObjectName;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.packageadmin.PackageAdmin;
 
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 import com.buschmais.maexo.test.Constants;
@@ -42,15 +43,16 @@ public class MaexoMBeanTests extends MaexoTests {
 	 * Returns a TestBundle from OSGI container for testing of general Bundle
 	 * functionality.
 	 * 
-	 * @return the bundle
+	 * @return The bundle.
 	 * @throws InvalidSyntaxException
-	 *             if no PackageAdmin could be found
+	 *             If no <code>org.osgi.service.packageadmin.PackageAdmin</code>
+	 *             could be found.
 	 */
 	protected Bundle getTestBundle() throws InvalidSyntaxException {
 		ServiceReference serviceReference = this.bundleContext
-				.getServiceReference(org.osgi.service.packageadmin.PackageAdmin.class
+				.getServiceReference(PackageAdmin.class
 						.getName());
-		final org.osgi.service.packageadmin.PackageAdmin packageAdmin = (org.osgi.service.packageadmin.PackageAdmin) bundleContext
+		final PackageAdmin packageAdmin = (PackageAdmin) bundleContext
 				.getService(serviceReference);
 		Bundle[] bundles = packageAdmin.getBundles(TESTBUNDLE_SYMBOLIC_NAME,
 				"0.0.0");
@@ -60,14 +62,20 @@ public class MaexoMBeanTests extends MaexoTests {
 	}
 
 	/**
-	 * Returns the object name for the given Object.
+	 * Returns the object name for the given resource.
 	 * 
-	 * @return the object name
+	 * @param resource
+	 *            The resource.
+	 * @param resourceInterface
+	 *            The interface to use for looking up the object name factory.
+	 * @return The object name.
 	 */
-	protected ObjectName getObjectName(Object o, Class<?> c) {
+	protected ObjectName getObjectName(Object resource,
+			Class<?> resourceInterface) {
 		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
 				this.bundleContext);
-		return objectNameFactoryHelper.getObjectName(o, c);
+		return objectNameFactoryHelper.getObjectName(resource,
+				resourceInterface);
 	}
 
 	/**
@@ -75,12 +83,12 @@ public class MaexoMBeanTests extends MaexoTests {
 	 * class type.
 	 * 
 	 * @param objectName
-	 *            object name of the MBean
-	 * @param clazz
-	 *            class type of the MBean
-	 * @return the MBean
+	 *            Object name of the MBean.
+	 * @param resourceInterface
+	 *            The interface of the MBean.
+	 * @return The MBean.
 	 */
-	protected Object getMBean(ObjectName objectName, Class<?> clazz) {
+	protected Object getMBean(ObjectName objectName, Class<?> resourceInterface) {
 		// get MBeanServer
 		ServiceReference serviceReference = bundleContext
 				.getServiceReference(MBeanServer.class.getName());
@@ -88,7 +96,7 @@ public class MaexoMBeanTests extends MaexoTests {
 				.getService(serviceReference);
 		// get new MBean from MBeanServer
 		final Object mBean = MBeanServerInvocationHandler.newProxyInstance(
-				mbeanServer, objectName, clazz, false);
+				mbeanServer, objectName, resourceInterface, false);
 		return mBean;
 	}
 
@@ -96,12 +104,12 @@ public class MaexoMBeanTests extends MaexoTests {
 	 * Returns the bundle specified by given location as byte array.
 	 * 
 	 * @param location
-	 *            location of the bundle
-	 * @return the bundle as byte array
+	 *            Location of the bundle.
+	 * @return The bundle as byte array.
 	 * @throws MalformedURLException
-	 *             if location was malformed
+	 *             If location was malformed.
 	 * @throws IOException
-	 *             if bundle could not be found under given location
+	 *             If bundle could not be found under given location.
 	 */
 	protected byte[] getByteArrayForBundleLocation(String location)
 			throws MalformedURLException, IOException {

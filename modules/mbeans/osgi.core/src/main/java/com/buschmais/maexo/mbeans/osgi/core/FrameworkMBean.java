@@ -11,7 +11,7 @@ public interface FrameworkMBean {
 
 	/**
 	 * Returns the value of the framework's boot delegation property (see
-	 * <code>org.osgi.framework.Constants#FRAMEWORK_BOOTDELEGATION</code>).
+	 * <code>org.osgi.framework.Constants.FRAMEWORK_BOOTDELEGATION</code>).
 	 * 
 	 * @return The value of the framework's boot delegation property.
 	 */
@@ -19,7 +19,7 @@ public interface FrameworkMBean {
 
 	/**
 	 * Returns the value of the framework's execution environment property (see
-	 * <code>org.osgi.framework.Constants#FRAMEWORK_EXECUTIONENVIRONMENT</code>
+	 * <code>org.osgi.framework.Constants.FRAMEWORK_EXECUTIONENVIRONMENT</code>
 	 * ).
 	 * 
 	 * @return The value of the framework's execution environment property.
@@ -28,7 +28,7 @@ public interface FrameworkMBean {
 
 	/**
 	 * Returns the value of the framework's language property (see
-	 * <code>org.osgi.framework.Constants#FRAMEWORK_LANGUAGE</code>).
+	 * <code>org.osgi.framework.Constants.FRAMEWORK_LANGUAGE</code>).
 	 * 
 	 * @return The value of the framework's language property.
 	 */
@@ -36,7 +36,7 @@ public interface FrameworkMBean {
 
 	/**
 	 * Returns the value of framework's OS name property (see
-	 * <code>org.osgi.framework.Constants#FRAMEWORK_OS_NAME</code>).
+	 * <code>org.osgi.framework.Constants.FRAMEWORK_OS_NAME</code>).
 	 * 
 	 * @return The value of the framework's OS name property.
 	 */
@@ -44,7 +44,7 @@ public interface FrameworkMBean {
 
 	/**
 	 * Returns the value of framework's OS version property (see
-	 * <code>org.osgi.framework.Constants#FRAMEWORK_OS_VERSION</code>).
+	 * <code>org.osgi.framework.Constants.FRAMEWORK_OS_VERSION</code>).
 	 * 
 	 * @return The value of the framework's OS version property.
 	 */
@@ -52,7 +52,7 @@ public interface FrameworkMBean {
 
 	/**
 	 * Returns the value of framework's processor property (see
-	 * <code>org.osgi.framework.Constants#FRAMEWORK_PROCESSOR</code>).
+	 * <code>org.osgi.framework.Constants.FRAMEWORK_PROCESSOR</code>).
 	 * 
 	 * @return The value of the framework's processor property.
 	 */
@@ -60,7 +60,7 @@ public interface FrameworkMBean {
 
 	/**
 	 * Returns the value of the framework's system packages property (see
-	 * <code>org.osgi.framework.Constants#FRAMEWORK_SYSTEMPACKAGES</code>).
+	 * <code>org.osgi.framework.Constants.FRAMEWORK_SYSTEMPACKAGES</code>).
 	 * 
 	 * @return The value of the framework's system packages property.
 	 */
@@ -68,7 +68,7 @@ public interface FrameworkMBean {
 
 	/**
 	 * Returns the value of the framework's vendor property (see
-	 * <code>org.osgi.framework.Constants#FRAMEWORK_VENDOR</code>).
+	 * <code>org.osgi.framework.Constants.FRAMEWORK_VENDOR</code>).
 	 * 
 	 * @return The value of the framework's vendor property.
 	 */
@@ -76,7 +76,7 @@ public interface FrameworkMBean {
 
 	/**
 	 * Returns the value of the framework's version property (see
-	 * <code>org.osgi.framework.Constants#FRAMEWORK_VERSION</code>).
+	 * <code>org.osgi.framework.Constants.FRAMEWORK_VERSION</code>).
 	 * 
 	 * @return The value of the framework's version property.
 	 */

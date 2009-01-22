@@ -60,7 +60,7 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 	 * Constructor.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context of the exporting bundle
+	 *            The bundle context of the exporting bundle.
 	 */
 	public DefaultServiceMBeanLifeCycleSupport(BundleContext bundleContext) {
 		super(bundleContext);
@@ -69,7 +69,7 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @return <code>null</code> as default
+	 * @return <code>null</code> as default.
 	 */
 	// CSOFF: DesignForExtensionCheck
 	@Override

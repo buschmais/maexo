@@ -64,8 +64,8 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 	 * Returns a BundleMBean for the given Bundle.
 	 * 
 	 * @param bundle
-	 *            the Bundle
-	 * @return the BundleMBean
+	 *            The Bundle.
+	 * @return The BundleMBean.
 	 */
 	private BundleMBean getTestBundleMBean(Bundle bundle) {
 		// get corresponding BundleMBean

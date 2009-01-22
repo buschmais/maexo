@@ -96,8 +96,9 @@ public interface BundleMBean {
 	ObjectName[] getRegisteredServices();
 
 	/**
-	 * Returns this bundle's ServiceReference list for all services it is using
-	 * or returns null if this bundle is not using any services.
+	 * Returns this bundle's <code>ServiceReference</code>s as list of object
+	 * names for all services it is using or returns null if this bundle is not
+	 * using any services.
 	 * 
 	 * @return An array of object names or null.
 	 */

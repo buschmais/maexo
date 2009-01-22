@@ -29,12 +29,12 @@ public interface ObjectNameFactory {
 	 * Returns the object name for the given resource.
 	 * 
 	 * @param resource
-	 *            the resource
+	 *            The resource.
 	 * @param properties
-	 *            additional properties which are not available from the
+	 *            Additional properties which are not available from the
 	 *            resource itself but which may be required to construct unique
-	 *            object names (e.g. the service id)
-	 * @return the object name
+	 *            object names (e.g. the service id).
+	 * @return The object name.
 	 */
 	ObjectName getObjectName(Object resource,
 			Map<String, Object> properties);
