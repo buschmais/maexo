@@ -25,6 +25,9 @@ import com.buschmais.maexo.mbeans.osgi.core.FrameworkConstants;
 import com.buschmais.maexo.mbeans.osgi.core.FrameworkMBean;
 import com.buschmais.maexo.mbeans.osgi.core.PackageAdminConstants;
 
+/**
+ * Represents the OSGi framework.
+ */
 public final class FrameworkMBeanImpl extends DynamicMBeanSupport implements
 		DynamicMBean, FrameworkMBean {
 

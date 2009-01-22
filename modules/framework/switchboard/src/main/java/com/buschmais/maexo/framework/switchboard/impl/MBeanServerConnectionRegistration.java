@@ -76,7 +76,7 @@ public class MBeanServerConnectionRegistration {
 	/**
 	 * @return the mbeanServerConnection
 	 */
-	public MBeanServerConnection getMBeanServerConnection() {
+	public final MBeanServerConnection getMBeanServerConnection() {
 		return mbeanServerConnection;
 	}
 
@@ -84,7 +84,7 @@ public class MBeanServerConnectionRegistration {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((agentId == null) ? 0 : agentId.hashCode());
@@ -95,19 +95,24 @@ public class MBeanServerConnectionRegistration {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public final boolean equals(Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		MBeanServerConnectionRegistration other = (MBeanServerConnectionRegistration) obj;
 		if (agentId == null) {
-			if (other.agentId != null)
+			if (other.agentId != null) {
 				return false;
-		} else if (!agentId.equals(other.agentId))
+			}
+		} else if (!agentId.equals(other.agentId)) {
 			return false;
+		}
 		return true;
 	}
 
