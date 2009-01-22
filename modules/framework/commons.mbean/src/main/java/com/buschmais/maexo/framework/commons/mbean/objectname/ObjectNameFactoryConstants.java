@@ -19,18 +19,18 @@ package com.buschmais.maexo.framework.commons.mbean.objectname;
 /**
  * Common constants for object name construction.
  */
-public final class Constants {
+public final class ObjectNameFactoryConstants {
 
 	/**
 	 * Private Constructor.
 	 */
-	private Constants() {
+	private ObjectNameFactoryConstants() {
 
 	}
 
 	/**
 	 * The resource interface property of object name factory services.
 	 */
-	public static final String SERVICE_PROPERTY_RESOURCEINTERFACE = "resourceInterface";
+	public static final String SERVICEPROPERTY_RESOURCEINTERFACE = "resourceInterface";
 
 }

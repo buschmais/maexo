@@ -35,7 +35,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.buschmais.maexo.adaptor.mx4j.http.Constants;
+import com.buschmais.maexo.adaptor.mx4j.http.Mx4jHttpConstants;
 
 /**
  * Activator for the MX4J HTTP adaptor.
@@ -49,20 +49,20 @@ public final class Activator implements BundleActivator {
 
 	static {
 		// initialize the default configuration
-		CONFIGURATION_PROPERTIES.put(Constants.HOST_PROPERTY,
-				Constants.HOST_DEFAULT_VALUE);
-		CONFIGURATION_PROPERTIES.put(Constants.PORT_PROPERTY,
-				Constants.PORT_DEFAULT_VALUE);
-		CONFIGURATION_PROPERTIES.put(Constants.AUTHENTICATION_PROPERTY,
-				Constants.AUTHENTICATION_DEFAULT_VALUE);
-		CONFIGURATION_PROPERTIES.put(Constants.USER_PROPERTY,
-				Constants.USER_DEFAULT_VALUE);
-		CONFIGURATION_PROPERTIES.put(Constants.PASSWORD_PROPERTY,
-				Constants.PASSWORD_DEFAULT_VALUE);
-		CONFIGURATION_PROPERTIES.put(Constants.STYLESHEET_PROPERTY,
-				Constants.STYLESHEET_DEFAULT_VALUE);
-		CONFIGURATION_PROPERTIES.put(Constants.START_PROPERTY,
-				Constants.START_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(Mx4jHttpConstants.HOST_PROPERTY,
+				Mx4jHttpConstants.HOST_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(Mx4jHttpConstants.PORT_PROPERTY,
+				Mx4jHttpConstants.PORT_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(Mx4jHttpConstants.AUTHENTICATION_PROPERTY,
+				Mx4jHttpConstants.AUTHENTICATION_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(Mx4jHttpConstants.USER_PROPERTY,
+				Mx4jHttpConstants.USER_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(Mx4jHttpConstants.PASSWORD_PROPERTY,
+				Mx4jHttpConstants.PASSWORD_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(Mx4jHttpConstants.STYLESHEET_PROPERTY,
+				Mx4jHttpConstants.STYLESHEET_DEFAULT_VALUE);
+		CONFIGURATION_PROPERTIES.put(Mx4jHttpConstants.START_PROPERTY,
+				Mx4jHttpConstants.START_DEFAULT_VALUE);
 	}
 
 	private ServiceRegistration adaptorServiceRegistration;
@@ -86,31 +86,31 @@ public final class Activator implements BundleActivator {
 		// create instance of the http adaptor mbean and apply configuration
 		Mx4jHttpAdaptorMBean httpAdaptorMBean = new Mx4jHttpAdaptor();
 		httpAdaptorMBean.setStartOnRegistration(Boolean.parseBoolean(properties
-				.getProperty(Constants.START_PROPERTY)));
+				.getProperty(Mx4jHttpConstants.START_PROPERTY)));
 		httpAdaptorMBean.setHost(properties
-				.getProperty(Constants.HOST_PROPERTY));
+				.getProperty(Mx4jHttpConstants.HOST_PROPERTY));
 		httpAdaptorMBean.setPort(Integer.parseInt(properties
-				.getProperty(Constants.PORT_PROPERTY)));
+				.getProperty(Mx4jHttpConstants.PORT_PROPERTY)));
 		httpAdaptorMBean.setAuthenticationMethod(properties
-				.getProperty(Constants.AUTHENTICATION_PROPERTY));
+				.getProperty(Mx4jHttpConstants.AUTHENTICATION_PROPERTY));
 		httpAdaptorMBean.addAuthorization(properties
-				.getProperty(Constants.USER_PROPERTY), properties
-				.getProperty(Constants.PASSWORD_PROPERTY));
+				.getProperty(Mx4jHttpConstants.USER_PROPERTY), properties
+				.getProperty(Mx4jHttpConstants.PASSWORD_PROPERTY));
 		// create instance of the xsl processor
 		XSLTProcessorMBean xsltProcessorMBean = new XSLTProcessor();
 		xsltProcessorMBean.setPathInJar(properties
-				.getProperty(Constants.STYLESHEET_PROPERTY));
+				.getProperty(Mx4jHttpConstants.STYLESHEET_PROPERTY));
 		httpAdaptorMBean.setProcessor(xsltProcessorMBean);
 		// create adaptor object name
 		Dictionary adaptorServiceProperties = new Hashtable();
 		ObjectName adaptorObjectName = new ObjectName(
-				Constants.HTTP_ADAPTOR_OBJECTNAME);
+				Mx4jHttpConstants.HTTP_ADAPTOR_OBJECTNAME);
 		adaptorServiceProperties.put(javax.management.ObjectName.class
 				.getName(), adaptorObjectName);
 		// create processor object name
 		Dictionary processorServiceProperties = new Hashtable();
 		ObjectName processorObjectName = new ObjectName(
-				Constants.XSLT_PROCESSOR_OBJECTNAME);
+				Mx4jHttpConstants.XSLT_PROCESSOR_OBJECTNAME);
 		processorServiceProperties.put(javax.management.ObjectName.class
 				.getName(), processorObjectName);
 		// register adaptor mbean

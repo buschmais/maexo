@@ -25,7 +25,7 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.Version;
 
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-import com.buschmais.maexo.mbeans.osgi.core.BundleConstants;
+import com.buschmais.maexo.mbeans.osgi.core.BundleMBeanConstants;
 
 /**
  * Object name factory implementation for bundles.
@@ -57,7 +57,7 @@ public final class BundleObjectNameFactory implements ObjectNameFactory {
 			bundleVersion = DEFAULT_BUNDLE_VERSION;
 		}
 		
-		String objectName = String.format(BundleConstants.OBJECTNAME_FORMAT,
+		String objectName = String.format(BundleMBeanConstants.OBJECTNAME_FORMAT,
 				symbolicName, bundleVersion);
 		try {
 			return new ObjectName(objectName);

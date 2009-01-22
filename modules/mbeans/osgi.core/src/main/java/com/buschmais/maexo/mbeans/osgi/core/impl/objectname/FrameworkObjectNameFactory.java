@@ -21,7 +21,7 @@ import java.util.Map;
 import javax.management.ObjectName;
 
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-import com.buschmais.maexo.mbeans.osgi.core.FrameworkConstants;
+import com.buschmais.maexo.mbeans.osgi.core.FrameworkMBeanConstants;
 
 /**
  * Object name factory implementation for framework.
@@ -35,7 +35,7 @@ public final class FrameworkObjectNameFactory implements ObjectNameFactory {
 			Map<String, Object> properties) {
 
 		String objectName = String.format(
-				FrameworkConstants.OBJECTNAME_FORMAT);
+				FrameworkMBeanConstants.OBJECTNAME_FORMAT);
 		try {
 			return new ObjectName(objectName);
 		} catch (Exception e) {

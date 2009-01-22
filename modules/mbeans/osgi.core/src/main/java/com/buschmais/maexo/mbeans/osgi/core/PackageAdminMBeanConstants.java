@@ -31,12 +31,12 @@ import com.buschmais.maexo.framework.commons.mbean.dynamic.OpenTypeFactory;
 /**
  * Class holding all constants for PackageAdminMBeans.
  */
-public final class PackageAdminConstants {
+public final class PackageAdminMBeanConstants {
 
 	/**
 	 * Private Constructor.
 	 */
-	private PackageAdminConstants() {
+	private PackageAdminMBeanConstants() {
 
 	}
 
@@ -143,7 +143,7 @@ public final class PackageAdminConstants {
 	/** Tabular type containing exported packages as composite type. */
 	public static final TabularType EXPORTED_PACKAGES_TYPE = OpenTypeFactory
 			.createTabularType("exportedPackages", "exported packages",
-					PackageAdminConstants.EXPORTED_PACKAGE_TYPE,
+					PackageAdminMBeanConstants.EXPORTED_PACKAGE_TYPE,
 					new String[] { "name" });
 
 	/** Composite type representing one required bundle. */
@@ -160,7 +160,7 @@ public final class PackageAdminConstants {
 	/** Tabular type containing required bundles as composite type. */
 	public static final TabularType REQUIRED_BUNDLES_TYPE = OpenTypeFactory
 			.createTabularType("requiredBundles", "required bundles",
-					PackageAdminConstants.REQUIRED_BUNDLE_TYPE,
+					PackageAdminMBeanConstants.REQUIRED_BUNDLE_TYPE,
 					new String[] { "symbolicName" });
 
 	/**
@@ -238,7 +238,7 @@ public final class PackageAdminConstants {
 			new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
 					"name", "The name of the exported package to be returned.",
 					SimpleType.STRING) },
-			PackageAdminConstants.EXPORTED_PACKAGE_TYPE,
+			PackageAdminMBeanConstants.EXPORTED_PACKAGE_TYPE,
 			OpenMBeanOperationInfoSupport.INFO);
 
 	/**
@@ -250,7 +250,7 @@ public final class PackageAdminConstants {
 			"Gets the exported package for the specified package name.",
 			new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
 					"id", "The id of the bundle.", SimpleType.LONG) },
-			PackageAdminConstants.EXPORTED_PACKAGES_TYPE,
+			PackageAdminMBeanConstants.EXPORTED_PACKAGES_TYPE,
 			OpenMBeanOperationInfoSupport.INFO);
 
 	/**
@@ -264,7 +264,7 @@ public final class PackageAdminConstants {
 			new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
 					"objectName", "The object name of the bundle.",
 					SimpleType.OBJECTNAME) },
-			PackageAdminConstants.EXPORTED_PACKAGES_TYPE,
+			PackageAdminMBeanConstants.EXPORTED_PACKAGES_TYPE,
 			OpenMBeanOperationInfoSupport.INFO);
 
 	/**
@@ -277,7 +277,7 @@ public final class PackageAdminConstants {
 			new OpenMBeanParameterInfoSupport[] { new OpenMBeanParameterInfoSupport(
 					"name", "The name of the exported package to be returned.",
 					SimpleType.STRING) },
-			PackageAdminConstants.EXPORTED_PACKAGES_TYPE,
+			PackageAdminMBeanConstants.EXPORTED_PACKAGES_TYPE,
 			OpenMBeanOperationInfoSupport.ACTION_INFO);
 
 	/**
@@ -341,7 +341,7 @@ public final class PackageAdminConstants {
 					"symbolicName",
 					"The bundle symbolic name or null for all required bundles.",
 					SimpleType.STRING) },
-			PackageAdminConstants.REQUIRED_BUNDLES_TYPE,
+			PackageAdminMBeanConstants.REQUIRED_BUNDLES_TYPE,
 			OpenMBeanOperationInfoSupport.INFO);
 
 	/**

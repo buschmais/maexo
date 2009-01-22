@@ -28,7 +28,7 @@ import org.osgi.service.packageadmin.PackageAdmin;
 import org.osgi.service.packageadmin.RequiredBundle;
 
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
-import com.buschmais.maexo.mbeans.osgi.core.PackageAdminConstants;
+import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBean;
 import com.buschmais.maexo.test.Constants;
 import com.buschmais.maexo.test.common.mbeans.MaexoMBeanTests;
@@ -90,18 +90,18 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		// compare name
 		final String exportedPackageName = exportedPackage.getName();
 		final String compositeDataName = (String) exportedPackageCompositeData
-				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_NAME);
+				.get(PackageAdminMBeanConstants.EXPORTEDPACKAGE_ITEM_NAME);
 		assertEquals(exportedPackageName, compositeDataName);
 		// compare exporting bundle by objectName
 		final Bundle exportingBundle = exportedPackage.getExportingBundle();
 		final ObjectName compositeDataExportingBundle = (ObjectName) exportedPackageCompositeData
-				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_EXPORTINGBUNDLE);
+				.get(PackageAdminMBeanConstants.EXPORTEDPACKAGE_ITEM_EXPORTINGBUNDLE);
 		assertEquals(getObjectName(exportingBundle, Bundle.class),
 				compositeDataExportingBundle);
 		// compare importing bundles by objectName
 		final Bundle[] importingBundles = exportedPackage.getImportingBundles();
 		final ObjectName[] compositeDataImportingBundles = (ObjectName[]) exportedPackageCompositeData
-				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_IMPORTINGBUNDLE);
+				.get(PackageAdminMBeanConstants.EXPORTEDPACKAGE_ITEM_IMPORTINGBUNDLE);
 		for (int i = 0; i < importingBundles.length; i++) {
 			assertEquals(getObjectName(importingBundles[i], Bundle.class),
 					compositeDataImportingBundles[i]);
@@ -110,19 +110,19 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		final String exportedPackageSpecificationVersion = exportedPackage
 				.getSpecificationVersion();
 		final String compositeDateSpecificationVersion = (String) exportedPackageCompositeData
-				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_SPECIFICATIONVERSION);
+				.get(PackageAdminMBeanConstants.EXPORTEDPACKAGE_ITEM_SPECIFICATIONVERSION);
 		assertEquals(exportedPackageSpecificationVersion,
 				compositeDateSpecificationVersion);
 		// compare version
 		final Version exportedPackageVersion = exportedPackage.getVersion();
 		final String compositeDataVersion = (String) exportedPackageCompositeData
-				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_VERSION);
+				.get(PackageAdminMBeanConstants.EXPORTEDPACKAGE_ITEM_VERSION);
 		assertEquals(exportedPackageVersion.toString(), compositeDataVersion);
 		// compare isRemovalPending
 		final boolean exportedPackageRemovalPending = exportedPackage
 				.isRemovalPending();
 		final Boolean compositeDateRemovalPending = (Boolean) exportedPackageCompositeData
-				.get(PackageAdminConstants.EXPORTEDPACKAGE_ITEM_REMOVALPENDING);
+				.get(PackageAdminMBeanConstants.EXPORTEDPACKAGE_ITEM_REMOVALPENDING);
 		assertEquals(compositeDateRemovalPending, Boolean
 				.valueOf(exportedPackageRemovalPending));
 	}
@@ -166,29 +166,29 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		final String requiredBundleSymbolicName = requiredBundle
 				.getSymbolicName();
 		final String compositeDataSymbolicName = (String) requiredBundleCompositeData
-				.get(PackageAdminConstants.REQUIREDBUNDLE_ITEM_SYMBOLICNAME);
+				.get(PackageAdminMBeanConstants.REQUIREDBUNDLE_ITEM_SYMBOLICNAME);
 		assertEquals(requiredBundleSymbolicName, compositeDataSymbolicName);
 		// compare bundle
 		final Bundle bundle = requiredBundle.getBundle();
 		final ObjectName compositeDataBundleObjectName = (ObjectName) requiredBundleCompositeData
-				.get(PackageAdminConstants.REQUIREDBUNDLE_ITEM_BUNDLE);
+				.get(PackageAdminMBeanConstants.REQUIREDBUNDLE_ITEM_BUNDLE);
 		ObjectName bundleObjectName = getObjectName(bundle, Bundle.class);
 		assertEquals(bundleObjectName, compositeDataBundleObjectName);
 		// compare version
 		final Version bundleVersion = requiredBundle.getVersion();
 		final String compositeDataVersion = (String) requiredBundleCompositeData
-				.get(PackageAdminConstants.REQUIREDBUNDLE_ITEM_VERSION);
+				.get(PackageAdminMBeanConstants.REQUIREDBUNDLE_ITEM_VERSION);
 		assertEquals(bundleVersion.toString(), compositeDataVersion);
 		// compare isRemovalPending
 		final Boolean removalPending = Boolean.valueOf(requiredBundle
 				.isRemovalPending());
 		final Boolean compositeDataRemovalPending = (Boolean) requiredBundleCompositeData
-				.get(PackageAdminConstants.REQUIREDBUNDLE_ITEM_REMOVALPENDING);
+				.get(PackageAdminMBeanConstants.REQUIREDBUNDLE_ITEM_REMOVALPENDING);
 		assertEquals(removalPending, compositeDataRemovalPending);
 		// compare requiring bundles
 		final Bundle[] requiringBundles = requiredBundle.getRequiringBundles();
 		final ObjectName[] compositeDataRequiringBundlesObjectNames = (ObjectName[]) requiredBundleCompositeData
-				.get(PackageAdminConstants.REQUIREDBUNDLE_ITEM_REQUIRINGBUNDLES);
+				.get(PackageAdminMBeanConstants.REQUIREDBUNDLE_ITEM_REQUIRINGBUNDLES);
 		for (int i = 0; i < requiringBundles.length; i++) {
 			ObjectName requiringBundleObjectname = getObjectName(
 					requiringBundles[i], Bundle.class);

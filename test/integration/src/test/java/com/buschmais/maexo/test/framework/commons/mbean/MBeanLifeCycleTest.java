@@ -280,7 +280,7 @@ public class MBeanLifeCycleTest extends MaexoTests {
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
 		properties
 				.put(
-						com.buschmais.maexo.framework.commons.mbean.objectname.Constants.SERVICE_PROPERTY_RESOURCEINTERFACE,
+						com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryConstants.SERVICEPROPERTY_RESOURCEINTERFACE,
 						ResourceInterfaceA.class.getName());
 		ServiceRegistration serviceRegistrationObjectNameFactory = super.bundleContext
 				.registerService(ObjectNameFactory.class.getName(),

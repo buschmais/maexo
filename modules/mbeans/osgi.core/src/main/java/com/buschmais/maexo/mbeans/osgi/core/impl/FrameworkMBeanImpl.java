@@ -21,9 +21,9 @@ import org.osgi.service.packageadmin.PackageAdmin;
 
 import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
-import com.buschmais.maexo.mbeans.osgi.core.FrameworkConstants;
+import com.buschmais.maexo.mbeans.osgi.core.FrameworkMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.FrameworkMBean;
-import com.buschmais.maexo.mbeans.osgi.core.PackageAdminConstants;
+import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants;
 
 /**
  * Represents the OSGi framework.
@@ -177,17 +177,17 @@ public final class FrameworkMBeanImpl extends DynamicMBeanSupport implements
 		String className = PackageAdmin.class.getName();
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[] {
-				FrameworkConstants.BOOTDELEGATION, FrameworkConstants.BUNDLES,
-				FrameworkConstants.EXECUTIONENVIRONMENT,
-				FrameworkConstants.LANGUAGE, FrameworkConstants.OSNAME,
-				FrameworkConstants.OSVERSION, FrameworkConstants.PROCESSOR,
-				FrameworkConstants.SERVICES, FrameworkConstants.SYSTEMPACKAGES,
-				FrameworkConstants.VENDOR, FrameworkConstants.VERSION };
+				FrameworkMBeanConstants.BOOTDELEGATION, FrameworkMBeanConstants.BUNDLES,
+				FrameworkMBeanConstants.EXECUTIONENVIRONMENT,
+				FrameworkMBeanConstants.LANGUAGE, FrameworkMBeanConstants.OSNAME,
+				FrameworkMBeanConstants.OSVERSION, FrameworkMBeanConstants.PROCESSOR,
+				FrameworkMBeanConstants.SERVICES, FrameworkMBeanConstants.SYSTEMPACKAGES,
+				FrameworkMBeanConstants.VENDOR, FrameworkMBeanConstants.VERSION };
 		// operations
 		OpenMBeanOperationInfoSupport[] mbeanOperationInfos = new OpenMBeanOperationInfoSupport[] {
-				FrameworkConstants.GETSERVICES_BY_OBJECTCLASS,
-				FrameworkConstants.INSTALLBUNDLE_BY_BYTEARRAY,
-				FrameworkConstants.INSTALLBUNDLE_BY_LOCATION };
+				FrameworkMBeanConstants.GETSERVICES_BY_OBJECTCLASS,
+				FrameworkMBeanConstants.INSTALLBUNDLE_BY_BYTEARRAY,
+				FrameworkMBeanConstants.INSTALLBUNDLE_BY_LOCATION };
 
 		// constructors
 		OpenMBeanConstructorInfoSupport[] mbeanConstructorInfos = new OpenMBeanConstructorInfoSupport[] {};
@@ -195,7 +195,7 @@ public final class FrameworkMBeanImpl extends DynamicMBeanSupport implements
 		MBeanNotificationInfo[] mbeanNotificationInfos = new MBeanNotificationInfo[] {};
 		// mbean info
 		OpenMBeanInfoSupport mbeanInfo = new OpenMBeanInfoSupport(className,
-				PackageAdminConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
+				PackageAdminMBeanConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
 				mbeanConstructorInfos, mbeanOperationInfos,
 				mbeanNotificationInfos);
 		return mbeanInfo;

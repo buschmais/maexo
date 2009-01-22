@@ -30,12 +30,12 @@ import com.buschmais.maexo.framework.commons.mbean.dynamic.OpenTypeFactory;
 /**
  * Class holding all constants for ServiceMBeans.
  */
-public final class ServiceConstants {
+public final class ServiceMBeanConstants {
 
 	/**
 	 * Private Constructor.
 	 */
-	private ServiceConstants() {
+	private ServiceMBeanConstants() {
 
 	}
 
@@ -97,14 +97,14 @@ public final class ServiceConstants {
 	/** Tabular type containing properties entries as composite type. */
 	public static final TabularType PROPERTIES_TYPE = OpenTypeFactory
 			.createTabularType("properties", "The service properties",
-					ServiceConstants.PROPERTIES_ROW_TYPE,
+					ServiceMBeanConstants.PROPERTIES_ROW_TYPE,
 					new String[] { "name" });
 
 	/** MBean attribute info for {@link ServiceMBean#getProperties()}. */
 	public static final OpenMBeanAttributeInfoSupport PROPERTIES = new OpenMBeanAttributeInfoSupport(
 			"properties",
 			"The properties of the Dictionary object of the service.",
-			ServiceConstants.PROPERTIES_TYPE, true, false, false);
+			ServiceMBeanConstants.PROPERTIES_TYPE, true, false, false);
 
 	/** MBean attribute info for {@link ServiceMBean#getRanking()}. */
 	public static final OpenMBeanAttributeInfoSupport RANKING = new OpenMBeanAttributeInfoSupport(

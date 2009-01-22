@@ -24,12 +24,12 @@ import javax.management.openmbean.SimpleType;
 /**
  * Class holding all constants for StartLevelMBeans.
  */
-public final class StartLevelConstants {
+public final class StartLevelMBeanConstants {
 
 	/**
 	 * Private Constructor.
 	 */
-	private StartLevelConstants() {
+	private StartLevelMBeanConstants() {
 
 	}
 

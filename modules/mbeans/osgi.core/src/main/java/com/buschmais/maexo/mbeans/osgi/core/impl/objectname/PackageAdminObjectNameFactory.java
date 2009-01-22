@@ -23,7 +23,7 @@ import javax.management.ObjectName;
 import org.osgi.framework.Constants;
 
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-import com.buschmais.maexo.mbeans.osgi.core.PackageAdminConstants;
+import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants;
 
 /**
  * Object name factory implementation for the package admin service.
@@ -56,7 +56,7 @@ public final class PackageAdminObjectNameFactory implements ObjectNameFactory {
 		if (id == null) {
 			throw new IllegalArgumentException("No service id provided");
 		}
-		String objectName = String.format(PackageAdminConstants.OBJECTNAME_FORMAT, id);
+		String objectName = String.format(PackageAdminMBeanConstants.OBJECTNAME_FORMAT, id);
 		try {
 			return new ObjectName(objectName);
 		} catch (Exception e) {

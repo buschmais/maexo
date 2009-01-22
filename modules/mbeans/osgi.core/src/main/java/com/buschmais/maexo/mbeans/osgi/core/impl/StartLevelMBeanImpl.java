@@ -30,8 +30,8 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.startlevel.StartLevel;
 
 import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
-import com.buschmais.maexo.mbeans.osgi.core.BundleConstants;
-import com.buschmais.maexo.mbeans.osgi.core.StartLevelConstants;
+import com.buschmais.maexo.mbeans.osgi.core.BundleMBeanConstants;
+import com.buschmais.maexo.mbeans.osgi.core.StartLevelMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.StartLevelMBean;
 
 /**
@@ -67,17 +67,17 @@ public final class StartLevelMBeanImpl extends DynamicMBeanSupport implements
 		String className = StartLevelMBeanImpl.class.getName();
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[] {
-				StartLevelConstants.STARTLEVEL,
-				StartLevelConstants.INITIALBUNDLE_STARTLEVEL };
+				StartLevelMBeanConstants.STARTLEVEL,
+				StartLevelMBeanConstants.INITIALBUNDLE_STARTLEVEL };
 
 		// operations
 		OpenMBeanOperationInfoSupport[] mbeanOperationInfos = new OpenMBeanOperationInfoSupport[] {
-				StartLevelConstants.GETBUNDLESTARTLEVEL_BY_OBJECTNAME,
-				StartLevelConstants.SETBUNDLESTARTLEVEL_BY_OBJECTNAME,
-				StartLevelConstants.GETBUNDLESTARTLEVEL_BY_ID,
-				StartLevelConstants.SETBUNDLESTARTLEVEL_BY_ID,
-				StartLevelConstants.ISBUNDLEPERSISTENTLYSTARTED_BY_OBJECTNAME,
-				StartLevelConstants.ISBUNDLEPERSISTENTLYSTARTED_BY_ID };
+				StartLevelMBeanConstants.GETBUNDLESTARTLEVEL_BY_OBJECTNAME,
+				StartLevelMBeanConstants.SETBUNDLESTARTLEVEL_BY_OBJECTNAME,
+				StartLevelMBeanConstants.GETBUNDLESTARTLEVEL_BY_ID,
+				StartLevelMBeanConstants.SETBUNDLESTARTLEVEL_BY_ID,
+				StartLevelMBeanConstants.ISBUNDLEPERSISTENTLYSTARTED_BY_OBJECTNAME,
+				StartLevelMBeanConstants.ISBUNDLEPERSISTENTLYSTARTED_BY_ID };
 
 		// constructors
 		OpenMBeanConstructorInfoSupport[] mbeanConstructorInfos = new OpenMBeanConstructorInfoSupport[] {};
@@ -85,7 +85,7 @@ public final class StartLevelMBeanImpl extends DynamicMBeanSupport implements
 		MBeanNotificationInfo[] mbeanNotificationInfos = new MBeanNotificationInfo[] {};
 		// mbean info
 		OpenMBeanInfoSupport mbeanInfo = new OpenMBeanInfoSupport(className,
-				BundleConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
+				BundleMBeanConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
 				mbeanConstructorInfos, mbeanOperationInfos,
 				mbeanNotificationInfos);
 		return mbeanInfo;
@@ -95,7 +95,7 @@ public final class StartLevelMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public Integer getBundleStartLevel(ObjectName objectName) {
-		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
+		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID.getName());
 		return this.getBundleStartLevel(id);
 	}
 
@@ -129,7 +129,7 @@ public final class StartLevelMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public Boolean isBundlePersistentlyStarted(ObjectName objectName) {
-		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
+		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID.getName());
 		return this.isBundlePersistentlyStarted(id);
 	}
 
@@ -150,7 +150,7 @@ public final class StartLevelMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public void setBundleStartLevel(ObjectName objectName, Integer startLevel) {
-		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
+		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID.getName());
 		this.setBundleStartLevel(id, startLevel);
 	}
 

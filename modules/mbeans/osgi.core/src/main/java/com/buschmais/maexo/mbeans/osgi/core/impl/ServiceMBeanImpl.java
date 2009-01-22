@@ -40,7 +40,7 @@ import org.osgi.framework.ServiceReference;
 
 import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
-import com.buschmais.maexo.mbeans.osgi.core.ServiceConstants;
+import com.buschmais.maexo.mbeans.osgi.core.ServiceMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.ServiceMBean;
 
 /**
@@ -81,17 +81,17 @@ public final class ServiceMBeanImpl extends DynamicMBeanSupport implements Dynam
 		String className = ServiceMBeanImpl.class.getName();
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[] {
-				ServiceConstants.BUNDLE, ServiceConstants.DESCRIPTION,
-				ServiceConstants.ID, ServiceConstants.OBJECTCLASS,
-				ServiceConstants.PID, ServiceConstants.PROPERTIES,
-				ServiceConstants.RANKING, ServiceConstants.USINGBUNDLES,
-				ServiceConstants.VENDOR };
+				ServiceMBeanConstants.BUNDLE, ServiceMBeanConstants.DESCRIPTION,
+				ServiceMBeanConstants.ID, ServiceMBeanConstants.OBJECTCLASS,
+				ServiceMBeanConstants.PID, ServiceMBeanConstants.PROPERTIES,
+				ServiceMBeanConstants.RANKING, ServiceMBeanConstants.USINGBUNDLES,
+				ServiceMBeanConstants.VENDOR };
 
 		OpenMBeanOperationInfoSupport[] mbeanOperationInfos = new OpenMBeanOperationInfoSupport[] {};
 		OpenMBeanConstructorInfoSupport[] mbeanConstructorInfos = new OpenMBeanConstructorInfoSupport[] {};
 		MBeanNotificationInfo[] mbeanNotificationInfos = new MBeanNotificationInfo[] {};
 		OpenMBeanInfoSupport mbeanInfo = new OpenMBeanInfoSupport(className,
-				ServiceConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
+				ServiceMBeanConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
 				mbeanConstructorInfos, mbeanOperationInfos,
 				mbeanNotificationInfos);
 		return mbeanInfo;
@@ -141,7 +141,7 @@ public final class ServiceMBeanImpl extends DynamicMBeanSupport implements Dynam
 	 */
 	public TabularData getProperties() {
 		TabularDataSupport tabularProperties = new TabularDataSupport(
-				ServiceConstants.PROPERTIES_TYPE);
+				ServiceMBeanConstants.PROPERTIES_TYPE);
 		String[] keys = this.serviceReference.getPropertyKeys();
 		for (String key : keys) {
 			Object value = this.serviceReference.getProperty(key);
@@ -156,8 +156,8 @@ public final class ServiceMBeanImpl extends DynamicMBeanSupport implements Dynam
 			}
 			try {
 				CompositeDataSupport row = new CompositeDataSupport(
-						ServiceConstants.PROPERTIES_ROW_TYPE,
-						ServiceConstants.SERVICEPROPERTY_ITEMS.toArray(new String[0]),
+						ServiceMBeanConstants.PROPERTIES_ROW_TYPE,
+						ServiceMBeanConstants.SERVICEPROPERTY_ITEMS.toArray(new String[0]),
 						new Object[] { key, stringRepresentation });
 				tabularProperties.put(row);
 			} catch (OpenDataException e) {

@@ -113,7 +113,7 @@ public final class ObjectNameFactoryHelper {
 				resourceInterface.getName());
 		ServiceReference[] serviceReferences;
 		String filter = String.format("(%s=%s)",
-				Constants.SERVICE_PROPERTY_RESOURCEINTERFACE, resourceInterface
+				ObjectNameFactoryConstants.SERVICEPROPERTY_RESOURCEINTERFACE, resourceInterface
 						.getName());
 		logger.debug("using filter : {}", filter);
 		try {
@@ -189,7 +189,7 @@ public final class ObjectNameFactoryHelper {
 					"Parameters objectNameFactory and resourceInterface must be provided");
 		}
 		Dictionary<String, String> properties = new Hashtable<String, String>();
-		properties.put(Constants.SERVICE_PROPERTY_RESOURCEINTERFACE,
+		properties.put(ObjectNameFactoryConstants.SERVICEPROPERTY_RESOURCEINTERFACE,
 				resourceInterface.getName());
 		return this.bundleContext.registerService(ObjectNameFactory.class
 				.getName(), objectNameFactory, properties);

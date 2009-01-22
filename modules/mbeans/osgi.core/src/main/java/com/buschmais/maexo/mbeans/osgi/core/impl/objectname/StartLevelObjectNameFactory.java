@@ -23,7 +23,7 @@ import javax.management.ObjectName;
 import org.osgi.framework.Constants;
 
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-import com.buschmais.maexo.mbeans.osgi.core.StartLevelConstants;
+import com.buschmais.maexo.mbeans.osgi.core.StartLevelMBeanConstants;
 
 /**
  * Object name factory implementation for the start level service.
@@ -56,7 +56,7 @@ public final class StartLevelObjectNameFactory implements ObjectNameFactory {
 		if (id == null) {
 			throw new IllegalArgumentException("No service id provided");
 		}
-		String objectName = String.format(StartLevelConstants.OBJECTNAME_FORMAT, id);
+		String objectName = String.format(StartLevelMBeanConstants.OBJECTNAME_FORMAT, id);
 		try {
 			return new ObjectName(objectName);
 		} catch (Exception e) {

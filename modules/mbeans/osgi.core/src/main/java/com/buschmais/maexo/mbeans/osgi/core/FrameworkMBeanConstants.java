@@ -27,12 +27,12 @@ import com.buschmais.maexo.framework.commons.mbean.dynamic.OpenTypeFactory;
 /**
  * Class holding all constants for FrameworkMBeans.
  */
-public final class FrameworkConstants {
+public final class FrameworkMBeanConstants {
 
 	/**
 	 * Private Constructor.
 	 */
-	private FrameworkConstants() {
+	private FrameworkMBeanConstants() {
 
 	}
 

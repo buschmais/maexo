@@ -24,7 +24,7 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-import com.buschmais.maexo.mbeans.osgi.core.ServiceConstants;
+import com.buschmais.maexo.mbeans.osgi.core.ServiceMBeanConstants;
 
 /**
  * Object name factory implementation for service references.
@@ -59,7 +59,7 @@ public final class ServiceObjectNameFactory implements ObjectNameFactory {
 			}
 			objectClassValue.append(objectClass);
 		}
-		String objectName = String.format(ServiceConstants.OBJECTNAME_FORMAT,
+		String objectName = String.format(ServiceMBeanConstants.OBJECTNAME_FORMAT,
 				id, objectClassValue.toString());
 		try {
 			return new ObjectName(objectName);

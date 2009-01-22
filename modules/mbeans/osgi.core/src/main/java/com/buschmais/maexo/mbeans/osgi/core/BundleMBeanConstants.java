@@ -33,7 +33,7 @@ import com.buschmais.maexo.framework.commons.mbean.dynamic.OpenTypeFactory;
 /**
  * Class holding all constants for BundleMBeans.
  */
-public final class BundleConstants {
+public final class BundleMBeanConstants {
 
 	/** Constant "name". */
 	public static final String HEADER_ITEM_NAME = "name";
@@ -164,7 +164,7 @@ public final class BundleConstants {
 	/**
 	 * Private Constructor.
 	 */
-	private BundleConstants() {
+	private BundleMBeanConstants() {
 
 	}
 }

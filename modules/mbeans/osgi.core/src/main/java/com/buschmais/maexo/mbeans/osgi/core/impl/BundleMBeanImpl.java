@@ -44,7 +44,7 @@ import org.osgi.framework.ServiceReference;
 
 import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
-import com.buschmais.maexo.mbeans.osgi.core.BundleConstants;
+import com.buschmais.maexo.mbeans.osgi.core.BundleMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.BundleMBean;
 
 /**
@@ -101,26 +101,26 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements Dynami
 		String className = BundleMBeanImpl.class.getName();
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[] {
-				BundleConstants.ID, BundleConstants.STATE,
-				BundleConstants.STATENAME, BundleConstants.HEADER,
-				BundleConstants.LASTMODIFIED,
-				BundleConstants.LASTMODIFIEDASDATE, BundleConstants.LOCATION,
-				BundleConstants.REGISTEREDSERVICES,
-				BundleConstants.SERVICESINUSE };
+				BundleMBeanConstants.ID, BundleMBeanConstants.STATE,
+				BundleMBeanConstants.STATENAME, BundleMBeanConstants.HEADER,
+				BundleMBeanConstants.LASTMODIFIED,
+				BundleMBeanConstants.LASTMODIFIEDASDATE, BundleMBeanConstants.LOCATION,
+				BundleMBeanConstants.REGISTEREDSERVICES,
+				BundleMBeanConstants.SERVICESINUSE };
 
 		// operations
 		OpenMBeanOperationInfoSupport[] mbeanOperationInfos = new OpenMBeanOperationInfoSupport[] {
-				BundleConstants.START, BundleConstants.STOP,
-				BundleConstants.UPDATE, BundleConstants.UPDATEFROMURL,
-				BundleConstants.UPDATEFROMBYTEARRAY,
-				BundleConstants.UNINSTALL };
+				BundleMBeanConstants.START, BundleMBeanConstants.STOP,
+				BundleMBeanConstants.UPDATE, BundleMBeanConstants.UPDATEFROMURL,
+				BundleMBeanConstants.UPDATEFROMBYTEARRAY,
+				BundleMBeanConstants.UNINSTALL };
 		// constructors
 		OpenMBeanConstructorInfoSupport[] mbeanConstructorInfos = new OpenMBeanConstructorInfoSupport[] {};
 		// notifications
 		MBeanNotificationInfo[] mbeanNotificationInfos = new MBeanNotificationInfo[] {};
 		// mbean info
 		OpenMBeanInfoSupport mbeanInfo = new OpenMBeanInfoSupport(className,
-				BundleConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
+				BundleMBeanConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
 				mbeanConstructorInfos, mbeanOperationInfos,
 				mbeanNotificationInfos);
 		return mbeanInfo;
@@ -173,7 +173,7 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements Dynami
 	@SuppressWarnings("unchecked")
 	public TabularData getHeaders() {
 		TabularDataSupport tabularHeaders = new TabularDataSupport(
-				BundleConstants.HEADERS_TYPE);
+				BundleMBeanConstants.HEADERS_TYPE);
 		Dictionary<String, String> headers = this.bundle.getHeaders();
 		Enumeration<String> keys = headers.keys();
 		while (keys.hasMoreElements()) {
@@ -181,7 +181,7 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements Dynami
 			String value = headers.get(key);
 			try {
 				CompositeDataSupport header = new CompositeDataSupport(
-						BundleConstants.HEADER_TYPE, BundleConstants.HEADER_ITEMS
+						BundleMBeanConstants.HEADER_TYPE, BundleMBeanConstants.HEADER_ITEMS
 								.toArray(new String[0]), new Object[] { key,
 								value });
 				tabularHeaders.put(header);

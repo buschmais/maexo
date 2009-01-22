@@ -41,8 +41,8 @@ import org.osgi.service.packageadmin.RequiredBundle;
 
 import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
-import com.buschmais.maexo.mbeans.osgi.core.BundleConstants;
-import com.buschmais.maexo.mbeans.osgi.core.PackageAdminConstants;
+import com.buschmais.maexo.mbeans.osgi.core.BundleMBeanConstants;
+import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBean;
 
 /**
@@ -103,26 +103,26 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[0];
 		// operations
 		OpenMBeanOperationInfoSupport[] mbeanOperationInfos = new OpenMBeanOperationInfoSupport[] {
-				PackageAdminConstants.GETBUNDLES,
-				PackageAdminConstants.GETBUNDLETYPE_BY_ID,
-				PackageAdminConstants.GETBUNDLETYPE_BY_OBJECTNAME,
-				PackageAdminConstants.GETBUNDLETYPEASNAME_BY_ID,
-				PackageAdminConstants.GETBUNDLETYPEASNAME_BY_OBJECTNAME,
-				PackageAdminConstants.EXPORTEDPACKAGE_BY_OBJECTNAME,
-				PackageAdminConstants.EXPORTEDPACKAGES_BY_ID,
-				PackageAdminConstants.EXPORTEDPACKAGES_BY_OBJECTNAME,
-				PackageAdminConstants.EXPORTEDPACKAGES_BY_NAME,
-				PackageAdminConstants.FRAGMENTS_BY_ID,
-				PackageAdminConstants.FRAGMENTS_BY_OBJECTNAME,
-				PackageAdminConstants.HOSTS_BY_ID,
-				PackageAdminConstants.HOSTS_BY_OBJECTNAME,
-				PackageAdminConstants.REQUIREDBUNDLES_BY_SYMBOLICNAME,
-				PackageAdminConstants.REFRESHPACKAGES_BY_IDS,
-				PackageAdminConstants.REFRESHPACKAGES_BY_OBJECTNAME,
-				PackageAdminConstants.REFRESHPACKAGES,
-				PackageAdminConstants.RESOLVEBUNDLES_BY_ID,
-				PackageAdminConstants.RESOLVEBUNDLES_BY_OBJECTNAME,
-				PackageAdminConstants.RESOLVEBUNDLES };
+				PackageAdminMBeanConstants.GETBUNDLES,
+				PackageAdminMBeanConstants.GETBUNDLETYPE_BY_ID,
+				PackageAdminMBeanConstants.GETBUNDLETYPE_BY_OBJECTNAME,
+				PackageAdminMBeanConstants.GETBUNDLETYPEASNAME_BY_ID,
+				PackageAdminMBeanConstants.GETBUNDLETYPEASNAME_BY_OBJECTNAME,
+				PackageAdminMBeanConstants.EXPORTEDPACKAGE_BY_OBJECTNAME,
+				PackageAdminMBeanConstants.EXPORTEDPACKAGES_BY_ID,
+				PackageAdminMBeanConstants.EXPORTEDPACKAGES_BY_OBJECTNAME,
+				PackageAdminMBeanConstants.EXPORTEDPACKAGES_BY_NAME,
+				PackageAdminMBeanConstants.FRAGMENTS_BY_ID,
+				PackageAdminMBeanConstants.FRAGMENTS_BY_OBJECTNAME,
+				PackageAdminMBeanConstants.HOSTS_BY_ID,
+				PackageAdminMBeanConstants.HOSTS_BY_OBJECTNAME,
+				PackageAdminMBeanConstants.REQUIREDBUNDLES_BY_SYMBOLICNAME,
+				PackageAdminMBeanConstants.REFRESHPACKAGES_BY_IDS,
+				PackageAdminMBeanConstants.REFRESHPACKAGES_BY_OBJECTNAME,
+				PackageAdminMBeanConstants.REFRESHPACKAGES,
+				PackageAdminMBeanConstants.RESOLVEBUNDLES_BY_ID,
+				PackageAdminMBeanConstants.RESOLVEBUNDLES_BY_OBJECTNAME,
+				PackageAdminMBeanConstants.RESOLVEBUNDLES };
 
 		// constructors
 		OpenMBeanConstructorInfoSupport[] mbeanConstructorInfos = new OpenMBeanConstructorInfoSupport[] {};
@@ -130,7 +130,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 		MBeanNotificationInfo[] mbeanNotificationInfos = new MBeanNotificationInfo[] {};
 		// mbean info
 		OpenMBeanInfoSupport mbeanInfo = new OpenMBeanInfoSupport(className,
-				PackageAdminConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
+				PackageAdminMBeanConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
 				mbeanConstructorInfos, mbeanOperationInfos,
 				mbeanNotificationInfos);
 		return mbeanInfo;
@@ -140,7 +140,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public Integer getBundleType(ObjectName objectName) {
-		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
+		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID.getName());
 		return this.getBundleType(id);
 	}
 
@@ -196,7 +196,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public TabularData getExportedPackages(ObjectName objectName) {
-		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
+		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID.getName());
 		return this.getExportedPackages(id);
 	}
 
@@ -227,7 +227,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public ObjectName[] getFragments(ObjectName objectName) {
-		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
+		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID.getName());
 		return this.getFragments(id);
 	}
 
@@ -249,7 +249,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public ObjectName[] getHosts(ObjectName objectName) {
-		Long id = (Long) getAttribute(objectName, BundleConstants.ID.getName());
+		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID.getName());
 		return this.getHosts(id);
 	}
 
@@ -277,12 +277,12 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 			return null;
 		}
 		TabularData tabularData = new TabularDataSupport(
-				PackageAdminConstants.REQUIRED_BUNDLES_TYPE);
+				PackageAdminMBeanConstants.REQUIRED_BUNDLES_TYPE);
 		for (RequiredBundle requiredBundle : requiredBundles) {
 			try {
 				tabularData.put(new CompositeDataSupport(
-						PackageAdminConstants.REQUIRED_BUNDLE_TYPE,
-						PackageAdminConstants.REQUIRED_BUNDLE_ITEMS
+						PackageAdminMBeanConstants.REQUIRED_BUNDLE_TYPE,
+						PackageAdminMBeanConstants.REQUIRED_BUNDLE_ITEMS
 								.toArray(new String[0]), new Object[] {
 								this.objectNameFactoryHelper.getObjectName(
 										requiredBundle.getBundle(),
@@ -307,7 +307,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	public void refreshPackages(ObjectName[] objectNames) {
 		Long[] ids = new Long[objectNames.length];
 		for (int i = 0; i < objectNames.length; i++) {
-			ids[i] = (Long) getAttribute(objectNames[i], BundleConstants.ID
+			ids[i] = (Long) getAttribute(objectNames[i], BundleMBeanConstants.ID
 					.getName());
 		}
 		this.refreshPackages(ids);
@@ -346,7 +346,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	public Boolean resolveBundles(ObjectName[] objectNames) {
 		Long[] ids = new Long[objectNames.length];
 		for (int i = 0; i < objectNames.length; i++) {
-			ids[i] = (Long) getAttribute(objectNames[i], BundleConstants.ID
+			ids[i] = (Long) getAttribute(objectNames[i], BundleMBeanConstants.ID
 					.getName());
 		}
 		return this.resolveBundles(ids);
@@ -391,7 +391,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 			return null;
 		}
 		TabularData tabularData = new TabularDataSupport(
-				PackageAdminConstants.EXPORTED_PACKAGES_TYPE);
+				PackageAdminMBeanConstants.EXPORTED_PACKAGES_TYPE);
 		for (ExportedPackage exportedPackage : exportedPackages) {
 			tabularData.put(this.convertExportedPackage(exportedPackage));
 		}
@@ -412,8 +412,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 		}
 		try {
 			return new CompositeDataSupport(
-					PackageAdminConstants.EXPORTED_PACKAGE_TYPE,
-					PackageAdminConstants.EXPORTED_PACKAGE_ITEMS
+					PackageAdminMBeanConstants.EXPORTED_PACKAGE_TYPE,
+					PackageAdminMBeanConstants.EXPORTED_PACKAGE_ITEMS
 							.toArray(new String[0]),
 					new Object[] {
 							this.objectNameFactoryHelper.getObjectName(

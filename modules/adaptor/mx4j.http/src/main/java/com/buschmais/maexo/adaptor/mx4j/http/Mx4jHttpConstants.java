@@ -19,12 +19,12 @@ package com.buschmais.maexo.adaptor.mx4j.http;
 /**
  * This class declares several global constants.
  */
-public final class Constants {
+public final class Mx4jHttpConstants {
 
 	/**
 	 * Private Constructor.
 	 */
-	private Constants() {
+	private Mx4jHttpConstants() {
 
 	}
 	
