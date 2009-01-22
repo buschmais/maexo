@@ -148,7 +148,7 @@ limitations under the License
 		</pluginManagement>
 
 		<plugins>
-			<!-- this required by the maven checkstyle plugin to support multiple modules -->
+			<!-- this is required by the maven checkstyle plugin to support multiple modules -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
