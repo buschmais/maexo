@@ -29,7 +29,7 @@
 	<groupId>com.buschmais.maexo</groupId>
 	<artifactId>maexo-distribution</artifactId>
 	<packaging>pom</packaging>
-	<name>maexo - Distribution</name>
+	<name>MAEXO - Distribution</name>
 
 	<build>
 		<plugins>
