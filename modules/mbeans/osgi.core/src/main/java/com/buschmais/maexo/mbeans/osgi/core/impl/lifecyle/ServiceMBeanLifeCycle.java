@@ -26,14 +26,18 @@ import com.buschmais.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLifeCyc
 import com.buschmais.maexo.mbeans.osgi.core.impl.ServiceMBeanImpl;
 
 /**
- * 
- * TODO@DM: complete javadoc (exclusion of services)
- * 
- * 
  * This class implements a service event listener to manage the life cycle of
- * the associated service mbeans.
+ * the associated service MBeans.
+ * <p>
+ * Note: Services which represent MBeans are not tracked as this would cause
+ * infinite recursions {@link #getServiceFilter()}.
  */
 public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
+
+	/**
+	 * Defines the filter to track the life cycle of services
+	 */
+	private static final String SERVICEFILTER = "(!(&(objectClass=*MBean)(|(%s=*)(objectName=*))))";
 
 	/**
 	 * Constructor.
@@ -87,8 +91,6 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 		// do not create MBeans for services which themselves represent
 		// services, e.g. the MBean services which were registered by this
 		// bundle
-		return String.format(
-				"(!(&(objectClass=*MBean)(|(%s=*)(objectName=*))))",
-				ObjectName.class.getName());
+		return String.format(SERVICEFILTER, ObjectName.class.getName());
 	}
 }

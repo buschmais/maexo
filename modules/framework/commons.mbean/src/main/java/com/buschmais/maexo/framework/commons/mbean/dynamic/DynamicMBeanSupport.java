@@ -39,14 +39,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class provides implementation of common needed functionality for dynamic
- * mbeans.
+ * This class provides supporting functionality to facilitate the implementation
+ * dynamic MBeans.
  * <p>
- * The invocation of methods and getting/setting attributes is performed via
- * introspection of the mbeans class and using the metadata provided by the
- * mbean itself.
+ * A dynamic MBean implementation can derive from this class and provide
+ * getters/setters and methods like standard MBeans: 
  * 
- * TODO @DM document assumptions about attribute names (lowerCase/upperCase)
+ * <pre>
+ *   public class MyDynamicMBean extends DynamicMBeanSupport { 
+ *     private int myAttribute;
+ *     public int getMyAttribute() { return this.myAttribute; }
+ *     public void setMyAttribute() {this.myAttribute = myAttribute; }
+ *     public void myOperation(int parameter) { ... }
+ *     public MBeanInfo getMBeanInfo() { ... }
+ *   }
+ * </pre>
+ * 
+ * The invocation of these methods is performed via introspection of the MBean's
+ * class and using the metadata provided by the method {@link #getMBeanInfo()}
+ * which still must be implemented by the MBean itself.
+ * <p>
+ * Note: The names of the attributes provided by the MBean must start with a
+ * lower case letter, e.g. <code>myAttribute</code>.
  */
 public abstract class DynamicMBeanSupport implements DynamicMBean,
 		MBeanRegistration {
