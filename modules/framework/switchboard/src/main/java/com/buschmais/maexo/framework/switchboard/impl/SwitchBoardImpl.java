@@ -30,23 +30,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides transparent couplings between MBeans, MBean servers, MBean server
- * connections and the OSGi service registry.
+ * Provides transparent couplings between MBeans, {@link NotificationListener}s,
+ * {@link MBeanServer}s and {@link MBeanServerConnection}s by tracking the life
+ * cycle of these items in the OSGi service registry.
  * <p>
  * The main idea is to register MBeans not to the MBean server directly but to
  * the OSGi service registry as an OSGi service. The <strong>MAEXO switch
  * board</strong> will take care of that all MBean services will be registered
- * (and transparently unregistered) to all known MBean servers.
- * <p>
- * Established use cases:
- * <ul>
- * <li>Export MBeans, that are found or registered in the OSGi service registry,
- * to all known MBean servers</li>
- * <li>Unregister any MBeans, if the providing bundle is stopped.</li>
- * <li></li>
- * <li>TODO@DM: Please complete this list</li>
- * </ul>
- * 
+ * (and transparently unregistered) to all known MBean servers. The same
+ * mechanism is implemented for the relation between NotificationListeners and
+ * MBean server connections.
  */
 public final class SwitchBoardImpl {
 
