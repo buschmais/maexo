@@ -21,8 +21,8 @@ import org.osgi.service.packageadmin.PackageAdmin;
 
 import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
-import com.buschmais.maexo.mbeans.osgi.core.FrameworkMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.FrameworkMBean;
+import com.buschmais.maexo.mbeans.osgi.core.FrameworkMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants;
 
 /**
@@ -155,18 +155,27 @@ public final class FrameworkMBeanImpl extends DynamicMBeanSupport implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public ObjectName installBundle(String location) throws BundleException {
-		Bundle bundle = this.bundleContext.installBundle(location);
+	public ObjectName installBundle(String location) {
+		Bundle bundle;
+		try {
+			bundle = this.bundleContext.installBundle(location);
+		} catch (BundleException e) {
+			throw new RuntimeException(e.toString());
+		}
 		return this.objectNameFactoryHelper.getObjectName(bundle, Bundle.class);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public ObjectName installBundle(String location, byte[] input)
-			throws BundleException {
+	public ObjectName installBundle(String location, byte[] input) {
 		ByteArrayInputStream inStream = new ByteArrayInputStream(input);
-		Bundle bundle = this.bundleContext.installBundle(location, inStream);
+		Bundle bundle;
+		try {
+			bundle = this.bundleContext.installBundle(location, inStream);
+		} catch (BundleException e) {
+			throw new RuntimeException(e.toString());
+		}
 		return this.objectNameFactoryHelper.getObjectName(bundle, Bundle.class);
 	}
 	
