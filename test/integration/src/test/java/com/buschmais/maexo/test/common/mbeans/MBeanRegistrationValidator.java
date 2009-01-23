@@ -19,14 +19,18 @@ package com.buschmais.maexo.test.common.mbeans;
 import javax.management.ObjectName;
 
 public interface MBeanRegistrationValidator {
-	
+
 	/**
-	 * @return the registrationDone
+	 * Returns TRUE if registration is done.
+	 * 
+	 * @return TRUE if registration is done.
 	 */
 	public Boolean isRegistrationDone();
 
 	/**
-	 * @return the objectName
+	 * Returns the object name.
+	 * 
+	 * @return The object name.
 	 */
 	public ObjectName getObjectName();
 }

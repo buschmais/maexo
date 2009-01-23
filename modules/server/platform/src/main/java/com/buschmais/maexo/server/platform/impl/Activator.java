@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * OSGi bundle activator for the the platform mbeans server bundle.
+ * OSGi bundle activator for the the platform MBeans server bundle.
  */
 public final class Activator implements BundleActivator {
 
@@ -41,7 +41,7 @@ public final class Activator implements BundleActivator {
 			.getLogger(Activator.class);
 
 	/**
-	 * Represents the platform mbean server.
+	 * Represents the platform MBean server.
 	 */
 	private ServiceRegistration mbeanServerRegistration;
 

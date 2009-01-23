@@ -23,19 +23,19 @@ import com.buschmais.maexo.test.Constants;
 import com.buschmais.maexo.test.common.mbeans.MaexoMBeanTests;
 
 /**
- * This class tests BundleMBean functionality.
+ * This class tests <code>BundleMBean</code> functionality.
  * 
  * @see MaexoTests
  */
 public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 
-	/** Set containing all triggered BundleEvents. */
+	/** Set containing all triggered bundle events. */
 	private BlockingQueue<Integer> bundleEvents;
 
-	/** The TestBundle. */
+	/** The test bundle. */
 	private Bundle bundle;
 
-	/** The TestBundleMBean. */
+	/** The test bundle MBean. */
 	private BundleMBean bundleMBean;
 
 	/**
@@ -65,7 +65,7 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 	 * 
 	 * @param bundle
 	 *            The Bundle.
-	 * @return The BundleMBean.
+	 * @return The bundle MBean.
 	 */
 	private BundleMBean getTestBundleMBean(Bundle bundle) {
 		// get corresponding BundleMBean
@@ -76,7 +76,7 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 	}
 
 	/**
-	 * Tests if all Bundles are registered on MBeanServer.
+	 * Tests if all Bundles are registered on MBean server.
 	 */
 	public void test_allBundlesRegisteredAsMBeans() throws IOException {
 		Bundle[] bundles = this.bundleContext.getBundles();
@@ -96,12 +96,9 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 	}
 
 	/**
-	 * Tests Bundle attributes.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests bundle attributes.
 	 */
-	public void test_testBundleAttributes() throws Exception {
+	public void test_testBundleAttributes() {
 		assertEquals(Long.valueOf(bundle.getBundleId()), bundleMBean
 				.getBundleId());
 		assertEquals(Long.valueOf(bundle.getLastModified()), bundleMBean
@@ -110,12 +107,9 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 	}
 
 	/**
-	 * Tests method <code>getServiceinUse()</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link BundleMBean#getServicesInUse()}.
 	 */
-	public void test_getServicesInUse() throws Exception {
+	public void test_getServicesInUse() {
 		ServiceReference[] bundleServiceReferences = bundle.getServicesInUse();
 		ObjectName[] bundleMBeanServicesInUse = bundleMBean.getServicesInUse();
 		assertEquals(bundleServiceReferences.length,
@@ -130,12 +124,9 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 	}
 
 	/**
-	 * Tests method <code>getRegisteredServices()</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link BundleMBean#getRegisteredServices()}
 	 */
-	public void test_getRegisteredServices() throws Exception {
+	public void test_getRegisteredServices() {
 		final ServiceReference[] registeredBundleServices = bundle
 				.getRegisteredServices();
 		final ObjectName[] objectNameMBeanServices = bundleMBean
@@ -151,13 +142,10 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 	}
 
 	/**
-	 * Tests method <code>getHeaders()</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link BundleMBean#getHeaders()}.
 	 */
 	@SuppressWarnings("unchecked")
-	public void test_getHeaders() throws Exception {
+	public void test_getHeaders() {
 		final Enumeration bundleKeys = bundle.getHeaders().keys();
 		final Enumeration bundleValues = bundle.getHeaders().elements();
 		final TabularData bundleMBeanHeaders = bundleMBean.getHeaders();

@@ -30,30 +30,27 @@ public class Standard extends NotificationBroadcasterSupport implements
 
 	public static String NOTIFICATION_DESCRIPTION = "value of attribute changed";
 
+	/** The attribute. */
 	private String attribute;
 
-	private AtomicLong sequenceNumber = new AtomicLong(0);
+	/** The sequence number. */
+	private final AtomicLong sequenceNumber = new AtomicLong(0);
 
+	/** The object name. */
 	private ObjectName objectName;
 
+	/** The value if registration is done. */
 	private Boolean registrationDone;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.maexo.test.common.mbeans.StandardMBean#getAttribute()
+	/**
+	 * {@inheritDoc}
 	 */
 	public String getAttribute() {
 		return this.attribute;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.maexo.test.common.mbeans.StandardMBean#setAttribute
-	 * (java.lang.String)
+	/**
+	 * {@inheritDoc}
 	 */
 	public void setAttribute(String newAttribute) {
 		String oldAttribute = this.attribute;
@@ -65,48 +62,34 @@ public class Standard extends NotificationBroadcasterSupport implements
 				String.class.getName(), oldAttribute, newAttribute));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.maexo.test.common.mbeans.StandardMBean#operation(boolean
-	 * )
+	/**
+	 * {@inheritDoc}
 	 */
 	public boolean operation(boolean value) {
 		return !value;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.MBeanRegistration#postDeregister()
+	/**
+	 * {@inheritDoc}
 	 */
 	public void postDeregister() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.MBeanRegistration#postRegister(java.lang.Boolean)
+	/**
+	 * {@inheritDoc}
 	 */
 	public void postRegister(Boolean registrationDone) {
 		this.registrationDone = registrationDone;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see javax.management.MBeanRegistration#preDeregister()
+	/**
+	 * {@inheritDoc}
 	 */
 	public void preDeregister() throws Exception {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.management.MBeanRegistration#preRegister(javax.management.MBeanServer
-	 * , javax.management.ObjectName)
+	/**
+	 * {@inheritDoc}
 	 */
 	public ObjectName preRegister(MBeanServer server, ObjectName name)
 			throws Exception {
@@ -114,33 +97,22 @@ public class Standard extends NotificationBroadcasterSupport implements
 		return name;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.maexo.test.common.mbeans.MBeanRegistrationValidator
-	 * #isRegistrationDone()
+	/**
+	 * {@inheritDoc}
 	 */
 	public Boolean isRegistrationDone() {
 		return registrationDone;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.buschmais.maexo.test.common.mbeans.MBeanRegistrationValidator
-	 * #getObjectName()
+	/**
+	 * {@inheritDoc}
 	 */
 	public ObjectName getObjectName() {
 		return objectName;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.management.NotificationBroadcasterSupport#getNotificationInfo()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public MBeanNotificationInfo[] getNotificationInfo() {

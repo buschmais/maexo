@@ -35,7 +35,7 @@ import com.buschmais.maexo.mbeans.osgi.core.impl.ServiceMBeanImpl;
 public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 
 	/**
-	 * Defines the filter to track the life cycle of services
+	 * Defines the filter to track the life cycle of services.
 	 */
 	private static final String SERVICEFILTER = "(!(&(objectClass=*MBean)(|(%s=*)(objectName=*))))";
 
@@ -43,7 +43,7 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 	 * Constructor.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context of the exporting bundle
+	 *            The bundle context of the exporting bundle.
 	 */
 	public ServiceMBeanLifeCycle(BundleContext bundleContext) {
 		super(bundleContext);

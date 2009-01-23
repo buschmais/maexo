@@ -21,12 +21,16 @@ import javax.management.Notification;
 public interface NotificationValidator {
 
 	/**
-	 * @return the lastNotification
+	 * Returns the last notification.
+	 * 
+	 * @return The last notification.
 	 */
 	public abstract Notification getLastNotification();
 
 	/**
-	 * @return the lastHandback
+	 * Returns the last handback.
+	 * 
+	 * @return The last handback.
 	 */
 	public abstract Object getLastHandback();
 

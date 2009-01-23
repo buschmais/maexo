@@ -19,40 +19,35 @@ package com.buschmais.maexo.test.common.mbeans;
 import javax.management.Notification;
 import javax.management.NotificationListener;
 
+/**
+ * Standard MBean notification listener.
+ */
 public class StandardMBeanNotificationListener implements NotificationListener,
 		NotificationValidator {
 
+	/** Last notification. */
 	private Notification lastNotification;
 
+	/** Last handback. */
 	private Object lastHandback;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.management.NotificationListener#handleNotification(javax.management
-	 * .Notification, java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	public void handleNotification(Notification notification, Object handback) {
 		this.lastNotification = notification;
 		this.lastHandback = handback;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.maexo.test.common.mbeans.NotificationValidator#
-	 * getLastNotification()
+	/**
+	 * {@inheritDoc}
 	 */
 	public Notification getLastNotification() {
 		return lastNotification;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.buschmais.maexo.test.common.mbeans.NotificationValidator#
-	 * getLastHandback()
+	/**
+	 * {@inheritDoc}
 	 */
 	public Object getLastHandback() {
 		return lastHandback;

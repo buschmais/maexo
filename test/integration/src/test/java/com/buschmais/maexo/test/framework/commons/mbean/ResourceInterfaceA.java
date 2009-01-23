@@ -16,6 +16,9 @@
  */
 package com.buschmais.maexo.test.framework.commons.mbean;
 
+/**
+ * Dummy interface for testing.
+ */
 public interface ResourceInterfaceA {
 
 }

@@ -42,8 +42,8 @@ import org.osgi.service.packageadmin.RequiredBundle;
 import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 import com.buschmais.maexo.mbeans.osgi.core.BundleMBeanConstants;
-import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBean;
+import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants;
 
 /**
  * Represents the OSGi package admin service.
@@ -51,7 +51,7 @@ import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBean;
 public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 		PackageAdminMBean, MBeanRegistration {
 
-	// translation map for bundle states
+	/** Translation map for bundle types. */
 	private static Map<Integer, String> bundleTypes;
 
 	static {
@@ -382,8 +382,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 * Converts exported packages to tabular data.
 	 * 
 	 * @param exportedPackages
-	 *            the exported packages
-	 * @return the tabular data or null if the exported packages are null
+	 *            The exported packages.
+	 * @return The tabular data or null if the exported packages are null.
 	 */
 	private TabularData convertExportedPackages(
 			ExportedPackage[] exportedPackages) {
@@ -402,8 +402,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 * Converts an exported package to composite data.
 	 * 
 	 * @param exportedPackage
-	 *            the exported package
-	 * @return the composite data or null if the exported package is null
+	 *            The exported package.
+	 * @return The composite data or null if the exported package is null.
 	 */
 	@SuppressWarnings("deprecation")
 	private CompositeData convertExportedPackage(ExportedPackage exportedPackage) {

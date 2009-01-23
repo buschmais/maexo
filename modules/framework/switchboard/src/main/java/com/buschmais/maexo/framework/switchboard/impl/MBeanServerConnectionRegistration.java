@@ -25,7 +25,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
- * Represents an mbean server connection which is registered with the
+ * Represents an MBean server connection which is registered with the
  * switchboard.
  * 
  * @see SwitchBoardImpl
@@ -34,21 +34,21 @@ import org.osgi.framework.ServiceReference;
  */
 public class MBeanServerConnectionRegistration {
 
-	private MBeanServerConnection mbeanServerConnection;
+	private final MBeanServerConnection mbeanServerConnection;
 
 	private String agentId;
 
 	/**
 	 * Constructor.
 	 * <p>
-	 * The constructor extracts the mbean server connection from the provided
+	 * The constructor extracts the MBean server connection from the provided
 	 * service reference and the bundle context.
 	 * <p>
 	 * 
 	 * @param bundleContext
-	 *            the bundle context
+	 *            The bundle context.
 	 * @param serviceReference
-	 *            the service reference
+	 *            The service reference.
 	 */
 	public MBeanServerConnectionRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference) {
@@ -74,7 +74,9 @@ public class MBeanServerConnectionRegistration {
 	}
 
 	/**
-	 * @return the mbeanServerConnection
+	 * Returns the MBean server connection.
+	 * 
+	 * @return The MBean server connection.
 	 */
 	public final MBeanServerConnection getMBeanServerConnection() {
 		return mbeanServerConnection;

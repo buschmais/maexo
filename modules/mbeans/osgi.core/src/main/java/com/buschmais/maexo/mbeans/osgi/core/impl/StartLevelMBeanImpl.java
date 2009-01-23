@@ -31,8 +31,8 @@ import org.osgi.service.startlevel.StartLevel;
 
 import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.maexo.mbeans.osgi.core.BundleMBeanConstants;
-import com.buschmais.maexo.mbeans.osgi.core.StartLevelMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.StartLevelMBean;
+import com.buschmais.maexo.mbeans.osgi.core.StartLevelMBeanConstants;
 
 /**
  * Represents the OSGi start level service.
@@ -50,9 +50,9 @@ public final class StartLevelMBeanImpl extends DynamicMBeanSupport implements
 	 * Constructor.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context
+	 *            The bundle context.
 	 * @param startLevel
-	 *            the start level service
+	 *            The start level service.
 	 */
 	public StartLevelMBeanImpl(BundleContext bundleContext,
 			StartLevel startLevel) {

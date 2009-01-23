@@ -23,7 +23,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
- * Represents an mbean which is registered with the switchboard.
+ * Represents an MBean which is registered with the switchboard.
  * 
  * @see SwitchBoardImpl
  */
@@ -36,26 +36,26 @@ public final class MBeanRegistration {
 
 	private ObjectName objectName;
 
-	private Object mbean;
+	private final Object mbean;
 
 	/**
 	 * Constructor.
 	 * <p>
-	 * The constructor extracts the mbean and its object name from the provided
+	 * The constructor extracts the MBean and its object name from the provided
 	 * service reference and the bundle context.
 	 * <p>
 	 * The service reference must contain either a "
 	 * <code>javax.management.ObjectName</code>" or a "<code>objectName</code>"
-	 * property which contains the mbean object name.
+	 * property which contains the MBean object name.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context
+	 *            The bundle context.
 	 * @param serviceReference
-	 *            the service reference
+	 *            The service reference.
 	 * @throws MalformedObjectNameException
-	 *             if the object name has a syntax error
+	 *             If the object name has a syntax error.
 	 * @exception NullPointerException
-	 *                if the object name is <code>null</code>
+	 *                If the object name is <code>null</code>.
 	 */
 	public MBeanRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference)
@@ -81,7 +81,7 @@ public final class MBeanRegistration {
 	}
 
 	/**
-	 * @return the mbean
+	 * @return the MBean
 	 */
 	public Object getMbean() {
 		return mbean;

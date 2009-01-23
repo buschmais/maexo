@@ -47,19 +47,26 @@ import com.buschmais.maexo.mbeans.osgi.core.impl.objectname.StartLevelObjectName
  */
 public final class Activator implements BundleActivator {
 
+	/** The logger. */
 	private static final Logger logger = LoggerFactory
 			.getLogger(Activator.class);
 
+	/** List of service registrations. */
 	private List<ServiceRegistration> serviceRegistrations;
 
-	private BundleMBeanLifeCycle bundleLifecyle;
+	/** The bundles life cycle. */
+	private BundleMBeanLifeCycle bundleLifeCyle;
 
-	private ServiceMBeanLifeCycleSupport serviceLifecycle;
+	/** The services life cycle. */
+	private ServiceMBeanLifeCycleSupport serviceLifeCycle;
 
-	private ServiceMBeanLifeCycleSupport startLevelServiceLifecycle;
+	/** The start level life cycle. */
+	private ServiceMBeanLifeCycleSupport startLevelServiceLifeCycle;
 
-	private ServiceMBeanLifeCycleSupport packageAdminServiceLifecycle;
+	/** The package admin life cycle. */
+	private ServiceMBeanLifeCycleSupport packageAdminServiceLifeCycle;
 	
+	/** The framework life cycle. */
 	private FrameworkMBeanLifeCycle frameworkLifeCycle;
 
 
@@ -83,20 +90,22 @@ public final class Activator implements BundleActivator {
 		this.frameworkLifeCycle = new FrameworkMBeanLifeCycle(bundleContext);
 		this.frameworkLifeCycle.start();
 		// create bundle listener
-		this.bundleLifecyle = new BundleMBeanLifeCycle(bundleContext);
-		this.bundleLifecyle.start();
+		this.bundleLifeCyle = new BundleMBeanLifeCycle(bundleContext);
+		this.bundleLifeCyle.start();
 
 		// create service listener
-		this.serviceLifecycle = new ServiceMBeanLifeCycle(bundleContext);
-		this.serviceLifecycle.start();
+		this.serviceLifeCycle = new ServiceMBeanLifeCycle(bundleContext);
+		this.serviceLifeCycle.start();
 
 		// create start level service listener
-		this.startLevelServiceLifecycle = new StartLevelMBeanLifeCycle(bundleContext);
-		this.startLevelServiceLifecycle.start();
+		this.startLevelServiceLifeCycle = new StartLevelMBeanLifeCycle(
+				bundleContext);
+		this.startLevelServiceLifeCycle.start();
 
 		// create package admin service listener
-		this.packageAdminServiceLifecycle = new PackageAdminMBeanLifeCycle(bundleContext);
-		this.packageAdminServiceLifecycle.start();
+		this.packageAdminServiceLifeCycle = new PackageAdminMBeanLifeCycle(
+				bundleContext);
+		this.packageAdminServiceLifeCycle.start();
 	}
 
 
@@ -111,16 +120,16 @@ public final class Activator implements BundleActivator {
 		this.frameworkLifeCycle.stop();
 
 		// remove bundle listener
-		this.bundleLifecyle.stop();
+		this.bundleLifeCyle.stop();
 
 		// remove service listener
-		this.serviceLifecycle.stop();
+		this.serviceLifeCycle.stop();
 
 		// remove start level service listener
-		this.startLevelServiceLifecycle.stop();
+		this.startLevelServiceLifeCycle.stop();
 
 		// remove package admin service listener
-		this.packageAdminServiceLifecycle.stop();
+		this.packageAdminServiceLifeCycle.stop();
 
 		// unregister services
 		for (ServiceRegistration serviceRegistration : this.serviceRegistrations) {

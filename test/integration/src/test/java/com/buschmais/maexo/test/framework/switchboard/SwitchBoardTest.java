@@ -25,7 +25,6 @@ import javax.management.InstanceNotFoundException;
 import javax.management.MBeanRegistrationException;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;
-import javax.management.MalformedObjectNameException;
 import javax.management.NotCompliantMBeanException;
 import javax.management.NotificationFilter;
 import javax.management.NotificationListener;
@@ -44,8 +43,10 @@ import com.buschmais.maexo.test.common.mbeans.StandardMBean;
  */
 public class SwitchBoardTest extends MaexoTests {
 
+	/** The object name of a test MBean. */
 	private static final String OBJECTNAME_TESTMBEAN = "com.buschmais.maexo:type=StandardMBean";
 
+	/** The object name. */
 	private ObjectName objectName;
 
 	/**
@@ -75,11 +76,11 @@ public class SwitchBoardTest extends MaexoTests {
 	}
 
 	/**
-	 * Registers an mbean server instance as OSGi service.
+	 * Registers an MBean server instance as OSGi service.
 	 * 
 	 * @param mbeanServer
-	 *            the mbean server
-	 * @return the service registration
+	 *            The MBean server.
+	 * @return The service registration.
 	 */
 	private ServiceRegistration registerMBeanServer(MBeanServer mbeanServer) {
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
@@ -90,14 +91,14 @@ public class SwitchBoardTest extends MaexoTests {
 	}
 
 	/**
-	 * First registers the mbean server and afterwards the mbean as services.
+	 * First registers the MBean server and afterwards the MBean as services.
 	 * 
 	 * @param objectName
-	 *            the object name
+	 *            The object name.
 	 * @param mbean
-	 *            the mbean
+	 *            The MBean.
 	 * @param mbeanInterface
-	 *            the mbean interface
+	 *            The MBean interface.
 	 * @throws InstanceNotFoundException
 	 * @throws MBeanRegistrationException
 	 * @throws InstanceAlreadyExistsException
@@ -107,7 +108,7 @@ public class SwitchBoardTest extends MaexoTests {
 			Object mbean, Class<?> mbeanInterface)
 			throws InstanceNotFoundException, MBeanRegistrationException,
 			InstanceAlreadyExistsException, NotCompliantMBeanException {
-		// create mock for mbean server
+		// create mock for MBean server
 		MBeanServer serverMock = EasyMock.createMock(MBeanServer.class);
 		EasyMock.expect(serverMock.registerMBean(mbean, objectName)).andReturn(
 				new ObjectInstance(objectName, mbean.getClass().getName()));
@@ -115,29 +116,29 @@ public class SwitchBoardTest extends MaexoTests {
 
 		// do test
 		EasyMock.replay(serverMock);
-		// register mbean server
+		// register MBean server
 		ServiceRegistration serverServiceRegistration = this
 				.registerMBeanServer(serverMock);
-		// register/unregister mbean
+		// register/unregister MBean
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
 		properties.put(ObjectName.class.getName(), objectName);
 		ServiceRegistration mbeanServiceRegistration = this.bundleContext
 				.registerService(mbeanInterface.getName(), mbean, properties);
 		mbeanServiceRegistration.unregister();
-		// verify mbean server
+		// verify MBean server
 		EasyMock.verify(serverMock);
 		serverServiceRegistration.unregister();
 	}
 
 	/**
-	 * First registers the mbean and afterwards the mbean server as services.
+	 * First registers the MBean and afterwards the MBean server as services.
 	 * 
 	 * @param objectName
-	 *            the object name
+	 *            The object name.
 	 * @param mbean
-	 *            the mbean
+	 *            The MBean.
 	 * @param mbeanInterface
-	 *            the mbean interface
+	 *            The MBean interface.
 	 * @throws InstanceNotFoundException
 	 * @throws MBeanRegistrationException
 	 * @throws InstanceAlreadyExistsException
@@ -147,7 +148,7 @@ public class SwitchBoardTest extends MaexoTests {
 			Object mbean, Class<?> mbeanInterface)
 			throws InstanceNotFoundException, MBeanRegistrationException,
 			InstanceAlreadyExistsException, NotCompliantMBeanException {
-		// create mock for mbean server
+		// create mock for MBean server
 		MBeanServer serverMock = EasyMock.createMock(MBeanServer.class);
 		EasyMock.expect(serverMock.registerMBean(mbean, objectName)).andReturn(
 				new ObjectInstance(objectName, mbean.getClass().getName()));
@@ -155,107 +156,95 @@ public class SwitchBoardTest extends MaexoTests {
 
 		// do test
 		EasyMock.replay(serverMock);
-		// register mbean
+		// register MBean
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
 		properties.put(ObjectName.class.getName(), objectName);
 		ServiceRegistration mbeanServiceRegistration = this.bundleContext
 				.registerService(mbeanInterface.getName(), mbean, properties);
-		// register/unregister mbean server
+		// register/unregister MBean server
 		ServiceRegistration serverServiceRegistration = this
 				.registerMBeanServer(serverMock);
 		serverServiceRegistration.unregister();
-		// verify mbean server
+		// verify MBean server
 		EasyMock.verify(serverMock);
-		// unregister mbean
+		// unregister MBean
 		mbeanServiceRegistration.unregister();
 	}
 
 	/**
-	 * Test mbean server first registration using standard mbeans.
+	 * Test MBean server first registration using standard MBeans.
 	 * 
-	 * @throws MalformedObjectNameException
-	 * @throws NullPointerException
 	 * @throws InstanceNotFoundException
 	 * @throws InstanceAlreadyExistsException
 	 * @throws MBeanRegistrationException
 	 * @throws NotCompliantMBeanException
 	 */
 	public void test_registerStandardMBeanOnExistingServer()
-			throws MalformedObjectNameException, NullPointerException,
-			InstanceNotFoundException, InstanceAlreadyExistsException,
+			throws InstanceNotFoundException, InstanceAlreadyExistsException,
 			MBeanRegistrationException, NotCompliantMBeanException {
-		// create a mbean
+		// create a MBean
 		StandardMBean mbean = EasyMock.createMock(StandardMBean.class);
 		this.test_registerMBeanOnExistingServer(this.objectName, mbean,
 				StandardMBean.class);
 	}
 
 	/**
-	 * Test mbean server first registration using dynamic mbeans.
+	 * Test MBean server first registration using dynamic MBeans.
 	 * 
-	 * @throws MalformedObjectNameException
-	 * @throws NullPointerException
 	 * @throws InstanceNotFoundException
 	 * @throws InstanceAlreadyExistsException
 	 * @throws MBeanRegistrationException
 	 * @throws NotCompliantMBeanException
 	 */
 	public void test_registerDynamicMBeanOnExistingServer()
-			throws MalformedObjectNameException, NullPointerException,
-			InstanceNotFoundException, InstanceAlreadyExistsException,
+			throws InstanceNotFoundException, InstanceAlreadyExistsException,
 			MBeanRegistrationException, NotCompliantMBeanException {
-		// create a mbean
+		// create a MBean
 		DynamicMBean mbean = EasyMock.createMock(DynamicMBean.class);
 		this.test_registerMBeanOnExistingServer(this.objectName, mbean,
 				DynamicMBean.class);
 	}
 
 	/**
-	 * Test mbean first registration using standard mbeans.
+	 * Test MBean first registration using standard MBeans.
 	 * 
-	 * @throws MalformedObjectNameException
-	 * @throws NullPointerException
 	 * @throws InstanceNotFoundException
 	 * @throws InstanceAlreadyExistsException
 	 * @throws MBeanRegistrationException
 	 * @throws NotCompliantMBeanException
 	 */
 	public void test_registerStandardMBeanOnNewServer()
-			throws MalformedObjectNameException, NullPointerException,
-			InstanceAlreadyExistsException, MBeanRegistrationException,
+			throws InstanceAlreadyExistsException, MBeanRegistrationException,
 			NotCompliantMBeanException, InstanceNotFoundException {
-		// create a mbean
+		// create a MBean
 		StandardMBean mbean = EasyMock.createMock(StandardMBean.class);
 		this.test_registerMBeanOnNewServer(this.objectName, mbean,
 				StandardMBean.class);
 	}
 
 	/**
-	 * Test mbean first registration using dynamic mbeans.
+	 * Test MBean first registration using dynamic MBeans.
 	 * 
-	 * @throws MalformedObjectNameException
-	 * @throws NullPointerException
 	 * @throws InstanceNotFoundException
 	 * @throws InstanceAlreadyExistsException
 	 * @throws MBeanRegistrationException
 	 * @throws NotCompliantMBeanException
 	 */
 	public void test_registerDynamicMBeanOnNewServer()
-			throws MalformedObjectNameException, NullPointerException,
-			InstanceAlreadyExistsException, MBeanRegistrationException,
+			throws InstanceAlreadyExistsException, MBeanRegistrationException,
 			NotCompliantMBeanException, InstanceNotFoundException {
-		// create a mbean
+		// create a MBean
 		DynamicMBean mbean = EasyMock.createMock(DynamicMBean.class);
 		this.test_registerMBeanOnNewServer(this.objectName, mbean,
 				DynamicMBean.class);
 	}
 
 	/**
-	 * Registers an mbean server connection instance as OSGi service.
+	 * Registers an MBean server connection instance as OSGi service.
 	 * 
 	 * @param mbeanServer
-	 *            the mbean server connection
-	 * @return the service registration
+	 *            The MBean server connection.
+	 * @return The service registration.
 	 */
 	private ServiceRegistration registerMBeanServerConnection(
 			MBeanServerConnection mbeanServerConnection) {
@@ -267,7 +256,7 @@ public class SwitchBoardTest extends MaexoTests {
 	}
 
 	/**
-	 * First registers the mbean server connection and afterwards registers the
+	 * First registers the MBean server connection and afterwards registers the
 	 * notification listener as services.
 	 */
 	public void test_addNotificationListenerOnExistingServerConnection()
@@ -278,7 +267,7 @@ public class SwitchBoardTest extends MaexoTests {
 		NotificationFilter notificationFilter = EasyMock
 				.createMock(NotificationFilter.class);
 		Object handback = "handbackObject";
-		// create mock for mbean server connection
+		// create mock for MBean server connection
 		MBeanServerConnection serverConnectionMock = EasyMock
 				.createMock(MBeanServerConnection.class);
 		serverConnectionMock.addNotificationListener(objectName,
@@ -288,7 +277,7 @@ public class SwitchBoardTest extends MaexoTests {
 
 		// do test
 		EasyMock.replay(serverConnectionMock);
-		// register mbean server connection
+		// register MBean server connection
 		ServiceRegistration serverConnectionServiceRegistration = this
 				.registerMBeanServerConnection(serverConnectionMock);
 		// register/unregister notification listener
@@ -300,18 +289,18 @@ public class SwitchBoardTest extends MaexoTests {
 				.registerService(NotificationListener.class.getName(),
 						notificationListener, properties);
 		notificationListenerServiceRegistration.unregister();
-		// verify mbean server connection
+		// verify MBean server connection
 		EasyMock.verify(serverConnectionMock);
 		serverConnectionServiceRegistration.unregister();
 	}
 
 	/**
-	 * First registers the notification listener and afterwards the mbean server
+	 * First registers the notification listener and afterwards the MBean server
 	 * connection as services.
 	 */
 	public void test_addNotificationListenerOnNewServerConnection()
 			throws Exception {
-		// create mock for mbean server connection
+		// create mock for MBean server connection
 		MBeanServerConnection serverConnectionMock = EasyMock
 				.createMock(MBeanServerConnection.class);
 		ObjectName objectName = new ObjectName(OBJECTNAME_TESTMBEAN);
@@ -335,11 +324,11 @@ public class SwitchBoardTest extends MaexoTests {
 		ServiceRegistration notificationListenerServiceRegistration = this.bundleContext
 				.registerService(NotificationListener.class.getName(),
 						notificationListener, properties);
-		// register/unregister mbean server connection
+		// register/unregister MBean server connection
 		ServiceRegistration serverServiceRegistration = this
 				.registerMBeanServerConnection(serverConnectionMock);
 		serverServiceRegistration.unregister();
-		// verify mbean server connection
+		// verify MBean server connection
 		EasyMock.verify(serverConnectionMock);
 		// unregister notification listener
 		notificationListenerServiceRegistration.unregister();

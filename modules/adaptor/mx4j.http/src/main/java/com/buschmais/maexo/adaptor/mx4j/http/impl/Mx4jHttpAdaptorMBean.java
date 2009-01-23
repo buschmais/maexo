@@ -24,13 +24,17 @@ import mx4j.tools.adaptor.http.HttpAdaptorMBean;
 public interface Mx4jHttpAdaptorMBean extends HttpAdaptorMBean {
 
 	/**
-	 * @return the startOnRegistration
+	 * Returns true if the adaptor is started on registration.
+	 * 
+	 * @return True if the adaptor is started on registration.
 	 */
 	boolean isStartOnRegistration();
 
 	/**
+	 * Sets value if the adaptor is started on registration.
+	 * 
 	 * @param startOnRegistration
-	 *            the startOnRegistration to set
+	 *            The value.
 	 */
 	void setStartOnRegistration(boolean startOnRegistration);
 

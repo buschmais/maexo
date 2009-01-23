@@ -35,7 +35,7 @@ public final class StartLevelMBeanLifeCycle extends
 	 * Constructor.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context of the exporting bundle
+	 *            The bundle context of the exporting bundle.
 	 */
 	public StartLevelMBeanLifeCycle(BundleContext bundleContext) {
 		super(bundleContext);

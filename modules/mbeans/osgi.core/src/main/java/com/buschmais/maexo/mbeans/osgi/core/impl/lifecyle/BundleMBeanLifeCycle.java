@@ -29,7 +29,7 @@ import com.buschmais.maexo.mbeans.osgi.core.impl.BundleMBeanImpl;
 
 /**
  * This class implements a bundle event listener to manage the life cycle of the
- * associated bundle mbeans.
+ * associated bundle MBeans.
  */
 public final class BundleMBeanLifeCycle extends MBeanLifeCycleSupport implements
 		BundleListener {
@@ -38,17 +38,17 @@ public final class BundleMBeanLifeCycle extends MBeanLifeCycleSupport implements
 	 * Constructor.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context of the exporting bundle
+	 *            The bundle context of the exporting bundle.
 	 */
 	public BundleMBeanLifeCycle(BundleContext bundleContext) {
 		super(bundleContext);
 	}
 
 	/**
-	 * Registers all existing bundles as MBeans. Adds bundleListener.
+	 * Registers all existing bundles as MBeans. Adds bundle listener.
 	 */
 	public void start() {
-		// register all existing bundles as mbeans
+		// register all existing bundles as MBeans
 		for (org.osgi.framework.Bundle bundle : super.getBundleContext()
 				.getBundles()) {
 			this.bundleChanged(new BundleEvent(BundleEvent.INSTALLED, bundle));
@@ -57,12 +57,12 @@ public final class BundleMBeanLifeCycle extends MBeanLifeCycleSupport implements
 	}
 
 	/**
-	 * Removes bundleListener. Unregisters all registered bundle MBeans.
+	 * Removes bundle listener. Unregisters all registered bundle MBeans.
 	 */
 	public void stop() {
 		// remove bundle listener
 		super.getBundleContext().removeBundleListener(this);
-		// unregister all registered bundle mbeans
+		// unregister all registered bundle MBeans
 		for (org.osgi.framework.Bundle bundle : super.getBundleContext()
 				.getBundles()) {
 			this

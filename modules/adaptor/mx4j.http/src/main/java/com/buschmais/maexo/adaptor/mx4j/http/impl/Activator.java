@@ -128,8 +128,8 @@ public final class Activator implements BundleActivator {
 	 * default values if necessary.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context
-	 * @return the configuration properties
+	 *            The bundle context.
+	 * @return The configuration properties.
 	 */
 	private Properties getProperties(BundleContext bundleContext) {
 		Properties configuration = new Properties();

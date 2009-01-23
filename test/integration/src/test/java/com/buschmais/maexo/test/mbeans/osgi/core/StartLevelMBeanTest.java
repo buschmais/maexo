@@ -20,16 +20,21 @@ import com.buschmais.maexo.mbeans.osgi.core.StartLevelMBean;
 import com.buschmais.maexo.test.Constants;
 import com.buschmais.maexo.test.common.mbeans.MaexoMBeanTests;
 
+/**
+ * This class tests <code>StartLevelMBean</code> functionality.
+ * 
+ * @see MaexoTests
+ */
 public class StartLevelMBeanTest extends MaexoMBeanTests implements
 		FrameworkListener {
 
-	/** The TestBundle. */
+	/** The test bundle. */
 	private Bundle bundle;
 
-	/** The StartLevel. */
+	/** The start level. */
 	private StartLevel startLevel;
 
-	/** The StartLevelMBean. */
+	/** The start level MBean. */
 	private StartLevelMBean startLevelMBean;
 
 	/** Queue of events fired by framework. */
@@ -47,6 +52,9 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 				Constants.ARTIFACT_TESTBUNDLE };
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void onSetUp() throws Exception {
 		super.onSetUp();
@@ -57,10 +65,10 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Returns a StartLevel from OSGI container for testing of general
-	 * StartLevel functionality.
+	 * Returns a start level from OSGi container for testing of general start
+	 * level functionality.
 	 * 
-	 * @return the StartLevel
+	 * @return The start level.
 	 */
 	private StartLevel getStartLevel() {
 		ServiceReference serviceReference = this.bundleContext
@@ -71,14 +79,14 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Returns a StartLevelMBean for the given StartLevel.
+	 * Returns a start level MBean for the given start level.
 	 * 
 	 * @param startLevel
-	 *            the StartLevel
-	 * @return the StartLevelMBean
+	 *            The start level.
+	 * @return The start level MBean.
 	 */
 	private StartLevelMBean getStartLevelMBean(StartLevel startLevel) {
-		// get property SERVICE_ID which is needed for ObjectName lookup
+		// get property SERVICE_ID which is needed for object name lookup
 		ServiceRegistration serviceRegistrationStartLevel = bundleContext
 				.registerService(StartLevel.class.getName(), startLevel, null);
 		Object serviceId = serviceRegistrationStartLevel.getReference()
@@ -86,12 +94,12 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 		// put SERVICE_ID property into properties-Map
 		Map<String, Object> properties = new HashMap<String, Object>();
 		properties.put(org.osgi.framework.Constants.SERVICE_ID, serviceId);
-		// get ObjectName for StartLevel
+		// get object name for start level
 		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
 				this.bundleContext);
 		ObjectName objectName = objectNameFactoryHelper.getObjectName(
 				startLevel, StartLevel.class, properties);
-		// get StartLevelMBean
+		// get start level MBean
 		final StartLevelMBean startLevelMBean = (StartLevelMBean) getMBean(
 				objectName, StartLevelMBean.class);
 		return startLevelMBean;
@@ -105,7 +113,7 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>Integer getBundleStartLevel(Long id)</code>.
+	 * Tests method {@link StartLevelMBean#getBundleStartLevel(Long)}.
 	 */
 	public void test_getBundleStartLevelByBundleId() {
 		final Integer bundleStartLevelMBean = startLevelMBean
@@ -115,8 +123,7 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method
-	 * <code>Integer getBundleStartLevel(ObjectName objectName)</code>.
+	 * Tests method{@link StartLevelMBean#getBundleStartLevel(ObjectName)}.
 	 */
 	public void test_getBundleStartLevelByBundleObjectName() {
 		ObjectName bundleObjectName = getObjectName(bundle, Bundle.class);
@@ -127,7 +134,7 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>Integer getInitialBundleStartLevel()</code>.
+	 * Tests method {@link StartLevelMBean#getInitialBundleStartLevel()}.
 	 */
 	public void test_getInitialBundleStartLevel() {
 		final Integer initialBundleStartLevelMBean = startLevelMBean
@@ -139,7 +146,7 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>Integer getStartLevel()</code>.
+	 * Tests method {@link StartLevelMBean#getStartLevel()}.
 	 */
 	public void test_getStartLevel() {
 		final Integer startLevelLevelMBean = startLevelMBean.getStartLevel();
@@ -148,7 +155,7 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>Boolean isBundlePersistentlyStarted(Long id)</code>.
+	 * Tests method {@link StartLevelMBean#isBundlePersistentlyStarted(Long)}.
 	 */
 	public void test_isBundlePersistentlyStartedByBundleId() {
 		final Boolean bundlePersistentlyStartedMBean = startLevelMBean
@@ -161,7 +168,7 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 
 	/**
 	 * Tests method
-	 * <code>Boolean isBundlePersistentlyStarted(ObjectName objectName)</code>.
+	 * {@link StartLevelMBean#isBundlePersistentlyStarted(ObjectName)}.
 	 */
 	public void test_isBundlePersistentlyStartedByBundleObjectName() {
 		ObjectName bundleObjectName = getObjectName(bundle, Bundle.class);
@@ -174,8 +181,7 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method
-	 * <code>void setBundleStartLevel(Long id, Integer startLevel)</code>.
+	 * Tests method {@link StartLevelMBean#setBundleStartLevel(Long, Integer)}.
 	 */
 	public void test_setBundleStartLevelByBundleId() {
 		final long bundleId = bundle.getBundleId();
@@ -196,8 +202,7 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 
 	/**
 	 * Tests method
-	 * <code>void setBundleStartLevel(ObjectName objectName, Integer startLevel)</code>
-	 * .
+	 * {@link StartLevelMBean#setBundleStartLevel(ObjectName, Integer)} .
 	 */
 	public void test_setBundleStartLevelByBundleObjectName() {
 		ObjectName bundleObjectName = getObjectName(bundle, Bundle.class);
@@ -217,7 +222,7 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>void setStartLevel(Integer startLevel)</code>.
+	 * Tests method {@link StartLevelMBean#setStartLevel(Integer)}.
 	 * 
 	 * @throws Exception
 	 *             on error
@@ -241,13 +246,9 @@ public class StartLevelMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method
-	 * <code>void setInitialBundleStartLevel(Integer startLevel)</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link StartLevelMBean#setInitialBundleStartLevel(Integer)}.
 	 */
-	public void test_setInitialBundleStartLevel() throws Exception {
+	public void test_setInitialBundleStartLevel() {
 		// get old initial bundle start level
 		int level = startLevelMBean.getInitialBundleStartLevel().intValue();
 		Integer newLevel = Integer.valueOf(level + 1);

@@ -20,14 +20,14 @@ public final class FrameworkMBeanLifeCycle extends MBeanLifeCycleSupport {
 	 * Constructor.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context of the exporting bundle
+	 *            The bundle context of the exporting bundle.
 	 */
 	public FrameworkMBeanLifeCycle(BundleContext bundleContext) {
 		super(bundleContext);
 	}
 
 	/**
-	 * Registers BundleContext as MBean.
+	 * Registers bundle context as MBean.
 	 */
 	public void start() {
 		final BundleContext bundleContext = getBundleContext();
@@ -42,7 +42,7 @@ public final class FrameworkMBeanLifeCycle extends MBeanLifeCycleSupport {
 	}
 
 	/**
-	 * Unregisters registered BundleContext MBean.
+	 * Unregisters registered bundle context MBean.
 	 */
 	public void stop() {
 		unregisterMBeanService(frameworkMBeanObjectName);

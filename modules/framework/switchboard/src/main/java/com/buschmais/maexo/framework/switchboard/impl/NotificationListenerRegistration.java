@@ -25,7 +25,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
- * Represents an mbean notification listener which is registered with the
+ * Represents an MBean notification listener which is registered with the
  * switchboard.
  * 
  * @see SwitchBoardImpl
@@ -43,29 +43,33 @@ public final class NotificationListenerRegistration {
 	 */
 	private static final String SERVICE_PROPERTY_HANDBACK = "handback";
 
+	/** The object name. */
 	private ObjectName objectName;
 
-	private NotificationListener notificationListener;
+	/** The notification listener. */
+	private final NotificationListener notificationListener;
 
-	private NotificationFilter notificationFilter;
+	/** The notification filter. */
+	private final NotificationFilter notificationFilter;
 
-	private Object handback;
+	/** The handback. */
+	private final Object handback;
 
 	/**
 	 * Constructor.
 	 * <p>
-	 * The constructor extracts the notification listener, the mbean object
+	 * The constructor extracts the notification listener, the MBean object
 	 * name, the notification filter and the handback context object from the
 	 * provided service reference and the bundle context.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context
+	 *            The bundle context.
 	 * @param serviceReference
-	 *            the service reference
+	 *            The service reference.
 	 * @throws MalformedObjectNameException
-	 *             if the object name has a syntax error
+	 *             If the object name has a syntax error.
 	 * @exception NullPointerException
-	 *                if the object name is <code>null</code>
+	 *                If the object name is <code>null</code>.
 	 */
 	public NotificationListenerRegistration(BundleContext bundleContext,
 			ServiceReference serviceReference)
@@ -89,28 +93,36 @@ public final class NotificationListenerRegistration {
 	}
 
 	/**
-	 * @return the objectName
+	 * Returns the object name.
+	 * 
+	 * @return The object name.
 	 */
 	public ObjectName getObjectName() {
 		return objectName;
 	}
 
 	/**
-	 * @return the notificationListener
+	 * Returns the notification listener.
+	 * 
+	 * @return The notification listener.
 	 */
 	public NotificationListener getNotificationListener() {
 		return notificationListener;
 	}
 
 	/**
-	 * @return the notificationFilter
+	 * Returns the notification filter.
+	 * 
+	 * @return The notification filter.
 	 */
 	public NotificationFilter getNotificationFilter() {
 		return notificationFilter;
 	}
 
 	/**
-	 * @return the handback
+	 * Returns the handback.
+	 * 
+	 * @return The handback.
 	 */
 	public Object getHandback() {
 		return handback;

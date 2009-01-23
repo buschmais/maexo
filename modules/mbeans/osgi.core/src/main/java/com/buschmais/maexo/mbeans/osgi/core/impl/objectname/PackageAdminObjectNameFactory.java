@@ -37,12 +37,12 @@ public final class PackageAdminObjectNameFactory implements ObjectNameFactory {
 	 *      #getObjectName(java.lang.Object, java.util.Map)
 	 * 
 	 * @param resource
-	 *            the resource
+	 *            The resource.
 	 * @param properties
-	 *            must contain a {@link Constants.SERVICE_ID} entry
+	 *            Must contain a {@link Constants.SERVICE_ID} entry.
 	 * @exception IllegalArgumentException
-	 *                if the {@link Constants.SERVICE_ID} entry is missing
-	 * @return the object name
+	 *                If the {@link Constants.SERVICE_ID} entry is missing.
+	 * @return The object name.
 	 */
 	public ObjectName getObjectName(Object resource,
 			Map<String, Object> properties) throws IllegalArgumentException {

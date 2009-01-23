@@ -28,11 +28,9 @@ import com.buschmais.maexo.test.MaexoTests;
  */
 public class PlatformServerTest extends MaexoTests {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
-	 * getTestBundlesNames()
+	
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected String[] getTestBundlesNames() {
@@ -40,8 +38,8 @@ public class PlatformServerTest extends MaexoTests {
 	}
 
 	/**
-	 * just see if we can find a MBeanServer instance in the OSGi service
-	 * registry
+	 * Just see if we can find a MBean server instance in the OSGi service
+	 * registry.
 	 */
 	public void test_getPlatformMBeanServer() {
 		ServiceReference serviceReference = super.bundleContext

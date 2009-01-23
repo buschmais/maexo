@@ -28,39 +28,45 @@ import org.osgi.service.packageadmin.PackageAdmin;
 import org.osgi.service.packageadmin.RequiredBundle;
 
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
-import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBean;
+import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants;
 import com.buschmais.maexo.test.Constants;
 import com.buschmais.maexo.test.common.mbeans.MaexoMBeanTests;
 
+/**
+ * This class tests <code>PackageAdminMBean</code> functionality.
+ * 
+ * @see MaexoTests
+ */
 public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		FrameworkListener, NotificationListener {
 
+	/** Name of the test package. */
 	private static final String TESTPACKAGE_NAME = "com.buschmais.maexo.test.testbundle";
 
 	/** Queue of events fired by framework. */
 	private BlockingQueue<Integer> frameworkEvents;
 
-	/** The TestBundle. */
+	/** The test bundle. */
 	private Bundle bundle;
 
-	/** PackageAdmin. */
+	/** The package admin. */
 	private PackageAdmin packageAdmin;
 
-	/** PackageAdminMBean. */
+	/** The package admin MBean. */
 	private PackageAdminMBean packageAdminMBean;
 
-	/** Set containing all triggered BundleEvents. */
+	/** Set containing all triggered bundle events. */
 	private BlockingQueue<Notification> notifications;
 
 	/**
 	 * Compares all exported packages to information stored in
-	 * exportedPackagesMBean.
+	 * <code>exportedPackagesMBean</code>.
 	 * 
 	 * @param exportedPackages
-	 *            exported packages to compare
+	 *            Exported packages to compare.
 	 * @param exportedPackagesMBean
-	 *            MBean holding information about all exported packages
+	 *            MBean holding information about all exported packages.
 	 */
 	private void compareAllExportedPackages(ExportedPackage[] exportedPackages,
 			TabularData exportedPackagesMBean) {
@@ -73,14 +79,14 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Compares all attributes of the exportedPackage to all attributes of
-	 * exportedPackageCompositeData.
+	 * Compares all attributes of the exported package to all attributes of
+	 * exported package composite data.
 	 * 
 	 * @param exportedPackageCompositeData
-	 *            CompositeData containing all information about an
-	 *            ExportedPackage
+	 *            Composite data containing all information about an exported
+	 *            package.
 	 * @param exportedPackage
-	 *            An ExportedPackage
+	 *            An exported package.
 	 */
 	@SuppressWarnings("deprecation")
 	private void compareExportedPackageAttributes(
@@ -92,13 +98,13 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		final String compositeDataName = (String) exportedPackageCompositeData
 				.get(PackageAdminMBeanConstants.EXPORTEDPACKAGE_ITEM_NAME);
 		assertEquals(exportedPackageName, compositeDataName);
-		// compare exporting bundle by objectName
+		// compare exporting bundle by object name
 		final Bundle exportingBundle = exportedPackage.getExportingBundle();
 		final ObjectName compositeDataExportingBundle = (ObjectName) exportedPackageCompositeData
 				.get(PackageAdminMBeanConstants.EXPORTEDPACKAGE_ITEM_EXPORTINGBUNDLE);
 		assertEquals(getObjectName(exportingBundle, Bundle.class),
 				compositeDataExportingBundle);
-		// compare importing bundles by objectName
+		// compare importing bundles by object name
 		final Bundle[] importingBundles = exportedPackage.getImportingBundles();
 		final ObjectName[] compositeDataImportingBundles = (ObjectName[]) exportedPackageCompositeData
 				.get(PackageAdminMBeanConstants.EXPORTEDPACKAGE_ITEM_IMPORTINGBUNDLE);
@@ -128,35 +134,37 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Compares an array of object names to object names of an array of items.
+	 * Compares an array of object names to object names of an array of
+	 * resources.
 	 * 
 	 * @param objectNames
-	 *            array of object names
-	 * @param items
-	 *            array of items
-	 * @param clazz
-	 *            class type of the given items
+	 *            Array of object names.
+	 * @param resources
+	 *            Array of resources.
+	 * @param resourceInterface
+	 *            Interface of the given resources.
 	 */
 	private void compareItemsObjectNames(final ObjectName[] objectNames,
-			Object[] items, Class<?> clazz) {
-		if (null != objectNames && null != items) {
-			assertEquals(items.length, objectNames.length);
-			for (int i = 0; i < items.length; i++) {
-				ObjectName fragmentName = getObjectName(items[i], clazz);
+			Object[] resources, Class<?> resourceInterface) {
+		if (null != objectNames && null != resources) {
+			assertEquals(resources.length, objectNames.length);
+			for (int i = 0; i < resources.length; i++) {
+				ObjectName fragmentName = getObjectName(resources[i],
+						resourceInterface);
 				assertEquals(fragmentName, objectNames[i]);
 			}
 		}
 	}
 
 	/**
-	 * Compares all attributes of the requiredBundle to all attributes of
-	 * requiredBundleCompositeData.
+	 * Compares all attributes of the required bundle to all attributes of
+	 * required bundle composite data.
 	 * 
 	 * @param requiredBundleCompositeData
-	 *            CompositeData containing all information about an
-	 *            RequiredBundle
+	 *            Composite data containing all information about an required
+	 *            bundle.
 	 * @param requiredBundle
-	 *            an RequiredBundle
+	 *            An required bundle.
 	 */
 	private void compareRequiredBundleAttributes(
 			final CompositeData requiredBundleCompositeData,
@@ -205,10 +213,10 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Returns a PackageAdmin from OSGI container for testing of general
-	 * PackageAdmin functionality.
+	 * Returns a package admin from OSGi container for testing of general
+	 * package admin functionality.
 	 * 
-	 * @return the PackageAdmin
+	 * @return The package admin.
 	 */
 	private PackageAdmin getPackageAdmin() {
 		ServiceReference serviceReference = this.bundleContext
@@ -220,11 +228,11 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Returns a PackageAdminMBean for the given PackageAdmin.
+	 * Returns a package admin MBean for the given package admin.
 	 * 
 	 * @param packageAdmin
-	 *            the PackageAdmin
-	 * @return the PackageAdminMBean
+	 *            The package admin.
+	 * @return The package admin MBean.
 	 */
 	private PackageAdminMBean getPackageAdminMBean(PackageAdmin packageAdmin) {
 		// get property SERVICE_ID which is needed for ObjectName lookup
@@ -280,12 +288,12 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Registers notification listener which listens to events fired by
-	 * Switchboard.
+	 * Registers a notification listener which listens to events fired by
+	 * switchboard.
 	 * 
-	 * @return the Listener
+	 * @return The listener.
 	 * @throws MalformedObjectNameException
-	 *             If NotificationListeners ObjectName is incorrect
+	 *             If notification listeners object name is incorrect.
 	 */
 	private ServiceRegistration registerNotificationListener()
 			throws MalformedObjectNameException {
@@ -299,13 +307,9 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method
-	 * <code>getBundles(String symbolicName, String versionRange)</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link PackageAdminMBean#getBundles(String, String)}.
 	 */
-	public void test_getBundles() throws Exception {
+	public void test_getBundles() {
 		// positive test
 		String symbolicName = bundle.getSymbolicName();
 		ObjectName[] packageAdminMBeanObjectNames = packageAdminMBean
@@ -324,7 +328,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>getBundleType(Long id)</code>.
+	 * Tests method {@link PackageAdminMBean#getBundleType(Long)}.
 	 */
 	public void test_getBundleTypeLong() {
 		assertEquals(Integer.valueOf(packageAdmin.getBundleType(bundle)),
@@ -333,19 +337,16 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>getBundleType(ObjectName objectName)</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link PackageAdminMBean#getBundleType(ObjectName)}.
 	 */
-	public void test_getBundleTypeObjectName() throws Exception {
+	public void test_getBundleTypeObjectName() {
 		ObjectName objectName = getObjectName(bundle, Bundle.class);
 		assertEquals(Integer.valueOf(packageAdmin.getBundleType(bundle)),
 				packageAdminMBean.getBundleType(objectName));
 	}
 
 	/**
-	 * Tests method <code>CompositeData getExportedPackage(String name)</code>.
+	 * Tests method {@link PackageAdminMBean#getExportedPackage(String)}.
 	 */
 	public void test_getExportedPackageByString() {
 		// positive test
@@ -362,13 +363,12 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method
-	 * <code>TabularData getExportedPackages(ObjectName objectName)</code>.
+	 * Tests method {@link PackageAdminMBean#getExportedPackages(ObjectName)}.
 	 * 
 	 * @throws Exception
 	 *             on error
 	 */
-	public void test_getExportedPackagesByBundleName() throws Exception {
+	public void test_getExportedPackagesByBundlesObjectName() throws Exception {
 		ObjectName objectName = getObjectName(bundle, Bundle.class);
 		ExportedPackage[] exportedPackages = packageAdmin
 				.getExportedPackages(bundle);
@@ -379,7 +379,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>TabularData getExportedPackages(Long id)</code>.
+	 * Tests method {@link PackageAdminMBean#getExportedPackages(Long)}.
 	 */
 	public void test_getExportedPackagesById() {
 		Long id = Long.valueOf(bundle.getBundleId());
@@ -393,7 +393,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>TabularData getExportedPackages(String name)</code>.
+	 * Tests method {@link PackageAdminMBean#getExportedPackages(String)}.
 	 */
 	public void test_getExportedPackagesByPackageName() {
 		// positive test
@@ -410,12 +410,9 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>ObjectName[] getFragments(Long id)</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link PackageAdminMBean#getFragments(Long)}.
 	 */
-	public void test_getFragmentsByBundleId() throws Exception {
+	public void test_getFragmentsByBundleId() {
 		Long id = Long.valueOf(bundle.getBundleId());
 		final ObjectName[] fragmentObjectNames = packageAdminMBean
 				.getFragments(id);
@@ -425,13 +422,9 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method
-	 * <code>ObjectName[] getFragments(ObjectName objectName)</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link PackageAdminMBean#getFragments(ObjectName)}.
 	 */
-	public void test_getFragmentsByBundleName() throws Exception {
+	public void test_getFragmentsByBundleName() {
 		ObjectName bundleName = getObjectName(bundle, Bundle.class);
 
 		final ObjectName[] fragmentObjectNames = packageAdminMBean
@@ -442,12 +435,9 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>ObjectName[] getHosts(Long id)</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link PackageAdminMBean#getHosts(Long)}.
 	 */
-	public void test_getHostsByBundleId() throws Exception {
+	public void test_getHostsByBundleId() {
 		Long id = Long.valueOf(bundle.getBundleId());
 		final ObjectName[] hostObjectNames = packageAdminMBean.getHosts(id);
 		Bundle[] hosts = packageAdmin.getHosts(bundle);
@@ -456,12 +446,9 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>ObjectName[] getHosts(ObjectName objectName)</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link PackageAdminMBean#getHosts(ObjectName)}.
 	 */
-	public void test_getHostsByBundleName() throws Exception {
+	public void test_getHostsByBundleName() {
 		ObjectName bundleName = getObjectName(bundle, Bundle.class);
 
 		final ObjectName[] hostObjectNames = packageAdminMBean
@@ -471,8 +458,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method
-	 * <code>TabularData getRequiredBundles(String symbolicName)</code>.
+	 * Tests method {@link PackageAdminMBean#getRequiredBundles(String)}.
 	 */
 	public void test_getRequiredBundles() {
 		// positive test for given symbolic name
@@ -509,7 +495,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>void refreshPackages(Long[] ids)</code>.
+	 * Tests method {@link PackageAdminMBean#refreshPackages(Long[])}.
 	 * 
 	 * @throws Exception
 	 *             on error
@@ -525,7 +511,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>void refreshPackages(ObjectName[] objectNames)</code>.
+	 * Tests method {@link PackageAdminMBean#refreshPackages(ObjectName[])}.
 	 * 
 	 * @throws Exception
 	 *             on error
@@ -540,7 +526,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>Boolean resolveBundles(Long[] ids)</code>.
+	 * Tests method {@link PackageAdminMBean#resolveBundles(Long[])}.
 	 * 
 	 * @throws Exception
 	 *             on error
@@ -556,15 +542,15 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Uninstalls test bundle, waits for unregister notifications of mbeans,
-	 * reinstalls bundle, waits for register notifications of mbeans and returns
+	 * Uninstalls test bundle, waits for unregister notifications of MBeans,
+	 * reinstalls bundle, waits for register notifications of MBeans and returns
 	 * new bundle.
 	 * 
-	 * @return the new bundle
+	 * @return The new bundle.
 	 * @throws BundleException
-	 *             if uninstall or install failed
+	 *             If uninstall or install failed.
 	 * @throws InterruptedException
-	 *             if thread was interrupted while waiting for notifications
+	 *             If thread was interrupted while waiting for notifications.
 	 */
 	private Bundle reinstallTestBundle() throws BundleException,
 			InterruptedException {
@@ -589,8 +575,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method
-	 * <code>Boolean resolveBundles(ObjectName[] objectNames)</code>.
+	 * Tests method {@link PackageAdminMBean#resolveBundles(ObjectName[])}.
 	 * 
 	 * @throws Exception
 	 *             on error

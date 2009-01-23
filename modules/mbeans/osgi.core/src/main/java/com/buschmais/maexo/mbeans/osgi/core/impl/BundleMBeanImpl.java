@@ -44,8 +44,8 @@ import org.osgi.framework.ServiceReference;
 
 import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
-import com.buschmais.maexo.mbeans.osgi.core.BundleMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.BundleMBean;
+import com.buschmais.maexo.mbeans.osgi.core.BundleMBeanConstants;
 
 /**
  * Represents an OSGi bundle.
@@ -53,7 +53,7 @@ import com.buschmais.maexo.mbeans.osgi.core.BundleMBean;
 public final class BundleMBeanImpl extends DynamicMBeanSupport implements DynamicMBean,
 		BundleMBean {
 
-	// translation map for bundle states
+	/** Translation map for bundle states. */
 	private static Map<Integer, String> bundleStates;
 
 	static {
@@ -78,15 +78,16 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements Dynami
 	 */
 	private final org.osgi.framework.Bundle bundle;
 
+	/** The object name factory helper. */
 	private final ObjectNameFactoryHelper objectNameFactoryHelper;
 
 	/**
 	 * Constructs the managed bean.
 	 * 
 	 * @param bundleContext
-	 *            the bundleContext
+	 *            The bundle context.
 	 * @param bundle
-	 *            the bundle to manage
+	 *            The bundle to manage.
 	 */
 	public BundleMBeanImpl(BundleContext bundleContext, org.osgi.framework.Bundle bundle) {
 		this.bundle = bundle;
@@ -151,7 +152,7 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements Dynami
 	 * Returns an array of object names representing the services which were
 	 * registered by this bundle.
 	 * 
-	 * @return the array of object names
+	 * @return The array of object names.
 	 */
 	public ObjectName[] getRegisteredServices() {
 		List<ObjectName> registeredServicesList = new LinkedList<ObjectName>();

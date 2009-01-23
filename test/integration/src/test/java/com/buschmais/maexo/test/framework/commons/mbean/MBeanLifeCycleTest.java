@@ -52,11 +52,8 @@ public class MBeanLifeCycleTest extends MaexoTests {
 	 */
 	private static final long TIMEOUT_SERVICETRACKER = 1000;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
-	 * getTestBundlesNames()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected String[] getTestBundlesNames() {
@@ -67,7 +64,7 @@ public class MBeanLifeCycleTest extends MaexoTests {
 	/**
 	 * Test if registering/unregistering an MBean using the class
 	 * {@link MBeanLifecycleSupport} is reflected via an appropriate service in
-	 * the OSGi service registry
+	 * the OSGi service registry.
 	 * 
 	 * @throws MalformedObjectNameException
 	 * @throws NullPointerException

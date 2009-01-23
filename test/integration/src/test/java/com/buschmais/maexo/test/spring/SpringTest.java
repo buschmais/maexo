@@ -53,35 +53,24 @@ public class SpringTest extends MaexoTests {
 
 	private StandardMBeanNotificationListener notificationListener;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
-	 * getTestBundlesNames()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected String[] getTestBundlesNames() {
 		return new String[] { Constants.ARTIFACT_SWITCHBOARD };
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.springframework.test.AbstractSingleSpringContextTests#getConfigLocations
-	 * ()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected String[] getConfigLocations() {
 		return SPRING_CONFIG_LOCATIONS;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.springframework.osgi.test.AbstractOnTheFlyBundleCreatorTests#getManifest
-	 * ()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Manifest getManifest() {
@@ -100,10 +89,8 @@ public class SpringTest extends MaexoTests {
 		return mf;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.test.AbstractSingleSpringContextTests#onSetUp()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void onSetUp() {
@@ -117,6 +104,12 @@ public class SpringTest extends MaexoTests {
 				.getApplicationContext().getBean(BEAN_NOTIFICATIONLISTENER);
 	}
 
+	/**
+	 * Test if MBean registration is done.
+	 * 
+	 * @throws MalformedObjectNameException
+	 * @throws NullPointerException
+	 */
 	public void test_mbeanRegistrationDone()
 			throws MalformedObjectNameException, NullPointerException {
 		assertNotNull(this.standardMBean.isRegistrationDone());
@@ -125,6 +118,11 @@ public class SpringTest extends MaexoTests {
 				.getObjectName());
 	}
 
+	/**
+	 * Test notification listener.
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void test_notificationListener() throws InterruptedException {
 		String newValue = "a new value";
 		this.standardMBean.setAttribute(newValue);

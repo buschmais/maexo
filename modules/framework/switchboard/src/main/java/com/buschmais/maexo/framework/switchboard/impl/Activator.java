@@ -36,21 +36,21 @@ import org.slf4j.LoggerFactory;
 public final class Activator implements BundleActivator {
 
 	/**
-	 * Filter for mbean server connections.
+	 * Filter for MBean server connections.
 	 */
 	private static final String FILTER_MBEANSERVERCONNECTION = String.format(
 			"(|(objectClass=%s)(objectClass=%s))", MBeanServerConnection.class
 					.getName(), MBeanServer.class.getName());
 
 	/**
-	 * Filter for mbean servers.
+	 * Filter for MBean servers.
 	 */
 	private static final String FILTER_MBEANSERVER = String.format(
 			"(objectClass=%s)", MBeanServer.class.getName());
 
 	/**
-	 * Filter for mbeans with either a <code>javax.management.ObjectName</code>
-	 * or objectName attribute.
+	 * Filter for MBeans with either a <code>javax.management.ObjectName</code>
+	 * or object name attribute.
 	 */
 	private static final String FILTER_MBEAN = String.format(
 			"(&(objectClass=*MBean)(|(%s=*)(objectName=*)))", ObjectName.class
@@ -63,16 +63,22 @@ public final class Activator implements BundleActivator {
 			"(&(objectClass=%s)(|(%s=*)(objectName=*)))",
 			NotificationListener.class.getName(), ObjectName.class.getName());
 
+	/** The logger. */
 	private static Logger logger = LoggerFactory.getLogger(Activator.class);
 
+	/** The switch board. */
 	private SwitchBoardImpl switchBoard;
 
+	/** Service listener for MBean server connections. */
 	private ServiceListener mbeanServerConnectionServiceListener;
 
+	/** Service listener for MBean server. */
 	private ServiceListener mbeanServerServiceListener;
 
+	/** Service listener for MBeans. */
 	private ServiceListener mbeanServiceListener;
 
+	/** Service listener for notification listeners. */
 	private ServiceListener notificationListenerServiceListener;
 
 	/**
@@ -96,7 +102,7 @@ public final class Activator implements BundleActivator {
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		logger.info("Stopping maexo switch board");
-		// remove service listener for mbean server connections s and clean up
+		// remove service listener for MBean server connections s and clean up
 		if (this.mbeanServerConnectionServiceListener != null) {
 			bundleContext
 					.removeServiceListener(this.mbeanServerConnectionServiceListener);
@@ -106,7 +112,7 @@ public final class Activator implements BundleActivator {
 			this.switchBoard
 					.unregisterMBeanServerConnection(mbeanServerConnectionRegistration);
 		}
-		// remove service listener for mbean servers and clean up
+		// remove service listener for MBean servers and clean up
 		if (this.mbeanServerServiceListener != null) {
 			bundleContext
 					.removeServiceListener(this.mbeanServerServiceListener);
@@ -115,14 +121,14 @@ public final class Activator implements BundleActivator {
 				.getMBeanServers()) {
 			this.switchBoard.unregisterMBeanServer(mbeanServerRegistration);
 		}
-		// remove service listener for mbeans and clean up
+		// remove service listener for MBeans and clean up
 		if (this.mbeanServiceListener != null) {
 			bundleContext.removeServiceListener(this.mbeanServiceListener);
 		}
 		for (MBeanRegistration mbeanRegistration : this.switchBoard.getMBeans()) {
 			this.switchBoard.unregisterMBean(mbeanRegistration);
 		}
-		// remove service listener for mbeans and clean up
+		// remove service listener for MBeans and clean up
 		if (this.notificationListenerServiceListener != null) {
 			bundleContext
 					.removeServiceListener(this.notificationListenerServiceListener);
@@ -138,10 +144,10 @@ public final class Activator implements BundleActivator {
 	 * Registers a service listener for MBean server connections.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context
-	 * @return the service listener
+	 *            The bundle context.
+	 * @return The service listener.
 	 * @throws InvalidSyntaxException
-	 *             if the registering fails
+	 *             If the registering fails.
 	 */
 	private ServiceListener registerMBeanServerConnectionServiceListener(
 			final BundleContext bundleContext) throws InvalidSyntaxException {
@@ -174,20 +180,20 @@ public final class Activator implements BundleActivator {
 				FILTER_MBEANSERVERCONNECTION);
 		// do initial registration of MBeanServerConnections
 		logger
-				.debug("performing initial registration of mbean server connections");
+				.debug("performing initial registration of MBean server connections");
 		this.registerExistingServices(FILTER_MBEANSERVERCONNECTION,
 				bundleContext, serviceListener);
 		return serviceListener;
 	}
 
 	/**
-	 * Registers a service listener for mbean servers.
+	 * Registers a service listener for MBean servers.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context
-	 * @return the service listener
+	 *            The bundle context.
+	 * @return The service listener.
 	 * @throws InvalidSyntaxException
-	 *             if the registering fails
+	 *             If the registering fails.
 	 */
 	private ServiceListener registerMBeanServerServiceListener(
 			final BundleContext bundleContext) throws InvalidSyntaxException {
@@ -218,20 +224,20 @@ public final class Activator implements BundleActivator {
 		};
 		bundleContext.addServiceListener(serviceListener, FILTER_MBEANSERVER);
 		// do initial registration of MBeanServers
-		logger.debug("performing initial registration of mbean servers");
+		logger.debug("performing initial registration of MBean servers");
 		this.registerExistingServices(FILTER_MBEANSERVER, bundleContext,
 				serviceListener);
 		return serviceListener;
 	}
 
 	/**
-	 * Registers a service listener for mbeans.
+	 * Registers a service listener for MBeans.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context
-	 * @return the service listener
+	 *            The bundle context.
+	 * @return The service listener.
 	 * @throws InvalidSyntaxException
-	 *             if the registering fails
+	 *             If the registering fails.
 	 */
 	private ServiceListener registerMBeanServiceListener(
 			final BundleContext bundleContext) throws InvalidSyntaxException {
@@ -250,7 +256,7 @@ public final class Activator implements BundleActivator {
 				} catch (Exception e) {
 					Activator.logger
 							.warn(
-									"cannot create mbean registration, skipping (un-)registration",
+									"cannot create MBean registration, skipping (un-)registration",
 									e);
 				}
 				if (mbeanRegistration != null) {
@@ -272,7 +278,7 @@ public final class Activator implements BundleActivator {
 		};
 		bundleContext.addServiceListener(serviceListener, FILTER_MBEAN);
 		// do initial registration of MBeans
-		logger.debug("performing initial registration of mbeans");
+		logger.debug("performing initial registration of MBeans");
 		this.registerExistingServices(FILTER_MBEAN, bundleContext,
 				serviceListener);
 		return serviceListener;
@@ -282,10 +288,10 @@ public final class Activator implements BundleActivator {
 	 * Registers a service listener for notification listeners.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context
-	 * @return the service listener
+	 *            The bundle context.
+	 * @return The service listener.
 	 * @throws InvalidSyntaxException
-	 *             if the registering fails
+	 *             If the registering fails.
 	 */
 	private ServiceListener registerNotificationListenerServiceListener(
 			final BundleContext bundleContext) throws InvalidSyntaxException {
@@ -338,13 +344,13 @@ public final class Activator implements BundleActivator {
 	 * Registers already existing services.
 	 * 
 	 * @param filter
-	 *            the filter for the services to match
+	 *            The filter for the services to match.
 	 * @param bundleContext
-	 *            the bundle context
+	 *            The bundle context.
 	 * @param serviceListener
-	 *            the service listener to effect the registration
+	 *            The service listener to effect the registration.
 	 * @throws InvalidSyntaxException
-	 *             if the filter has a syntactical error
+	 *             If the filter has a syntactical error.
 	 */
 	private void registerExistingServices(String filter,
 			BundleContext bundleContext, ServiceListener serviceListener)

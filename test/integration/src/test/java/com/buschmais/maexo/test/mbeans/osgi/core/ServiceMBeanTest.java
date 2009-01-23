@@ -14,12 +14,19 @@ import com.buschmais.maexo.test.Constants;
 import com.buschmais.maexo.test.common.mbeans.MaexoMBeanTests;
 
 /**
- * This class tests ServiceMBeanFunctionality
+ * This class tests <code>ServiceMBean</code> functionality.
  * 
  * @see MaexoTests
  */
 public class ServiceMBeanTest extends MaexoMBeanTests {
 
+	
+	/** The service reference. */
+	private ServiceReference service;
+
+	/** The service MBean. */
+	private ServiceMBean serviceMBean;
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -33,15 +40,19 @@ public class ServiceMBeanTest extends MaexoMBeanTests {
 	}
 
 	/**
-	 * Tests method <code>getBundle()</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * {@inheritDoc}
 	 */
-	public void test_getBundle() throws Exception {
-		ServiceReference service = getTestService();
-		ServiceMBean serviceMBean = getTestServiceMBean(service);
+	@Override
+	protected void onSetUp() throws Exception {
+		super.onSetUp();
+		service = getTestService();
+		serviceMBean = getTestServiceMBean(service);
+	}
 
+	/**
+	 * Tests method {@link ServiceMBean#getBundle()}.
+	 */
+	public void test_getBundle() {
 		ObjectName serviceMBeanObjectName = serviceMBean.getBundle();
 
 		ObjectName serviceObjectName = getObjectName(service.getBundle(),
@@ -51,15 +62,9 @@ public class ServiceMBeanTest extends MaexoMBeanTests {
 	}
 
 	/**
-	 * Tests method <code>getUsingBundles()</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link ServiceMBean#getUsingBundles()}.
 	 */
-	public void test_getUsingBundles() throws Exception {
-		ServiceReference service = getTestService();
-		ServiceMBean serviceMBean = getTestServiceMBean(service);
-
+	public void test_getUsingBundles() {
 		ObjectName[] serviceMBeanUsingBundlesObjectNames = serviceMBean
 				.getUsingBundles();
 
@@ -74,15 +79,9 @@ public class ServiceMBeanTest extends MaexoMBeanTests {
 	}
 
 	/**
-	 * Tests method <code>getObjectClass()</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link ServiceMBean#getObjectClass()}.
 	 */
-	public void test_getObjectClass() throws Exception {
-		ServiceReference service = getTestService();
-		ServiceMBean serviceMBean = getTestServiceMBean(service);
-
+	public void test_getObjectClass() {
 		// get ObjectClass as String[]
 		String[] serviceMBeanObjectClass = serviceMBean.getObjectClass();
 		Object serviceObjectClass = service
@@ -97,16 +96,11 @@ public class ServiceMBeanTest extends MaexoMBeanTests {
 	}
 
 	/**
-	 * Tests simple ServiceMBean attributes (
+	 * Tests simple <code>ServiceMBean</code> attributes (
 	 * <code>getId(), getRanking(), getPid(), getDescription(), getVendor()</code>
 	 * ).
-	 * 
-	 * @throws Exception
-	 *             on error
 	 */
 	public void test_simpleAttributes() throws Exception {
-		ServiceReference service = getTestService();
-		ServiceMBean serviceMBean = getTestServiceMBean(service);
 		assertEquals(service
 				.getProperty(org.osgi.framework.Constants.SERVICE_ID),
 				serviceMBean.getId());
@@ -125,14 +119,9 @@ public class ServiceMBeanTest extends MaexoMBeanTests {
 	}
 
 	/**
-	 * Tests method <code>getProperties()</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link ServiceMBean#getProperties()}.
 	 */
-	public void test_getProperties() throws Exception {
-		ServiceReference service = getTestService();
-		ServiceMBean serviceMBean = getTestServiceMBean(service);
+	public void test_getProperties() {
 		// compare properties from ServiceReference and ServiceMBean
 		TabularData properties = serviceMBean.getProperties();
 		String[] keys = service.getPropertyKeys();
@@ -156,12 +145,12 @@ public class ServiceMBeanTest extends MaexoMBeanTests {
 	}
 
 	/**
-	 * Returns a TestService from OSGI container for testing of general Service
+	 * Returns a test service from OSGi container for testing of general service
 	 * functionality.
 	 * 
-	 * @return the ServiceReference for the Service
+	 * @return The service reference for the service.
 	 * @throws InvalidSyntaxException
-	 *             on error
+	 *             On error.
 	 */
 	private ServiceReference getTestService() throws Exception {
 		Bundle bundle = getTestBundle();
@@ -172,11 +161,11 @@ public class ServiceMBeanTest extends MaexoMBeanTests {
 	}
 
 	/**
-	 * Returns a ServiceMBean for the given ServiceReference.
+	 * Returns a service MBean for the given service reference.
 	 * 
 	 * @param service
-	 *            the ServiceReference
-	 * @return the ServiceMBean
+	 *            The service reference.
+	 * @return The service MBean.
 	 */
 	private ServiceMBean getTestServiceMBean(ServiceReference service) {
 		// get ObjectName for ServiceReference

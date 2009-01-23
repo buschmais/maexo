@@ -32,8 +32,10 @@ import com.buschmais.maexo.mbeans.osgi.core.BundleMBeanConstants;
  */
 public final class BundleObjectNameFactory implements ObjectNameFactory {
 
+	/** Default bundle symbolic name "unknown". */
 	private static final String DEFAULT_BUNDLE_SYMBOLICNAME = "unknown";
 
+	/** Default bundle version (empty version). */
 	private static final String DEFAULT_BUNDLE_VERSION = Version.emptyVersion
 			.toString();
 

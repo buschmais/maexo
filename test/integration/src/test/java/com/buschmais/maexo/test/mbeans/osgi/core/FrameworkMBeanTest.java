@@ -26,19 +26,24 @@ import com.buschmais.maexo.test.Constants;
 import com.buschmais.maexo.test.common.mbeans.MaexoMBeanTests;
 import com.buschmais.maexo.test.testbundle.TestInterface;
 
+/**
+ * This class tests <code>FrameworkMBean</code> functionality.
+ * 
+ * @see MaexoTests
+ */
 public class FrameworkMBeanTest extends MaexoMBeanTests implements
 		NotificationListener {
 
-	/** FrameworkMBean. */
+	/** Framework MBean. */
 	private FrameworkMBean frameworkMBean;
 
-	/** The TestBundle. */
+	/** The test bundle. */
 	private Bundle bundle;
 
 	/** Name of the test service. */
 	private final Class<TestInterface> testService = TestInterface.class;
 
-	/** Set containing all triggered BundleEvents. */
+	/** Set containing all triggered bundle events. */
 	private BlockingQueue<Notification> notifications;
 
 	/**
@@ -72,9 +77,9 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Returns a FrameworkMBean for the given BundleContext.
+	 * Returns a <code>FrameworkMBean</code>.
 	 * 
-	 * @return the getFrameworkMBean
+	 * @return The <code>FrameworkMBean</code>.
 	 */
 	private FrameworkMBean getFrameworkMBean() {
 		// get property SERVICE_ID which is needed for ObjectName lookup
@@ -97,7 +102,7 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests simple FrameworkMBean attributes (
+	 * Tests simple framework MBean attributes (
 	 * <code>getBootDelegation(), getExecutionEnvironment(), getLanguage(), getOsName(), getOsVersion(), getProcessor(), 
 	 * getSystemPackages(), getVendor(), getVersion()</code> ).
 	 */
@@ -136,7 +141,7 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>ObjectName[] getServices()</code>.
+	 * Tests method {@link FrameworkMBean#getServices()}.
 	 * 
 	 * @throws Exception
 	 *             on error
@@ -155,16 +160,12 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method
-	 * <code>ObjectName[] getServices(String objectClass, String filter)</code>.
-	 * 
-	 * @throws Exception
-	 *             on error
+	 * Tests method {@link FrameworkMBean#getServices(String, String)}.
 	 */
-	public void test_getServicesForObjectClassAndFilter() throws Exception {
+	public void test_getServicesForObjectClassAndFilter() {
 		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
 				this.bundleContext);
-
+		// only one test service should be in use
 		ServiceReference[] servicesReferences = bundle.getServicesInUse();
 
 		final ObjectName[] servicesMBean = frameworkMBean.getServices(
@@ -177,7 +178,7 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method <code>ObjectName installBundle(String location)</code>.
+	 * Tests method {@link FrameworkMBean#installBundle(String)}.
 	 * 
 	 * @throws Exception
 	 *             on error
@@ -187,7 +188,7 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 		ObjectName oldBundleObjectName = getObjectName(bundle, Bundle.class);
 		Long bundleId = Long.valueOf(bundle.getBundleId());
 		String location = bundle.getLocation();
-		// uninstall bundle an registered services
+		// uninstall bundle and registered services
 		final ServiceReference[] servicesInUse = bundle.getServicesInUse();
 		int servicesToUnregister = servicesInUse != null ? servicesInUse.length
 				: 0;
@@ -214,8 +215,7 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 	}
 
 	/**
-	 * Tests method
-	 * <code>ObjectName installBundle(String location, byte[] input)</code>.
+	 * Tests method {@link FrameworkMBean#installBundle(String, byte[])}.
 	 * 
 	 * @throws Exception
 	 *             on error
@@ -245,7 +245,7 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 		assertTrue(notification instanceof MBeanServerNotification);
 		assertEquals(MBeanServerNotification.REGISTRATION_NOTIFICATION,
 				notification.getType());
-		// get new bundle mbean
+		// get new bundle MBean
 		final BundleMBean bundleMBean = (BundleMBean) getMBean(
 				newBundleObjectName, BundleMBean.class);
 		// assert new bundle has same object name but different id
@@ -254,14 +254,13 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 		notificationListenerServiceRegistration.unregister();
 	}
 
-
 	/**
 	 * Registers notification listener which listens to events fired by
 	 * Switchboard.
 	 * 
-	 * @return the Listener
+	 * @return The listener.
 	 * @throws MalformedObjectNameException
-	 *             If NotificationListeners ObjectName is incorrect
+	 *             If notification listeners object name is incorrect.
 	 */
 	private ServiceRegistration registerNotificationListener()
 			throws MalformedObjectNameException {

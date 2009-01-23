@@ -22,15 +22,12 @@ import com.buschmais.maexo.test.MaexoTests;
 
 public class MaexoMBeanTests extends MaexoTests {
 	
-	/** Symbolic name for the testbundle. */
+	/** Symbolic name for the test bundle. */
 	private static final String TESTBUNDLE_SYMBOLIC_NAME = "maexo-test.testbundle";
 
-	/** Object name for the Switchboard notification listener. */
+	/** Object name for the switchboard notification listener. */
 	protected final String SWITCHBOARDNOTIFICATIONLISTENER_OBJECTNAME = "JMImplementation:type=MBeanServerDelegate";
 	
-	/** Timeout for sleeping threads. */
-	protected final int timeout = 5000;
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -40,7 +37,7 @@ public class MaexoMBeanTests extends MaexoTests {
 	}
 
 	/**
-	 * Returns a TestBundle from OSGI container for testing of general Bundle
+	 * Returns a test bundle from OSGI container for testing of general bundle
 	 * functionality.
 	 * 
 	 * @return The bundle.
@@ -79,8 +76,8 @@ public class MaexoMBeanTests extends MaexoTests {
 	}
 
 	/**
-	 * Returns an MBean registered on MBeanServer under given object name and
-	 * class type.
+	 * Returns an MBean registered on MBean server under given object name and
+	 * interface.
 	 * 
 	 * @param objectName
 	 *            Object name of the MBean.

@@ -30,19 +30,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides transparent couplings between mbeans, mbean servers, mbean server
+ * Provides transparent couplings between MBeans, MBean servers, MBean server
  * connections and the OSGi service registry.
  * <p>
- * The main idea is to register mbeans not to the mbean server directly but to
+ * The main idea is to register MBeans not to the MBean server directly but to
  * the OSGi service registry as an OSGi service. The <strong>MAEXO switch
- * board</strong> will take care of that all mbean services will be registered
- * (and transparently unregistered) to all known mbean servers.
+ * board</strong> will take care of that all MBean services will be registered
+ * (and transparently unregistered) to all known MBean servers.
  * <p>
  * Established use cases:
  * <ul>
- * <li>Export mbeans, that are found or registered in the OSGi service registry,
- * to all known mbean servers</li>
- * <li>Unregister any mbeans, if the providing bundle is stopped.</li>
+ * <li>Export MBeans, that are found or registered in the OSGi service registry,
+ * to all known MBean servers</li>
+ * <li>Unregister any MBeans, if the providing bundle is stopped.</li>
  * <li></li>
  * <li>TODO@DM: Please complete this list</li>
  * </ul>
@@ -53,36 +53,36 @@ public final class SwitchBoardImpl {
 	private static Logger logger = LoggerFactory
 			.getLogger(SwitchBoardImpl.class);
 
-	private Set<MBeanServerConnectionRegistration> mbeanServerConnections = new HashSet<MBeanServerConnectionRegistration>();
+	private final Set<MBeanServerConnectionRegistration> mbeanServerConnections = new HashSet<MBeanServerConnectionRegistration>();
 
-	private Set<MBeanServerRegistration> mbeanServers = new HashSet<MBeanServerRegistration>();
+	private final Set<MBeanServerRegistration> mbeanServers = new HashSet<MBeanServerRegistration>();
 
-	private Set<MBeanRegistration> mbeans = new HashSet<MBeanRegistration>();
+	private final Set<MBeanRegistration> mbeans = new HashSet<MBeanRegistration>();
 
-	private Set<NotificationListenerRegistration> notificationListeners = new HashSet<NotificationListenerRegistration>();
+	private final Set<NotificationListenerRegistration> notificationListeners = new HashSet<NotificationListenerRegistration>();
 
 	/**
-	 * Returns the currently registered mbeans.
+	 * Returns the currently registered MBeans.
 	 * 
-	 * @return the map of mbeans registrations
+	 * @return The map of MBean registrations.
 	 */
 	public Set<MBeanRegistration> getMBeans() {
 		return Collections.unmodifiableSet(this.mbeans);
 	}
 
 	/**
-	 * Returns the registered mbean server connections.
+	 * Returns the registered MBean server connections.
 	 * 
-	 * @return the mbean server connection registrations
+	 * @return The MBean server connection registrations.
 	 */
 	public Set<MBeanServerConnectionRegistration> getMBeanServerConnections() {
 		return Collections.unmodifiableSet(this.mbeanServerConnections);
 	}
 
 	/**
-	 * Returns the registered mbean servers.
+	 * Returns the registered MBean servers.
 	 * 
-	 * @return the mbean server registrations
+	 * @return The MBean server registrations.
 	 */
 	public Set<MBeanServerRegistration> getMBeanServers() {
 		return Collections.unmodifiableSet(this.mbeanServers);
@@ -91,7 +91,7 @@ public final class SwitchBoardImpl {
 	/**
 	 * Returns the currently registered notification listeners.
 	 * 
-	 * @return the set of notification listener registrations
+	 * @return The set of notification listener registrations.
 	 */
 	public Set<NotificationListenerRegistration> getNotificationListeners() {
 		return Collections.unmodifiableSet(this.notificationListeners);
@@ -100,11 +100,11 @@ public final class SwitchBoardImpl {
 	/**
 	 * Adds a notification listener.
 	 * <p>
-	 * The notification listener is registered on all known mbean server
+	 * The notification listener is registered on all known MBean server
 	 * connections.
 	 * 
 	 * @param notificationListenerRegistration
-	 *            the notification listener registration
+	 *            The notification listener registration.
 	 */
 	public synchronized void addNotificationListener(
 			NotificationListenerRegistration notificationListenerRegistration) {
@@ -114,7 +114,7 @@ public final class SwitchBoardImpl {
 				.contains(notificationListenerRegistration)) {
 			logger
 					.debug(
-							"adding notification listener {} on all known mbean server connections",
+							"adding notification listener {} on all known MBean server connections",
 							notificationListenerRegistration);
 			this.notificationListeners.add(notificationListenerRegistration);
 			for (MBeanServerConnectionRegistration mbeanServerConnectionRegistration : this.mbeanServerConnections) {
@@ -134,23 +134,23 @@ public final class SwitchBoardImpl {
 	}
 
 	/**
-	 * Registers an mbean server connection instance.
+	 * Registers an MBean server connection instance.
 	 * <p>
-	 * The mbean server connection is associated with all known notification
+	 * The MBean server connection is associated with all known notification
 	 * listeners.
 	 * 
 	 * @param mbeanServerConnectionRegistration
-	 *            the mbean server connection registration
+	 *            The MBean server connection registration.
 	 */
 	public synchronized void registerMBeanServerConnection(
 			MBeanServerConnectionRegistration mbeanServerConnectionRegistration) {
-		logger.debug("registering mbean server connection {}",
+		logger.debug("registering MBean server connection {}",
 				mbeanServerConnectionRegistration);
 		if (!this.mbeanServerConnections
 				.contains(mbeanServerConnectionRegistration)) {
 			logger
 					.debug(
-							"associating mbean server connection {} with all known notification listeners",
+							"associating MBean server connection {} with all known notification listeners",
 							mbeanServerConnectionRegistration);
 			this.mbeanServerConnections.add(mbeanServerConnectionRegistration);
 			for (NotificationListenerRegistration notificationListenerRegistration : this.notificationListeners) {
@@ -164,24 +164,24 @@ public final class SwitchBoardImpl {
 						notificationListenerRegistration.getHandback());
 			}
 		} else {
-			logger.warn("mbean server connection {} is already registered",
+			logger.warn("MBean server connection {} is already registered",
 					mbeanServerConnectionRegistration);
 		}
 	}
 
 	/**
-	 * Adds a notification listener on an mbean server connection.
+	 * Adds a notification listener on an MBean server connection.
 	 * 
 	 * @param mbeanServerConnection
-	 *            the mbean server connection
+	 *            The MBean server connection.
 	 * @param objectName
-	 *            the object name
+	 *            The object name.
 	 * @param notificationListener
-	 *            the notification listener
+	 *            The notification listener.
 	 * @param notificationFilter
-	 *            the notification filter
+	 *            The notification filter.
 	 * @param handback
-	 *            the handback context object
+	 *            The handback context object.
 	 */
 	private void addNotificationListener(
 			MBeanServerConnection mbeanServerConnection, ObjectName objectName,
@@ -198,24 +198,24 @@ public final class SwitchBoardImpl {
 					.warn(
 							String
 									.format(
-											"exception while adding notification listener %s on mbean server connection %s",
+											"exception while adding notification listener %s on MBean server connection %s",
 											notificationListener,
 											mbeanServerConnection), e);
 		}
 	}
 
 	/**
-	 * Registers an mbean.
+	 * Registers an MBean.
 	 * <p>
-	 * The mbean is registered on all known mbean servers.
+	 * The MBean is registered on all known MBean servers.
 	 * 
 	 * @param mbeanRegistration
-	 *            the mbean registration
+	 *            The MBean registration.
 	 */
 	public synchronized void registerMBean(MBeanRegistration mbeanRegistration) {
-		logger.debug("registering mbean {}", mbeanRegistration);
+		logger.debug("registering MBean {}", mbeanRegistration);
 		if (!this.mbeans.contains(mbeanRegistration)) {
-			logger.debug("registering mbean {} on all known mbean servers",
+			logger.debug("registering MBean {} on all known MBean servers",
 					mbeanRegistration);
 			this.mbeans.add(mbeanRegistration);
 			for (MBeanServerRegistration mbeanServerRegistration : this.mbeanServers) {
@@ -224,23 +224,23 @@ public final class SwitchBoardImpl {
 								.getMbean());
 			}
 		} else {
-			logger.warn("mbean {} is already registered", mbeanRegistration);
+			logger.warn("MBean {} is already registered", mbeanRegistration);
 		}
 	}
 
 	/**
-	 * Registers a mbean server instance.
+	 * Registers a MBean server instance.
 	 * <p>
-	 * The mbean server instance is associated with all known mbeans.
+	 * The MBean server instance is associated with all known MBeans.
 	 * 
 	 * @param mbeanServerRegistration
-	 *            the mbean server registration
+	 *            The MBean server registration.
 	 */
 	public synchronized void registerMBeanServer(
 			MBeanServerRegistration mbeanServerRegistration) {
-		logger.debug("registering mbean server {}", mbeanServerRegistration);
+		logger.debug("registering MBean server {}", mbeanServerRegistration);
 		if (!this.mbeanServers.contains(mbeanServerRegistration)) {
-			logger.debug("associating mbean server {} with all known mbeans",
+			logger.debug("associating MBean server {} with all known MBeans",
 					mbeanServerRegistration);
 			this.mbeanServers.add(mbeanServerRegistration);
 			for (MBeanRegistration mbeanRegistration : this.mbeans) {
@@ -249,24 +249,24 @@ public final class SwitchBoardImpl {
 								.getMbean());
 			}
 		} else {
-			logger.warn("mbean server {} is already registered",
+			logger.warn("MBean server {} is already registered",
 					mbeanServerRegistration);
 		}
 	}
 
 	/**
-	 * Registers an mbean on a single mbean server.
+	 * Registers an MBean on a single MBean server.
 	 * 
 	 * @param mbeanServer
-	 *            the mbean server
+	 *            The MBean server.
 	 * @param objectName
-	 *            the object name
+	 *            The object name.
 	 * @param mbean
-	 *            the mbean
+	 *            The MBean.
 	 */
 	private void registerMBean(MBeanServer mbeanServer, ObjectName objectName,
 			Object mbean) {
-		logger.trace("registering mbean {} on mbean server {}", objectName,
+		logger.trace("registering MBean {} on MBean server {}", objectName,
 				mbeanServer);
 		try {
 			mbeanServer.registerMBean(mbean, objectName);
@@ -275,7 +275,7 @@ public final class SwitchBoardImpl {
 					.warn(
 							String
 									.format(
-											"caught exception while registering mbean %s on mbean server %s",
+											"caught exception while registering MBean %s on MBean server %s",
 											objectName, mbeanServer), e);
 		}
 	}
@@ -283,11 +283,11 @@ public final class SwitchBoardImpl {
 	/**
 	 * Removes a notification listener.
 	 * <p>
-	 * The notification listener is removed from all known mbean server
+	 * The notification listener is removed from all known MBean server
 	 * connections.
 	 * 
 	 * @param notificationListenerRegistration
-	 *            the notification listener registration
+	 *            The notification listener registration.
 	 * 
 	 */
 	public synchronized void removeNotificationListener(
@@ -297,7 +297,7 @@ public final class SwitchBoardImpl {
 		if (this.notificationListeners.remove(notificationListenerRegistration)) {
 			logger
 					.debug(
-							"removing notification listener {} from all known mbean server connections",
+							"removing notification listener {} from all known MBean server connections",
 							notificationListenerRegistration);
 			for (MBeanServerConnectionRegistration mbeanServerConnectionRegistration : this.mbeanServerConnections) {
 				this.removeNotificationListener(
@@ -317,23 +317,23 @@ public final class SwitchBoardImpl {
 	}
 
 	/**
-	 * Unregisters an mbean server connection instance.
+	 * Unregisters an MBean server connection instance.
 	 * <p>
-	 * The mbean server connection is disassociated with all known notification
+	 * The MBean server connection is disassociated with all known notification
 	 * listeners.
 	 * 
 	 * @param mbeanServerConnectionRegistration
-	 *            the mbean server connection registration
+	 *            The MBean server connection registration.
 	 */
 	public synchronized void unregisterMBeanServerConnection(
 			MBeanServerConnectionRegistration mbeanServerConnectionRegistration) {
-		logger.debug("unregistering mbean server connection {}",
+		logger.debug("unregistering MBean server connection {}",
 				mbeanServerConnectionRegistration);
 		if (this.mbeanServerConnections
 				.remove(mbeanServerConnectionRegistration)) {
 			logger
 					.debug(
-							"disassociating mbean server connection {} with all known notification listeners",
+							"disassociating MBean server connection {} with all known notification listeners",
 							mbeanServerConnectionRegistration);
 			for (NotificationListenerRegistration notificationListenerRegistration : this.notificationListeners) {
 				this.removeNotificationListener(
@@ -348,24 +348,24 @@ public final class SwitchBoardImpl {
 			}
 		} else {
 			logger.warn(
-					"mbean server connection {} is not registered, skipping",
+					"MBean server connection {} is not registered, skipping",
 					mbeanServerConnectionRegistration);
 		}
 	}
 
 	/**
-	 * Removes a notification listener from a single mbean server connection.
+	 * Removes a notification listener from a single MBean server connection.
 	 * 
 	 * @param mbeanServerConnection
-	 *            the mbean server connection
+	 *            The MBean server connection.
 	 * @param objectName
-	 *            the object name
+	 *            The object name.
 	 * @param notificationListener
-	 *            the notification listener
+	 *            The notification listener.
 	 * @param notificationFilter
-	 *            the notification filter
+	 *            The notification filter.
 	 * @param handback
-	 *            the handback context object
+	 *            The handback context object.
 	 */
 	private void removeNotificationListener(
 			MBeanServerConnection mbeanServerConnection, ObjectName objectName,
@@ -374,7 +374,7 @@ public final class SwitchBoardImpl {
 		try {
 			logger
 					.trace(
-							"removing notification listener {} from mbean server connection {}",
+							"removing notification listener {} from MBean server connection {}",
 							notificationListener, mbeanServerConnection);
 			mbeanServerConnection.removeNotificationListener(objectName,
 					notificationListener, notificationFilter, handback);
@@ -383,70 +383,70 @@ public final class SwitchBoardImpl {
 					.warn(
 							String
 									.format(
-											"caught exception while removing notification listener %s from mbean server conncetion %s",
+											"caught exception while removing notification listener %s from MBean server conncetion %s",
 											notificationListener,
 											mbeanServerConnection), e);
 		}
 	}
 
 	/**
-	 * Unregisters an mbean.
+	 * Unregisters an MBean.
 	 * <p>
-	 * The mbean is unregistered from all known mbean servers.
+	 * The MBean is unregistered from all known MBean servers.
 	 * 
 	 * @param mbeanRegistration
-	 *            the mbean registration
+	 *            The MBean registration.
 	 */
 	public synchronized void unregisterMBean(MBeanRegistration mbeanRegistration) {
-		logger.debug("unregistering mbean {}", mbeanRegistration);
+		logger.debug("unregistering MBean {}", mbeanRegistration);
 		if (this.mbeans.remove(mbeanRegistration)) {
-			logger.debug("unregistering mbean {} from all known mbean servers",
+			logger.debug("unregistering MBean {} from all known MBean servers",
 					mbeanRegistration);
 			for (MBeanServerRegistration mbeanServerRegistration : this.mbeanServers) {
 				this.unregisterMBean(mbeanServerRegistration.getMBeanServer(),
 						mbeanRegistration.getObjectName());
 			}
 		} else {
-			logger.warn("mbean {} is not registered", mbeanRegistration);
+			logger.warn("MBean {} is not registered", mbeanRegistration);
 		}
 	}
 
 	/**
-	 * Unregisters an mbean server instance.
+	 * Unregisters an MBean server instance.
 	 * <p>
-	 * The mbean server instance is disassociated with all known mbeans.
+	 * The MBean server instance is disassociated with all known MBeans.
 	 * 
 	 * @param mbeanServerRegistration
-	 *            the mbean server registration
+	 *            The MBean server registration.
 	 */
 	public synchronized void unregisterMBeanServer(
 			MBeanServerRegistration mbeanServerRegistration) {
-		logger.debug("unregistering mbean server {}", mbeanServerRegistration);
+		logger.debug("unregistering MBean server {}", mbeanServerRegistration);
 		if (this.mbeanServers.remove(mbeanServerRegistration)) {
 			logger.debug(
-					"disassociating mbean server {} with all known mbeans",
+					"disassociating MBean server {} with all known MBeans",
 					mbeanServerRegistration);
 			for (MBeanRegistration mbeanRegistration : this.mbeans) {
 				this.unregisterMBean(mbeanServerRegistration.getMBeanServer(),
 						mbeanRegistration.getObjectName());
 			}
 		} else {
-			logger.warn("mbean server {} is not registered, skipping",
+			logger.warn("MBean server {} is not registered, skipping",
 					mbeanServerRegistration);
 		}
 	}
 
 	/**
-	 * Unregisters an mbean from a single mbean server.
+	 * Unregisters an MBean from a single MBean server.
 	 * 
 	 * @param mbeanServer
-	 *            the mbean server
+	 *            The MBean server.
 	 * @param objectName
-	 *            the name
+	 *            The object name.
 	 */
 	private void unregisterMBean(MBeanServer mbeanServer, ObjectName objectName) {
 		try {
-			logger.trace("unregistering mbean {} from server {}", objectName,
+			logger.trace("unregistering MBean {} from server {}", objectName,
 					mbeanServer);
 			mbeanServer.unregisterMBean(objectName);
 		} catch (Exception e) {
@@ -454,9 +454,8 @@ public final class SwitchBoardImpl {
 					.warn(
 							String
 									.format(
-											"caught exception while unregistering mbean %s from mbean server %s",
+											"caught exception while unregistering MBean %s from MBean server %s",
 											objectName, mbeanServer), e);
 		}
 	}
-
 }

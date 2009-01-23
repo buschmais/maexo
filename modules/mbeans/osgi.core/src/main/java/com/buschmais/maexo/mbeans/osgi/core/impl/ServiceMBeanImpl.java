@@ -40,8 +40,8 @@ import org.osgi.framework.ServiceReference;
 
 import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
-import com.buschmais.maexo.mbeans.osgi.core.ServiceMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.ServiceMBean;
+import com.buschmais.maexo.mbeans.osgi.core.ServiceMBeanConstants;
 
 /**
  * Represents a registered service (wrapping a service reference).
@@ -60,12 +60,12 @@ public final class ServiceMBeanImpl extends DynamicMBeanSupport implements Dynam
 	private final ObjectNameFactoryHelper objectNameFactoryHelper;
 
 	/**
-	 * Constructs the service mbean.
+	 * Constructs the service MBean.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context
+	 *            The bundle context.
 	 * @param serviceReference
-	 *            the service reference
+	 *            The service reference.
 	 */
 	public ServiceMBeanImpl(BundleContext bundleContext,
 			ServiceReference serviceReference) {

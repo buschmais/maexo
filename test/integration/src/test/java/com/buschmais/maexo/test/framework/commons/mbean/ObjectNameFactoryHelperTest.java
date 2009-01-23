@@ -16,7 +16,6 @@
  */
 package com.buschmais.maexo.test.framework.commons.mbean;
 
-import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 import org.easymock.EasyMock;
@@ -48,10 +47,9 @@ public class ObjectNameFactoryHelperTest extends MaexoTests {
 	private ObjectName objectNameA;
 	private ObjectName objectNameB;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.test.AbstractSingleSpringContextTests#onSetUp()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void onSetUp() throws Exception {
@@ -75,11 +73,8 @@ public class ObjectNameFactoryHelperTest extends MaexoTests {
 		this.objectNameB = new ObjectName(OBJECTNAME_RESOURCE_B);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.springframework.test.AbstractSingleSpringContextTests#onTearDown()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected void onTearDown() throws Exception {
@@ -88,11 +83,8 @@ public class ObjectNameFactoryHelperTest extends MaexoTests {
 		super.onTearDown();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
-	 * getTestBundlesNames()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected String[] getTestBundlesNames() {
@@ -100,8 +92,10 @@ public class ObjectNameFactoryHelperTest extends MaexoTests {
 				Constants.ARTIFACT_EASYMOCK };
 	}
 
-	public void test_getObjectNameFromInterface()
-			throws MalformedObjectNameException, NullPointerException {
+	/**
+	 * Tests method {@link ObjectNameFactory#getObjectName(Object, Map)}.
+	 */
+	public void test_getObjectNameFromInterface() {
 		// expect calls to object name factories
 		EasyMock.expect(
 				this.objectNameFactoryA.getObjectName(this.resourceA, null))

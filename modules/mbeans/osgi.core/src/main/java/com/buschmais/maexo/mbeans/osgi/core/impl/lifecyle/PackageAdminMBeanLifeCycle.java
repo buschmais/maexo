@@ -26,7 +26,7 @@ import com.buschmais.maexo.mbeans.osgi.core.impl.PackageAdminMBeanImpl;
 
 /**
  * This class implements a service event listener which tracks the life cycle of
- * the packageAdmin admin service.
+ * the package admin admin service.
  */
 public final class PackageAdminMBeanLifeCycle extends
 		DefaultServiceMBeanLifeCycleSupport {
@@ -35,7 +35,7 @@ public final class PackageAdminMBeanLifeCycle extends
 	 * Constructor.
 	 * 
 	 * @param bundleContext
-	 *            the bundle context of the exporting bundle
+	 *            The bundle context of the exporting bundle.
 	 */
 	public PackageAdminMBeanLifeCycle(BundleContext bundleContext) {
 		super(bundleContext);
