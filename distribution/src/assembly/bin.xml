@@ -35,6 +35,7 @@
 				<include>com.buschmais.maexo.modules.framework:maexo-framework.switchboard</include>
 				<include>com.buschmais.maexo.modules.framework:maexo-framework.commons.mbean</include>
 				<include>com.buschmais.maexo.modules.mbeans:maexo-mbeans.osgi.core</include>
+				<include>com.buschmais.maexo.modules.server:maexo-server.factory</include>
 				<include>com.buschmais.maexo.modules.server:maexo-server.platform</include>
 				<include>com.buschmais.maexo.modules.adaptor:maexo-adaptor.mx4j.http</include>
 			</includes>

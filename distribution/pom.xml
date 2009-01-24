@@ -78,6 +78,10 @@
 		</dependency>
 		<dependency>
 			<groupId>com.buschmais.maexo.modules.server</groupId>
+			<artifactId>maexo-server.factory</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.buschmais.maexo.modules.server</groupId>
 			<artifactId>maexo-server.platform</artifactId>
 		</dependency>
 		<dependency>

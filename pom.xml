@@ -308,6 +308,12 @@ limitations under the License
 
 			<dependency>
 				<groupId>com.buschmais.maexo.modules.server</groupId>
+				<artifactId>maexo-server.factory</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.modules.server</groupId>
 				<artifactId>maexo-server.platform</artifactId>
 				<version>${maexo.version}</version>
 			</dependency>

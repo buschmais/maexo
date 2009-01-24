@@ -32,6 +32,7 @@
 	<name>MAEXO - Server</name>
 
 	<modules>
+		<module>factory</module>
 		<module>platform</module>
 	</modules>
 

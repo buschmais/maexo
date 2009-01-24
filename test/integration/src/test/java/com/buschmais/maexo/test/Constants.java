@@ -35,6 +35,9 @@ public class Constants {
 	public static final String ARTIFACT_OSGI_CORE_MBEAN = "com.buschmais.maexo.modules.mbeans, maexo-mbeans.osgi.core, "
 			+ MAEXO_VERSION;
 
+	public static final String ARTIFACT_MBEAN_SERVER_FACTORY = "com.buschmais.maexo.modules.server, maexo-server.factory, "
+		+ MAEXO_VERSION;
+
 	public static final String ARTIFACT_PLATFORM_MBEAN_SERVER = "com.buschmais.maexo.modules.server, maexo-server.platform, "
 			+ MAEXO_VERSION;
 

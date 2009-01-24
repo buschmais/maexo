@@ -16,21 +16,25 @@
  */
 package com.buschmais.maexo.test.server.platform;
 
-import javax.management.MBeanServer;
+import java.lang.management.ManagementFactory;
+import java.util.Arrays;
 
-import org.osgi.framework.ServiceReference;
+import javax.management.MBeanServer;
 
 import com.buschmais.maexo.test.Constants;
 import com.buschmais.maexo.test.MaexoTests;
+import com.buschmais.maexo.test.server.MaexoServerTests;
 
 /**
  * @see MaexoTests
  */
-public class PlatformServerTest extends MaexoTests {
+public class PlatformServerTest extends MaexoServerTests {
 
-	
-	/**
-	 * {@inheritDoc}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.osgi.test.AbstractDependencyManagerTests#
+	 * getTestBundlesNames()
 	 */
 	@Override
 	protected String[] getTestBundlesNames() {
@@ -38,20 +42,13 @@ public class PlatformServerTest extends MaexoTests {
 	}
 
 	/**
-	 * Just see if we can find a MBean server instance in the OSGi service
-	 * registry.
+	 * Looks up the platform MBean server and checks it's registration
 	 */
 	public void test_getPlatformMBeanServer() {
-		ServiceReference serviceReference = super.bundleContext
-				.getServiceReference(MBeanServer.class.getName());
-		assertNotNull(serviceReference);
-		try {
-			MBeanServer mbeanServer = (MBeanServer) super.bundleContext
-					.getService(serviceReference);
-			assertNotNull(mbeanServer);
-		} finally {
-			super.bundleContext.ungetService(serviceReference);
-		}
+		MBeanServer platformMBeanServer = ManagementFactory
+				.getPlatformMBeanServer();
+		super.test_ServersAreRegistered(Arrays
+				.asList(new MBeanServer[] { platformMBeanServer }));
 	}
 
 }

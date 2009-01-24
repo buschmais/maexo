@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * OSGi bundle activator for the the platform MBeans server bundle.
+ * OSGi bundle activator for the platform MBean server bundle.
  */
 public final class Activator implements BundleActivator {
 
