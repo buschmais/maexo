@@ -25,6 +25,7 @@ import javax.management.InstanceNotFoundException;
 import javax.management.MBeanRegistrationException;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;
+import javax.management.MBeanServerDelegateMBean;
 import javax.management.NotCompliantMBeanException;
 import javax.management.NotificationFilter;
 import javax.management.NotificationListener;
@@ -76,6 +77,29 @@ public class SwitchBoardTest extends MaexoTests {
 	}
 
 	/**
+	 * Adds an expectation of fetching the agentId from a MBean server
+	 * connection mock.
+	 * <p>
+	 * The switchboard must be allowed to fetch the agentId. This is done by
+	 * reading the attribute "MBeanServerId" from the
+	 * {@link MBeanServerDelegateMBean} which is associated to the connection.
+	 * 
+	 * @param mbeanServerConnection
+	 *            the MBean server connection mock
+	 */
+	private void expectGetMBeanServerId(
+			MBeanServerConnection mbeanServerConnection) {
+		try {
+			EasyMock.expect(
+					mbeanServerConnection.getAttribute(new ObjectName(
+							"JMImplementation:type=MBeanServerDelegate"),
+							"MBeanServerId")).andReturn("mock").anyTimes();
+		} catch (Exception e) {
+			fail(e.getMessage());
+		}
+	}
+
+	/**
 	 * Registers an MBean server instance as OSGi service.
 	 * 
 	 * @param mbeanServer
@@ -83,11 +107,8 @@ public class SwitchBoardTest extends MaexoTests {
 	 * @return The service registration.
 	 */
 	private ServiceRegistration registerMBeanServer(MBeanServer mbeanServer) {
-		Dictionary<String, Object> properties = new Hashtable<String, Object>();
-		// provide an agentId
-		properties.put("agentId", "localhost");
 		return super.bundleContext.registerService(MBeanServer.class.getName(),
-				mbeanServer, properties);
+				mbeanServer, null);
 	}
 
 	/**
@@ -110,6 +131,7 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceAlreadyExistsException, NotCompliantMBeanException {
 		// create mock for MBean server
 		MBeanServer serverMock = EasyMock.createMock(MBeanServer.class);
+		this.expectGetMBeanServerId(serverMock);
 		EasyMock.expect(serverMock.registerMBean(mbean, objectName)).andReturn(
 				new ObjectInstance(objectName, mbean.getClass().getName()));
 		serverMock.unregisterMBean(objectName);
@@ -150,6 +172,7 @@ public class SwitchBoardTest extends MaexoTests {
 			InstanceAlreadyExistsException, NotCompliantMBeanException {
 		// create mock for MBean server
 		MBeanServer serverMock = EasyMock.createMock(MBeanServer.class);
+		this.expectGetMBeanServerId(serverMock);
 		EasyMock.expect(serverMock.registerMBean(mbean, objectName)).andReturn(
 				new ObjectInstance(objectName, mbean.getClass().getName()));
 		serverMock.unregisterMBean(objectName);
@@ -248,11 +271,8 @@ public class SwitchBoardTest extends MaexoTests {
 	 */
 	private ServiceRegistration registerMBeanServerConnection(
 			MBeanServerConnection mbeanServerConnection) {
-		Dictionary<String, Object> properties = new Hashtable<String, Object>();
-		// provide an agentId
-		properties.put("agentId", "localhost");
 		return super.bundleContext.registerService(MBeanServerConnection.class
-				.getName(), mbeanServerConnection, properties);
+				.getName(), mbeanServerConnection, null);
 	}
 
 	/**
@@ -270,6 +290,7 @@ public class SwitchBoardTest extends MaexoTests {
 		// create mock for MBean server connection
 		MBeanServerConnection serverConnectionMock = EasyMock
 				.createMock(MBeanServerConnection.class);
+		this.expectGetMBeanServerId(serverConnectionMock);
 		serverConnectionMock.addNotificationListener(objectName,
 				notificationListener, notificationFilter, handback);
 		serverConnectionMock.removeNotificationListener(objectName,
@@ -303,6 +324,7 @@ public class SwitchBoardTest extends MaexoTests {
 		// create mock for MBean server connection
 		MBeanServerConnection serverConnectionMock = EasyMock
 				.createMock(MBeanServerConnection.class);
+		this.expectGetMBeanServerId(serverConnectionMock);
 		ObjectName objectName = new ObjectName(OBJECTNAME_TESTMBEAN);
 		NotificationListener notificationListener = EasyMock
 				.createMock(NotificationListener.class);

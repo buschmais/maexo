@@ -54,22 +54,19 @@ public class MBeanServerConnectionRegistration {
 			ServiceReference serviceReference) {
 		this.mbeanServerConnection = (MBeanServerConnection) bundleContext
 				.getService(serviceReference);
-		this.agentId = (String) serviceReference.getProperty("agentId");
-		if (this.agentId == null) {
-			MBeanServerDelegateMBean mbeanServerDelegateMBean;
-			try {
-				mbeanServerDelegateMBean = (MBeanServerDelegateMBean) MBeanServerInvocationHandler
-						.newProxyInstance(
-								this.mbeanServerConnection,
-								new ObjectName(
-										"JMImplementation:type=MBeanServerDelegate"),
-								MBeanServerDelegateMBean.class, false);
-				this.agentId = mbeanServerDelegateMBean.getMBeanServerId();
-			} catch (Exception e) {
-				throw new IllegalStateException(
-						"cannot determine agentId for connection "
-								+ this.mbeanServerConnection, e);
-			}
+		MBeanServerDelegateMBean mbeanServerDelegateMBean;
+		try {
+			mbeanServerDelegateMBean = (MBeanServerDelegateMBean) MBeanServerInvocationHandler
+					.newProxyInstance(
+							this.mbeanServerConnection,
+							new ObjectName(
+									"JMImplementation:type=MBeanServerDelegate"),
+							MBeanServerDelegateMBean.class, false);
+			this.agentId = mbeanServerDelegateMBean.getMBeanServerId();
+		} catch (Exception e) {
+			throw new IllegalStateException(
+					"cannot determine agentId for connection "
+							+ this.mbeanServerConnection, e);
 		}
 	}
 
