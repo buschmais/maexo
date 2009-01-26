@@ -40,7 +40,7 @@ public final class ServiceMBeanConstants {
 	}
 
 	/** MBean object name format. */
-	public static final String OBJECTNAME_FORMAT = "com.buschmais.maexo:type=Service,id=%s,name=%s";
+	public static final String OBJECTNAME_FORMAT = "com.buschmais.maexo:type=Service,name=%s,id=%s";
 
 	/** MBean description. */
 	public static final String MBEAN_DESCRIPTION = "Service MBean";

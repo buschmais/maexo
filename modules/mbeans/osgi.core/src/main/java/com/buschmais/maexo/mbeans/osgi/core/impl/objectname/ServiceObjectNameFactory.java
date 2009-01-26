@@ -59,8 +59,9 @@ public final class ServiceObjectNameFactory implements ObjectNameFactory {
 			}
 			objectClassValue.append(objectClass);
 		}
-		String objectName = String.format(ServiceMBeanConstants.OBJECTNAME_FORMAT,
-				id, objectClassValue.toString());
+		String objectName = String.format(
+				ServiceMBeanConstants.OBJECTNAME_FORMAT, objectClassValue
+						.toString(), id);
 		try {
 			return new ObjectName(objectName);
 		} catch (Exception e) {
