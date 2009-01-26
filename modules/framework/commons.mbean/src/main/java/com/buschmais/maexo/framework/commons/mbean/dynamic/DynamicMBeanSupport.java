@@ -21,38 +21,46 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.management.Attribute;
+import javax.management.AttributeChangeNotification;
 import javax.management.AttributeList;
 import javax.management.AttributeNotFoundException;
 import javax.management.DynamicMBean;
 import javax.management.InvalidAttributeValueException;
-import javax.management.JMException;
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanException;
-import javax.management.MBeanRegistration;
-import javax.management.MBeanServer;
-import javax.management.ObjectName;
 import javax.management.ReflectionException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.buschmais.maexo.framework.commons.mbean.MBeanSupport;
+
 /**
- * This class provides supporting functionality to facilitate the implementation
- * dynamic MBeans.
+ * This class extends {@link MBeanSupport} and provides supporting functionality
+ * to facilitate the implementation dynamic MBeans.
  * <p>
  * A dynamic MBean implementation can derive from this class and provide
- * getters/setters and methods like standard MBeans: 
+ * getters/setters and methods like standard MBeans:
  * 
  * <pre>
- *   public class MyDynamicMBean extends DynamicMBeanSupport { 
- *     private int myAttribute;
- *     public int getMyAttribute() { return this.myAttribute; }
- *     public void setMyAttribute() {this.myAttribute = myAttribute; }
- *     public void myOperation(int parameter) { ... }
- *     public MBeanInfo getMBeanInfo() { ... }
- *   }
+ * public class MyDynamicMBean extends DynamicMBeanSupport {
+ * 	private int myAttribute;
+ * 
+ * 	public int getMyAttribute() {
+ * 		return this.myAttribute;
+ * 	}
+ * 
+ * 	public void setMyAttribute() {
+ * 		this.myAttribute = myAttribute;
+ * 	}
+ * 
+ * 	public void myOperation(int parameter) { ... }
+ * 
+ * 	public MBeanInfo getMBeanInfo() { ... }
+ * }
  * </pre>
  * 
  * The invocation of these methods is performed via introspection of the MBean's
@@ -60,10 +68,15 @@ import org.slf4j.LoggerFactory;
  * which still must be implemented by the MBean itself.
  * <p>
  * Note: The names of the attributes provided by the MBean must start with a
- * lower case letter, e.g. <code>myAttribute</code>.
+ * lower case letter, e.g. <code>myAttribute</code>.
+ * <p>
+ * This class furthermore provides the method
+ * {@link #sendAttributeChangeNotification(MBeanAttributeInfo, Object, Object)}
+ * which allows sending an {@link AttributeChangeNotification} based on the meta
+ * data from an {@link MBeanAttributeInfo} instance.
  */
-public abstract class DynamicMBeanSupport implements DynamicMBean,
-		MBeanRegistration {
+public abstract class DynamicMBeanSupport extends MBeanSupport implements
+		DynamicMBean {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(DynamicMBeanSupport.class);
@@ -72,15 +85,14 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 	private static final String SETTER_PREFIX = "set";
 
 	/**
-	 * The mbean server where this mbean is registered. It may be used to lookup
-	 * other mbeans by their object name.
-	 */
-	private MBeanServer mbeanServer;
-
-	/**
 	 * This map holds the attribute names as keys and the types as values.
 	 */
 	private final Map<String, Class<?>> attributeTypes;
+
+	/**
+	 * The sequence number for sending notifications.
+	 */
+	private AtomicLong notificationSequenceNumber = new AtomicLong(0);
 
 	/**
 	 * Constructor.
@@ -261,60 +273,23 @@ public abstract class DynamicMBeanSupport implements DynamicMBean,
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	public void postDeregister() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void postRegister(Boolean registrationDone) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void preDeregister() throws Exception {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public final ObjectName preRegister(MBeanServer server, ObjectName name)
-			throws Exception {
-		this.mbeanServer = server;
-		return name;
-	}
-
-	/**
-	 * @return the mbeanServer
-	 */
-	protected final MBeanServer getMbeanServer() {
-		return mbeanServer;
-	}
-
-	/**
-	 * Gets the value of a specific attribute of a named MBean. The MBean is
-	 * identified by its object name.
+	 * Sends an {@link AttributeChangeNotification}.
 	 * 
-	 * @param objectName
-	 *            The object name of the MBean from which the attribute is to be
-	 *            retrieved.
-	 * @param attribute
-	 *            A String specifying the name of the attribute to be retrieved.
-	 * 
-	 * @return The value of the retrieved attribute.
+	 * @param mbeanAttributeInfo
+	 *            The {@link MBeanAttributeInfo} of the changed attribute.
+	 * @param oldValue
+	 *            The old value.
+	 * @param newValue
+	 *            The new value.
 	 */
-	protected final Object getAttribute(ObjectName objectName, String attribute) {
-		try {
-			return getMbeanServer().getAttribute(objectName, attribute);
-		} catch (MBeanException e) {
-			throw new RuntimeException(e.getTargetException().toString());
-		} catch (JMException e) {
-			throw new IllegalArgumentException(String.format(
-					"cannot get attribute %s from mbean %s", attribute,
-					objectName), e);
-		}
+	protected void sendAttributeChangeNotification(
+			MBeanAttributeInfo mbeanAttributeInfo, Object oldValue,
+			Object newValue) {
+		this.sendNotification(new AttributeChangeNotification(this,
+				this.notificationSequenceNumber.getAndIncrement(), System
+						.currentTimeMillis(), mbeanAttributeInfo.getName(),
+				mbeanAttributeInfo.getDescription(), mbeanAttributeInfo
+						.getType(), oldValue, newValue));
 	}
+
 }
