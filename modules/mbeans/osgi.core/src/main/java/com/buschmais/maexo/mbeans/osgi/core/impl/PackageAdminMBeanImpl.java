@@ -44,6 +44,7 @@ import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryH
 import com.buschmais.maexo.mbeans.osgi.core.BundleMBeanConstants;
 import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBean;
 import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants;
+import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants.BundleType;
 
 /**
  * Represents the OSGi package admin service.
@@ -52,15 +53,15 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 		PackageAdminMBean, MBeanRegistration {
 
 	/** Translation map for bundle types. */
-	private static Map<Integer, String> bundleTypes;
+	private static Map<Integer, BundleType> bundleTypes;
 
 	static {
-		bundleTypes = new HashMap<Integer, String>();
+		bundleTypes = new HashMap<Integer, BundleType>();
 		bundleTypes
 				.put(
 						Integer
 								.valueOf(org.osgi.service.packageadmin.PackageAdmin.BUNDLE_TYPE_FRAGMENT),
-						"FRAGMENT");
+						BundleType.FRAGMENT);
 	}
 
 	/**
@@ -130,9 +131,9 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 		MBeanNotificationInfo[] mbeanNotificationInfos = new MBeanNotificationInfo[] {};
 		// mbean info
 		OpenMBeanInfoSupport mbeanInfo = new OpenMBeanInfoSupport(className,
-				PackageAdminMBeanConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
-				mbeanConstructorInfos, mbeanOperationInfos,
-				mbeanNotificationInfos);
+				PackageAdminMBeanConstants.MBEAN_DESCRIPTION,
+				mbeanAttributeInfos, mbeanConstructorInfos,
+				mbeanOperationInfos, mbeanNotificationInfos);
 		return mbeanInfo;
 	}
 
@@ -140,7 +141,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public Integer getBundleType(ObjectName objectName) {
-		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID.getName());
+		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID
+				.getName());
 		return this.getBundleType(id);
 	}
 
@@ -160,14 +162,16 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public String getBundleTypeAsName(ObjectName objectName) {
-		return bundleTypes.get(this.getBundleType(objectName));
+		BundleType bundleType = bundleTypes.get(this.getBundleType(objectName));
+		return bundleType != null ? bundleType.toString() : null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public String getBundleTypeAsName(Long id) {
-		return bundleTypes.get(this.getBundleType(id));
+		BundleType bundleType = bundleTypes.get(this.getBundleType(id));
+		return bundleType != null ? bundleType.toString() : null;
 	}
 
 	/**
@@ -196,7 +200,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public TabularData getExportedPackages(ObjectName objectName) {
-		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID.getName());
+		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID
+				.getName());
 		return this.getExportedPackages(id);
 	}
 
@@ -227,7 +232,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public ObjectName[] getFragments(ObjectName objectName) {
-		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID.getName());
+		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID
+				.getName());
 		return this.getFragments(id);
 	}
 
@@ -241,15 +247,15 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 					"cannot get bundle for id %s", id));
 		}
 		return this.objectNameFactoryHelper.getObjectNames(this.packageAdmin
-				.getFragments(bundle),
-				Bundle.class);
+				.getFragments(bundle), Bundle.class);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public ObjectName[] getHosts(ObjectName objectName) {
-		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID.getName());
+		Long id = (Long) getAttribute(objectName, BundleMBeanConstants.ID
+				.getName());
 		return this.getHosts(id);
 	}
 
@@ -263,8 +269,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 					"cannot get bundle for id %s", id));
 		}
 		return this.objectNameFactoryHelper.getObjectNames(this.packageAdmin
-				.getHosts(bundle),
-				Bundle.class);
+				.getHosts(bundle), Bundle.class);
 	}
 
 	/**
@@ -288,8 +293,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 										requiredBundle.getBundle(),
 										Bundle.class),
 								this.objectNameFactoryHelper.getObjectNames(
-										requiredBundle
-										.getRequiringBundles(), Bundle.class),
+										requiredBundle.getRequiringBundles(),
+										Bundle.class),
 								requiredBundle.getSymbolicName(),
 								requiredBundle.getVersion().toString(),
 								Boolean.valueOf(requiredBundle
@@ -307,8 +312,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	public void refreshPackages(ObjectName[] objectNames) {
 		Long[] ids = new Long[objectNames.length];
 		for (int i = 0; i < objectNames.length; i++) {
-			ids[i] = (Long) getAttribute(objectNames[i], BundleMBeanConstants.ID
-					.getName());
+			ids[i] = (Long) getAttribute(objectNames[i],
+					BundleMBeanConstants.ID.getName());
 		}
 		this.refreshPackages(ids);
 	}
@@ -346,8 +351,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	public Boolean resolveBundles(ObjectName[] objectNames) {
 		Long[] ids = new Long[objectNames.length];
 		for (int i = 0; i < objectNames.length; i++) {
-			ids[i] = (Long) getAttribute(objectNames[i], BundleMBeanConstants.ID
-					.getName());
+			ids[i] = (Long) getAttribute(objectNames[i],
+					BundleMBeanConstants.ID.getName());
 		}
 		return this.resolveBundles(ids);
 	}
@@ -420,9 +425,8 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 									exportedPackage.getExportingBundle(),
 									Bundle.class),
 							this.objectNameFactoryHelper.getObjectNames(
-									exportedPackage
-									.getImportingBundles(), Bundle.class),
-							exportedPackage.getName(),
+									exportedPackage.getImportingBundles(),
+									Bundle.class), exportedPackage.getName(),
 							exportedPackage.getSpecificationVersion(),
 							exportedPackage.getVersion().toString(),
 							Boolean.valueOf(exportedPackage.isRemovalPending()) });

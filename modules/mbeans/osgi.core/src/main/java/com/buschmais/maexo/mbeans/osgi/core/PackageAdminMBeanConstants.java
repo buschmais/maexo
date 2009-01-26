@@ -59,7 +59,8 @@ public final class PackageAdminMBeanConstants {
 	public static final String EXPORTEDPACKAGE_ITEM_IMPORTINGBUNDLE = "importingBundle";
 
 	/**
-	 * <code>org.osgi.service.packageadmin.ExportedPackage</code> attribute name.
+	 * <code>org.osgi.service.packageadmin.ExportedPackage</code> attribute
+	 * name.
 	 */
 	public static final String EXPORTEDPACKAGE_ITEM_NAME = "name";
 
@@ -203,6 +204,16 @@ public final class PackageAdminMBeanConstants {
 					"objectName", "The object name of the bundle.",
 					SimpleType.OBJECTNAME) }, SimpleType.INTEGER,
 			OpenMBeanOperationInfoSupport.INFO);
+
+	/**
+	 * Enum type for bundle types for MBean operations
+	 * {@link PackageAdminMBean#getBundleTypeAsName(Long)} and
+	 * {@link PackageAdminMBean#getBundleTypeAsName(javax.management.ObjectName)}
+	 * .
+	 */
+	public enum BundleType {
+		FRAGMENT
+	}
 
 	/**
 	 * MBean operation info for operation

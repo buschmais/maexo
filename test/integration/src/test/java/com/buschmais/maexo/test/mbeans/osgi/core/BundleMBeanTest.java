@@ -57,7 +57,7 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 				Constants.ARTIFACT_PLATFORM_MBEAN_SERVER,
 				Constants.ARTIFACT_COMMONS_MBEAN,
 				Constants.ARTIFACT_OSGI_CORE_MBEAN,
-				Constants.ARTIFACT_TESTBUNDLE, Constants.ARTIFACT_EASYMOCK };
+				Constants.ARTIFACT_TESTBUNDLE };
 	}
 
 	/**
@@ -173,9 +173,9 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 		// get byte[] for update(byte[] array)
 		String location = bundleMBean.getLocation();
 		byte[] bundleArray = getByteArrayForBundleLocation(location);
-		
+
 		bundleContext.addBundleListener(this);
-		
+
 		bundleEvents = new LinkedBlockingQueue<Integer>();
 		// run methods to test
 		bundleMBean.stop();
@@ -213,7 +213,7 @@ public class BundleMBeanTest extends MaexoMBeanTests implements BundleListener {
 		expectedEvents.offer(Integer.valueOf(BundleEvent.STOPPED));
 		expectedEvents.offer(Integer.valueOf(BundleEvent.UNRESOLVED));
 		expectedEvents.offer(Integer.valueOf(BundleEvent.UNINSTALLED));
-		
+
 		// compare expected BundleEvents with fired BundleEvents
 		while (!expectedEvents.isEmpty()) {
 			Integer event = this.bundleEvents.poll(5, TimeUnit.SECONDS);

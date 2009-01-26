@@ -37,7 +37,7 @@ public final class BundleMBeanConstants {
 
 	/** Constant "name". */
 	public static final String HEADER_ITEM_NAME = "name";
-	
+
 	/** Constant "value". */
 	public static final String HEADER_ITEM_VALUE = "value";
 
@@ -52,7 +52,7 @@ public final class BundleMBeanConstants {
 	 */
 	public static final List<String> HEADER_ITEMS = Arrays.asList(new String[] {
 			HEADER_ITEM_NAME, HEADER_ITEM_VALUE });
-	
+
 	/** Composite type representing one header entry. */
 	public static final CompositeType HEADER_TYPE = OpenTypeFactory
 			.createCompositeType("headerEntry", "bundle header entry",
@@ -90,39 +90,44 @@ public final class BundleMBeanConstants {
 	public static final OpenMBeanAttributeInfoSupport LASTMODIFIED = new OpenMBeanAttributeInfoSupport(
 			"lastModified", "The time when this bundle was last modified.",
 			SimpleType.LONG, true, false, false);
-	
+
 	/** MBean attribute info for {@link BundleMBean#getLastModifiedAsDate()}. */
 	public static final OpenMBeanAttributeInfoSupport LASTMODIFIEDASDATE = new OpenMBeanAttributeInfoSupport(
 			"lastModifiedAsDate",
 			"The time when this bundle was last modified.", SimpleType.DATE,
 			true, false, false);
-	
+
 	/** MBean attribute info for {@link BundleMBean#getLocation()}. */
 	public static final OpenMBeanAttributeInfoSupport LOCATION = new OpenMBeanAttributeInfoSupport(
 			"location",
 			"The string representation of this bundle's location identifier.",
 			SimpleType.STRING, true, false, false);
-	
+
 	/** MBean attribute info for {@link BundleMBean#getRegisteredServices()}. */
 	public static final OpenMBeanAttributeInfoSupport REGISTEREDSERVICES = new OpenMBeanAttributeInfoSupport(
 			"registeredServices",
 			"This bundle's ObjectName list for all services it has registered or null if this bundle has no registered services.",
 			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME), true,
 			false, false);
-	
+
 	/** MBean attribute info for {@link BundleMBean#getServicesInUse()}. */
 	public static final OpenMBeanAttributeInfoSupport SERVICESINUSE = new OpenMBeanAttributeInfoSupport(
 			"servicesInUse",
 			"This bundle's ObjectName list for all services it is using or returns null if this bundle is not using any services.",
 			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME), true,
 			false, false);
-	
+
+	/** Enum type for bundle states for MBean attribute {@link BundleMBean#getStateAsName()} */
+	public enum State {
+		UNINSTALLED, INSTALLED, RESOLVED, STARTING, STOPPING, ACTIVE, UNKNOWN
+	}
+
 	/** MBean attribute info for {@link BundleMBean#getStateAsName()}. */
 	public static final OpenMBeanAttributeInfoSupport STATENAME = new OpenMBeanAttributeInfoSupport(
 			"stateAsName",
-			"An element of UNINSTALLED,INSTALLED,RESOLVED,STARTING,STOPPING,ACTIVE.",
+			"An element of UNINSTALLED,INSTALLED,RESOLVED,STARTING,STOPPING,ACTIVE,UNKNOWN.",
 			SimpleType.STRING, true, false, false);
-	
+
 	/** MBean operation info for operation {@link BundleMBean#start()}. */
 	public static final OpenMBeanOperationInfoSupport START = new OpenMBeanOperationInfoSupport(
 			"start", "Start the bundle",
@@ -160,7 +165,7 @@ public final class BundleMBeanConstants {
 					"in", "BYTEARRAY", OpenTypeFactory.createArrayType(1,
 							SimpleType.BYTE)) }, SimpleType.VOID,
 			OpenMBeanOperationInfoSupport.ACTION_INFO);
-	
+
 	/**
 	 * Private Constructor.
 	 */

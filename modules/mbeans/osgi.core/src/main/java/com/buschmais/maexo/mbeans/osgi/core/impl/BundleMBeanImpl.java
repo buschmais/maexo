@@ -46,31 +46,32 @@ import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 import com.buschmais.maexo.mbeans.osgi.core.BundleMBean;
 import com.buschmais.maexo.mbeans.osgi.core.BundleMBeanConstants;
+import com.buschmais.maexo.mbeans.osgi.core.BundleMBeanConstants.State;
 
 /**
  * Represents an OSGi bundle.
  */
-public final class BundleMBeanImpl extends DynamicMBeanSupport implements DynamicMBean,
-		BundleMBean {
+public final class BundleMBeanImpl extends DynamicMBeanSupport implements
+		DynamicMBean, BundleMBean {
 
 	/** Translation map for bundle states. */
-	private static Map<Integer, String> bundleStates;
+	private static Map<Integer, State> bundleStates;
 
 	static {
-		bundleStates = new HashMap<Integer, String>();
+		bundleStates = new HashMap<Integer, State>();
 		bundleStates.put(Integer.valueOf(org.osgi.framework.Bundle.ACTIVE),
-				"ACTIVE");
+				State.ACTIVE);
 		bundleStates.put(Integer.valueOf(org.osgi.framework.Bundle.INSTALLED),
-				"INSTALLED");
+				State.INSTALLED);
 		bundleStates.put(Integer.valueOf(org.osgi.framework.Bundle.RESOLVED),
-				"RESOLVED");
+				State.RESOLVED);
 		bundleStates.put(Integer.valueOf(org.osgi.framework.Bundle.STARTING),
-				"STARTING");
+				State.STARTING);
 		bundleStates.put(Integer.valueOf(org.osgi.framework.Bundle.STOPPING),
-				"STOPPING");
+				State.STOPPING);
 		bundleStates.put(
 				Integer.valueOf(org.osgi.framework.Bundle.UNINSTALLED),
-				"UNINSTALLED");
+				State.UNINSTALLED);
 	}
 
 	/**
@@ -89,7 +90,8 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements Dynami
 	 * @param bundle
 	 *            The bundle to manage.
 	 */
-	public BundleMBeanImpl(BundleContext bundleContext, org.osgi.framework.Bundle bundle) {
+	public BundleMBeanImpl(BundleContext bundleContext,
+			org.osgi.framework.Bundle bundle) {
 		this.bundle = bundle;
 		this.objectNameFactoryHelper = new ObjectNameFactoryHelper(
 				bundleContext);
@@ -105,14 +107,16 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements Dynami
 				BundleMBeanConstants.ID, BundleMBeanConstants.STATE,
 				BundleMBeanConstants.STATENAME, BundleMBeanConstants.HEADER,
 				BundleMBeanConstants.LASTMODIFIED,
-				BundleMBeanConstants.LASTMODIFIEDASDATE, BundleMBeanConstants.LOCATION,
+				BundleMBeanConstants.LASTMODIFIEDASDATE,
+				BundleMBeanConstants.LOCATION,
 				BundleMBeanConstants.REGISTEREDSERVICES,
 				BundleMBeanConstants.SERVICESINUSE };
 
 		// operations
 		OpenMBeanOperationInfoSupport[] mbeanOperationInfos = new OpenMBeanOperationInfoSupport[] {
 				BundleMBeanConstants.START, BundleMBeanConstants.STOP,
-				BundleMBeanConstants.UPDATE, BundleMBeanConstants.UPDATEFROMURL,
+				BundleMBeanConstants.UPDATE,
+				BundleMBeanConstants.UPDATEFROMURL,
 				BundleMBeanConstants.UPDATEFROMBYTEARRAY,
 				BundleMBeanConstants.UNINSTALL };
 		// constructors
@@ -145,7 +149,11 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements Dynami
 	 * {@inheritDoc}
 	 */
 	public String getStateAsName() {
-		return bundleStates.get(Integer.valueOf(this.bundle.getState()));
+		State state = bundleStates.get(Integer.valueOf(this.bundle.getState()));
+		if (state == null) {
+			state = State.UNKNOWN;
+		}
+		return state.toString();
 	}
 
 	/**
@@ -182,7 +190,8 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements Dynami
 			String value = headers.get(key);
 			try {
 				CompositeDataSupport header = new CompositeDataSupport(
-						BundleMBeanConstants.HEADER_TYPE, BundleMBeanConstants.HEADER_ITEMS
+						BundleMBeanConstants.HEADER_TYPE,
+						BundleMBeanConstants.HEADER_ITEMS
 								.toArray(new String[0]), new Object[] { key,
 								value });
 				tabularHeaders.put(header);
