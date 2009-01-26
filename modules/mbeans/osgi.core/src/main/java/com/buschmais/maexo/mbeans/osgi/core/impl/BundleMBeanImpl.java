@@ -105,7 +105,7 @@ public final class BundleMBeanImpl extends DynamicMBeanSupport implements
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[] {
 				BundleMBeanConstants.ID, BundleMBeanConstants.STATE,
-				BundleMBeanConstants.STATENAME, BundleMBeanConstants.HEADER,
+				BundleMBeanConstants.STATEASNAME, BundleMBeanConstants.HEADERS,
 				BundleMBeanConstants.LASTMODIFIED,
 				BundleMBeanConstants.LASTMODIFIEDASDATE,
 				BundleMBeanConstants.LOCATION,
