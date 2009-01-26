@@ -81,7 +81,7 @@ public final class BundleMBeanConstants {
 			SimpleType.INTEGER, true, false, false);
 
 	/** MBean attribute info for {@link BundleMBean#getHeaders()}. */
-	public static final OpenMBeanAttributeInfoSupport HEADER = new OpenMBeanAttributeInfoSupport(
+	public static final OpenMBeanAttributeInfoSupport HEADERS = new OpenMBeanAttributeInfoSupport(
 			"headers",
 			"A TabularData object containing this bundle's Manifest headers and values.",
 			HEADERS_TYPE, true, false, false);
@@ -117,13 +117,16 @@ public final class BundleMBeanConstants {
 			OpenTypeFactory.createArrayType(1, SimpleType.OBJECTNAME), true,
 			false, false);
 
-	/** Enum type for bundle states for MBean attribute {@link BundleMBean#getStateAsName()} */
+	/**
+	 * Enum type for bundle states for MBean attribute
+	 * {@link BundleMBean#getStateAsName()}
+	 */
 	public enum State {
 		UNINSTALLED, INSTALLED, RESOLVED, STARTING, STOPPING, ACTIVE, UNKNOWN
 	}
 
 	/** MBean attribute info for {@link BundleMBean#getStateAsName()}. */
-	public static final OpenMBeanAttributeInfoSupport STATENAME = new OpenMBeanAttributeInfoSupport(
+	public static final OpenMBeanAttributeInfoSupport STATEASNAME = new OpenMBeanAttributeInfoSupport(
 			"stateAsName",
 			"An element of UNINSTALLED,INSTALLED,RESOLVED,STARTING,STOPPING,ACTIVE,UNKNOWN.",
 			SimpleType.STRING, true, false, false);
