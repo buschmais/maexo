@@ -18,6 +18,8 @@ package com.buschmais.maexo.test.framework.switchboard;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.management.DynamicMBean;
 import javax.management.InstanceAlreadyExistsException;
@@ -33,7 +35,11 @@ import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
 import org.easymock.EasyMock;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.packageadmin.PackageAdmin;
+import org.osgi.util.tracker.ServiceTracker;
 
 import com.buschmais.maexo.test.Constants;
 import com.buschmais.maexo.test.MaexoTests;
@@ -51,11 +57,26 @@ public class SwitchBoardTest extends MaexoTests {
 	private ObjectName objectName;
 
 	/**
+	 * The switch board bundle.
+	 */
+	private Bundle switchBoardBundle;
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected void onSetUp() throws Exception {
 		super.onSetUp();
+		ServiceTracker serviceTracker = new ServiceTracker(super.bundleContext,
+				PackageAdmin.class.getName(), null);
+		serviceTracker.open();
+		PackageAdmin packageAdmin = (PackageAdmin) serviceTracker.getService();
+		assertNotNull(packageAdmin);
+		Bundle[] switchBoardBundles = packageAdmin.getBundles(
+				"maexo-framework.switchboard", null);
+		assertNotNull(switchBoardBundles);
+		assertEquals(1, switchBoardBundles.length);
+		this.switchBoardBundle = switchBoardBundles[0];
 		this.objectName = new ObjectName(OBJECTNAME_TESTMBEAN);
 	}
 
@@ -354,5 +375,58 @@ public class SwitchBoardTest extends MaexoTests {
 		EasyMock.verify(serverConnectionMock);
 		// unregister notification listener
 		notificationListenerServiceRegistration.unregister();
+	}
+
+	/**
+	 * First registers the MBean server and MBeans and then starts the switch
+	 * board.
+	 */
+	public void test_registerMBeanAndServerBeforeSwitchBoard()
+			throws InstanceNotFoundException, MBeanRegistrationException,
+			InstanceAlreadyExistsException, NotCompliantMBeanException,
+			BundleException {
+		// stop the switch board
+		this.switchBoardBundle.stop();
+		List<StandardMBean> mbeans = new LinkedList<StandardMBean>();
+		for (int i = 0; i < 5; i++) {
+			mbeans.add(EasyMock.createMock(StandardMBean.class));
+		}
+		// create mock for MBean server
+		MBeanServer serverMock = EasyMock.createMock(MBeanServer.class);
+		this.expectGetMBeanServerId(serverMock);
+		for (StandardMBean mbean : mbeans) {
+			EasyMock.expect(serverMock.registerMBean(mbean, objectName))
+					.andReturn(
+							new ObjectInstance(objectName, mbean.getClass()
+									.getName()));
+		}
+		for (int k = 0; k < 5; k++) {
+			serverMock.unregisterMBean(objectName);
+		}
+
+		// do test
+		EasyMock.replay(serverMock);
+		// register MBean server
+		ServiceRegistration serverServiceRegistration = this
+				.registerMBeanServer(serverMock);
+		List<ServiceRegistration> mbeanServiceRegistrations = new LinkedList<ServiceRegistration>();
+		for (StandardMBean mbean : mbeans) {
+			// register MBean
+			Dictionary<String, Object> properties = new Hashtable<String, Object>();
+			properties.put(ObjectName.class.getName(), objectName);
+			mbeanServiceRegistrations.add(this.bundleContext.registerService(
+					StandardMBean.class.getName(), mbean, properties));
+		}
+		// start the switch board
+		this.switchBoardBundle.start();
+		// stop the switch board
+		this.switchBoardBundle.stop();
+		// unregister mbeans
+		for (ServiceRegistration mbeanServiceRegistration : mbeanServiceRegistrations) {
+			mbeanServiceRegistration.unregister();
+		}
+		// verify MBean server
+		EasyMock.verify(serverMock);
+		serverServiceRegistration.unregister();
 	}
 }
