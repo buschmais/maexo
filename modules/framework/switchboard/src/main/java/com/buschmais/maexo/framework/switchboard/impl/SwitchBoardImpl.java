@@ -16,7 +16,6 @@
  */
 package com.buschmais.maexo.framework.switchboard.impl;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -46,48 +45,47 @@ public final class SwitchBoardImpl {
 	private static Logger logger = LoggerFactory
 			.getLogger(SwitchBoardImpl.class);
 
-	private final Set<MBeanServerConnectionRegistration> mbeanServerConnections = new HashSet<MBeanServerConnectionRegistration>();
+	private Set<MBeanServerConnectionRegistration> mbeanServerConnections = null;
 
-	private final Set<MBeanServerRegistration> mbeanServers = new HashSet<MBeanServerRegistration>();
+	private Set<MBeanServerRegistration> mbeanServers = null;
 
-	private final Set<MBeanRegistration> mbeans = new HashSet<MBeanRegistration>();
+	private Set<MBeanRegistration> mbeans = null;
 
-	private final Set<NotificationListenerRegistration> notificationListeners = new HashSet<NotificationListenerRegistration>();
+	private Set<NotificationListenerRegistration> notificationListeners = null;
 
 	/**
-	 * Returns the currently registered MBeans.
-	 * 
-	 * @return The map of MBean registrations.
+	 * Starts the switch board.
 	 */
-	public Set<MBeanRegistration> getMBeans() {
-		return Collections.unmodifiableSet(this.mbeans);
+	public void start() {
+		this.mbeanServerConnections = new HashSet<MBeanServerConnectionRegistration>();
+		this.mbeanServers = new HashSet<MBeanServerRegistration>();
+		this.mbeans = new HashSet<MBeanRegistration>();
+		this.notificationListeners = new HashSet<NotificationListenerRegistration>();
 	}
 
 	/**
-	 * Returns the registered MBean server connections.
-	 * 
-	 * @return The MBean server connection registrations.
+	 * Stops the switch board.
+	 * <p>
+	 * All registrations of MBeans and notification listeners are removed.
 	 */
-	public Set<MBeanServerConnectionRegistration> getMBeanServerConnections() {
-		return Collections.unmodifiableSet(this.mbeanServerConnections);
-	}
-
-	/**
-	 * Returns the registered MBean servers.
-	 * 
-	 * @return The MBean server registrations.
-	 */
-	public Set<MBeanServerRegistration> getMBeanServers() {
-		return Collections.unmodifiableSet(this.mbeanServers);
-	}
-
-	/**
-	 * Returns the currently registered notification listeners.
-	 * 
-	 * @return The set of notification listener registrations.
-	 */
-	public Set<NotificationListenerRegistration> getNotificationListeners() {
-		return Collections.unmodifiableSet(this.notificationListeners);
+	public void stop() {
+		for (MBeanServerConnectionRegistration mbeanServerConnectionRegistration : new HashSet<MBeanServerConnectionRegistration>(
+				this.mbeanServerConnections)) {
+			this
+					.unregisterMBeanServerConnection(mbeanServerConnectionRegistration);
+		}
+		for (MBeanServerRegistration mbeanServerRegistration : new HashSet<MBeanServerRegistration>(
+				this.mbeanServers)) {
+			this.unregisterMBeanServer(mbeanServerRegistration);
+		}
+		for (MBeanRegistration mbeanRegistration : new HashSet<MBeanRegistration>(
+				this.mbeans)) {
+			this.unregisterMBean(mbeanRegistration);
+		}
+		for (NotificationListenerRegistration notificationListenerRegistration : new HashSet<NotificationListenerRegistration>(
+				this.notificationListeners)) {
+			this.removeNotificationListener(notificationListenerRegistration);
+		}
 	}
 
 	/**
@@ -101,6 +99,7 @@ public final class SwitchBoardImpl {
 	 */
 	public synchronized void addNotificationListener(
 			NotificationListenerRegistration notificationListenerRegistration) {
+		assert (this.notificationListeners != null);
 		logger.debug("adding notification listener {}",
 				notificationListenerRegistration);
 		if (!this.notificationListeners
@@ -137,6 +136,7 @@ public final class SwitchBoardImpl {
 	 */
 	public synchronized void registerMBeanServerConnection(
 			MBeanServerConnectionRegistration mbeanServerConnectionRegistration) {
+		assert (this.mbeanServerConnections != null);
 		logger.debug("registering MBean server connection {}",
 				mbeanServerConnectionRegistration);
 		if (!this.mbeanServerConnections
@@ -206,6 +206,7 @@ public final class SwitchBoardImpl {
 	 *            The MBean registration.
 	 */
 	public synchronized void registerMBean(MBeanRegistration mbeanRegistration) {
+		assert (this.mbeans != null);
 		logger.debug("registering MBean {}", mbeanRegistration);
 		if (!this.mbeans.contains(mbeanRegistration)) {
 			logger.debug("registering MBean {} on all known MBean servers",
@@ -231,6 +232,7 @@ public final class SwitchBoardImpl {
 	 */
 	public synchronized void registerMBeanServer(
 			MBeanServerRegistration mbeanServerRegistration) {
+		assert (this.mbeanServers != null);
 		logger.debug("registering MBean server {}", mbeanServerRegistration);
 		if (!this.mbeanServers.contains(mbeanServerRegistration)) {
 			logger.debug("associating MBean server {} with all known MBeans",

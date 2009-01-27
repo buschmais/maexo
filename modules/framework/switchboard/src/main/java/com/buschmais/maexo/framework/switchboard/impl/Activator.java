@@ -87,6 +87,9 @@ public final class Activator implements BundleActivator {
 	public void start(BundleContext bundleContext) throws Exception {
 		logger.info("Starting maexo switch board");
 		this.switchBoard = new SwitchBoardImpl();
+		// start the switch board
+		this.switchBoard.start();
+		// register service listeners
 		this.mbeanServerConnectionServiceListener = this
 				.registerMBeanServerConnectionServiceListener(bundleContext);
 		this.mbeanServerServiceListener = this
@@ -102,42 +105,24 @@ public final class Activator implements BundleActivator {
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		logger.info("Stopping maexo switch board");
-		// remove service listener for MBean server connections s and clean up
+		// remove service listeners
 		if (this.mbeanServerConnectionServiceListener != null) {
 			bundleContext
 					.removeServiceListener(this.mbeanServerConnectionServiceListener);
 		}
-		for (MBeanServerConnectionRegistration mbeanServerConnectionRegistration : this.switchBoard
-				.getMBeanServerConnections()) {
-			this.switchBoard
-					.unregisterMBeanServerConnection(mbeanServerConnectionRegistration);
-		}
-		// remove service listener for MBean servers and clean up
 		if (this.mbeanServerServiceListener != null) {
 			bundleContext
 					.removeServiceListener(this.mbeanServerServiceListener);
 		}
-		for (MBeanServerRegistration mbeanServerRegistration : this.switchBoard
-				.getMBeanServers()) {
-			this.switchBoard.unregisterMBeanServer(mbeanServerRegistration);
-		}
-		// remove service listener for MBeans and clean up
 		if (this.mbeanServiceListener != null) {
 			bundleContext.removeServiceListener(this.mbeanServiceListener);
 		}
-		for (MBeanRegistration mbeanRegistration : this.switchBoard.getMBeans()) {
-			this.switchBoard.unregisterMBean(mbeanRegistration);
-		}
-		// remove service listener for MBeans and clean up
 		if (this.notificationListenerServiceListener != null) {
 			bundleContext
 					.removeServiceListener(this.notificationListenerServiceListener);
 		}
-		for (NotificationListenerRegistration notificationListenerRegistration : this.switchBoard
-				.getNotificationListeners()) {
-			this.switchBoard
-					.removeNotificationListener(notificationListenerRegistration);
-		}
+		// stop the switch board
+		this.switchBoard.stop();
 	}
 
 	/**
