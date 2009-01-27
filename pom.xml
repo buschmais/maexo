@@ -31,6 +31,7 @@
 		<module>distribution</module>
 		<module>external</module>
 		<module>modules</module>
+		<module>samples</module>
 		<module>test</module>
 	</modules>
 
@@ -345,7 +346,7 @@ limitations under the License
 			</dependency>
 
 			<dependency>
-				<groupId>com.buschmais.maexo.modules.samples</groupId>
+				<groupId>com.buschmais.maexo.samples</groupId>
 				<artifactId>maexo-samples.basic</artifactId>
 				<type>zip</type>
 				<version>${maexo.version}</version>
