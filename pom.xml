@@ -131,6 +131,7 @@ limitations under the License
 					<configuration>
 						<instructions>
 							<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+							<Implementation-Version>${BUILD_TAG}/${SVN_REVISION}</Implementation-Version>
 						</instructions>
 					</configuration>
 				</plugin>
