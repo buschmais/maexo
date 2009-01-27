@@ -56,7 +56,7 @@ public final class SwitchBoardImpl {
 	/**
 	 * Starts the switch board.
 	 */
-	public void start() {
+	public synchronized void start() {
 		this.mbeanServerConnections = new HashSet<MBeanServerConnectionRegistration>();
 		this.mbeanServers = new HashSet<MBeanServerRegistration>();
 		this.mbeans = new HashSet<MBeanRegistration>();
@@ -68,7 +68,7 @@ public final class SwitchBoardImpl {
 	 * <p>
 	 * All registrations of MBeans and notification listeners are removed.
 	 */
-	public void stop() {
+	public synchronized void stop() {
 		for (MBeanServerConnectionRegistration mbeanServerConnectionRegistration : new HashSet<MBeanServerConnectionRegistration>(
 				this.mbeanServerConnections)) {
 			this
