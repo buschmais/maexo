@@ -31,6 +31,10 @@
 	<packaging>pom</packaging>
 	<name>MAEXO - Basic Sample</name>
 
+	<properties>
+		<jmx.remote.port>1099</jmx.remote.port>
+	</properties>
+	
 	<build>
 		<plugins>
 			<plugin>

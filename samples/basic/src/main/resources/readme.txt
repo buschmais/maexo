@@ -47,3 +47,5 @@ connected:
     MBeans plugin. 
   * The MX4J HTTP adapator contained in the container setup provides a simple web interface which
     may be accessed from the url http://127.0.0.1:8081.
+  * Another console using an RMI connection to service:jmx:rmi:///jndi/rmi://localhost:${jmx.remote.port}/jmxrmi
+    (no SSL support, no authentication).
