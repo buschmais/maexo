@@ -17,13 +17,11 @@ import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
-import org.osgi.service.packageadmin.PackageAdmin;
 
 import com.buschmais.maexo.framework.commons.mbean.dynamic.DynamicMBeanSupport;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 import com.buschmais.maexo.mbeans.osgi.core.FrameworkMBean;
 import com.buschmais.maexo.mbeans.osgi.core.FrameworkMBeanConstants;
-import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants;
 
 /**
  * Represents the OSGi framework.
