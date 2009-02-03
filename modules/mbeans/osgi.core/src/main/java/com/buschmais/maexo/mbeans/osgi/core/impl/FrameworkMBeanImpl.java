@@ -183,7 +183,7 @@ public final class FrameworkMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public MBeanInfo getMBeanInfo() {
-		String className = PackageAdmin.class.getName();
+		String className = FrameworkMBeanImpl.class.getName();
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[] {
 				FrameworkMBeanConstants.BOOTDELEGATION, FrameworkMBeanConstants.BUNDLES,
@@ -204,7 +204,7 @@ public final class FrameworkMBeanImpl extends DynamicMBeanSupport implements
 		MBeanNotificationInfo[] mbeanNotificationInfos = new MBeanNotificationInfo[] {};
 		// mbean info
 		OpenMBeanInfoSupport mbeanInfo = new OpenMBeanInfoSupport(className,
-				PackageAdminMBeanConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
+				FrameworkMBeanConstants.MBEAN_DESCRIPTION, mbeanAttributeInfos,
 				mbeanConstructorInfos, mbeanOperationInfos,
 				mbeanNotificationInfos);
 		return mbeanInfo;

@@ -99,7 +99,7 @@ public final class PackageAdminMBeanImpl extends DynamicMBeanSupport implements
 	 * {@inheritDoc}
 	 */
 	public MBeanInfo getMBeanInfo() {
-		String className = PackageAdmin.class.getName();
+		String className = PackageAdminMBeanImpl.class.getName();
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[0];
 		// operations
