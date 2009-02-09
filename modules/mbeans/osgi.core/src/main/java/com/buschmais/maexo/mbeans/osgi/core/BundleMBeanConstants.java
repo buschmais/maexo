@@ -72,7 +72,7 @@ public final class BundleMBeanConstants {
 	/** MBean attribute info for {@link BundleMBean#getBundleId()}. */
 	public static final OpenMBeanAttributeInfoSupport ID = new OpenMBeanAttributeInfoSupport(
 			"bundleId", "The unique identifier of this bundle.",
-			SimpleType.INTEGER, true, false, false);
+			SimpleType.LONG, true, false, false);
 
 	/** MBean attribute info for {@link BundleMBean#getState()}. */
 	public static final OpenMBeanAttributeInfoSupport STATE = new OpenMBeanAttributeInfoSupport(
