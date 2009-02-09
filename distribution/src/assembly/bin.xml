@@ -53,7 +53,8 @@
 			<outputDirectory>samples</outputDirectory>
 			<unpack>true</unpack>
 			<includes>
-				<include>com.buschmais.maexo.samples:maexo-samples.basic</include>
+				<include>com.buschmais.maexo.samples.assembly:maexo-assembly.basic</include>
+				<include>com.buschmais.maexo.samples.assembly:maexo-assembly.spring</include>
 			</includes>
 		</dependencySet>
 		<dependencySet>

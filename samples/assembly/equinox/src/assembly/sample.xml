@@ -17,21 +17,21 @@
 		limitations under the License
 	-->
 
-  <id>sample</id>
-  <formats>
-    <format>zip</format>
-  </formats>
-  <baseDirectory>basic</baseDirectory>
-  <fileSets>
-	<fileSet>
-		<outputDirectory></outputDirectory>
-		<directory>src/main/resources</directory>
-		<filtered>true</filtered>
-	</fileSet>
-  </fileSets>
-  <dependencySets>
-	  <dependencySet>
-		<outputDirectory></outputDirectory>
-	  </dependencySet>
-  </dependencySets>
+	<id>sample</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<baseDirectory></baseDirectory>
+	<fileSets>
+		<fileSet>
+			<outputDirectory></outputDirectory>
+			<directory>src/main/resources</directory>
+			<filtered>true</filtered>
+		</fileSet>
+	</fileSets>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory></outputDirectory>
+		</dependencySet>
+	</dependencySets>
 </assembly>

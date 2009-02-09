@@ -20,20 +20,21 @@
 	-->
 
 	<parent>
-		<groupId>com.buschmais</groupId>
-		<artifactId>maexo</artifactId>
+		<groupId>com.buschmais.maexo</groupId>
+		<artifactId>maexo-samples</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.buschmais.maexo</groupId>
-	<artifactId>maexo-samples</artifactId>
+	<groupId>com.buschmais.maexo.samples</groupId>
+	<artifactId>maexo-samples.assembly</artifactId>
 	<packaging>pom</packaging>
-	<name>MAEXO - Samples</name>
+	<name>MAEXO - Sample Assemblies</name>
 
 	<modules>
-		<module>assembly</module>
-		<module>bundle</module>
+		<module>basic</module>
+		<module>equinox</module>
+		<module>spring</module>
 	</modules>
 
 </project>

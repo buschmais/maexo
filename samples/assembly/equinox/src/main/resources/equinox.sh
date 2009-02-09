@@ -16,5 +16,5 @@
 # limitations under the License
 
 echo Starting Equinox, enter "close" to exit
-java -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=${jmx.remote.port} -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar org.eclipse.osgi-${equinox.version}.jar -console
+java -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar org.eclipse.osgi-3.4.0.v20080605-1900.jar -console
 

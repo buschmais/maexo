@@ -42,8 +42,11 @@
 		<log4j.version>1.2.15</log4j.version>
 		<spring.maven.artifact.version>2.5.6.A</spring.maven.artifact.version>
 		<spring.osgi.version>1.1.2.A</spring.osgi.version>
+		<aopalliance.version>1.0.0</aopalliance.version>
+		<asm.version>2.2.3</asm.version>
 		<equinox.version>3.4.0.v20080605-1900</equinox.version>
 		<mx4j.tools.version>3.0.1</mx4j.tools.version>
+		<jmx.remote.port>1099</jmx.remote.port>
 	</properties>
 
 	<description>Management Extensions for OSGi</description>
@@ -346,8 +349,56 @@ limitations under the License
 			</dependency>
 
 			<dependency>
-				<groupId>com.buschmais.maexo.samples</groupId>
-				<artifactId>maexo-samples.basic</artifactId>
+				<groupId>com.buschmais.maexo.samples.assembly</groupId>
+				<artifactId>maexo-assembly.equinox</artifactId>
+				<type>zip</type>
+				<classifier>sample</classifier>
+				<version>${maexo.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.eclipse.osgi</groupId>
+						<artifactId>org.eclipse.osgi</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.bundle</groupId>
+				<artifactId>maexo-bundle.spring.mbean</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.bundle</groupId>
+				<artifactId>maexo-bundle.spring.mbean</artifactId>
+				<classifier>sources</classifier>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.bundle</groupId>
+				<artifactId>maexo-bundle.spring.server</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.bundle</groupId>
+				<artifactId>maexo-bundle.spring.server</artifactId>
+				<classifier>sources</classifier>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.assembly</groupId>
+				<artifactId>maexo-assembly.basic</artifactId>
+				<type>zip</type>
+				<version>${maexo.version}</version>
+				<classifier>sample</classifier>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.assembly</groupId>
+				<artifactId>maexo-assembly.spring</artifactId>
 				<type>zip</type>
 				<version>${maexo.version}</version>
 				<classifier>sample</classifier>
@@ -403,6 +454,99 @@ limitations under the License
 				<scope>runtime</scope>
 			</dependency>
 
+			<!-- Spring DM and required dependencies -->
+			<dependency>
+				<groupId>org.aopalliance</groupId>
+				<artifactId>com.springsource.org.aopalliance</artifactId>
+				<version>${aopalliance.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.objectweb.asm</groupId>
+				<artifactId>com.springsource.org.objectweb.asm</artifactId>
+				<version>${asm.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.aop</artifactId>
+				<version>${spring.maven.artifact.version}</version>
+				<scope>runtime</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.commons</groupId>
+						<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.beans</artifactId>
+				<version>${spring.maven.artifact.version}</version>
+				<scope>runtime</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.commons</groupId>
+						<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.context</artifactId>
+				<version>${spring.maven.artifact.version}</version>
+				<scope>runtime</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.commons</groupId>
+						<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>org.springframework.core</artifactId>
+				<version>${spring.maven.artifact.version}</version>
+				<scope>runtime</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.commons</groupId>
+						<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.osgi</groupId>
+				<artifactId>org.springframework.osgi.extender</artifactId>
+				<version>${spring.osgi.version}</version>
+				<scope>runtime</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.commons</groupId>
+						<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.osgi</groupId>
+				<artifactId>org.springframework.osgi.extensions.annotation</artifactId>
+				<version>${spring.osgi.version}</version>
+				<scope>runtime</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.commons</groupId>
+						<artifactId>com.springsource.org.apache.commons.logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
 			<!-- test scoped dependencies -->
 			<dependency>
 				<groupId>org.easymock</groupId>
@@ -419,41 +563,6 @@ limitations under the License
 			</dependency>
 
 			<dependency>
-				<groupId>org.objectweb.asm</groupId>
-				<artifactId>com.springsource.org.objectweb.asm</artifactId>
-				<version>2.2.3</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.aop</artifactId>
-				<version>${spring.maven.artifact.version}</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.beans</artifactId>
-				<version>${spring.maven.artifact.version}</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.context</artifactId>
-				<version>${spring.maven.artifact.version}</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.core</artifactId>
-				<version>${spring.maven.artifact.version}</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.test</artifactId>
 				<version>${spring.maven.artifact.version}</version>
@@ -463,20 +572,6 @@ limitations under the License
 			<dependency>
 				<groupId>org.springframework.osgi</groupId>
 				<artifactId>org.springframework.osgi.test</artifactId>
-				<version>${spring.osgi.version}</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework.osgi</groupId>
-				<artifactId>org.springframework.osgi.extender</artifactId>
-				<version>${spring.osgi.version}</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework.osgi</groupId>
-				<artifactId>org.springframework.osgi.extensions.annotation</artifactId>
 				<version>${spring.osgi.version}</version>
 				<scope>test</scope>
 			</dependency>

@@ -20,20 +20,43 @@
 	-->
 
 	<parent>
-		<groupId>com.buschmais</groupId>
-		<artifactId>maexo</artifactId>
+		<groupId>com.buschmais.maexo.samples</groupId>
+		<artifactId>maexo-samples.assembly</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.buschmais.maexo</groupId>
-	<artifactId>maexo-samples</artifactId>
+	<groupId>com.buschmais.maexo.samples.assembly</groupId>
+	<artifactId>maexo-assembly.equinox</artifactId>
 	<packaging>pom</packaging>
-	<name>MAEXO - Samples</name>
+	<name>MAEXO - Equinox Sample Assembly</name>
 
-	<modules>
-		<module>assembly</module>
-		<module>bundle</module>
-	</modules>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>src/assembly/sample.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>sample</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attached</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.osgi</groupId>
+			<artifactId>org.eclipse.osgi</artifactId>
+		</dependency>
+	</dependencies>
 </project>

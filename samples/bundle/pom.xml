@@ -20,20 +20,37 @@
 	-->
 
 	<parent>
-		<groupId>com.buschmais</groupId>
-		<artifactId>maexo</artifactId>
+		<groupId>com.buschmais.maexo</groupId>
+		<artifactId>maexo-samples</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.buschmais.maexo</groupId>
-	<artifactId>maexo-samples</artifactId>
+	<groupId>com.buschmais.maexo.samples</groupId>
+	<artifactId>maexo-samples.bundle</artifactId>
 	<packaging>pom</packaging>
-	<name>MAEXO - Samples</name>
+	<name>MAEXO - Sample Bundles</name>
 
 	<modules>
-		<module>assembly</module>
-		<module>bundle</module>
+		<module>spring.mbean</module>
+		<module>spring.server</module>
 	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+	        </plugin>	        
+		</plugins>
+	</build>
 
 </project>
