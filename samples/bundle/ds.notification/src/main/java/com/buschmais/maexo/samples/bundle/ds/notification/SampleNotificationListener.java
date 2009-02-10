@@ -34,6 +34,13 @@ public class SampleNotificationListener implements NotificationListener {
 			.getLogger(SampleNotificationListener.class);
 
 	/**
+	 * The constructor.
+	 */
+	public SampleNotificationListener() {
+		logger.info("created notification listener instance");
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public void handleNotification(Notification notification, Object handback) {

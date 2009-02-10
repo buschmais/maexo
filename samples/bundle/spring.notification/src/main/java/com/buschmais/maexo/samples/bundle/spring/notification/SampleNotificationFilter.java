@@ -36,7 +36,14 @@ public class SampleNotificationFilter implements NotificationFilter {
 	 * The logger instance.
 	 */
 	private static final Logger logger = LoggerFactory
-			.getLogger(SampleNotificationListener.class);
+			.getLogger(SampleNotificationFilter.class);
+
+	/**
+	 * The constructor.
+	 */
+	public SampleNotificationFilter() {
+		logger.info("created notification filter instance");
+	}
 
 	/**
 	 * {@inheritDoc}
