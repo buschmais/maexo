@@ -492,6 +492,10 @@ limitations under the License
 						<artifactId>org.apache.felix.shell</artifactId>
 					</exclusion>
 					<exclusion>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>org.osgi.compendium</artifactId>
+					</exclusion>
+					<exclusion>
 						<groupId>net.sf.kxml</groupId>
 						<artifactId>kxml2</artifactId>
 					</exclusion>
