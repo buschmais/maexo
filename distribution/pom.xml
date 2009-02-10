@@ -101,6 +101,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.buschmais.maexo.samples.assembly</groupId>
+			<artifactId>maexo-assembly.ds</artifactId>
+			<type>zip</type>
+			<classifier>sample</classifier>
+		</dependency>		
+		<dependency>
+			<groupId>com.buschmais.maexo.samples.assembly</groupId>
 			<artifactId>maexo-assembly.spring</artifactId>
 			<type>zip</type>
 			<classifier>sample</classifier>

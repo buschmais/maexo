@@ -73,6 +73,10 @@ The project aims at portability, minimal dependencies and user-friendliness.
 - samples/
     * basic
         Demonstrates a basic OSGi container setup for MAEXO using Eclipse Equinox.
+    * ds
+        Integration of MAEXO with OSGi Declarative Services.
+    * spring
+        Integration of MAEXO with Spring Dynamic Modules (Spring DM).
 
 3. Links
 --------

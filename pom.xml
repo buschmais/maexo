@@ -45,6 +45,7 @@
 		<aopalliance.version>1.0.0</aopalliance.version>
 		<asm.version>2.2.3</asm.version>
 		<equinox.version>3.4.0.v20080605-1900</equinox.version>
+		<org.apache.felix.scr.version>1.0.6</org.apache.felix.scr.version>
 		<mx4j.tools.version>3.0.1</mx4j.tools.version>
 		<jmx.remote.port>1099</jmx.remote.port>
 	</properties>
@@ -364,6 +365,32 @@ limitations under the License
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.bundle</groupId>
+				<artifactId>maexo-bundle.ds.mbean</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.bundle</groupId>
+				<artifactId>maexo-bundle.ds.mbean</artifactId>
+				<classifier>sources</classifier>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.bundle</groupId>
+				<artifactId>maexo-bundle.ds.notification</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.bundle</groupId>
+				<artifactId>maexo-bundle.ds.notification</artifactId>
+				<classifier>sources</classifier>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.bundle</groupId>
 				<artifactId>maexo-bundle.spring.mbean</artifactId>
 				<version>${maexo.version}</version>
 			</dependency>
@@ -411,6 +438,14 @@ limitations under the License
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.assembly</groupId>
+				<artifactId>maexo-assembly.ds</artifactId>
+				<type>zip</type>
+				<version>${maexo.version}</version>
+				<classifier>sample</classifier>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.assembly</groupId>
 				<artifactId>maexo-assembly.spring</artifactId>
 				<type>zip</type>
 				<version>${maexo.version}</version>
@@ -446,6 +481,40 @@ limitations under the License
 			</dependency>
 			
 			<!-- runtime dependencies -->
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.apache.felix.scr</artifactId>
+				<version>${org.apache.felix.scr.version}</version>
+				<scope>runtime</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>org.apache.felix.shell</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>net.sf.kxml</groupId>
+						<artifactId>kxml2</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.osgi.compendium</artifactId>
+				<version>1.2.0</version>
+				<scope>runtime</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>javax.servlet</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>org.osgi.foundation</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
 			<dependency>
 				<groupId>org.eclipse.osgi</groupId>
 				<artifactId>org.eclipse.osgi</artifactId>

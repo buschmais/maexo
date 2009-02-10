@@ -32,6 +32,8 @@
 	<name>MAEXO - Sample Bundles</name>
 
 	<modules>
+		<module>ds.mbean</module>
+		<module>ds.notification</module>
 		<module>spring.mbean</module>
 		<module>spring.notification</module>
 		<module>spring.server</module>

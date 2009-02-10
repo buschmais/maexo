@@ -63,13 +63,11 @@ public final class MBeanRegistration {
 		// get object name from service properties
 		this.objectName = (ObjectName) serviceReference
 				.getProperty(ObjectName.class.getName());
-
 		if (this.objectName == null) {
-			String name = (String) serviceReference
+			Object objectName = serviceReference
 					.getProperty(SERVICE_PROPERTY_OBJECTNAME);
-			this.objectName = new ObjectName(name);
+			this.objectName = new ObjectName(objectName.toString());
 		}
-
 		this.mbean = bundleContext.getService(serviceReference);
 	}
 

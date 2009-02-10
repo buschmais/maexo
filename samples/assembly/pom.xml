@@ -33,6 +33,7 @@
 
 	<modules>
 		<module>basic</module>
+		<module>ds</module>
 		<module>equinox</module>
 		<module>spring</module>
 	</modules>

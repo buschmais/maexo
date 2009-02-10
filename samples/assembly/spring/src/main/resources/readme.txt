@@ -1,11 +1,11 @@
 MAEXO - Spring DM sample
 ************************
 
-This sample demonstrates how to integrate MAEXO with Spring DM. This framework provides an
-extender bundle which (if activated) checks active bundles in the container for the existence
-of Spring application context descriptors (default directory is META-INF/spring) and evaluates
-them. For more information on the Spring DM framework please refer to the project web site
-http://www.springframework.org/osgi.
+This sample demonstrates how to integrate MAEXO with Spring Dynamic Modules (Spring DM). This
+framework provides an extender bundle which checks active bundles in the container for the
+existence of Spring application context descriptors (default directory is META-INF/spring) and
+evaluates them. For more information on the Spring DM framework please refer to the project web
+site http://www.springframework.org/osgi.
 The bundles in this sample create instances of MBeans, notification listeners and MBean servers
 using the Spring DM approach and export them to the OSGi service registry. The life cycle of
 these services is monitored by the MAEXO switch board which transparently performs registration
