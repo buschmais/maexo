@@ -377,6 +377,19 @@ limitations under the License
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.bundle</groupId>
+				<artifactId>maexo-bundle.spring.notification</artifactId>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.bundle</groupId>
+				<artifactId>maexo-bundle.spring.notification</artifactId>
+				<classifier>sources</classifier>
+				<version>${maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples.bundle</groupId>
 				<artifactId>maexo-bundle.spring.server</artifactId>
 				<version>${maexo.version}</version>
 			</dependency>

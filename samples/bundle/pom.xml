@@ -33,6 +33,7 @@
 
 	<modules>
 		<module>spring.mbean</module>
+		<module>spring.notification</module>
 		<module>spring.server</module>
 	</modules>
 

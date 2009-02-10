@@ -75,6 +75,15 @@
 		</dependency>
 		<dependency>
 			<groupId>com.buschmais.maexo.samples.bundle</groupId>
+			<artifactId>maexo-bundle.spring.notification</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.buschmais.maexo.samples.bundle</groupId>
+			<artifactId>maexo-bundle.spring.notification</artifactId>
+			<classifier>sources</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.buschmais.maexo.samples.bundle</groupId>
 			<artifactId>maexo-bundle.spring.server</artifactId>
 		</dependency>
 		<dependency>

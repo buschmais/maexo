@@ -29,7 +29,7 @@
 	<groupId>com.buschmais.maexo.samples</groupId>
 	<artifactId>maexo-samples.assembly</artifactId>
 	<packaging>pom</packaging>
-	<name>MAEXO - Sample Assemblies</name>
+	<name>MAEXO - Sample Assembly</name>
 
 	<modules>
 		<module>basic</module>

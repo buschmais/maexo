@@ -49,6 +49,9 @@
 					com.buschmais.maexo.samples.bundle:maexo-bundle.spring.mbean:jar:sources
 				</exclude>
 				<exclude>
+					com.buschmais.maexo.samples.bundle:maexo-bundle.spring.notification:jar:sources
+				</exclude>
+				<exclude>
 					com.buschmais.maexo.samples.bundle:maexo-bundle.spring.server:jar:sources
 				</exclude>
 			</excludes>
@@ -60,6 +63,16 @@
 			<includes>
 				<include>
 					com.buschmais.maexo.samples.bundle:maexo-bundle.spring.mbean
+				</include>
+			</includes>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>sources/bundle.spring.notification
+			</outputDirectory>
+			<unpack>true</unpack>
+			<includes>
+				<include>
+					com.buschmais.maexo.samples.bundle:maexo-bundle.spring.notification
 				</include>
 			</includes>
 		</dependencySet>
