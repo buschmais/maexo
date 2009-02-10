@@ -37,16 +37,15 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maexo.version>1.0.0-SNAPSHOT</maexo.version>
-		<slf4j.version>1.5.6</slf4j.version>
-		<log4j.version>1.2.15</log4j.version>
-		<spring.maven.artifact.version>2.5.6.A</spring.maven.artifact.version>
-		<spring.osgi.version>1.1.2.A</spring.osgi.version>
-		<aopalliance.version>1.0.0</aopalliance.version>
-		<asm.version>2.2.3</asm.version>
-		<equinox.version>3.4.0.v20080605-1900</equinox.version>
-		<org.apache.felix.scr.version>1.0.6</org.apache.felix.scr.version>
+		<com.buschmais.maexo.version>1.0.0-SNAPSHOT</com.buschmais.maexo.version>
 		<mx4j.tools.version>3.0.1</mx4j.tools.version>
+		<org.aopalliance.version>1.0.0</org.aopalliance.version>
+		<org.apache.felix.scr.version>1.0.6</org.apache.felix.scr.version>
+		<org.eclipse.osgi.version>3.4.0.v20080605-1900</org.eclipse.osgi.version>
+		<org.objectweb.asm.version>2.2.3</org.objectweb.asm.version>
+		<org.slf4j.version>1.5.6</org.slf4j.version>
+		<org.springframework.version>2.5.6.A</org.springframework.version>
+		<org.springframework.osgi.version>1.1.2.A</org.springframework.osgi.version>
 		<jmx.remote.port>1099</jmx.remote.port>
 	</properties>
 
@@ -162,7 +161,7 @@ limitations under the License
 					<dependency>
 						<groupId>com.buschmais.maexo.build</groupId>
 						<artifactId>maexo-build.checkstyle</artifactId>
-						<version>${maexo.version}</version>
+						<version>${com.buschmais.maexo.version}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -283,70 +282,70 @@ limitations under the License
 			<dependency>
 				<groupId>com.buschmais.maexo.modules.framework</groupId>
 				<artifactId>maexo-framework.commons.mbean</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.modules.framework</groupId>
 				<artifactId>maexo-framework.commons.mbean</artifactId>
 				<classifier>javadoc</classifier>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.modules.framework</groupId>
 				<artifactId>maexo-framework.switchboard</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.modules.mbeans</groupId>
 				<artifactId>maexo-mbeans.osgi.core</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.modules.mbeans</groupId>
 				<artifactId>maexo-mbeans.osgi.core</artifactId>
 				<classifier>javadoc</classifier>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.modules.server</groupId>
 				<artifactId>maexo-server.factory</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.modules.server</groupId>
 				<artifactId>maexo-server.platform</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.test</groupId>
 				<artifactId>maexo-test.testbundle</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.test</groupId>
 				<artifactId>maexo-test.integration</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.modules.adaptor</groupId>
 				<artifactId>maexo-adaptor.mx4j.http</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.modules.adaptor</groupId>
 				<artifactId>maexo-adaptor.mx4j.http</artifactId>
 				<classifier>javadoc</classifier>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
@@ -354,7 +353,7 @@ limitations under the License
 				<artifactId>maexo-assembly.equinox</artifactId>
 				<type>zip</type>
 				<classifier>sample</classifier>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 				<exclusions>
 					<exclusion>
 						<groupId>org.eclipse.osgi</groupId>
@@ -366,73 +365,73 @@ limitations under the License
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.bundle</groupId>
 				<artifactId>maexo-bundle.ds.mbean</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.bundle</groupId>
 				<artifactId>maexo-bundle.ds.mbean</artifactId>
 				<classifier>sources</classifier>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.bundle</groupId>
 				<artifactId>maexo-bundle.ds.notification</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.bundle</groupId>
 				<artifactId>maexo-bundle.ds.notification</artifactId>
 				<classifier>sources</classifier>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.bundle</groupId>
 				<artifactId>maexo-bundle.spring.mbean</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.bundle</groupId>
 				<artifactId>maexo-bundle.spring.mbean</artifactId>
 				<classifier>sources</classifier>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.bundle</groupId>
 				<artifactId>maexo-bundle.spring.notification</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.bundle</groupId>
 				<artifactId>maexo-bundle.spring.notification</artifactId>
 				<classifier>sources</classifier>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.bundle</groupId>
 				<artifactId>maexo-bundle.spring.server</artifactId>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.bundle</groupId>
 				<artifactId>maexo-bundle.spring.server</artifactId>
 				<classifier>sources</classifier>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples.assembly</groupId>
 				<artifactId>maexo-assembly.basic</artifactId>
 				<type>zip</type>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 				<classifier>sample</classifier>
 			</dependency>
 
@@ -440,7 +439,7 @@ limitations under the License
 				<groupId>com.buschmais.maexo.samples.assembly</groupId>
 				<artifactId>maexo-assembly.ds</artifactId>
 				<type>zip</type>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 				<classifier>sample</classifier>
 			</dependency>
 
@@ -448,7 +447,7 @@ limitations under the License
 				<groupId>com.buschmais.maexo.samples.assembly</groupId>
 				<artifactId>maexo-assembly.spring</artifactId>
 				<type>zip</type>
-				<version>${maexo.version}</version>
+				<version>${com.buschmais.maexo.version}</version>
 				<classifier>sample</classifier>
 			</dependency>
 
@@ -476,7 +475,7 @@ limitations under the License
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j.version}</version>
+				<version>${org.slf4j.version}</version>
 				<scope>compile</scope>
 			</dependency>
 			
@@ -522,21 +521,21 @@ limitations under the License
 			<dependency>
 				<groupId>org.eclipse.osgi</groupId>
 				<artifactId>org.eclipse.osgi</artifactId>
-				<version>${equinox.version}</version>
+				<version>${org.eclipse.osgi.version}</version>
 				<scope>runtime</scope>
 			</dependency>
 
 			<dependency>
 			    <groupId>org.slf4j</groupId>
 			    <artifactId>slf4j-jdk14</artifactId>
-				<version>${slf4j.version}</version>
+				<version>${org.slf4j.version}</version>
 				<scope>runtime</scope>
 			</dependency> 
 
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>jcl-over-slf4j</artifactId>
-				<version>${slf4j.version}</version>
+				<version>${org.slf4j.version}</version>
 				<scope>runtime</scope>
 			</dependency>
 
@@ -544,21 +543,21 @@ limitations under the License
 			<dependency>
 				<groupId>org.aopalliance</groupId>
 				<artifactId>com.springsource.org.aopalliance</artifactId>
-				<version>${aopalliance.version}</version>
+				<version>${org.aopalliance.version}</version>
 				<scope>runtime</scope>
 			</dependency>
 
 			<dependency>
 				<groupId>org.objectweb.asm</groupId>
 				<artifactId>com.springsource.org.objectweb.asm</artifactId>
-				<version>${asm.version}</version>
+				<version>${org.objectweb.asm.version}</version>
 				<scope>runtime</scope>
 			</dependency>
 
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.aop</artifactId>
-				<version>${spring.maven.artifact.version}</version>
+				<version>${org.springframework.version}</version>
 				<scope>runtime</scope>
 				<exclusions>
 					<exclusion>
@@ -571,7 +570,7 @@ limitations under the License
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.beans</artifactId>
-				<version>${spring.maven.artifact.version}</version>
+				<version>${org.springframework.version}</version>
 				<scope>runtime</scope>
 				<exclusions>
 					<exclusion>
@@ -584,7 +583,7 @@ limitations under the License
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.context</artifactId>
-				<version>${spring.maven.artifact.version}</version>
+				<version>${org.springframework.version}</version>
 				<scope>runtime</scope>
 				<exclusions>
 					<exclusion>
@@ -597,7 +596,7 @@ limitations under the License
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.core</artifactId>
-				<version>${spring.maven.artifact.version}</version>
+				<version>${org.springframework.version}</version>
 				<scope>runtime</scope>
 				<exclusions>
 					<exclusion>
@@ -610,7 +609,7 @@ limitations under the License
 			<dependency>
 				<groupId>org.springframework.osgi</groupId>
 				<artifactId>org.springframework.osgi.extender</artifactId>
-				<version>${spring.osgi.version}</version>
+				<version>${org.springframework.osgi.version}</version>
 				<scope>runtime</scope>
 				<exclusions>
 					<exclusion>
@@ -623,7 +622,7 @@ limitations under the License
 			<dependency>
 				<groupId>org.springframework.osgi</groupId>
 				<artifactId>org.springframework.osgi.extensions.annotation</artifactId>
-				<version>${spring.osgi.version}</version>
+				<version>${org.springframework.osgi.version}</version>
 				<scope>runtime</scope>
 				<exclusions>
 					<exclusion>
@@ -651,14 +650,14 @@ limitations under the License
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>org.springframework.test</artifactId>
-				<version>${spring.maven.artifact.version}</version>
+				<version>${org.springframework.version}</version>
 				<scope>test</scope>
 			</dependency>
 
 			<dependency>
 				<groupId>org.springframework.osgi</groupId>
 				<artifactId>org.springframework.osgi.test</artifactId>
-				<version>${spring.osgi.version}</version>
+				<version>${org.springframework.osgi.version}</version>
 				<scope>test</scope>
 			</dependency>
 

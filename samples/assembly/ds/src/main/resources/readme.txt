@@ -11,23 +11,23 @@ The following bundles are installed (see configuration/config.ini):
   * Declarative Services MBean - The bundle exports an instance of a standard MBean using Declarative
     Services.
 	
-	  maexo-bundle.ds.mbean-${maexo.version}.jar [activated]
+	  maexo-bundle.ds.mbean-${com.buschmais.maexo.version}.jar [activated]
 
   * Declarative Services Notification - The bundle exports an instance of a notification listener
     which is registered to the MBeanServerDelegate (JMImplementation:type=MBeanServerDelegate). It
     listens on notifications regarding the life cycle of MBeans and simply logs information messages.
 	
-	  maexo-bundle.ds.notification-${maexo.version}.jar [activated]
+	  maexo-bundle.ds.notification-${com.buschmais.maexo.version}.jar [activated]
 
   * Switch Board - Life cycle monitoring for MBeans, notification listeners, MBean servers and MBean
     server connections for transparent export of resources to the JMX infrastructure.
     
-      maexo-framework.switchboard-${maexo.version}.jar [activated]
+      maexo-framework.switchboard-${com.buschmais.maexo.version}.jar [activated]
 	  
   * Exporter Bundle for the Java platform MBean server - Looks up the platform MBean server of
     the Java Runtime Environment and exports it to the OSGi service registry. 
     
-      maexo-server.platform-${maexo.version}.jar [activated]
+      maexo-server.platform-${com.buschmais.maexo.version}.jar [activated]
   
   * Apache Felix Service Component Runtime (SCR) - The implemenation of the OSGi Declarative
     Services specification from the Apache Felix project (see http://felix.apache.org).
@@ -36,7 +36,7 @@ The following bundles are installed (see configuration/config.ini):
 	
   * SLF4J logging framework (including JDK 1.4 adapter and Java Commons Logging API)
   
-      slf4j-api-${slf4j.version}.jar
-      slf4j-jdk14-${slf4j.version}.jar
+      slf4j-api-${org.slf4j.version}.jar
+      slf4j-jdk14-${org.slf4j.version}.jar
 
 The container may be started using equinox.cmd or equinox.sh.

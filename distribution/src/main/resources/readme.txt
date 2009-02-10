@@ -18,48 +18,48 @@ The project aims at portability, minimal dependencies and user-friendliness.
 - dist/
     Contains the bundles of MAEXO.
 
-		* maexo-framework.switchboard-${maexo.version}.jar
+		* maexo-framework.switchboard-${com.buschmais.maexo.version}.jar
 		    If activated this bundle monitors the life cycle of services representing MBean
 		    servers, MBean server connections, MBeans and NotificationListeners do provide 
 		    transparent registration and unregistration.
 		   
-		* maexo-framework.commons.mbean-${maexo.version}.jar
+		* maexo-framework.commons.mbean-${com.buschmais.maexo.version}.jar
 		    Provides common classes for other bundles to support MBean implementations in an OSGi 
 		    environment.
 		      
-		* maexo-framework.commons.mbean-${maexo.version}.jar-javadoc
-		    Contains the javadoc for the bundle maexo-framework.commons.mbean-${maexo.version}.jar.
+		* maexo-framework.commons.mbean-${com.buschmais.maexo.version}.jar-javadoc
+		    Contains the javadoc for the bundle maexo-framework.commons.mbean-${com.buschmais.maexo.version}.jar.
 		
-		* maexo-mbeans.osgi.core-${maexo.version}.jar
+		* maexo-mbeans.osgi.core-${com.buschmais.maexo.version}.jar
 		    This bundle registers MBeans to the OSGi service registry which represent resources
 		    within the container, e.g. Bundles and Services.
 		    
-		* maexo-mbeans.osgi.core-${maexo.version}.jar-javadoc
-		    Contains the javadoc for the bundle maexo-framework.commons.mbean-${maexo.version}.jar.
+		* maexo-mbeans.osgi.core-${com.buschmais.maexo.version}.jar-javadoc
+		    Contains the javadoc for the bundle maexo-framework.commons.mbean-${com.buschmais.maexo.version}.jar.
 		
-		* maexo-server.factory-${maexo.version}.jar
+		* maexo-server.factory-${com.buschmais.maexo.version}.jar
 		    Registers all MBean servers which are available from the MBeanServerFactory as OSGi 
 		    services.
 		
-		* maexo-server.platform-${maexo.version}.jar
+		* maexo-server.platform-${com.buschmais.maexo.version}.jar
 		    Registers the platform MBean server provided by the JRE as OSGi service.
 		    
-		* maexo-adaptor.mx4j.http-${maexo.version}.jar
+		* maexo-adaptor.mx4j.http-${com.buschmais.maexo.version}.jar
 		    Activator bundle for the MX4j HTTP adaptor. It may be configured using bundle
 		    properties (see provided javadoc).
 		  
-		* maexo-adaptor.mx4j.http-${maexo.version}.jar-javadoc
-		    Contains the javadoc for the bundle maexo-adaptor.mx4j.http-${maexo.version}.jar.
+		* maexo-adaptor.mx4j.http-${com.buschmais.maexo.version}.jar-javadoc
+		    Contains the javadoc for the bundle maexo-adaptor.mx4j.http-${com.buschmais.maexo.version}.jar.
 		  
 - lib/
 	Third party libraries which are required by MAEXO or related bundles.
-		* slf4j-api-${slf4j.version}.jar
+		* slf4j-api-${org.slf4j.version}.jar
 		    Contains the API of the SLF4J framework which is used for logging by the MAEXO bundles.
 		     
-		* slf4j-jdk14-${slf4j.version}.jar
+		* slf4j-jdk14-${org.slf4j.version}.jar
 		    The JDK14LoggerAdapter of the SLF4j framework.
 		    
-		* jcl-over-slf4j-${slf4j.version}.jar
+		* jcl-over-slf4j-${org.slf4j.version}.jar
 		    Provides an SLF4J implementation of the Jakarta Commons Logging (JCL) API. It is only
 		    required if the MX4J HTTP adaptor is going to be used.
 		    

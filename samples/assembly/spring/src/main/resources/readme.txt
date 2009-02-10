@@ -14,7 +14,7 @@ The following bundles are installed (see configuration/config.ini):
 
   * Spring MBean - The bundle exports an instance of a standard MBean using Spring DM.
 	
-	  maexo-bundle.spring.mbean-${maexo.version}.jar [activated]
+	  maexo-bundle.spring.mbean-${com.buschmais.maexo.version}.jar [activated]
 
   * Spring Notification - The bundle exports an instance of a notification listener which is
     registered to the MBeanServerDelegate (JMImplementation:type=MBeanServerDelegate). It listens
@@ -22,34 +22,34 @@ The following bundles are installed (see configuration/config.ini):
     Furthermore an optional notification filter and handback object are defined in the Spring
     application context descriptor.
 	
-	  maexo-bundle.spring.notification-${maexo.version}.jar [activated]
+	  maexo-bundle.spring.notification-${com.buschmais.maexo.version}.jar [activated]
 
   * Spring MBean Server - The bundle exports an instance of the platform MBean server which is
     looked up using the MBeanServerFactoryBean provided by the Spring Framework.
 
-	  maexo-bundle.spring.server-${maexo.version}.jar [activated]
+	  maexo-bundle.spring.server-${com.buschmais.maexo.version}.jar [activated]
 
   * Switch Board - Life cycle monitoring for MBeans, notification listeners, MBean servers and MBean
     server connections for transparent export of resources to the JMX infrastructure.
     
-      maexo-framework.switchboard-${maexo.version}.jar [activated]
+      maexo-framework.switchboard-${com.buschmais.maexo.version}.jar [activated]
 
   * Spring Framework and its dependencies - The most interesting part is the Spring DM Extender which
     will look for active bundles in the container and evaluate application context descriptors.
       
-	  org.springframework.aop-${spring.maven.artifact.version}.jar
-      org.springframework.beans-${spring.maven.artifact.version}.jar
-      org.springframework.context-${spring.maven.artifact.version}.jar
-      org.springframework.core-${spring.maven.artifact.version}.jar
-      org.springframework.osgi.core-${spring.osgi.version}.jar
-      org.springframework.osgi.extender-${spring.osgi.version}.jar [activated]
-      org.springframework.osgi.io-${spring.osgi.version}.jar
-      com.springsource.org.aopalliance-${aopalliance.version}.jar 
+	  org.springframework.aop-${org.springframework.version}.jar
+      org.springframework.beans-${org.springframework.version}.jar
+      org.springframework.context-${org.springframework.version}.jar
+      org.springframework.core-${org.springframework.version}.jar
+      org.springframework.osgi.core-${org.springframework.osgi.version}.jar
+      org.springframework.osgi.extender-${org.springframework.osgi.version}.jar [activated]
+      org.springframework.osgi.io-${org.springframework.osgi.version}.jar
+      com.springsource.org.aopalliance-${org.aopalliance.version}.jar 
 	  
   * SLF4J logging framework (including JDK 1.4 adapter and Java Commons Logging API)
   
-      slf4j-api-${slf4j.version}.jar
-      slf4j-jdk14-${slf4j.version}.jar
-      jcl-over-slf4j-${slf4j.version}.jar
+      slf4j-api-${org.slf4j.version}.jar
+      slf4j-jdk14-${org.slf4j.version}.jar
+      jcl-over-slf4j-${org.slf4j.version}.jar
 
 The container may be started using equinox.cmd or equinox.sh.
