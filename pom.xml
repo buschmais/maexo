@@ -111,6 +111,33 @@ limitations under the License
 					<version>2.2-beta-3</version>
 				</plugin>
 				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>1.4.3</version>
+					<extensions>true</extensions>
+					<configuration>
+						<instructions>
+							<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+							<Implementation-Version>${BUILD_TAG}/${SVN_REVISION}</Implementation-Version>
+						</instructions>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<configuration>
+					  <attach>true</attach>
+					</configuration>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<configuration>
@@ -127,18 +154,6 @@ limitations under the License
 			        <artifactId>maven-checkstyle-plugin</artifactId>
 			        <version>2.2</version>
 		      	</plugin>
-				<plugin>
-					<groupId>org.apache.felix</groupId>
-					<artifactId>maven-bundle-plugin</artifactId>
-					<version>1.4.3</version>
-					<extensions>true</extensions>
-					<configuration>
-						<instructions>
-							<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-							<Implementation-Version>${BUILD_TAG}/${SVN_REVISION}</Implementation-Version>
-						</instructions>
-					</configuration>
-				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>findbugs-maven-plugin</artifactId>
@@ -349,8 +364,73 @@ limitations under the License
 			</dependency>
 
 			<dependency>
-				<groupId>com.buschmais.maexo.samples.assembly</groupId>
-				<artifactId>maexo-assembly.equinox</artifactId>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.ds.mbean</artifactId>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.ds.mbean</artifactId>
+				<classifier>sources</classifier>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.ds.notification</artifactId>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.ds.notification</artifactId>
+				<classifier>sources</classifier>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.spring.mbean</artifactId>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.spring.mbean</artifactId>
+				<classifier>sources</classifier>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.spring.notification</artifactId>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.spring.notification</artifactId>
+				<classifier>sources</classifier>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.spring.server</artifactId>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.spring.server</artifactId>
+				<classifier>sources</classifier>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.assembly.equinox</artifactId>
 				<type>zip</type>
 				<classifier>sample</classifier>
 				<version>${com.buschmais.maexo.version}</version>
@@ -363,89 +443,24 @@ limitations under the License
 			</dependency>
 
 			<dependency>
-				<groupId>com.buschmais.maexo.samples.bundle</groupId>
-				<artifactId>maexo-bundle.ds.mbean</artifactId>
-				<version>${com.buschmais.maexo.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.buschmais.maexo.samples.bundle</groupId>
-				<artifactId>maexo-bundle.ds.mbean</artifactId>
-				<classifier>sources</classifier>
-				<version>${com.buschmais.maexo.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.buschmais.maexo.samples.bundle</groupId>
-				<artifactId>maexo-bundle.ds.notification</artifactId>
-				<version>${com.buschmais.maexo.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.buschmais.maexo.samples.bundle</groupId>
-				<artifactId>maexo-bundle.ds.notification</artifactId>
-				<classifier>sources</classifier>
-				<version>${com.buschmais.maexo.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.buschmais.maexo.samples.bundle</groupId>
-				<artifactId>maexo-bundle.spring.mbean</artifactId>
-				<version>${com.buschmais.maexo.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.buschmais.maexo.samples.bundle</groupId>
-				<artifactId>maexo-bundle.spring.mbean</artifactId>
-				<classifier>sources</classifier>
-				<version>${com.buschmais.maexo.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.buschmais.maexo.samples.bundle</groupId>
-				<artifactId>maexo-bundle.spring.notification</artifactId>
-				<version>${com.buschmais.maexo.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.buschmais.maexo.samples.bundle</groupId>
-				<artifactId>maexo-bundle.spring.notification</artifactId>
-				<classifier>sources</classifier>
-				<version>${com.buschmais.maexo.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.buschmais.maexo.samples.bundle</groupId>
-				<artifactId>maexo-bundle.spring.server</artifactId>
-				<version>${com.buschmais.maexo.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.buschmais.maexo.samples.bundle</groupId>
-				<artifactId>maexo-bundle.spring.server</artifactId>
-				<classifier>sources</classifier>
-				<version>${com.buschmais.maexo.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.buschmais.maexo.samples.assembly</groupId>
-				<artifactId>maexo-assembly.basic</artifactId>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.assembly.basic</artifactId>
 				<type>zip</type>
 				<version>${com.buschmais.maexo.version}</version>
 				<classifier>sample</classifier>
 			</dependency>
 
 			<dependency>
-				<groupId>com.buschmais.maexo.samples.assembly</groupId>
-				<artifactId>maexo-assembly.ds</artifactId>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.assembly.ds</artifactId>
 				<type>zip</type>
 				<version>${com.buschmais.maexo.version}</version>
 				<classifier>sample</classifier>
 			</dependency>
 
 			<dependency>
-				<groupId>com.buschmais.maexo.samples.assembly</groupId>
-				<artifactId>maexo-assembly.spring</artifactId>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.assembly.spring</artifactId>
 				<type>zip</type>
 				<version>${com.buschmais.maexo.version}</version>
 				<classifier>sample</classifier>

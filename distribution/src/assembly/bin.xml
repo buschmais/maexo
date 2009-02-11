@@ -53,9 +53,9 @@
 			<outputDirectory>samples</outputDirectory>
 			<unpack>true</unpack>
 			<includes>
-				<include>com.buschmais.maexo.samples.assembly:maexo-assembly.basic</include>
-				<include>com.buschmais.maexo.samples.assembly:maexo-assembly.ds</include>
-				<include>com.buschmais.maexo.samples.assembly:maexo-assembly.spring</include>
+				<include>com.buschmais.maexo.samples:maexo-samples.assembly.basic</include>
+				<include>com.buschmais.maexo.samples:maexo-samples.assembly.ds</include>
+				<include>com.buschmais.maexo.samples:maexo-samples.assembly.spring</include>
 			</includes>
 		</dependencySet>
 		<dependencySet>
