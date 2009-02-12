@@ -35,7 +35,7 @@ The container may be started using equinox.cmd or equinox.sh. Now a management c
 connected:
 
   * JDK 6.0 comes with VisualVM which can be found in the directory bin/ of the local Java
-    installation (e.g. C:\Program Files\Java\Jdk1.5.0_17\bin). Alternatively it is available from
+    installation (e.g. C:\Program Files\Java\Jdk1.6.0_12\bin). Alternatively it is available from
     the web site http://visualvm.dev.java.net.
     It offers a wide range of functionality to monitor, manage and profile running Java
     applications and allows installation of a plugin called VisualVM-MBeans (see Tools->Plugins).
