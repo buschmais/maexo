@@ -54,6 +54,7 @@
 			<unpack>true</unpack>
 			<includes>
 				<include>com.buschmais.maexo.samples:maexo-samples.assembly.basic</include>
+				<include>com.buschmais.maexo.samples:maexo-samples.assembly.commons.mbean</include>
 				<include>com.buschmais.maexo.samples:maexo-samples.assembly.ds</include>
 				<include>com.buschmais.maexo.samples:maexo-samples.assembly.spring</include>
 			</includes>

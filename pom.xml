@@ -365,6 +365,19 @@ limitations under the License
 
 			<dependency>
 				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.commons.mbean</artifactId>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.commons.mbean</artifactId>
+				<classifier>sources</classifier>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
 				<artifactId>maexo-samples.ds.mbean</artifactId>
 				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
@@ -445,6 +458,14 @@ limitations under the License
 			<dependency>
 				<groupId>com.buschmais.maexo.samples</groupId>
 				<artifactId>maexo-samples.assembly.basic</artifactId>
+				<type>zip</type>
+				<version>${com.buschmais.maexo.version}</version>
+				<classifier>sample</classifier>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.samples</groupId>
+				<artifactId>maexo-samples.assembly.commons.mbean</artifactId>
 				<type>zip</type>
 				<version>${com.buschmais.maexo.version}</version>
 				<classifier>sample</classifier>

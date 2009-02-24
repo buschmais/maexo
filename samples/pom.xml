@@ -33,9 +33,11 @@
 
 	<modules>
 		<module>assembly.basic</module>
+		<module>assembly.commons.mbean</module>
 		<module>assembly.equinox</module>
 		<module>assembly.ds</module>
 		<module>assembly.spring</module>
+		<module>commons.mbean</module>
 		<module>ds.mbean</module>
 		<module>ds.notification</module>
 		<module>spring.mbean</module>

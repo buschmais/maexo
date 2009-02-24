@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -32,14 +32,14 @@ import org.osgi.framework.ServiceReference;
  * The following assumptions are used:
  * <ul>
  * <li>No filter is used for tracking services.</li>
- * <li>The object name may be constructed by using an
+ * <li>The object name can be constructed by using an
  * {@link com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactory}
  * which must have been registered for the service interface provided by the
  * method {@link ServiceMBeanLifeCycleSupport#getServiceInterface()}.
  * </ul>
  * <p>
- * The following information will be used to create an object name for the OSGi service mbean
- * {@link #getObjectName(ServiceReference, Object)}:
+ * The following information will be used to create an object name for the OSGi
+ * service MBean {@link #getObjectName(ServiceReference, Object)}:
  * <ul>
  * <li>{@link Constants#SERVICE_DESCRIPTION}</li>
  * <li>{@link Constants#SERVICE_ID}</li>
@@ -51,6 +51,10 @@ import org.osgi.framework.ServiceReference;
 public abstract class DefaultServiceMBeanLifeCycleSupport extends
 		ServiceMBeanLifeCycleSupport {
 
+	/**
+	 * Defines the properties which will be passed from the service reference to
+	 * the object name factory.
+	 */
 	private static final String[] OBJECTNAME_PROPERTIES = new String[] {
 			Constants.SERVICE_DESCRIPTION, Constants.SERVICE_ID,
 			Constants.SERVICE_PID, Constants.SERVICE_RANKING,
@@ -58,7 +62,7 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param bundleContext
 	 *            The bundle context of the exporting bundle.
 	 */
@@ -68,23 +72,19 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @return <code>null</code> as default.
 	 */
-	// CSOFF: DesignForExtensionCheck
 	@Override
-	public String getServiceFilter() {
+	protected final String getServiceFilter() {
 		return null;
 	}
-
-	// CSON: DesignForExtensionCheck
 
 	/**
 	 * {@inheritDoc}
 	 */
-	// CSOFF: DesignForExtensionCheck
 	@Override
-	protected ObjectName getObjectName(ServiceReference serviceReference,
+	protected final ObjectName getObjectName(ServiceReference serviceReference,
 			Object service) {
 		Map<String, Object> properties = new HashMap<String, Object>();
 		for (String propertyName : OBJECTNAME_PROPERTIES) {
@@ -94,5 +94,4 @@ public abstract class DefaultServiceMBeanLifeCycleSupport extends
 		return super.getObjectNameHelper().getObjectName(service,
 				this.getServiceInterface(), properties);
 	}
-	// CSON: DesignForExtensionCheck
 }
