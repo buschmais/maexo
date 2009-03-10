@@ -30,8 +30,6 @@ import com.buschmais.maexo.test.MaexoTests;
 import com.buschmais.maexo.test.common.mbeans.DynamicMBean;
 import com.buschmais.maexo.test.common.mbeans.DynamicMBeanImpl;
 import com.buschmais.maexo.test.common.mbeans.MaexoMBeanTests;
-import com.buschmais.maexo.test.common.mbeans.OpenMBean;
-import com.buschmais.maexo.test.common.mbeans.OpenMBeanImpl;
 
 /**
  * @see MaexoTests
@@ -43,10 +41,7 @@ public class DynamicMBeanSupportTest extends MaexoMBeanTests {
 	 */
 	private static final String OBJECTNAME_DYNAMICMBEAN = "com.buschmais.maexo:type=DynamicMBean";
 
-	private static final String OBJECTNAME_OPENMBEAN = "com.buschmais.maexo:type=OpenMBean";
-
-	private OpenMBean openMBean;
-	private ServiceRegistration openMBeanRegistration;
+	private DynamicMBeanSupport dynamicMBeanSupport;
 	private DynamicMBean dynamicMBean;
 	private ServiceRegistration dynamicMBeanRegistration;
 
@@ -66,13 +61,6 @@ public class DynamicMBeanSupportTest extends MaexoMBeanTests {
 	@Override
 	protected void onSetUp() throws Exception {
 		super.onSetUp();
-		this.openMBean = new OpenMBeanImpl();
-		Dictionary<String, Object> openMBeanProperties = new Hashtable<String, Object>();
-		openMBeanProperties.put(ObjectName.class.getName(), new ObjectName(
-				OBJECTNAME_OPENMBEAN));
-		this.openMBeanRegistration = super.bundleContext.registerService(
-				javax.management.DynamicMBean.class.getName(), this.openMBean,
-				openMBeanProperties);
 		this.dynamicMBean = new DynamicMBeanImpl();
 		Dictionary<String, Object> dynamicMBeanProperties = new Hashtable<String, Object>();
 		dynamicMBeanProperties.put(ObjectName.class.getName(), new ObjectName(
@@ -88,7 +76,6 @@ public class DynamicMBeanSupportTest extends MaexoMBeanTests {
 	@Override
 	protected void onTearDown() throws Exception {
 		this.dynamicMBeanRegistration.unregister();
-		this.openMBeanRegistration.unregister();
 	}
 
 	/**

@@ -33,7 +33,6 @@ public class MBeanMethodDescriptor {
 
 	static {
 		Map<String, String> nativeTypeTranslations = new HashMap<String, String>();
-		nativeTypeTranslations = new HashMap<String, String>();
 		nativeTypeTranslations.put(Boolean.TYPE.getName(), Boolean.class
 				.getName());
 		nativeTypeTranslations.put(Byte.TYPE.getName(), Byte.class.getName());
