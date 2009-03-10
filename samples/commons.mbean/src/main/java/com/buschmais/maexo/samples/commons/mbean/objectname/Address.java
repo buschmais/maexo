@@ -36,7 +36,7 @@ public class Address {
 	 *
 	 * @return The id.
 	 */
-	public int getId() {
+	public final  int getId() {
 		return id;
 	}
 
@@ -46,7 +46,7 @@ public class Address {
 	 * @param id
 	 *            The id to set.
 	 */
-	public void setId(int id) {
+	public final void setId(int id) {
 		this.id = id;
 	}
 
@@ -55,7 +55,7 @@ public class Address {
 	 *
 	 * @return The person.
 	 */
-	public Person getPerson() {
+	public final Person getPerson() {
 		return person;
 	}
 
@@ -65,7 +65,7 @@ public class Address {
 	 * @param person
 	 *            The person to set.
 	 */
-	public void setPerson(Person person) {
+	public final void setPerson(Person person) {
 		this.person = person;
 	}
 

@@ -31,7 +31,7 @@ public class AddressObjectNameFactory implements ObjectNameFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public ObjectName getObjectName(Object resource,
+	public final ObjectName getObjectName(Object resource,
 			Map<String, Object> properties) {
 		Address address = (Address) resource;
 		try {

@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -72,23 +72,23 @@ public abstract class MBeanSupport extends NotificationBroadcasterSupport
 
 	/**
 	 * Returns the MBean server.
-	 * 
+	 *
 	 * @return The MBean server.
 	 */
-	protected MBeanServer getMBeanServer() {
+	protected final MBeanServer getMBeanServer() {
 		return this.mbeanServer;
 	}
 
 	/**
 	 * Gets the value of a specific attribute of a named MBean. The MBean is
 	 * identified by its object name.
-	 * 
+	 *
 	 * @param objectName
 	 *            The object name of the MBean from which the attribute is to be
 	 *            retrieved.
 	 * @param attribute
 	 *            A String specifying the name of the attribute to be retrieved.
-	 * 
+	 *
 	 * @return The value of the retrieved attribute.
 	 */
 	protected final Object getAttribute(ObjectName objectName, String attribute) {
@@ -106,7 +106,7 @@ public abstract class MBeanSupport extends NotificationBroadcasterSupport
 	/**
 	 * Sets the value of a specific attribute of a named MBean. The MBean is
 	 * identified by its object name.
-	 * 
+	 *
 	 * @param objectName
 	 *            The object name of the MBean from which the attribute is to be
 	 *            set.
@@ -114,8 +114,6 @@ public abstract class MBeanSupport extends NotificationBroadcasterSupport
 	 *            A String specifying the name of the attribute to be set.
 	 * @param value
 	 *            The new value of the attribute.
-	 * 
-	 * @return The value of the retrieved attribute.
 	 */
 	protected final void setAttribute(ObjectName objectName, String name,
 			Object value) {

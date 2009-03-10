@@ -1,6 +1,6 @@
 /*
  * Copyright 2009 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Sample implementation of a {@link NotificationListener}
+ * Sample implementation of a {@link NotificationListener}.
  */
 public class SampleNotificationListener implements NotificationListener {
 
@@ -43,7 +43,7 @@ public class SampleNotificationListener implements NotificationListener {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void handleNotification(Notification notification, Object handback) {
+	public final void handleNotification(Notification notification, Object handback) {
 		logger.info("received notification: \"{}\"", notification.toString());
 
 	}

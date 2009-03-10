@@ -44,7 +44,7 @@ public class Person {
 	 *
 	 * @return The first name.
 	 */
-	public String getFirstName() {
+	public final String getFirstName() {
 		return firstName;
 	}
 
@@ -54,7 +54,7 @@ public class Person {
 	 * @param firstName
 	 *            The first name to set.
 	 */
-	public void setFirstName(String firstName) {
+	public final void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
@@ -63,7 +63,7 @@ public class Person {
 	 *
 	 * @return The last name.
 	 */
-	public String getLastName() {
+	public final String getLastName() {
 		return lastName;
 	}
 
@@ -73,7 +73,7 @@ public class Person {
 	 * @param lastName
 	 *            The last name to set.
 	 */
-	public void setLastName(String lastName) {
+	public final void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
@@ -82,7 +82,7 @@ public class Person {
 	 *
 	 * @return The addresses.
 	 */
-	public List<Address> getAdresses() {
+	public final List<Address> getAdresses() {
 		return addresses;
 	}
 
@@ -92,7 +92,7 @@ public class Person {
 	 * @param addresses
 	 *            The address list to set.
 	 */
-	public void setAdresses(List<Address> adresses) {
-		this.addresses = adresses;
+	public final void setAdresses(List<Address> addresses) {
+		this.addresses = addresses;
 	}
 }

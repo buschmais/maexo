@@ -28,5 +28,5 @@ public interface Service {
 	 * @param message
 	 *            The message.
 	 */
-	public void hello(String message);
+	void hello(String message);
 }

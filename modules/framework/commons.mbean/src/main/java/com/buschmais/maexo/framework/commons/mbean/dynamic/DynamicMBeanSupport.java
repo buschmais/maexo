@@ -140,7 +140,7 @@ public abstract class DynamicMBeanSupport extends MBeanSupport implements
 	 * signatures.
 	 */
 	private void introspectMBeanMethods() {
-		Map<MBeanMethodDescriptor, Method> mbeanMethods = new HashMap<MBeanMethodDescriptor, Method>();
+		this.mbeanMethods = new HashMap<MBeanMethodDescriptor, Method>();
 		for (Method mbeanMethod : this.getClass().getMethods()) {
 			List<String> parameterTypes = new LinkedList<String>();
 			for (Class<?> parameterType : mbeanMethod.getParameterTypes()) {
@@ -151,7 +151,7 @@ public abstract class DynamicMBeanSupport extends MBeanSupport implements
 							.toArray(new String[0]));
 			mbeanMethods.put(descriptor, mbeanMethod);
 		}
-		this.mbeanMethods = Collections.unmodifiableMap(mbeanMethods);
+		this.mbeanMethods = Collections.unmodifiableMap(this.mbeanMethods);
 	}
 
 	/**
@@ -318,7 +318,7 @@ public abstract class DynamicMBeanSupport extends MBeanSupport implements
 	 * @param newValue
 	 *            The new value.
 	 */
-	protected void sendAttributeChangeNotification(
+	protected final void sendAttributeChangeNotification(
 			MBeanAttributeInfo mbeanAttributeInfo, Object oldValue,
 			Object newValue) {
 		this.sendNotification(new AttributeChangeNotification(this,

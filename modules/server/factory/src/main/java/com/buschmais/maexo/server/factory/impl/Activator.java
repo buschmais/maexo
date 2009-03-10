@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -52,11 +52,11 @@ public final class Activator implements BundleActivator {
 
 	/**
 	 * Returns the agentId for an MBean server.
-	 * 
+	 *
 	 * @param mbeanServer
 	 *            The MBean server.
 	 * @return The agentId.
-	 * @throws JMException
+	 * @throws JMException The JMException thrown while accessing the MBeanServerDelegate.
 	 */
 	private String getAgentId(MBeanServer mbeanServer) throws JMException {
 		MBeanServerDelegateMBean mbeanServerDelegateMBean = (MBeanServerDelegateMBean) MBeanServerInvocationHandler

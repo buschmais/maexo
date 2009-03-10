@@ -1,6 +1,6 @@
 /*
  * Copyright 2009 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -23,12 +23,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Sample implementation of a {@link NotificationFilter}
+ * Sample implementation of a {@link NotificationFilter}.
  */
 public class SampleNotificationFilter implements NotificationFilter {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1708333410465497442L;
 
@@ -48,7 +48,7 @@ public class SampleNotificationFilter implements NotificationFilter {
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean isNotificationEnabled(Notification notification) {
+	public final boolean isNotificationEnabled(Notification notification) {
 		logger.info("The notification filter received a notification: \"{}\"",
 				notification.toString());
 		return true;

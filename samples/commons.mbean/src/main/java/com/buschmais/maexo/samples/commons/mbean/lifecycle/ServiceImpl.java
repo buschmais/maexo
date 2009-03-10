@@ -33,7 +33,7 @@ public class ServiceImpl implements Service {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void hello(String message) {
+	public final void hello(String message) {
 		// This implementation just logs the provided
 		// messages.
 		logger.info(message);

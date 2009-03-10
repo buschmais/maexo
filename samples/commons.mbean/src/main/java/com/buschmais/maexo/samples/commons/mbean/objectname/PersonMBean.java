@@ -67,7 +67,7 @@ public class PersonMBean extends DynamicMBeanSupport {
 	/**
 	 * {@inheritDoc}
 	 */
-	public MBeanInfo getMBeanInfo() {
+	public final MBeanInfo getMBeanInfo() {
 		String className = this.getClass().getName();
 		OpenMBeanAttributeInfo firstNameInfo = new OpenMBeanAttributeInfoSupport(
 				"firstName", "The first name.", SimpleType.STRING, true, false,
@@ -87,7 +87,12 @@ public class PersonMBean extends DynamicMBeanSupport {
 				new MBeanNotificationInfo[] {});
 	}
 
-	public ObjectName[] getAddresses() {
+	/**
+	 * Returns the addresses as object name representation.
+	 *
+	 * @return The object names.
+	 */
+	public final ObjectName[] getAddresses() {
 		List<ObjectName> addresses = new LinkedList<ObjectName>();
 		for (Address address : this.person.getAdresses()) {
 			addresses.add(this.objectNameFactoryHelper.getObjectName(address,

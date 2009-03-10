@@ -31,7 +31,7 @@ public class PersonObjectNameFactory implements ObjectNameFactory {
 	/**
 	 * {@inheritDoc}
 	 */
-	public ObjectName getObjectName(Object resource,
+	public final ObjectName getObjectName(Object resource,
 			Map<String, Object> properties) {
 		Person person = (Person) resource;
 		try {

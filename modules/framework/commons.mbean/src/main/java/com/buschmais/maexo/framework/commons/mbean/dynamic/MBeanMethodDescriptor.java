@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class MBeanMethodDescriptor {
 
-	private final static Map<String, String> NATIVE_TYPE_TRANSLATIONS;
+	private static final Map<String, String> NATIVE_TYPE_TRANSLATIONS;
 
 	static {
 		Map<String, String> nativeTypeTranslations = new HashMap<String, String>();
@@ -94,7 +94,7 @@ public class MBeanMethodDescriptor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -107,24 +107,31 @@ public class MBeanMethodDescriptor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public final boolean equals(Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		MBeanMethodDescriptor other = (MBeanMethodDescriptor) obj;
 		if (name == null) {
-			if (other.name != null)
+			if (other.name != null) {
 				return false;
-		} else if (!name.equals(other.name))
+			}
+		} else if (!name.equals(other.name)) {
 			return false;
+		}
 		if (parameterTypes == null) {
-			if (other.parameterTypes != null)
+			if (other.parameterTypes != null) {
 				return false;
-		} else if (!parameterTypes.equals(other.parameterTypes))
+			}
+		} else if (!parameterTypes.equals(other.parameterTypes)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -132,7 +139,7 @@ public class MBeanMethodDescriptor {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public final String toString() {
 		return String.format("%s(%s)", this.name, this.parameterTypes);
 	}
 

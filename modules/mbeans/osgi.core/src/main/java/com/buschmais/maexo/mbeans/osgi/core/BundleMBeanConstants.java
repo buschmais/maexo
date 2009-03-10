@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -118,11 +118,38 @@ public final class BundleMBeanConstants {
 			false, false);
 
 	/**
-	 * Enum type for bundle states for MBean attribute
+	 * Enum type for bundle states for MBean attribute.
 	 * {@link BundleMBean#getStateAsName()}
 	 */
 	public enum State {
-		UNINSTALLED, INSTALLED, RESOLVED, STARTING, STOPPING, ACTIVE, UNKNOWN
+		/**
+		 * Bundle state: uninstalled.
+		 */
+		UNINSTALLED,
+		/**
+		 * Bundle state: installed.
+		 */
+		INSTALLED,
+		/**
+		 * Bundle state: resolved.
+		 */
+		RESOLVED,
+		/**
+		 * Bundle state: starting.
+		 */
+		STARTING,
+		/**
+		 * Bundle state: stopping.
+		 */
+		STOPPING,
+		/**
+		 * Bundle state: active.
+		 */
+		ACTIVE,
+		/**
+		 * Bundle state: unknown.
+		 */
+		UNKNOWN
 	}
 
 	/** MBean attribute info for {@link BundleMBean#getStateAsName()}. */

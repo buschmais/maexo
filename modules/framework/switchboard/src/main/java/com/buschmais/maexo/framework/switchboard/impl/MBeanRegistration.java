@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -24,7 +24,7 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * Represents an MBean which is registered with the switchboard.
- * 
+ *
  * @see SwitchBoardImpl
  */
 public final class MBeanRegistration {
@@ -47,7 +47,7 @@ public final class MBeanRegistration {
 	 * The service reference must contain either a "
 	 * <code>javax.management.ObjectName</code>" or a "<code>objectName</code>"
 	 * property which contains the MBean object name.
-	 * 
+	 *
 	 * @param bundleContext
 	 *            The bundle context.
 	 * @param serviceReference
@@ -64,9 +64,8 @@ public final class MBeanRegistration {
 		this.objectName = (ObjectName) serviceReference
 				.getProperty(ObjectName.class.getName());
 		if (this.objectName == null) {
-			Object objectName = serviceReference
-					.getProperty(SERVICE_PROPERTY_OBJECTNAME);
-			this.objectName = new ObjectName(objectName.toString());
+			this.objectName = new ObjectName((String) serviceReference
+					.getProperty(SERVICE_PROPERTY_OBJECTNAME));
 		}
 		this.mbean = bundleContext.getService(serviceReference);
 	}

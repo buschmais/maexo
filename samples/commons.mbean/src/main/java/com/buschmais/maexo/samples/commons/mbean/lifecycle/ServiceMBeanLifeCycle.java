@@ -24,7 +24,6 @@ import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.buschmais.maexo.framework.commons.mbean.lifecycle.DefaultServiceMBeanLifeCycleSupport;
 import com.buschmais.maexo.framework.commons.mbean.lifecycle.ServiceMBeanLifeCycleSupport;
 
 /**
@@ -61,25 +60,32 @@ public class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 	/**
 	 * Returns the class which defines the services to track in the OSGi service
 	 * registry.
+	 *
+	 * {@inheritDoc}
 	 */
 	@Override
-	protected Class<?> getServiceInterface() {
+	protected final Class<?> getServiceInterface() {
 		return Service.class;
 	}
 
 	/**
 	 * An additional filter may be used for tracking services.
+	 *
+	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getServiceFilter() {
+	protected final String getServiceFilter() {
 		return null;
 	}
 
 	/**
 	 * Constructs the MBean which will represent/manage the service.
+	 *
+	 * {@inheritDoc}
 	 */
 	@Override
-	protected Object getMBean(ServiceReference serviceReference, Object service) {
+	protected final Object getMBean(ServiceReference serviceReference,
+			Object service) {
 		logger.info(String.format("constructing service MBean for service %s",
 				service));
 		return new ServiceMBean((Service) service);
@@ -87,17 +93,21 @@ public class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 
 	/**
 	 * Returns the interface which will be used to publish the MBean.
+	 *
+	 * {@inheritDoc}
 	 */
 	@Override
-	protected Class<?> getMBeanInterface() {
+	protected final Class<?> getMBeanInterface() {
 		return DynamicMBean.class;
 	}
 
 	/**
 	 * Returns the {@link ObjectName} for the MBean.
+	 *
+	 * {@inheritDoc}
 	 */
 	@Override
-	protected ObjectName getObjectName(ServiceReference serviceReference,
+	protected final ObjectName getObjectName(ServiceReference serviceReference,
 			Object service) {
 		try {
 			return new ObjectName(

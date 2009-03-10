@@ -26,11 +26,11 @@ public interface ServicePublisherMBean {
 	/**
 	 * Registers a {@link Service} instance in the OSGi service registry.
 	 */
-	public void registerService();
+	void registerService();
 
 	/**
 	 * Unregisters a formerly registered instance of {@link Service} from
 	 * the OSGi service registry.
 	 */
-	public void unregisterService();
+	void unregisterService();
 }

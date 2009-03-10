@@ -63,7 +63,7 @@ public class AddressMBean extends DynamicMBeanSupport {
 	/**
 	 * {@inheritDoc}
 	 */
-	public MBeanInfo getMBeanInfo() {
+	public final MBeanInfo getMBeanInfo() {
 		String className = this.getClass().getName();
 		OpenMBeanAttributeInfo idInfo = new OpenMBeanAttributeInfoSupport(
 				"person", "The id.", SimpleType.INTEGER, true, false, false);
@@ -83,7 +83,7 @@ public class AddressMBean extends DynamicMBeanSupport {
 	 *
 	 * @return The id of the address.
 	 */
-	public Integer getId() {
+	public final Integer getId() {
 		return Integer.valueOf(this.address.getId());
 	}
 
@@ -93,7 +93,7 @@ public class AddressMBean extends DynamicMBeanSupport {
 	 *
 	 * @return The object name of the {@link PersonMBean}.
 	 */
-	public ObjectName getPerson() {
+	public final ObjectName getPerson() {
 		return this.objectNameFactoryHelper.getObjectName(this.address
 				.getPerson(), Person.class);
 	}

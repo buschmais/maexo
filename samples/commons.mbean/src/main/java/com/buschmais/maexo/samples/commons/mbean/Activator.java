@@ -44,10 +44,13 @@ import com.buschmais.maexo.samples.commons.mbean.openmbean.OpenMBean;
 
 /**
  * The bundle activator.
- * <p>
- * Registers
  */
 public class Activator implements BundleActivator {
+
+	/**
+	 * The number of address which will be generated for a person.
+	 */
+	private static final int ADDRESS_COUNT = 10;
 
 	/**
 	 * The logger.
@@ -68,22 +71,22 @@ public class Activator implements BundleActivator {
 	/**
 	 * The service registration of the open MBean.
 	 */
-	private ServiceRegistration openMBean;
+	private ServiceRegistration openMBeanRegistration;
 
 	/**
 	 * The service registration of the person MBean.
 	 */
-	private ServiceRegistration personMBean;
+	private ServiceRegistration personMBeanRegistration;
 
 	/**
 	 * The service registrations of the address MBeans.
 	 */
-	private List<ServiceRegistration> addressMBeans;
+	private List<ServiceRegistration> addressMBeanRegistrations;
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void start(BundleContext bundleContext) throws Exception {
+	public final void start(BundleContext bundleContext) throws Exception {
 		// register services of MBean life cycle support sample
 		logger.info("registering service publisher MBean.");
 		Dictionary<String, Object> publisherProperties = new Hashtable<String, Object>();
@@ -102,7 +105,7 @@ public class Activator implements BundleActivator {
 		Dictionary<String, Object> openMBeanProperties = new Hashtable<String, Object>();
 		openMBeanProperties.put("objectName",
 				"com.buschmais.maexo.sample:type=OpenMBean");
-		this.openMBean = bundleContext.registerService(DynamicMBean.class
+		this.openMBeanRegistration = bundleContext.registerService(DynamicMBean.class
 				.getName(), new OpenMBean(), openMBeanProperties);
 
 		// register services of the object name factory sample
@@ -124,11 +127,11 @@ public class Activator implements BundleActivator {
 		personMBeanProperties.put(ObjectName.class.getName(),
 				objectNameFactoryHelper.getObjectName(person, Person.class));
 		logger.info("registering PersonMBean.");
-		this.personMBean = bundleContext.registerService(DynamicMBean.class
+		this.personMBeanRegistration = bundleContext.registerService(DynamicMBean.class
 				.getName(), personMBean, personMBeanProperties);
-		this.addressMBeans = new LinkedList<ServiceRegistration>();
+		this.addressMBeanRegistrations = new LinkedList<ServiceRegistration>();
 		// create addresses and address MBean
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < ADDRESS_COUNT; i++) {
 			Address address = new Address();
 			address.setId(i);
 			address.setPerson(person);
@@ -140,7 +143,7 @@ public class Activator implements BundleActivator {
 					objectNameFactoryHelper.getObjectName(address,
 							Address.class));
 			logger.info("registering AddressMBean {}.", Integer.valueOf(i));
-			this.addressMBeans.add(bundleContext.registerService(
+			this.addressMBeanRegistrations.add(bundleContext.registerService(
 					DynamicMBean.class.getName(), addressMBean,
 					addressMBeanProperties));
 		}
@@ -149,17 +152,17 @@ public class Activator implements BundleActivator {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void stop(BundleContext arg0) throws Exception {
+	public final void stop(BundleContext arg0) throws Exception {
 		logger.info("stopping ServiceMBeanLifeCycle instance.");
 		this.serviceMBeanLifeCycle.stop();
 		logger.info("unregistering service publisher MBean.");
 		this.servicePublisherMBean.unregister();
 		logger.info("unregistering Open MBean.");
-		this.openMBean.unregister();
+		this.openMBeanRegistration.unregister();
 		logger.info("unregistering PersonMBean.");
-		this.personMBean.unregister();
+		this.personMBeanRegistration.unregister();
 		logger.info("unregistering AddressMBeans.");
-		for (ServiceRegistration addressMBean : this.addressMBeans) {
+		for (ServiceRegistration addressMBean : this.addressMBeanRegistrations) {
 			addressMBean.unregister();
 		}
 	}

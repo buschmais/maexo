@@ -16,7 +16,6 @@
  */
 package com.buschmais.maexo.samples.commons.mbean.openmbean;
 
-import javax.management.DynamicMBean;
 import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.openmbean.CompositeData;
@@ -47,9 +46,9 @@ import com.buschmais.maexo.framework.commons.mbean.dynamic.OpenTypeFactory;
  * <p>
  * The implementation provides an operation which will do a calculation on two
  * provided parameters <code>a</code> and <code>b</code> depending on the
- * current value of the attribute
- * <code>operationMode</mode>. All information is logged into the attribute <code>operationLog</code>
- * which may be reseted using the operation <code>clear</code>.
+ * current value of the attribute <code>operationMode</code>. All information is
+ * logged into the attribute <code>operationLog</code> which may be reseted
+ * using the operation <code>clear</code>.
  * <p>
  * The MBean only contains an implementation of the method
  * {@link DynamicMBean#getMBeanInfo()} to provide meta information. The other
@@ -63,7 +62,22 @@ public class OpenMBean extends DynamicMBeanSupport {
 	 * Defines the supported operations.
 	 */
 	enum OperationMode {
-		ADD, SUB, MUL, DIV
+		/**
+		 * Add.
+		 */
+		ADD,
+		/**
+		 * Sub.
+		 */
+		SUB,
+		/**
+		 * Mul.
+		 */
+		MUL,
+		/**
+		 * Div.
+		 */
+		DIV
 	};
 
 	/**
@@ -105,7 +119,7 @@ public class OpenMBean extends DynamicMBeanSupport {
 	/**
 	 * {@inheritDoc}
 	 */
-	public MBeanInfo getMBeanInfo() {
+	public final MBeanInfo getMBeanInfo() {
 		String className = this.getClass().getName();
 		OpenMBeanAttributeInfo[] mbeanAttributes = new OpenMBeanAttributeInfo[] {
 				new OpenMBeanAttributeInfoSupport(
@@ -140,7 +154,7 @@ public class OpenMBean extends DynamicMBeanSupport {
 	 *
 	 * @return The operation mode.
 	 */
-	public String getOperationMode() {
+	public final String getOperationMode() {
 		return this.operationMode.toString();
 	}
 
@@ -156,7 +170,7 @@ public class OpenMBean extends DynamicMBeanSupport {
 	 *            <li>DIV</li>
 	 *            </ul>
 	 */
-	public void setOperationMode(String operationMode) {
+	public final void setOperationMode(String operationMode) {
 		this.operationMode = OperationMode.valueOf(operationMode);
 	}
 
@@ -165,7 +179,7 @@ public class OpenMBean extends DynamicMBeanSupport {
 	 *
 	 * @return The operation log.
 	 */
-	public TabularData getOperationLog() {
+	public final TabularData getOperationLog() {
 		return this.operationLog;
 	}
 
@@ -179,7 +193,7 @@ public class OpenMBean extends DynamicMBeanSupport {
 	 *            The second parameter.
 	 * @return The result of the operation.
 	 */
-	public Integer operation(Integer a, Integer b) {
+	public final Integer operation(Integer a, Integer b) {
 		if (a == null || b == null) {
 			throw new IllegalArgumentException(String.format(
 					"The parameters must not be null: a=%s b=%s", a, b));
@@ -221,7 +235,7 @@ public class OpenMBean extends DynamicMBeanSupport {
 	/**
 	 * Clears the operation log.
 	 */
-	public void clearOperationLog() {
+	public final void clearOperationLog() {
 		this.operationLog.clear();
 	}
 }

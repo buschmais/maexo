@@ -16,7 +16,6 @@
  */
 package com.buschmais.maexo.samples.commons.mbean.lifecycle;
 
-import javax.management.DynamicMBean;
 import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.openmbean.OpenMBeanAttributeInfo;
@@ -66,8 +65,10 @@ public class ServiceMBean extends DynamicMBeanSupport {
 	/**
 	 * Returns meta data for this MBean. This method is an implementation of the
 	 * method declared in {@link DynamicMBean#getMBeanInfo()}.
+	 *
+	 * {@inheritDoc}
 	 */
-	public MBeanInfo getMBeanInfo() {
+	public final MBeanInfo getMBeanInfo() {
 		String className = this.getClass().getName();
 		OpenMBeanOperationInfo[] mbeanOperations = new OpenMBeanOperationInfo[] { new OpenMBeanOperationInfoSupport(
 				"hello",
@@ -89,7 +90,7 @@ public class ServiceMBean extends DynamicMBeanSupport {
 	 * @param message
 	 *            The message.
 	 */
-	public void hello(String message) {
+	public final void hello(String message) {
 		logger.info("operation \"hello\" invoked on service MBean");
 		this.service.hello(message + (" [invoked by MBean]"));
 	}

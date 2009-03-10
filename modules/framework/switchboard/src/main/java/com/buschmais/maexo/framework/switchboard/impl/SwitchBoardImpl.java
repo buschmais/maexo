@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -93,7 +93,7 @@ public final class SwitchBoardImpl {
 	 * <p>
 	 * The notification listener is registered on all known MBean server
 	 * connections.
-	 * 
+	 *
 	 * @param notificationListenerRegistration
 	 *            The notification listener registration.
 	 */
@@ -130,7 +130,7 @@ public final class SwitchBoardImpl {
 	 * <p>
 	 * The MBean server connection is associated with all known notification
 	 * listeners.
-	 * 
+	 *
 	 * @param mbeanServerConnectionRegistration
 	 *            The MBean server connection registration.
 	 */
@@ -164,7 +164,7 @@ public final class SwitchBoardImpl {
 
 	/**
 	 * Adds a notification listener on an MBean server connection.
-	 * 
+	 *
 	 * @param mbeanServerConnection
 	 *            The MBean server connection.
 	 * @param objectName
@@ -201,7 +201,7 @@ public final class SwitchBoardImpl {
 	 * Registers an MBean.
 	 * <p>
 	 * The MBean is registered on all known MBean servers.
-	 * 
+	 *
 	 * @param mbeanRegistration
 	 *            The MBean registration.
 	 */
@@ -226,7 +226,7 @@ public final class SwitchBoardImpl {
 	 * Registers a MBean server instance.
 	 * <p>
 	 * The MBean server instance is associated with all known MBeans.
-	 * 
+	 *
 	 * @param mbeanServerRegistration
 	 *            The MBean server registration.
 	 */
@@ -251,7 +251,7 @@ public final class SwitchBoardImpl {
 
 	/**
 	 * Registers an MBean on a single MBean server.
-	 * 
+	 *
 	 * @param mbeanServer
 	 *            The MBean server.
 	 * @param objectName
@@ -280,10 +280,10 @@ public final class SwitchBoardImpl {
 	 * <p>
 	 * The notification listener is removed from all known MBean server
 	 * connections.
-	 * 
+	 *
 	 * @param notificationListenerRegistration
 	 *            The notification listener registration.
-	 * 
+	 *
 	 */
 	public synchronized void removeNotificationListener(
 			NotificationListenerRegistration notificationListenerRegistration) {
@@ -316,7 +316,7 @@ public final class SwitchBoardImpl {
 	 * <p>
 	 * The MBean server connection is disassociated with all known notification
 	 * listeners.
-	 * 
+	 *
 	 * @param mbeanServerConnectionRegistration
 	 *            The MBean server connection registration.
 	 */
@@ -350,7 +350,7 @@ public final class SwitchBoardImpl {
 
 	/**
 	 * Removes a notification listener from a single MBean server connection.
-	 * 
+	 *
 	 * @param mbeanServerConnection
 	 *            The MBean server connection.
 	 * @param objectName
@@ -388,7 +388,7 @@ public final class SwitchBoardImpl {
 	 * Unregisters an MBean.
 	 * <p>
 	 * The MBean is unregistered from all known MBean servers.
-	 * 
+	 *
 	 * @param mbeanRegistration
 	 *            The MBean registration.
 	 */
@@ -410,7 +410,7 @@ public final class SwitchBoardImpl {
 	 * Unregisters an MBean server instance.
 	 * <p>
 	 * The MBean server instance is disassociated with all known MBeans.
-	 * 
+	 *
 	 * @param mbeanServerRegistration
 	 *            The MBean server registration.
 	 */
@@ -433,7 +433,7 @@ public final class SwitchBoardImpl {
 
 	/**
 	 * Unregisters an MBean from a single MBean server.
-	 * 
+	 *
 	 * @param mbeanServer
 	 *            The MBean server.
 	 * @param objectName

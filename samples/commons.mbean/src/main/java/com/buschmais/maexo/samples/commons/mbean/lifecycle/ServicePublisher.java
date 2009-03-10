@@ -56,7 +56,7 @@ public class ServicePublisher implements ServicePublisherMBean {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void registerService() {
+	public final void registerService() {
 		if (this.serviceRegistration == null) {
 			logger.info("registering service.");
 			// Create an instance of the service and register it.
@@ -69,7 +69,7 @@ public class ServicePublisher implements ServicePublisherMBean {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void unregisterService() {
+	public final void unregisterService() {
 		if (this.serviceRegistration != null) {
 			logger.info("unregistering service.");
 			this.serviceRegistration.unregister();
