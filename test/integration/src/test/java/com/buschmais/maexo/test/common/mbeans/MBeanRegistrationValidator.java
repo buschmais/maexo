@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -22,14 +22,14 @@ public interface MBeanRegistrationValidator {
 
 	/**
 	 * Returns TRUE if registration is done.
-	 * 
+	 *
 	 * @return TRUE if registration is done.
 	 */
 	public Boolean isRegistrationDone();
 
 	/**
 	 * Returns the object name.
-	 * 
+	 *
 	 * @return The object name.
 	 */
 	public ObjectName getObjectName();

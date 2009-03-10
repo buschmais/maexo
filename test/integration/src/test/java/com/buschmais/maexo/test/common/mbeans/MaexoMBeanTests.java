@@ -1,3 +1,19 @@
+/*
+ * Copyright 2009 buschmais GbR
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+ * implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License
+ */
 package com.buschmais.maexo.test.common.mbeans;
 
 import java.io.ByteArrayOutputStream;
@@ -21,13 +37,13 @@ import com.buschmais.maexo.test.Constants;
 import com.buschmais.maexo.test.MaexoTests;
 
 public class MaexoMBeanTests extends MaexoTests {
-	
+
 	/** Symbolic name for the test bundle. */
 	private static final String TESTBUNDLE_SYMBOLIC_NAME = "maexo-test.testbundle";
 
 	/** Object name for the switchboard notification listener. */
 	protected final String SWITCHBOARDNOTIFICATIONLISTENER_OBJECTNAME = "JMImplementation:type=MBeanServerDelegate";
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -39,7 +55,7 @@ public class MaexoMBeanTests extends MaexoTests {
 	/**
 	 * Returns a test bundle from OSGI container for testing of general bundle
 	 * functionality.
-	 * 
+	 *
 	 * @return The bundle.
 	 * @throws InvalidSyntaxException
 	 *             If no <code>org.osgi.service.packageadmin.PackageAdmin</code>
@@ -60,7 +76,7 @@ public class MaexoMBeanTests extends MaexoTests {
 
 	/**
 	 * Returns the object name for the given resource.
-	 * 
+	 *
 	 * @param resource
 	 *            The resource.
 	 * @param resourceInterface
@@ -78,14 +94,14 @@ public class MaexoMBeanTests extends MaexoTests {
 	/**
 	 * Returns an MBean registered on MBean server under given object name and
 	 * interface.
-	 * 
+	 *
 	 * @param objectName
 	 *            Object name of the MBean.
-	 * @param resourceInterface
+	 * @param mbeanInterface
 	 *            The interface of the MBean.
 	 * @return The MBean.
 	 */
-	protected Object getMBean(ObjectName objectName, Class<?> resourceInterface) {
+	protected Object getMBean(ObjectName objectName, Class<?> mbeanInterface) {
 		// get MBeanServer
 		ServiceReference serviceReference = bundleContext
 				.getServiceReference(MBeanServer.class.getName());
@@ -93,13 +109,13 @@ public class MaexoMBeanTests extends MaexoTests {
 				.getService(serviceReference);
 		// get new MBean from MBeanServer
 		final Object mBean = MBeanServerInvocationHandler.newProxyInstance(
-				mbeanServer, objectName, resourceInterface, false);
+				mbeanServer, objectName, mbeanInterface, false);
 		return mBean;
 	}
 
 	/**
 	 * Returns the bundle specified by given location as byte array.
-	 * 
+	 *
 	 * @param location
 	 *            Location of the bundle.
 	 * @return The bundle as byte array.
