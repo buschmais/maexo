@@ -215,8 +215,7 @@ public final class Activator implements BundleActivator {
 						.getServiceReference();
 				MBeanServer mbeanServer = (MBeanServer) bundleContext
 						.getService(serviceReference);
-				String agentId = Activator.this
-						.getAgentId(mbeanServer);
+				String agentId = Activator.this.getAgentId(mbeanServer);
 				if (agentId == null) {
 					logger
 							.warn("Cannot get agentId for MBean server, skipping (un-)registration.");
@@ -266,8 +265,8 @@ public final class Activator implements BundleActivator {
 				ServiceReference serviceReference = serviceEvent
 						.getServiceReference();
 				Object mbean = bundleContext.getService(serviceReference);
-				ObjectName objectName = Activator.this.getObjectName(
-						serviceReference, bundleContext);
+				ObjectName objectName = Activator.this
+						.getObjectName(serviceReference);
 				if (objectName == null) {
 					Activator.logger
 							.warn("cannot get object name from service reference, skipping (un-)registration of the MBean");
@@ -321,8 +320,8 @@ public final class Activator implements BundleActivator {
 						.getServiceReference();
 				NotificationListener notificationListener = (NotificationListener) bundleContext
 						.getService(serviceReference);
-				ObjectName objectName = Activator.this.getObjectName(
-						serviceReference, bundleContext);
+				ObjectName objectName = Activator.this
+						.getObjectName(serviceReference);
 				NotificationFilter notificationFilter = (NotificationFilter) serviceReference
 						.getProperty(NotificationFilter.class.getName());
 				Object handback = serviceReference
@@ -394,14 +393,11 @@ public final class Activator implements BundleActivator {
 	 *
 	 * @param serviceReference
 	 *            The service reference.
-	 * @param bundleContext
-	 *            The bundle context.
 	 * @return The {@link ObjectName} instance or <code>null</code> if the
 	 *         properties are not set or an error occurred while construction
 	 *         the instance.
 	 */
-	private ObjectName getObjectName(ServiceReference serviceReference,
-			BundleContext bundleContext) {
+	private ObjectName getObjectName(ServiceReference serviceReference) {
 		// get object name from service properties
 		ObjectName objectName = (ObjectName) serviceReference
 				.getProperty(ObjectName.class.getName());
