@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -17,17 +17,11 @@
 package com.buschmais.maexo.framework.switchboard.impl;
 
 import javax.management.MBeanServerConnection;
-import javax.management.MBeanServerDelegateMBean;
-import javax.management.MBeanServerInvocationHandler;
-import javax.management.ObjectName;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Represents an MBean server connection which is registered with the
  * switchboard.
- * 
+ *
  * @see SwitchBoardImpl
  * @see MBeanServerConnection
  * @see javax.management.MBeanServer
@@ -41,38 +35,21 @@ public class MBeanServerConnectionRegistration {
 	/**
 	 * Constructor.
 	 * <p>
-	 * The constructor extracts the MBean server connection from the provided
-	 * service reference and the bundle context.
-	 * <p>
-	 * 
-	 * @param bundleContext
-	 *            The bundle context.
-	 * @param serviceReference
-	 *            The service reference.
+	 *
+	 * @param agentId
+	 *            The AgentId of the connection.
+	 * @param mbeanServerConnection
+	 *            The instance of the {@link MBeanServerConnection}.
 	 */
-	public MBeanServerConnectionRegistration(BundleContext bundleContext,
-			ServiceReference serviceReference) {
-		this.mbeanServerConnection = (MBeanServerConnection) bundleContext
-				.getService(serviceReference);
-		MBeanServerDelegateMBean mbeanServerDelegateMBean;
-		try {
-			mbeanServerDelegateMBean = (MBeanServerDelegateMBean) MBeanServerInvocationHandler
-					.newProxyInstance(
-							this.mbeanServerConnection,
-							new ObjectName(
-									"JMImplementation:type=MBeanServerDelegate"),
-							MBeanServerDelegateMBean.class, false);
-			this.agentId = mbeanServerDelegateMBean.getMBeanServerId();
-		} catch (Exception e) {
-			throw new IllegalStateException(
-					"cannot determine agentId for connection "
-							+ this.mbeanServerConnection, e);
-		}
+	public MBeanServerConnectionRegistration(String agentId,
+			MBeanServerConnection mbeanServerConnection) {
+		this.agentId = agentId;
+		this.mbeanServerConnection = mbeanServerConnection;
 	}
 
 	/**
 	 * Returns the MBean server connection.
-	 * 
+	 *
 	 * @return The MBean server connection.
 	 */
 	public final MBeanServerConnection getMBeanServerConnection() {

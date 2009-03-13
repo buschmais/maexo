@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,12 +18,9 @@ package com.buschmais.maexo.framework.switchboard.impl;
 
 import javax.management.MBeanServer;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-
 /**
  * Represents an MBean server which is registered with the switchboard.
- * 
+ *
  * @see SwitchBoardImpl
  * @see MBeanServer
  */
@@ -33,23 +30,19 @@ public final class MBeanServerRegistration extends
 	/**
 	 * Constructor.
 	 * <p>
-	 * The constructor extracts the MBean server from the provided service
-	 * reference and the bundle context.
-	 * <p>
-	 * 
-	 * @param bundleContext
-	 *            The bundle context.
-	 * @param serviceReference
-	 *            The service reference.
+	 *
+	 * @param agentId
+	 *            The AgentId of the connection.
+	 * @param mbeanServer
+	 *            The instance of the {@link MBeanServer}.
 	 */
-	public MBeanServerRegistration(BundleContext bundleContext,
-			ServiceReference serviceReference) {
-		super(bundleContext, serviceReference);
+	public MBeanServerRegistration(String agentId, MBeanServer mbeanServer) {
+		super(agentId, mbeanServer);
 	}
 
 	/**
 	 * Returns the MBean server.
-	 * 
+	 *
 	 * @return The MBean server.
 	 */
 	public MBeanServer getMBeanServer() {

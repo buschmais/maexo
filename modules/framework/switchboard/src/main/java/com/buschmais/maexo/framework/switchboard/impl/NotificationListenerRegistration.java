@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,32 +16,18 @@
  */
 package com.buschmais.maexo.framework.switchboard.impl;
 
-import javax.management.MalformedObjectNameException;
 import javax.management.NotificationFilter;
 import javax.management.NotificationListener;
 import javax.management.ObjectName;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-
 /**
  * Represents an MBean notification listener which is registered with the
  * switchboard.
- * 
+ *
  * @see SwitchBoardImpl
  * @see javax.management.MBeanServer
  */
 public final class NotificationListenerRegistration {
-
-	/**
-	 * The object name property.
-	 */
-	private static final String SERVICE_PROPERTY_OBJECTNAME = "objectName";
-
-	/**
-	 * The handback property.
-	 */
-	private static final String SERVICE_PROPERTY_HANDBACK = "handback";
 
 	/** The object name. */
 	private ObjectName objectName;
@@ -57,44 +43,28 @@ public final class NotificationListenerRegistration {
 
 	/**
 	 * Constructor.
-	 * <p>
-	 * The constructor extracts the notification listener, the MBean object
-	 * name, the notification filter and the handback context object from the
-	 * provided service reference and the bundle context.
-	 * 
-	 * @param bundleContext
-	 *            The bundle context.
-	 * @param serviceReference
-	 *            The service reference.
-	 * @throws MalformedObjectNameException
-	 *             If the object name has a syntax error.
-	 * @exception NullPointerException
-	 *                If the object name is <code>null</code>.
+	 *
+	 * @param notificationListener
+	 *            The notification listener.
+	 * @param objectName
+	 *            The object name.
+	 * @param notificationFilter
+	 *            The notification filter (optional),
+	 * @param handback
+	 *            The handback object.
 	 */
-	public NotificationListenerRegistration(BundleContext bundleContext,
-			ServiceReference serviceReference)
-			throws MalformedObjectNameException, NullPointerException {
-		this.notificationListener = (NotificationListener) bundleContext
-				.getService(serviceReference);
-
-		this.objectName = (ObjectName) serviceReference
-				.getProperty(ObjectName.class.getName());
-
-		if (this.objectName == null) {
-			String name = (String) serviceReference
-					.getProperty(SERVICE_PROPERTY_OBJECTNAME);
-			this.objectName = new ObjectName(name);
-		}
-
-		this.notificationFilter = (NotificationFilter) serviceReference
-				.getProperty(NotificationFilter.class.getName());
-
-		this.handback = serviceReference.getProperty(SERVICE_PROPERTY_HANDBACK);
+	public NotificationListenerRegistration(
+			NotificationListener notificationListener, ObjectName objectName,
+			NotificationFilter notificationFilter, Object handback) {
+		this.notificationListener = notificationListener;
+		this.handback = handback;
+		this.notificationFilter = notificationFilter;
+		this.objectName = objectName;
 	}
 
 	/**
 	 * Returns the object name.
-	 * 
+	 *
 	 * @return The object name.
 	 */
 	public ObjectName getObjectName() {
@@ -103,7 +73,7 @@ public final class NotificationListenerRegistration {
 
 	/**
 	 * Returns the notification listener.
-	 * 
+	 *
 	 * @return The notification listener.
 	 */
 	public NotificationListener getNotificationListener() {
@@ -112,7 +82,7 @@ public final class NotificationListenerRegistration {
 
 	/**
 	 * Returns the notification filter.
-	 * 
+	 *
 	 * @return The notification filter.
 	 */
 	public NotificationFilter getNotificationFilter() {
@@ -121,7 +91,7 @@ public final class NotificationListenerRegistration {
 
 	/**
 	 * Returns the handback.
-	 * 
+	 *
 	 * @return The handback.
 	 */
 	public Object getHandback() {

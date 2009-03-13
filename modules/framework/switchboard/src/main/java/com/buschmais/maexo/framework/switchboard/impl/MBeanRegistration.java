@@ -16,11 +16,7 @@
  */
 package com.buschmais.maexo.framework.switchboard.impl;
 
-import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Represents an MBean which is registered with the switchboard.
@@ -29,11 +25,6 @@ import org.osgi.framework.ServiceReference;
  */
 public final class MBeanRegistration {
 
-	/**
-	 * The object name property.
-	 */
-	private static final String SERVICE_PROPERTY_OBJECTNAME = "objectName";
-
 	private ObjectName objectName;
 
 	private final Object mbean;
@@ -41,33 +32,15 @@ public final class MBeanRegistration {
 	/**
 	 * Constructor.
 	 * <p>
-	 * The constructor extracts the MBean and its object name from the provided
-	 * service reference and the bundle context.
-	 * <p>
-	 * The service reference must contain either a "
-	 * <code>javax.management.ObjectName</code>" or a "<code>objectName</code>"
-	 * property which contains the MBean object name.
 	 *
-	 * @param bundleContext
-	 *            The bundle context.
-	 * @param serviceReference
-	 *            The service reference.
-	 * @throws MalformedObjectNameException
-	 *             If the object name has a syntax error.
-	 * @exception NullPointerException
-	 *                If the object name is <code>null</code>.
+	 * @param objectName
+	 *            The object name of the MBean.
+	 * @param mbean
+	 *            The MBean instance.
 	 */
-	public MBeanRegistration(BundleContext bundleContext,
-			ServiceReference serviceReference)
-			throws MalformedObjectNameException, NullPointerException {
-		// get object name from service properties
-		this.objectName = (ObjectName) serviceReference
-				.getProperty(ObjectName.class.getName());
-		if (this.objectName == null) {
-			this.objectName = new ObjectName((String) serviceReference
-					.getProperty(SERVICE_PROPERTY_OBJECTNAME));
-		}
-		this.mbean = bundleContext.getService(serviceReference);
+	public MBeanRegistration(ObjectName objectName, Object mbean) {
+		this.objectName = objectName;
+		this.mbean = mbean;
 	}
 
 	/**
