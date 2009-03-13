@@ -88,6 +88,24 @@ public class PersonMBean extends DynamicMBeanSupport {
 	}
 
 	/**
+	 * Returns the first name of the person.
+	 *
+	 * @return The first name.
+	 */
+	public final String getFirstName() {
+		return this.person.getFirstName();
+	}
+
+	/**
+	 * Returns the last name of the person.
+	 *
+	 * @return The last name.
+	 */
+	public final String getLastName() {
+		return this.person.getLastName();
+	}
+
+	/**
 	 * Returns the addresses as object name representation.
 	 *
 	 * @return The object names.
@@ -100,5 +118,4 @@ public class PersonMBean extends DynamicMBeanSupport {
 		}
 		return addresses.toArray(new ObjectName[0]);
 	}
-
 }

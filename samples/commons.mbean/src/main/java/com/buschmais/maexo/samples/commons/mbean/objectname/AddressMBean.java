@@ -66,7 +66,7 @@ public class AddressMBean extends DynamicMBeanSupport {
 	public final MBeanInfo getMBeanInfo() {
 		String className = this.getClass().getName();
 		OpenMBeanAttributeInfo idInfo = new OpenMBeanAttributeInfoSupport(
-				"person", "The id.", SimpleType.INTEGER, true, false, false);
+				"id", "The id.", SimpleType.INTEGER, true, false, false);
 		OpenMBeanAttributeInfo personInfo = new OpenMBeanAttributeInfoSupport(
 				"person", "The person which owns this address.",
 				SimpleType.OBJECTNAME, true, false, false);
