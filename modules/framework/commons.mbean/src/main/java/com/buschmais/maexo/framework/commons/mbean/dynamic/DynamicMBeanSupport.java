@@ -117,21 +117,17 @@ public abstract class DynamicMBeanSupport extends MBeanSupport implements
 	 * Constructor.
 	 */
 	protected DynamicMBeanSupport() {
-		if (logger.isDebugEnabled()) {
-			logger.debug("constructing dynamic mbean support for "
-					+ this.toString());
-		}
+		logger.debug("constructing dynamic mbean support for {}" , this);
 		this.introspectMBeanMethods();
 		this.attributeTypes = new HashMap<String, String>();
 		for (MBeanAttributeInfo attributeInfo : this.getMBeanInfo()
 				.getAttributes()) {
 			String name = attributeInfo.getName();
 			String type = attributeInfo.getType();
-			if (logger.isDebugEnabled()) {
-				logger.debug("\t" + name + ":" + type);
-			}
 			this.attributeTypes.put(name, type);
 		}
+		logger.debug("attribute types for {} are {}" , this, attributeTypes);
+		
 	}
 
 	/**
