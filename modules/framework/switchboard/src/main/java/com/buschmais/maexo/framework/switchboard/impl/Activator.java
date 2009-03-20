@@ -18,9 +18,6 @@ package com.buschmais.maexo.framework.switchboard.impl;
 
 import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;
-import javax.management.MBeanServerDelegateMBean;
-import javax.management.MBeanServerInvocationHandler;
-import javax.management.NotificationFilter;
 import javax.management.NotificationListener;
 import javax.management.ObjectName;
 
@@ -37,17 +34,6 @@ import org.slf4j.LoggerFactory;
  * OSGi bundle activator for the switchboard bundle.
  */
 public final class Activator implements BundleActivator {
-
-	/**
-	 * The service property which defines the {@link ObjectName} of an MBean.
-	 */
-	private static final String SERVICEPROPERTY_OBJECTNAME = "objectName";
-
-	/**
-	 * The service property which defines the hand back for a
-	 * {@link NotificationListener}.
-	 */
-	private static final String SERVICEPROPERTY_HANDBACK = "handback";
 
 	/**
 	 * Filter for MBean server connections.
@@ -101,7 +87,7 @@ public final class Activator implements BundleActivator {
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		logger.info("Starting maexo switch board");
-		this.switchBoard = new SwitchBoardImpl();
+		this.switchBoard = new SwitchBoardImpl(bundleContext);
 		// start the switch board
 		this.switchBoard.start();
 		// register service listeners
@@ -142,7 +128,7 @@ public final class Activator implements BundleActivator {
 
 	/**
 	 * Registers a service listener for MBean server connections.
-	 * 
+	 *
 	 * @param bundleContext
 	 *            The bundle context.
 	 * @return The service listener.
@@ -157,38 +143,19 @@ public final class Activator implements BundleActivator {
 			 * {@inheritDoc}
 			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
-				if (serviceEvent.getType() != ServiceEvent.REGISTERED
-						&& serviceEvent.getType() != ServiceEvent.UNREGISTERING) {
-					return;
-				}
 				ServiceReference serviceReference = serviceEvent
 						.getServiceReference();
-				MBeanServerConnection mbeanServerConnection = (MBeanServerConnection) bundleContext
-						.getService(serviceReference);
-				String agentId = Activator.this
-						.getAgentId(mbeanServerConnection);
-				if (agentId == null) {
-					logger
-							.warn(
-									"Cannot get agentId for MBean server connection '{}', skipping {}.",
-									mbeanServerConnection,
-									(serviceEvent.getType() == ServiceEvent.REGISTERED ? "registration"
-											: "un-registration"));
-				} else {
-					MBeanServerConnectionRegistration mbeanServerConnectionRegistration = new MBeanServerConnectionRegistration(
-							agentId, mbeanServerConnection);
-					switch (serviceEvent.getType()) {
-					case ServiceEvent.REGISTERED:
-						Activator.this.switchBoard
-								.registerMBeanServerConnection(mbeanServerConnectionRegistration);
-						break;
-					case ServiceEvent.UNREGISTERING:
-						Activator.this.switchBoard
-								.unregisterMBeanServerConnection(mbeanServerConnectionRegistration);
-						break;
-					default:
-						break;
-					}
+				switch (serviceEvent.getType()) {
+				case ServiceEvent.REGISTERED:
+					Activator.this.switchBoard
+							.registerMBeanServerConnection(serviceReference);
+					break;
+				case ServiceEvent.UNREGISTERING:
+					Activator.this.switchBoard
+							.unregisterMBeanServerConnection(serviceReference);
+					break;
+				default:
+					break;
 				}
 			}
 
@@ -205,7 +172,7 @@ public final class Activator implements BundleActivator {
 
 	/**
 	 * Registers a service listener for MBean servers.
-	 * 
+	 *
 	 * @param bundleContext
 	 *            The bundle context.
 	 * @return The service listener.
@@ -220,37 +187,19 @@ public final class Activator implements BundleActivator {
 			 * {@inheritDoc}
 			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
-				if (serviceEvent.getType() != ServiceEvent.REGISTERED
-						&& serviceEvent.getType() != ServiceEvent.UNREGISTERING) {
-					return;
-				}
 				ServiceReference serviceReference = serviceEvent
 						.getServiceReference();
-				MBeanServer mbeanServer = (MBeanServer) bundleContext
-						.getService(serviceReference);
-				String agentId = Activator.this.getAgentId(mbeanServer);
-				if (agentId == null) {
-					logger
-							.warn(
-									"cannot get agentId for MBean server '{}', skipping {}.",
-									mbeanServer,
-									(serviceEvent.getType() == ServiceEvent.REGISTERED ? "registration"
-											: "un-registration"));
-				} else {
-					MBeanServerRegistration mBeanServerRegistration = new MBeanServerRegistration(
-							agentId, mbeanServer);
-					switch (serviceEvent.getType()) {
-					case ServiceEvent.REGISTERED:
-						Activator.this.switchBoard
-								.registerMBeanServer(mBeanServerRegistration);
-						break;
-					case ServiceEvent.UNREGISTERING:
-						Activator.this.switchBoard
-								.unregisterMBeanServer(mBeanServerRegistration);
-						break;
-					default:
-						break;
-					}
+				switch (serviceEvent.getType()) {
+				case ServiceEvent.REGISTERED:
+					Activator.this.switchBoard
+							.registerMBeanServer(serviceReference);
+					break;
+				case ServiceEvent.UNREGISTERING:
+					Activator.this.switchBoard
+							.unregisterMBeanServer(serviceReference);
+					break;
+				default:
+					break;
 				}
 			}
 		};
@@ -264,7 +213,7 @@ public final class Activator implements BundleActivator {
 
 	/**
 	 * Registers a service listener for MBeans.
-	 * 
+	 *
 	 * @param bundleContext
 	 *            The bundle context.
 	 * @return The service listener.
@@ -279,37 +228,18 @@ public final class Activator implements BundleActivator {
 			 * {@inheritDoc}
 			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
-				if (serviceEvent.getType() != ServiceEvent.REGISTERED
-						&& serviceEvent.getType() != ServiceEvent.UNREGISTERING) {
-					return;
-				}
 				ServiceReference serviceReference = serviceEvent
 						.getServiceReference();
-				Object mbean = bundleContext.getService(serviceReference);
-				ObjectName objectName = Activator.this
-						.getObjectName(serviceReference);
-				if (objectName == null) {
-					logger
-							.warn(
-									"cannot get object name from service reference '{}', skipping {} of the MBean",
-									serviceReference,
-									(serviceEvent.getType() == ServiceEvent.REGISTERED ? "registration"
-											: "un-registration"));
-				} else {
-					MBeanRegistration mbeanRegistration = new MBeanRegistration(
-							objectName, mbean);
-					switch (serviceEvent.getType()) {
-					case ServiceEvent.REGISTERED:
-						Activator.this.switchBoard
-								.registerMBean(mbeanRegistration);
-						break;
-					case ServiceEvent.UNREGISTERING:
-						Activator.this.switchBoard
-								.unregisterMBean(mbeanRegistration);
-						break;
-					default:
-						break;
-					}
+				switch (serviceEvent.getType()) {
+				case ServiceEvent.REGISTERED:
+					Activator.this.switchBoard.registerMBean(serviceReference);
+					break;
+				case ServiceEvent.UNREGISTERING:
+					Activator.this.switchBoard
+							.unregisterMBean(serviceReference);
+					break;
+				default:
+					break;
 				}
 			}
 
@@ -324,7 +254,7 @@ public final class Activator implements BundleActivator {
 
 	/**
 	 * Registers a service listener for notification listeners.
-	 * 
+	 *
 	 * @param bundleContext
 	 *            The bundle context.
 	 * @return The service listener.
@@ -339,43 +269,19 @@ public final class Activator implements BundleActivator {
 			 * {@inheritDoc}
 			 */
 			public void serviceChanged(ServiceEvent serviceEvent) {
-				if (serviceEvent.getType() != ServiceEvent.REGISTERED
-						&& serviceEvent.getType() != ServiceEvent.UNREGISTERING) {
-					return;
-				}
 				ServiceReference serviceReference = serviceEvent
 						.getServiceReference();
-				NotificationListener notificationListener = (NotificationListener) bundleContext
-						.getService(serviceReference);
-				ObjectName objectName = Activator.this
-						.getObjectName(serviceReference);
-				NotificationFilter notificationFilter = (NotificationFilter) serviceReference
-						.getProperty(NotificationFilter.class.getName());
-				Object handback = serviceReference
-						.getProperty(SERVICEPROPERTY_HANDBACK);
-				if (objectName == null) {
-					logger
-							.warn(
-									"cannot get object name from service reference '{}', skipping {} of the notification listener",
-									serviceReference,
-									(serviceEvent.getType() == ServiceEvent.REGISTERED ? "registration"
-											: "un-registration"));
-				} else {
-					NotificationListenerRegistration notificationListenerRegistration = new NotificationListenerRegistration(
-							notificationListener, objectName,
-							notificationFilter, handback);
-					switch (serviceEvent.getType()) {
-					case ServiceEvent.REGISTERED:
-						Activator.this.switchBoard
-								.addNotificationListener(notificationListenerRegistration);
-						break;
-					case ServiceEvent.UNREGISTERING:
-						Activator.this.switchBoard
-								.removeNotificationListener(notificationListenerRegistration);
-						break;
-					default:
-						break;
-					}
+				switch (serviceEvent.getType()) {
+				case ServiceEvent.REGISTERED:
+					Activator.this.switchBoard
+							.addNotificationListener(serviceReference);
+					break;
+				case ServiceEvent.UNREGISTERING:
+					Activator.this.switchBoard
+							.removeNotificationListener(serviceReference);
+					break;
+				default:
+					break;
 				}
 			}
 		};
@@ -391,7 +297,7 @@ public final class Activator implements BundleActivator {
 
 	/**
 	 * Registers already existing services.
-	 * 
+	 *
 	 * @param filter
 	 *            The filter for the services to match.
 	 * @param bundleContext
@@ -414,65 +320,5 @@ public final class Activator implements BundleActivator {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Constructs an {@link ObjectName} from the properties of a service
-	 * reference.
-	 * 
-	 * @param serviceReference
-	 *            The service reference.
-	 * @return The {@link ObjectName} instance or <code>null</code> if the
-	 *         properties are not set or an error occurred while construction
-	 *         the instance.
-	 */
-	private ObjectName getObjectName(ServiceReference serviceReference) {
-		// get object name from service properties
-		ObjectName objectName = (ObjectName) serviceReference
-				.getProperty(ObjectName.class.getName());
-		if (objectName != null) {
-			return objectName;
-		}
-		Object objectNameProperty = serviceReference
-				.getProperty(SERVICEPROPERTY_OBJECTNAME);
-		if (objectNameProperty != null) {
-			try {
-				objectName = new ObjectName((objectNameProperty.toString()));
-			} catch (Exception e) {
-				logger
-						.debug(
-								String
-										.format(
-												"cannot construct object name from service property %s",
-												objectNameProperty), e);
-			}
-		}
-		return objectName;
-	}
-
-	/**
-	 * Returns the agentId of a MBean server.
-	 * 
-	 * @param mbeanServerConnection
-	 *            The MBean server connection
-	 * @return The agentId or <code>null</code>.
-	 */
-	private String getAgentId(MBeanServerConnection mbeanServerConnection) {
-		ObjectName delegateObjectName = null;
-		try {
-			delegateObjectName = new ObjectName(
-					"JMImplementation:type=MBeanServerDelegate");
-			MBeanServerDelegateMBean mbeanServerDelegateMBean = (MBeanServerDelegateMBean) MBeanServerInvocationHandler
-					.newProxyInstance(mbeanServerConnection,
-							delegateObjectName, MBeanServerDelegateMBean.class,
-							false);
-			return mbeanServerDelegateMBean.getMBeanServerId();
-		} catch (Exception e) {
-			logger
-					.debug(
-							"cannot construct object name for mbean server delegate",
-							e);
-		}
-		return null;
 	}
 }
