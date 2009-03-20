@@ -86,7 +86,7 @@ public final class Activator implements BundleActivator {
 	 * {@inheritDoc}
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
-		logger.info("Starting maexo switch board");
+		logger.info("Starting MAEXO switch board");
 		this.switchBoard = new SwitchBoardImpl(bundleContext);
 		// start the switch board
 		this.switchBoard.start();
@@ -105,7 +105,7 @@ public final class Activator implements BundleActivator {
 	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
-		logger.info("Stopping maexo switch board");
+		logger.info("Stopping MAEXO switch board");
 		// remove service listeners
 		if (this.mbeanServerConnectionServiceListener != null) {
 			bundleContext

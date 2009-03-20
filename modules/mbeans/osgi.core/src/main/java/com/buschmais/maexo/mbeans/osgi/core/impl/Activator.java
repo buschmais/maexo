@@ -75,7 +75,7 @@ public final class Activator implements BundleActivator {
 	 */
 	public void start(final BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("Starting maexo OSGi Core MBeans");
+			logger.info("Starting MAEXO OSGi Core MBeans");
 		}
 		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(bundleContext);
 		this.serviceRegistrations = new LinkedList<ServiceRegistration>();
@@ -114,7 +114,7 @@ public final class Activator implements BundleActivator {
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("Stopping maexo OSGi Core MBeans");
+			logger.info("Stopping MAEXO OSGi Core MBeans");
 		}
 		
 		this.frameworkLifeCycle.stop();

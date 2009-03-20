@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 buschmais GbR
+ * Copyright 2009 buschmais GbR
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,7 +49,7 @@ public final class Activator implements BundleActivator {
 	 * {@inheritDoc}
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
-		logger.info("Starting maexo Platform MBean Server");
+		logger.info("Starting MAEXO Platform MBean Server");
 		MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
 		MBeanServerDelegateMBean mbeanServerDelegateMBean = (MBeanServerDelegateMBean) MBeanServerInvocationHandler
 				.newProxyInstance(mbeanServer, new ObjectName(
@@ -70,7 +70,7 @@ public final class Activator implements BundleActivator {
 	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext bundleContext) throws Exception {
-		logger.info("Stopping maexo Platform MBean Server");
+		logger.info("Stopping MAEXO Platform MBean Server");
 		this.mbeanServerRegistration.unregister();
 	}
 }

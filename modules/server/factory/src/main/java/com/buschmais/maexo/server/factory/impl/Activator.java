@@ -71,7 +71,7 @@ public final class Activator implements BundleActivator {
 	 */
 	@SuppressWarnings("unchecked")
 	public void start(BundleContext bundleContext) throws Exception {
-		logger.info("Starting maexo MBean Server Factory");
+		logger.info("Starting MAEXO MBean Server Factory");
 		List<MBeanServer> mbeanServers = MBeanServerFactory
 				.findMBeanServer(null);
 		this.mbeanServerRegistrations = new HashMap<String, ServiceRegistration>();
