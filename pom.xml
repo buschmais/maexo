@@ -37,9 +37,13 @@
 	
 	<distributionManagement>
 		<repository>
+			<id>buschmais-release-repository</id>
+			<url>dav:https://repository.buschmais.com/releases</url>
+		</repository>
+		<snapshotRepository>
 			<id>buschmais-snapshot-repository</id>
 			<url>dav:https://repository.buschmais.com/snapshots</url>
-		</repository>
+		</snapshotRepository>
 	</distributionManagement>
 
 	<properties>
