@@ -34,6 +34,13 @@
 		<module>samples</module>
 		<module>test</module>
 	</modules>
+	
+	<distributionManagement>
+		<repository>
+			<id>buschmais-snapshot-repository</id>
+			<url>dav:https://repository.buschmais.com/snapshots</url>
+		</repository>
+	</distributionManagement>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -66,6 +73,13 @@
 	
 	<inceptionYear>2008</inceptionYear>
 
+    <mailingLists>
+        <mailingList>
+            <name>MAEXO discussion group</name>
+            <archive>http://groups.google.com/group/maexo-discuss</archive>
+        </mailingList>
+	</mailingLists>
+	
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
