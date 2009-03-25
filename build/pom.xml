@@ -31,6 +31,17 @@
 	<packaging>pom</packaging>
 	<name>MAEXO - Build</name>
 
+	<build>
+		<plugins>
+			<plugin>
+            	<artifactId>maven-deploy-plugin</artifactId>
+            	<configuration>
+                	<skip>true</skip>
+            	</configuration>
+            </plugin>
+		</plugins>
+	</build>
+
 	<modules>
 		<module>checkstyle</module>
 	</modules>
