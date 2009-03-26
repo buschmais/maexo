@@ -27,7 +27,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.buschmais.maexo</groupId>
-	<artifactId>maexo-external</artifactId>
+	<artifactId>external</artifactId>
 	<packaging>pom</packaging>
 	<name>MAEXO - External Artifacts</name>
 

@@ -20,16 +20,16 @@
 	-->
 
 	<parent>
-		<groupId>com.buschmais</groupId>
-		<artifactId>maexo</artifactId>
+		<groupId>com.buschmais.maexo</groupId>
+		<artifactId>distribution</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.buschmais.maexo</groupId>
-	<artifactId>maexo-distribution</artifactId>
+	<groupId>com.buschmais.maexo.distribution</groupId>
+	<artifactId>maexo-distribution.binary</artifactId>
 	<packaging>pom</packaging>
-	<name>MAEXO - Distribution</name>
+	<name>MAEXO - Binary Distribution</name>
 
 	<build>
 		<plugins>

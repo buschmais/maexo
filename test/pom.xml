@@ -27,7 +27,7 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.buschmais.maexo</groupId>
-	<artifactId>maexo-test</artifactId>
+	<artifactId>test</artifactId>
 	<packaging>pom</packaging>
 	<name>MAEXO - Test</name>
 
