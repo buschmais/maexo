@@ -51,11 +51,11 @@
 				</configuration>
 			</plugin>
 			<plugin>
-            	<artifactId>maven-deploy-plugin</artifactId>
-            	<configuration>
-                	<skip>true</skip>
-            	</configuration>
-            </plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+						<skip>true</skip>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
