@@ -31,17 +31,6 @@
 	<packaging>pom</packaging>
 	<name>MAEXO - Samples</name>
 
-	<build>
-		<plugins>
-			<plugin>
-            	<artifactId>maven-deploy-plugin</artifactId>
-            	<configuration>
-                	<skip>true</skip>
-            	</configuration>
-            </plugin>
-		</plugins>
-	</build>
-
 	<modules>
 		<module>assembly.basic</module>
 		<module>assembly.commons.mbean</module>
@@ -58,6 +47,12 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+						<skip>true</skip>
+				</configuration>
+			</plugin>
 			<!-- this is required by the maven checkstyle plugin to support multiple modules -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
