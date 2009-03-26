@@ -56,4 +56,21 @@
 		<module>spring.server</module>
 	</modules>
 
+	<build>
+		<plugins>
+			<!-- this is required by the maven checkstyle plugin to support multiple modules -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>com.buschmais.maexo.build</groupId>
+						<artifactId>maexo-build.checkstyle</artifactId>
+						<version>${com.buschmais.maexo.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
