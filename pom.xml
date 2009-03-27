@@ -77,13 +77,13 @@
 	
 	<inceptionYear>2008</inceptionYear>
 
-    <mailingLists>
-        <mailingList>
-            <name>MAEXO discussion group</name>
-            <archive>http://groups.google.com/group/maexo-discuss</archive>
-        </mailingList>
+	<mailingLists>
+		<mailingList>
+			<name>MAEXO discussion group</name>
+			<archive>http://groups.google.com/group/maexo-discuss</archive>
+		</mailingList>
 	</mailingLists>
-	
+
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
@@ -228,30 +228,30 @@ limitations under the License
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<configuration>
 					<excludePackageNames>*.impl</excludePackageNames>
-		          	<groups>
-			            <group>
+					<groups>
+						<group>
 							<title>MAEXO - Framework: Commons MBean</title>
-			              	<packages>com.buschmais.maexo.framework.commons.mbean*</packages>
-			            </group>
-			            <group>
+							<packages>com.buschmais.maexo.framework.commons.mbean*</packages>
+						</group>
+						<group>
 							<title>MAEXO - MBeans: OSGi Core</title>
-			              	<packages>com.buschmais.maexo.mbeans.osgi.core*</packages>
-			            </group>
-			            <group>
+							<packages>com.buschmais.maexo.mbeans.osgi.core*</packages>
+						</group>
+						<group>
 							<title>MAEXO - Adaptor: MX4j HTTP</title>
-			              	<packages>com.buschmais.maexo.adaptor.mx4j.http*</packages>
-			            </group>
+							<packages>com.buschmais.maexo.adaptor.mx4j.http*</packages>
+						</group>
 					</groups>
 				</configuration>
 			</plugin>
 			<plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-checkstyle-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
 				<configuration>
-				    <configLocation>configuration/sun_checks_eclipse.xml</configLocation>
+					<configLocation>target/classes/configuration/sun_checks_eclipse.xml</configLocation>
 					<encoding>UTF-8</encoding>
 				</configuration>
-	      	</plugin>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
