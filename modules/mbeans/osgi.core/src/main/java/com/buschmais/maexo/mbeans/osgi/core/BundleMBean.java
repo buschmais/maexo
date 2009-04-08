@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -22,22 +22,22 @@ import javax.management.ObjectName;
 import javax.management.openmbean.TabularData;
 
 /**
- * Management interface for an OSGI bundle.
- * 
+ * Management interface for an OSGi bundle.
+ *
  * @see org.osgi.framework.Bundle
  */
 public interface BundleMBean {
 
 	/**
 	 * Returns this bundle's unique identifier.
-	 * 
+	 *
 	 * @return The unique identifier of this bundle.
 	 */
 	Long getBundleId();
 
 	/**
 	 * Returns this bundle's current state.
-	 * 
+	 *
 	 * @return An element of {@link org.osgi.framework.Bundle#UNINSTALLED},
 	 *         {@link org.osgi.framework.Bundle#INSTALLED},
 	 *         {@link org.osgi.framework.Bundle#RESOLVED},
@@ -49,7 +49,7 @@ public interface BundleMBean {
 
 	/**
 	 * Returns this bundle's current state as name.
-	 * 
+	 *
 	 * @return An element of {@link org.osgi.framework.Bundle#UNINSTALLED},
 	 *         {@link org.osgi.framework.Bundle#INSTALLED},
 	 *         {@link org.osgi.framework.Bundle#RESOLVED},
@@ -61,7 +61,7 @@ public interface BundleMBean {
 
 	/**
 	 * Returns this bundle's Manifest headers and values.
-	 * 
+	 *
 	 * @return A TabularData object containing this bundle's Manifest headers
 	 *         and values.
 	 */
@@ -69,28 +69,28 @@ public interface BundleMBean {
 
 	/**
 	 * Returns the time when this bundle was last modified.
-	 * 
+	 *
 	 * @return The time when this bundle was last modified.
 	 */
 	Long getLastModified();
 
 	/**
 	 * Returns the time when this bundle was last modified.
-	 * 
+	 *
 	 * @return The time when this bundle was last modified.
 	 */
 	Date getLastModifiedAsDate();
 
 	/**
 	 * Returns this bundle's location identifier.
-	 * 
+	 *
 	 * @return The string representation of this bundle's location identifier.
 	 */
 	String getLocation();
 
 	/**
 	 * Returns the services which have been registered by this bundle.
-	 * 
+	 *
 	 * @return the services
 	 */
 	ObjectName[] getRegisteredServices();
@@ -99,32 +99,32 @@ public interface BundleMBean {
 	 * Returns this bundle's <code>ServiceReference</code>s as list of object
 	 * names for all services it is using or returns null if this bundle is not
 	 * using any services.
-	 * 
+	 *
 	 * @return An array of object names or null.
 	 */
 	ObjectName[] getServicesInUse();
 
 	/**
 	 * Start the bundle.
-	 * 
+	 *
 	 */
 	void start();
 
 	/**
 	 * Stop the bundle.
-	 * 
+	 *
 	 */
 	void stop();
 
 	/**
 	 * Update the bundle.
-	 * 
+	 *
 	 */
 	void update();
 
 	/**
 	 * Update the bundle from the provided url.
-	 * 
+	 *
 	 * @param url
 	 *            the url
 	 */
@@ -132,7 +132,7 @@ public interface BundleMBean {
 
 	/**
 	 * Update the bundle from a byte array.
-	 * 
+	 *
 	 * @param in
 	 *            the byte array
 	 */
