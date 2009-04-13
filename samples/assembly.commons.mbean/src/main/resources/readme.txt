@@ -2,7 +2,7 @@ MAEXO - Commons MBean sample
 ***********************************
 
 This sample demonstrates how to use the API contained in the bundle maexo-framework.commons.mbean.
-The following bundles are installed (see configuration/config.ini):
+The following bundles are installed (see configuration/config.ini and conf/config.properties):
 
   * Commons MBean - The bundle maexo-framework.commons.mbean provides APIs which facilitate the
     implementation of MBeans. A sample is provided which demonstrates the use of these APIs. It
@@ -36,4 +36,4 @@ The following bundles are installed (see configuration/config.ini):
       slf4j-api-${org.slf4j.version}.jar
       slf4j-jdk14-${org.slf4j.version}.jar
 
-The container may be started using equinox.cmd or equinox.sh.
+The container may be started using one of the provided shell scripts for Equinox or Felix.

@@ -10,7 +10,7 @@ The bundles in this sample create instances of MBeans, notification listeners an
 using the Spring DM approach and export them to the OSGi service registry. The life cycle of
 these services is monitored by the MAEXO switch board which transparently performs registration
 and unregistration of the MBeans and notification listeners on the MBean server.
-The following bundles are installed (see configuration/config.ini):
+The following bundles are installed (see configuration/config.ini and conf/config.properties):
 
   * Spring MBean - The bundle exports an instance of a standard MBean using Spring DM.
 	
@@ -52,4 +52,4 @@ The following bundles are installed (see configuration/config.ini):
       slf4j-jdk14-${org.slf4j.version}.jar
       jcl-over-slf4j-${org.slf4j.version}.jar
 
-The container may be started using equinox.cmd or equinox.sh.
+The container may be started using one of the provided shell scripts for Equinox or Felix.

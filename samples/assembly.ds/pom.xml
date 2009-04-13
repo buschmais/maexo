@@ -61,6 +61,12 @@
 			<classifier>sample</classifier>
 		</dependency>
 		<dependency>
+			<groupId>com.buschmais.maexo.samples</groupId>
+			<artifactId>maexo-samples.assembly.felix</artifactId>
+			<type>zip</type>
+			<classifier>sample</classifier>
+		</dependency>
+		<dependency>
 			<groupId>com.buschmais.maexo.modules.framework</groupId>
 			<artifactId>maexo-framework.switchboard</artifactId>
 		</dependency>

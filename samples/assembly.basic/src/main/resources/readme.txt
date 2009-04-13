@@ -31,8 +31,12 @@ following bundles are installed (see configuration/config.ini):
       slf4j-jdk14-${org.slf4j.version}.jar
       jcl-over-slf4j-${org.slf4j.version}.jar
 
-The container may be started using equinox.cmd or equinox.sh. Now a management console can be
-connected:
+The container may be started using one of the provided scripts depending on the OSGi container to use
+(Eclipse Equinox or Apache Felix) and your operating system:
+  * equinox.cmd or equinox.sh
+  * felix.cmd or felix.sh
+  
+Now a management console can be connected:
 
   * JDK 6.0 comes with VisualVM which can be found in the directory bin/ of the local Java
     installation (e.g. C:\Program Files\Java\Jdk1.6.0_12\bin). Alternatively it is available from
@@ -40,8 +44,8 @@ connected:
     It offers a wide range of functionality to monitor, manage and profile running Java
     applications and allows installation of a plugin called VisualVM-MBeans (see Tools->Plugins).
     If the sample is running it will be listed in the applications view (left side) as 
-    org.eclipse.osgi-${org.eclipse.osgi.version}.jar. Double clicking the entry opens a tab where the MBeans
-    view can be selected.
+    "org.eclipse.osgi-${org.eclipse.osgi.version}.jar" or "org.apache.felix.main-${org.apache.felix.main.version}.jar".
+	Double clicking the entry opens a tab where the MBeans view can be selected.
   * JDK 5.0 and JDK 6.0 provide a generic management console called JConsole. It can found in the
     directory bin/ of your Java installation and offers the same functionality as the VisualVM
     MBeans plugin. 

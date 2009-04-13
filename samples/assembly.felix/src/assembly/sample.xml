@@ -1,7 +1,7 @@
 <assembly>
 
 	<!-- 
-		Copyright 2008 buschmais GbR
+		Copyright 2009 buschmais GbR
 		 
 		Licensed under the Apache License, Version 2.0 (the "License");
 		you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 	<formats>
 		<format>zip</format>
 	</formats>
-	<baseDirectory>basic</baseDirectory>
+	<baseDirectory></baseDirectory>
 	<fileSets>
 		<fileSet>
 			<outputDirectory></outputDirectory>
@@ -32,26 +32,6 @@
 	<dependencySets>
 		<dependencySet>
 			<outputDirectory></outputDirectory>
-			<unpack>true</unpack>			
-			<includes>
-				<include>
-					com.buschmais.maexo.samples:maexo-samples.assembly.equinox
-				</include>
-				<include>
-					com.buschmais.maexo.samples:maexo-samples.assembly.felix
-				</include>
-			</includes>
-		</dependencySet>
-		<dependencySet>
-			<outputDirectory>bundles</outputDirectory>
-			<excludes>
-				<exclude>
-					com.buschmais.maexo.samples:maexo-samples.assembly.equinox
-				</exclude>
-				<exclude>
-					com.buschmais.maexo.samples:maexo-samples.assembly.felix
-				</exclude>
-			</excludes>
 		</dependencySet>
 	</dependencySets>
 </assembly>

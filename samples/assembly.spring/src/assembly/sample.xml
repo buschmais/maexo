@@ -37,6 +37,9 @@
 				<include>
 					com.buschmais.maexo.samples:maexo-samples.assembly.equinox
 				</include>
+				<include>
+					com.buschmais.maexo.samples:maexo-samples.assembly.felix
+				</include>
 			</includes>
 		</dependencySet>
 		<dependencySet>
@@ -44,6 +47,9 @@
 			<excludes>
 				<exclude>
 					com.buschmais.maexo.samples:maexo-samples.assembly.equinox
+				</exclude>
+				<exclude>
+					com.buschmais.maexo.samples:maexo-samples.assembly.felix
 				</exclude>
 				<exclude>
 					com.buschmais.maexo.samples:maexo-samples.spring.mbean:jar:sources

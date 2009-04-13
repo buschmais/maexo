@@ -35,6 +35,7 @@
 		<module>assembly.basic</module>
 		<module>assembly.commons.mbean</module>
 		<module>assembly.equinox</module>
+		<module>assembly.felix</module>
 		<module>assembly.ds</module>
 		<module>assembly.spring</module>
 		<module>commons.mbean</module>
