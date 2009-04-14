@@ -249,7 +249,7 @@ limitations under the License
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<configuration>
-					<configLocation>${project.build.outputDirectory}/configuration/sun_checks_eclipse.xml</configLocation>
+					<configLocation>target/classes/configuration/sun_checks_eclipse.xml</configLocation>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
