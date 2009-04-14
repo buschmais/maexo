@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,7 +21,7 @@ public class Constants {
 	public static final String MAEXO_VERSION = "1.0.0-SNAPSHOT";
 	public static final String SLF4J_VERSION = "1.5.6";
 	public static final String SPRING_VERSION = "2.5.6.A";
-	public static final String SPRING_OSGI_VERSION = "1.1.2.A";
+	public static final String SPRING_OSGI_VERSION = "1.1.2.B";
 
 	public static final String ARTIFACT_SWITCHBOARD = "com.buschmais.maexo.modules.framework, maexo-framework.switchboard, "
 			+ MAEXO_VERSION;
