@@ -28,7 +28,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.buschmais.maexo.external.mx4j</groupId>
 	<artifactId>maexo-mx4j.tools.osgi</artifactId>
-	<version>3.0.1</version>
+	<version>${mx4j.tools.version}</version>
 	<packaging>bundle</packaging>
 	<name>MAEXO - MX4J Tools</name>
 
