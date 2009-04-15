@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<!--
 		Copyright 2008 buschmais GbR
@@ -23,7 +22,7 @@
 	<groupId>com.buschmais</groupId>
 	<artifactId>maexo</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>MAEXO - Management Extensions for OSGi</name>
 
 	<modules>
@@ -48,7 +47,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<com.buschmais.maexo.version>1.0.0-SNAPSHOT</com.buschmais.maexo.version>
+		<com.buschmais.maexo.version>1.0.0</com.buschmais.maexo.version>
 		<mx4j.tools.version>3.0.1</mx4j.tools.version>
 		<org.aopalliance.version>1.0.0</org.aopalliance.version>
 		<org.apache.felix.main.version>1.4.1</org.apache.felix.main.version>
@@ -66,9 +65,9 @@
 	<url>http://code.google.com/p/maexo</url>
 
 	<scm>
-		<connection>scm:svn:http://maexo.googlecode.com/svn</connection>
-		<developerConnection>scm:svn:https://maexo.googlecode.com/svn</developerConnection>
-		<url>http://code.google.com/p/maexo/source/browse/</url>
+		<connection>scm:svn:http://maexo.googlecode.com/svn/tags/maexo-1.0.0</connection>
+		<developerConnection>scm:svn:https://maexo.googlecode.com/svn/tags/maexo-1.0.0</developerConnection>
+		<url>http://code.google.com/p/maexo/source/browse/tags/maexo-1.0.0</url>
 	</scm>
 
 	<organization>
@@ -510,7 +509,7 @@ limitations under the License
 			<dependency>
 				<groupId>com.buschmais.maexo.external.mx4j</groupId>
 				<artifactId>maexo-mx4j.tools.osgi</artifactId>
-				<version>${mx4j.tools.version}</version>
+				<version>3.0.1</version>
 			</dependency>
 
 			<!-- compile time dependencies -->
