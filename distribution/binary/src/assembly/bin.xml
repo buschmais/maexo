@@ -63,21 +63,21 @@
 			<outputDirectory>doc/api/maexo-framework.commons.mbean</outputDirectory>
 			<unpack>true</unpack>
 			<includes>
-				<include>com.buschmais.maexo.modules.framework:maexo-framework.commons.mbean:jar:javadoc</include>
+				<include>com.buschmais.maexo.modules.framework:maexo-framework.commons.mbean:javadoc:javadoc</include>
 			</includes>
 		</dependencySet>
 		<dependencySet>
 			<outputDirectory>doc/api/maexo-mbeans.osgi.core</outputDirectory>
 			<unpack>true</unpack>
 			<includes>
-				<include>com.buschmais.maexo.modules.mbeans:maexo-mbeans.osgi.core:jar:javadoc</include>
+				<include>com.buschmais.maexo.modules.mbeans:maexo-mbeans.osgi.core:javadoc:javadoc</include>
 			</includes>
 		</dependencySet>
 		<dependencySet>
 			<outputDirectory>doc/api/maexo-adaptor.mx4j.http</outputDirectory>
 			<unpack>true</unpack>
 			<includes>
-				<include>com.buschmais.maexo.modules.adaptor:maexo-adaptor.mx4j.http:jar:javadoc</include>
+				<include>com.buschmais.maexo.modules.adaptor:maexo-adaptor.mx4j.http:javadoc:javadoc</include>
 			</includes>
 		</dependencySet>
 	</dependencySets>

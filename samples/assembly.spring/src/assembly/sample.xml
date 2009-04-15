@@ -52,13 +52,13 @@
 					com.buschmais.maexo.samples:maexo-samples.assembly.felix
 				</exclude>
 				<exclude>
-					com.buschmais.maexo.samples:maexo-samples.spring.mbean:jar:sources
+					com.buschmais.maexo.samples:maexo-samples.spring.mbean:java-source:sources
 				</exclude>
 				<exclude>
-					com.buschmais.maexo.samples:maexo-samples.spring.notification:jar:sources
+					com.buschmais.maexo.samples:maexo-samples.spring.notification:java-source:sources
 				</exclude>
 				<exclude>
-					com.buschmais.maexo.samples:maexo-samples.spring.server:jar:sources
+					com.buschmais.maexo.samples:maexo-samples.spring.server:java-source:sources
 				</exclude>
 			</excludes>
 		</dependencySet>
@@ -68,7 +68,7 @@
 			<unpack>true</unpack>
 			<includes>
 				<include>
-					com.buschmais.maexo.samples:maexo-samples.spring.mbean:jar:sources
+					com.buschmais.maexo.samples:maexo-samples.spring.mbean:java-source:sources
 				</include>
 			</includes>
 		</dependencySet>
@@ -78,7 +78,7 @@
 			<unpack>true</unpack>
 			<includes>
 				<include>
-					com.buschmais.maexo.samples:maexo-samples.spring.notification:jar:sources
+					com.buschmais.maexo.samples:maexo-samples.spring.notification:java-source:sources
 				</include>
 			</includes>
 		</dependencySet>
@@ -88,7 +88,7 @@
 			<unpack>true</unpack>
 			<includes>
 				<include>
-					com.buschmais.maexo.samples:maexo-samples.spring.server:jar:sources
+					com.buschmais.maexo.samples:maexo-samples.spring.server:java-source:sources
 				</include>
 			</includes>
 		</dependencySet>

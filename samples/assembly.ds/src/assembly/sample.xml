@@ -52,10 +52,10 @@
 					com.buschmais.maexo.samples:maexo-samples.assembly.felix
 				</exclude>
 				<exclude>
-					com.buschmais.maexo.samples:maexo-samples.ds.mbean:jar:sources
+					com.buschmais.maexo.samples:maexo-samples.ds.mbean:java-source:sources
 				</exclude>
 				<exclude>
-					com.buschmais.maexo.samples:maexo-samples.ds.notification:jar:sources
+					com.buschmais.maexo.samples:maexo-samples.ds.notification:java-source:sources
 				</exclude>
 			</excludes>
 		</dependencySet>
@@ -65,7 +65,7 @@
 			<unpack>true</unpack>
 			<includes>
 				<include>
-					com.buschmais.maexo.samples:maexo-samples.ds.mbean:jar:sources
+					com.buschmais.maexo.samples:maexo-samples.ds.mbean:java-source:sources
 				</include>
 			</includes>
 		</dependencySet>
@@ -75,7 +75,7 @@
 			<unpack>true</unpack>
 			<includes>
 				<include>
-					com.buschmais.maexo.samples:maexo-samples.ds.notification:jar:sources
+					com.buschmais.maexo.samples:maexo-samples.ds.notification:java-source:sources
 				</include>
 			</includes>
 		</dependencySet>

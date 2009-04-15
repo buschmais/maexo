@@ -52,7 +52,7 @@
 					com.buschmais.maexo.samples:maexo-samples.assembly.felix
 				</exclude>
 				<exclude>
-					com.buschmais.maexo.samples:maexo-samples.commons.mbean:jar:sources
+					com.buschmais.maexo.samples:maexo-samples.commons.mbean:java-source:sources
 				</exclude>
 			</excludes>
 		</dependencySet>
@@ -62,7 +62,7 @@
 			<unpack>true</unpack>
 			<includes>
 				<include>
-					com.buschmais.maexo.samples:maexo-samples.commons.mbean:jar:sources
+					com.buschmais.maexo.samples:maexo-samples.commons.mbean:java-source:sources
 				</include>
 			</includes>
 		</dependencySet>
