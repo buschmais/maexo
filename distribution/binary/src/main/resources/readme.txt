@@ -9,7 +9,7 @@ Copyright 2008-2009 buschmais GbR
 The MAEXO project enables JMX based management of OSGi containers and applications. It offers an
 easy to use programming model for dealing with JMX resources within an OSGi application.
 
-As a showcase, the framework is used to export basic OSGi services and resources to JMX.
+As a showcase, the framework is used to export OSGi services and resources to JMX.
 
 The project aims at portability, minimal dependencies and user-friendliness.
 
@@ -72,7 +72,9 @@ The project aims at portability, minimal dependencies and user-friendliness.
     
 - samples/
     * basic
-        Demonstrates a basic OSGi container setup for MAEXO using Eclipse Equinox.
+        A basic OSGi container setup using MAEXO to provide MBeans for the OSGi Platform.
+    * commons.mbean
+        Shows the usage of the MAEXO APIs which support the development of MBeans in an OSGi environment.
     * ds
         Integration of MAEXO with OSGi Declarative Services.
     * spring
