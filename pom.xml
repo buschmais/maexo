@@ -509,7 +509,7 @@ limitations under the License
 			<dependency>
 				<groupId>com.buschmais.maexo.external.mx4j</groupId>
 				<artifactId>maexo-mx4j.tools.osgi</artifactId>
-				<version>3.0.2-SNAPSHOT</version>
+				<version>${mx4j.tools.version}</version>
 			</dependency>
 
 			<!-- compile time dependencies -->
