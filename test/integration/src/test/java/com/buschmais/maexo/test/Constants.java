@@ -21,7 +21,7 @@ public class Constants {
 	public static final String MAEXO_VERSION = "1.0.1-SNAPSHOT";
 	public static final String SLF4J_VERSION = "1.5.6";
 	public static final String SPRING_VERSION = "2.5.6.A";
-	public static final String SPRING_OSGI_VERSION = "1.1.2.B";
+	public static final String SPRING_OSGI_VERSION = "1.2.0";
 
 	public static final String ARTIFACT_SWITCHBOARD = "com.buschmais.maexo.modules.framework, maexo-framework.switchboard, "
 			+ MAEXO_VERSION;
@@ -69,15 +69,15 @@ public class Constants {
 	public static final String ARTIFACT_SPRING_TEST = "org.springframework, org.springframework.test, "
 			+ SPRING_VERSION;
 
-	public static final String ARTIFACT_SPRING_OSGI_ANNOTATION = "org.springframework.osgi, org.springframework.osgi.extensions.annotation, "
+	public static final String ARTIFACT_SPRING_OSGI_ANNOTATION = "org.springframework.osgi, spring-osgi-annotation, "
 			+ SPRING_OSGI_VERSION;
-	public static final String ARTIFACT_SPRING_OSGI_CORE = "org.springframework.osgi, org.springframework.osgi.core, "
+	public static final String ARTIFACT_SPRING_OSGI_CORE = "org.springframework.osgi, spring-osgi-core, "
 			+ SPRING_OSGI_VERSION;
-	public static final String ARTIFACT_SPRING_OSGI_EXTENDER = "org.springframework.osgi, org.springframework.osgi.extender, "
+	public static final String ARTIFACT_SPRING_OSGI_EXTENDER = "org.springframework.osgi, spring-osgi-extender, "
 			+ SPRING_OSGI_VERSION;
-	public static final String ARTIFACT_SPRING_OSGI_IO = "org.springframework.osgi, org.springframework.osgi.io, "
+	public static final String ARTIFACT_SPRING_OSGI_IO = "org.springframework.osgi, spring-osgi-io, "
 			+ SPRING_OSGI_VERSION;
-	public static final String ARTIFACT_SPRING_OSGI_TEST = "org.springframework.osgi, org.springframework.osgi.test, "
+	public static final String ARTIFACT_SPRING_OSGI_TEST = "org.springframework.osgi, spring-osgi-test, "
 			+ SPRING_OSGI_VERSION;
 
 	public static final String[] TEST_FRAMEWORK_BUNDLES_NAMES = new String[] {
