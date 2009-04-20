@@ -41,9 +41,9 @@ The following bundles are installed (see configuration/config.ini and conf/confi
       org.springframework.beans-${org.springframework.version}.jar
       org.springframework.context-${org.springframework.version}.jar
       org.springframework.core-${org.springframework.version}.jar
-      org.springframework.osgi.core-${org.springframework.osgi.version}.jar
-      org.springframework.osgi.extender-${org.springframework.osgi.version}.jar [activated]
-      org.springframework.osgi.io-${org.springframework.osgi.version}.jar
+      spring-osgi-core-${org.springframework.osgi.version}.jar
+      spring-osgi-extender-${org.springframework.osgi.version}.jar [activated]
+      spring-osgi-io-${org.springframework.osgi.version}.jar
       com.springsource.org.aopalliance-${org.aopalliance.version}.jar 
 	  
   * SLF4J logging framework (including JDK 1.4 adapter and Java Commons Logging API)
