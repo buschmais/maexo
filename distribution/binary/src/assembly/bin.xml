@@ -74,6 +74,13 @@
 			</includes>
 		</dependencySet>
 		<dependencySet>
+			<outputDirectory>doc/api/maexo-mbeans.osgi.compendium</outputDirectory>
+			<unpack>true</unpack>
+			<includes>
+				<include>com.buschmais.maexo.modules.mbeans:maexo-mbeans.osgi.compendium:javadoc:javadoc</include>
+			</includes>
+		</dependencySet>
+		<dependencySet>
 			<outputDirectory>doc/api/maexo-adaptor.mx4j.http</outputDirectory>
 			<unpack>true</unpack>
 			<includes>

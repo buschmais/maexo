@@ -9,10 +9,11 @@ following bundles are installed (see configuration/config.ini):
     
 	  maexo-framework.switchboard-${com.buschmais.maexo.version}.jar [activated]
 	
-  * MBeans for the OSGi core framework - Registers MBeans representing core OSGi resources (e.g.
-    Bundles) as OSGi Services
+  * MBeans for the OSGi core framework and compendium - Register MBeans representing OSGi resources
+    (e.g. Bundles) as OSGi Services
     
       maexo-mbeans.osgi.core-${com.buschmais.maexo.version}.jar [activated]
+      maexo-mbeans.osgi.compendium-${com.buschmais.maexo.version}.jar [activated]
       maexo-framework.commons.mbean-${com.buschmais.maexo.version}.jar
 
   * Exporter Bundle for the Java platform MBean server - Looks up the platform MBean server of

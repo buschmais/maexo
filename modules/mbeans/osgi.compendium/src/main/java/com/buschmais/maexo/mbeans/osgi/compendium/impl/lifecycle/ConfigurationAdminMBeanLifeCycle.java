@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 buschmais GbR
+ * Copyright 2009 buschmais GbR
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License
  */
-package com.buschmais.maexo.mbeans.osgi.core.impl.lifecyle;
+package com.buschmais.maexo.mbeans.osgi.compendium.impl.lifecycle;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.management.DynamicMBean;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 import com.buschmais.maexo.framework.commons.mbean.lifecycle.DefaultServiceMBeanLifeCycleSupport;
-import com.buschmais.maexo.mbeans.osgi.core.impl.PackageAdminMBeanImpl;
+import com.buschmais.maexo.mbeans.osgi.compendium.impl.ConfigurationAdminMBeanImpl;
 
 /**
  * This class implements a service event listener which tracks the life cycle of
- * the package admin admin service.
+ * the configuration admin service.
  */
-public final class PackageAdminMBeanLifeCycle extends
+public final class ConfigurationAdminMBeanLifeCycle extends
 		DefaultServiceMBeanLifeCycleSupport {
+
+	/**
+	 * Holds service references of {@link ConfigurationAdmin} services and the
+	 * associated instances of {@link ConfigurationMBeanLifeCycle}s.
+	 */
+	private Map<ServiceReference, ConfigurationMBeanLifeCycle> configurationMBeanLifeCycles = new HashMap<ServiceReference, ConfigurationMBeanLifeCycle>();
 
 	/**
 	 * Constructor.
@@ -37,7 +47,7 @@ public final class PackageAdminMBeanLifeCycle extends
 	 * @param bundleContext
 	 *            The bundle context of the exporting bundle.
 	 */
-	public PackageAdminMBeanLifeCycle(BundleContext bundleContext) {
+	public ConfigurationAdminMBeanLifeCycle(BundleContext bundleContext) {
 		super(bundleContext);
 	}
 
@@ -46,8 +56,14 @@ public final class PackageAdminMBeanLifeCycle extends
 	 */
 	@Override
 	protected Object getMBean(ServiceReference serviceReference, Object service) {
-		return new PackageAdminMBeanImpl(super.getBundleContext(),
-				(org.osgi.service.packageadmin.PackageAdmin) service);
+		ConfigurationAdmin configurationAdmin = (ConfigurationAdmin) service;
+		ConfigurationMBeanLifeCycle configurationMBeanLifeCycle = new ConfigurationMBeanLifeCycle(
+				super.getBundleContext(), serviceReference, configurationAdmin);
+		this.configurationMBeanLifeCycles.put(serviceReference,
+				configurationMBeanLifeCycle);
+		configurationMBeanLifeCycle.start();
+		return new ConfigurationAdminMBeanImpl(configurationAdmin,
+				configurationMBeanLifeCycle);
 	}
 
 	/**
@@ -56,6 +72,12 @@ public final class PackageAdminMBeanLifeCycle extends
 	@Override
 	protected void releaseMBean(ServiceReference serviceReference,
 			Object service, Object mbean) {
+		ConfigurationMBeanLifeCycle configurationMBeanLifeCycle = this.configurationMBeanLifeCycles
+				.remove(serviceReference);
+		if (configurationMBeanLifeCycle != null) {
+			configurationMBeanLifeCycle.stop();
+		}
+
 	}
 
 	/**
@@ -71,6 +93,6 @@ public final class PackageAdminMBeanLifeCycle extends
 	 */
 	@Override
 	protected Class<?> getServiceInterface() {
-		return org.osgi.service.packageadmin.PackageAdmin.class;
+		return ConfigurationAdmin.class;
 	}
 }

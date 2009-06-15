@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -36,7 +36,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param bundleContext
 	 *            The bundle context of the exporting bundle.
 	 */
@@ -46,7 +46,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 
 	/**
 	 * Returns the service interface supported by the life cycle event listener.
-	 * 
+	 *
 	 * @return The service interface.
 	 */
 	protected abstract Class<?> getServiceInterface();
@@ -57,38 +57,51 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * <p>
 	 * If <code>null</code> is returned all service instances for the interface
 	 * provided by {@link #getServiceInterface()} will be used to create MBeans.
-	 * 
+	 *
 	 * @return The service filter or <code>null</code>.
 	 */
 	protected abstract String getServiceFilter();
 
 	/**
 	 * Returns the object name of service which will be used for the MBean.
-	 * 
+	 *
 	 * @param serviceReference
 	 *            The service reference.
 	 * @param service
 	 *            The service instance.
 	 * @return The object name.
 	 */
-	protected abstract ObjectName getObjectName(ServiceReference serviceReference,
-			Object service);
+	protected abstract ObjectName getObjectName(
+			ServiceReference serviceReference, Object service);
 
 	/**
 	 * Returns the MBean instance for the given service.
-	 * 
+	 *
 	 * @param serviceReference
 	 *            The service reference.
 	 * @param service
 	 *            The service instance.
-	 * @return The MBean instance.
+	 * @return The MBean instance which represents the service.
 	 */
 	protected abstract Object getMBean(ServiceReference serviceReference,
 			Object service);
 
 	/**
+	 * Releases the MBean instance for the given service.
+	 *
+	 * @param serviceReference
+	 *            The service reference.
+	 * @param service
+	 *            The service instance.
+	 * @param mbean
+	 *            The MBean instance which represents the service.
+	 */
+	protected abstract void releaseMBean(ServiceReference serviceReference,
+			Object service, Object mbean);
+
+	/**
 	 * Returns the MBean interface which will be used for registration.
-	 * 
+	 *
 	 * @return The MBean interface.
 	 */
 	protected abstract Class<?> getMBeanInterface();
@@ -97,7 +110,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	 * Returns a filter using the interface from {@link #getServiceInterface()}
 	 * as object class and the service filter obtained from
 	 * {@link #getServiceFilter()}.
-	 * 
+	 *
 	 * @return The filter or <code>null</code> if there is no service interface
 	 *         declared.
 	 */
@@ -121,7 +134,7 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 	/**
 	 * Returns the currently registered service references for the interface
 	 * provided by {@link #getServiceInterface()}.
-	 * 
+	 *
 	 * @return The service references.
 	 */
 	private ServiceReference[] getServices() {
@@ -142,14 +155,17 @@ public abstract class ServiceMBeanLifeCycleSupport extends
 		ServiceReference serviceReference = serviceEvent.getServiceReference();
 		Object service = super.getBundleContext().getService(serviceReference);
 		ObjectName objectName = this.getObjectName(serviceReference, service);
+		Object mbean = null;
 		switch (serviceEvent.getType()) {
 		case ServiceEvent.REGISTERED:
+			mbean = this.getMBean(serviceReference, service);
 			super.registerMBeanService(this.getMBeanInterface(), objectName,
-					this.getMBean(serviceReference, service));
+					mbean);
 			break;
 		case ServiceEvent.UNREGISTERING:
 			try {
-				super.unregisterMBeanService(objectName);
+				mbean = super.unregisterMBeanService(objectName);
+				this.releaseMBean(serviceReference, service, mbean);
 			} finally {
 				super.getBundleContext().ungetService(serviceReference);
 			}

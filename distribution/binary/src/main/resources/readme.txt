@@ -35,8 +35,15 @@ The project aims at portability, minimal dependencies and user-friendliness.
 		    within the container, e.g. Bundles and Services.
 		    
 		* maexo-mbeans.osgi.core-${com.buschmais.maexo.version}.jar-javadoc
-		    Contains the javadoc for the bundle maexo-framework.commons.mbean-${com.buschmais.maexo.version}.jar.
+		    Contains the javadoc for the bundle maexo-mbeans.osgi.core-${com.buschmais.maexo.version}.jar.
 		
+		* maexo-mbeans.osgi.compendium-${com.buschmais.maexo.version}.jar
+		    This bundle registers MBeans to the OSGi service registry which represent resources
+		    from the OSGi compendium specification (e.g. ConfigurationAdmin).
+		    
+		* maexo-mbeans.osgi.compendium-${com.buschmais.maexo.version}.jar-javadoc
+		    Contains the javadoc for the bundle maexo-mbeans.osgi.compendium-${com.buschmais.maexo.version}.jar.
+
 		* maexo-server.factory-${com.buschmais.maexo.version}.jar
 		    Registers all MBean servers which are available from the MBeanServerFactory as OSGi 
 		    services.

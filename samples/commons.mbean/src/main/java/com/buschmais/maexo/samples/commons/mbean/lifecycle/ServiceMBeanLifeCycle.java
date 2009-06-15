@@ -92,6 +92,18 @@ public class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 	}
 
 	/**
+	 * Releases the MBean which represents/manages the service.
+	 *
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected final void releaseMBean(ServiceReference serviceReference,
+			Object service, Object mbean) {
+		logger.info(String.format("releasing service MBean for service %s",
+				service));
+	}
+
+	/**
 	 * Returns the interface which will be used to publish the MBean.
 	 *
 	 * {@inheritDoc}

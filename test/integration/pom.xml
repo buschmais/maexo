@@ -56,6 +56,16 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.buschmais.maexo.modules.mbeans</groupId>
+			<artifactId>maexo-mbeans.osgi.compendium</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>com.springsource.org.easymock</artifactId>
 		</dependency>

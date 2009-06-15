@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -65,7 +65,7 @@ public class MBeanLifeCycleTest extends MaexoTests {
 	 * Test if registering/unregistering an MBean using the class
 	 * {@link MBeanLifecycleSupport} is reflected via an appropriate service in
 	 * the OSGi service registry.
-	 * 
+	 *
 	 * @throws MalformedObjectNameException
 	 * @throws NullPointerException
 	 * @throws InterruptedException
@@ -100,7 +100,7 @@ public class MBeanLifeCycleTest extends MaexoTests {
 	 * started before service registration and stopped after service
 	 * unregistration. This is reverse to the behavior in the test method
 	 * {@link #test_defaultServiceMBeanLifeCycleSupport()}.
-	 * 
+	 *
 	 * @throws MalformedObjectNameException
 	 * @throws NullPointerException
 	 * @throws InterruptedException
@@ -123,6 +123,14 @@ public class MBeanLifeCycleTest extends MaexoTests {
 			protected Object getMBean(ServiceReference serviceReference,
 					Object service) {
 				return new Standard();
+			}
+
+			/**
+			 * {@inheritDoc}
+			 */
+			@Override
+			protected void releaseMBean(ServiceReference serviceReference,
+					Object service, Object mbean) {
 			}
 
 			/**
@@ -205,11 +213,11 @@ public class MBeanLifeCycleTest extends MaexoTests {
 	 * started after service registration and stopped before service
 	 * unregistration. This is reverse to the behavior in the test method
 	 * {@link #test_serviceMBeanLifeCycleSupport()}.
-	 * 
+	 *
 	 * @throws NullPointerException
 	 * @throws MalformedObjectNameException
 	 * @throws InterruptedException
-	 * 
+	 *
 	 */
 	public void test_defaultServiceMBeanLifeCycleSupport()
 			throws MalformedObjectNameException, NullPointerException,
@@ -254,6 +262,14 @@ public class MBeanLifeCycleTest extends MaexoTests {
 			protected Object getMBean(ServiceReference serviceReference,
 					Object service) {
 				return new Standard();
+			}
+
+			/**
+			 * {@inheritDoc}
+			 */
+			@Override
+			protected void releaseMBean(ServiceReference serviceReference,
+					Object service, Object mbean) {
 			}
 
 			/**

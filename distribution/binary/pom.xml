@@ -76,6 +76,15 @@
 			<classifier>javadoc</classifier>
 		</dependency>
 		<dependency>
+			<groupId>com.buschmais.maexo.modules.mbeans</groupId>
+			<artifactId>maexo-mbeans.osgi.compendium</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.buschmais.maexo.modules.mbeans</groupId>
+			<artifactId>maexo-mbeans.osgi.compendium</artifactId>
+			<classifier>javadoc</classifier>
+		</dependency>
+		<dependency>
 			<groupId>com.buschmais.maexo.modules.server</groupId>
 			<artifactId>maexo-server.factory</artifactId>
 		</dependency>

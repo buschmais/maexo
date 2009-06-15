@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<!--
-		Copyright 2008 buschmais GbR
+		Copyright 2008-2009 buschmais GbR
 
 		Licensed under the Apache License, Version 2.0 (the "License");
 		you may not use this file except in compliance with the License.
@@ -50,10 +50,13 @@
 		<com.buschmais.maexo.version>1.0.1-SNAPSHOT</com.buschmais.maexo.version>
 		<mx4j.tools.version>3.0.1</mx4j.tools.version>
 		<org.aopalliance.version>1.0.0</org.aopalliance.version>
+		<org.apache.felix.configadmin.version>1.0.10</org.apache.felix.configadmin.version>
 		<org.apache.felix.main.version>1.4.1</org.apache.felix.main.version>
 		<org.apache.felix.scr.version>1.0.6</org.apache.felix.scr.version>
 		<org.eclipse.osgi.version>3.4.0.v20080605-1900</org.eclipse.osgi.version>
 		<org.objectweb.asm.version>2.2.3</org.objectweb.asm.version>
+		<org.osgi.core.version>2.2.3</org.osgi.core.version>
+		<org.osgi.compendium.version>2.2.3</org.osgi.compendium.version>
 		<org.slf4j.version>1.5.6</org.slf4j.version>
 		<org.springframework.version>2.5.6.A</org.springframework.version>
 		<org.springframework.osgi.version>1.2.0</org.springframework.osgi.version>
@@ -238,6 +241,10 @@ limitations under the License
 							<packages>com.buschmais.maexo.mbeans.osgi.core*</packages>
 						</group>
 						<group>
+							<title>MAEXO - MBeans: OSGi Core</title>
+							<packages>com.buschmais.maexo.mbeans.osgi.compendium*</packages>
+						</group>
+						<group>
 							<title>MAEXO - Adaptor: MX4j HTTP</title>
 							<packages>com.buschmais.maexo.adaptor.mx4j.http*</packages>
 						</group>
@@ -327,6 +334,19 @@ limitations under the License
 			<dependency>
 				<groupId>com.buschmais.maexo.modules.mbeans</groupId>
 				<artifactId>maexo-mbeans.osgi.core</artifactId>
+				<classifier>javadoc</classifier>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.modules.mbeans</groupId>
+				<artifactId>maexo-mbeans.osgi.compendium</artifactId>
+				<version>${com.buschmais.maexo.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.buschmais.maexo.modules.mbeans</groupId>
+				<artifactId>maexo-mbeans.osgi.compendium</artifactId>
 				<classifier>javadoc</classifier>
 				<version>${com.buschmais.maexo.version}</version>
 			</dependency>
@@ -521,6 +541,27 @@ limitations under the License
 			</dependency>
 
 			<dependency>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>org.osgi.compendium</artifactId>
+				<version>1.2.0</version>
+				<scope>provided</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>javax.servlet</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>org.osgi.core</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache.felix</groupId>
+						<artifactId>org.osgi.foundation</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
 				<version>${org.slf4j.version}</version>
@@ -555,6 +596,13 @@ limitations under the License
 
 			<dependency>
 				<groupId>org.apache.felix</groupId>
+				<artifactId>org.apache.felix.configadmin</artifactId>
+				<version>${org.apache.felix.configadmin.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.felix</groupId>
 				<artifactId>org.apache.felix.scr</artifactId>
 				<version>${org.apache.felix.scr.version}</version>
 				<scope>runtime</scope>
@@ -570,23 +618,6 @@ limitations under the License
 					<exclusion>
 						<groupId>net.sf.kxml</groupId>
 						<artifactId>kxml2</artifactId>
-					</exclusion>
-				</exclusions>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>org.osgi.compendium</artifactId>
-				<version>1.2.0</version>
-				<scope>runtime</scope>
-				<exclusions>
-					<exclusion>
-						<groupId>org.apache.felix</groupId>
-						<artifactId>javax.servlet</artifactId>
-					</exclusion>
-					<exclusion>
-						<groupId>org.apache.felix</groupId>
-						<artifactId>org.osgi.foundation</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>

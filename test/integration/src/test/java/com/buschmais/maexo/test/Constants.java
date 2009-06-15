@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 buschmais GbR
+ * Copyright 2008-2009 buschmais GbR
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ public class Constants {
 	public static final String SLF4J_VERSION = "1.5.6";
 	public static final String SPRING_VERSION = "2.5.6.A";
 	public static final String SPRING_OSGI_VERSION = "1.2.0";
+	public static final String FELIX_CONFIGADMIN_VERSION = "1.0.10";
+	public static final String OSGI_COMPENDIUM_VERSION = "1.2.0";
 
 	public static final String ARTIFACT_SWITCHBOARD = "com.buschmais.maexo.modules.framework, maexo-framework.switchboard, "
 			+ MAEXO_VERSION;
@@ -35,8 +37,11 @@ public class Constants {
 	public static final String ARTIFACT_OSGI_CORE_MBEAN = "com.buschmais.maexo.modules.mbeans, maexo-mbeans.osgi.core, "
 			+ MAEXO_VERSION;
 
+	public static final String ARTIFACT_OSGI_COMPENDIUM_MBEAN = "com.buschmais.maexo.modules.mbeans, maexo-mbeans.osgi.compendium, "
+			+ MAEXO_VERSION;
+
 	public static final String ARTIFACT_MBEAN_SERVER_FACTORY = "com.buschmais.maexo.modules.server, maexo-server.factory, "
-		+ MAEXO_VERSION;
+			+ MAEXO_VERSION;
 
 	public static final String ARTIFACT_PLATFORM_MBEAN_SERVER = "com.buschmais.maexo.modules.server, maexo-server.platform, "
 			+ MAEXO_VERSION;
@@ -79,6 +84,11 @@ public class Constants {
 			+ SPRING_OSGI_VERSION;
 	public static final String ARTIFACT_SPRING_OSGI_TEST = "org.springframework.osgi, spring-osgi-test, "
 			+ SPRING_OSGI_VERSION;
+
+	public static final String ARTIFACT_FELIX_CONFIGADMIN = "org.apache.felix, org.apache.felix.configadmin, "
+			+ FELIX_CONFIGADMIN_VERSION;
+	public static final String ARTIFACT_OSGI_COMPENDIUM = "org.apache.felix, org.osgi.compendium, "
+			+ OSGI_COMPENDIUM_VERSION;
 
 	public static final String[] TEST_FRAMEWORK_BUNDLES_NAMES = new String[] {
 			ARTIFACT_ASM, ARTIFACT_AOPALLIANCE, ARTIFACT_JUNIT,

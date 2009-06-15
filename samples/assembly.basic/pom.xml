@@ -78,6 +78,10 @@
 			<artifactId>maexo-mbeans.osgi.core</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.buschmais.maexo.modules.mbeans</groupId>
+			<artifactId>maexo-mbeans.osgi.compendium</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.buschmais.maexo.modules.server</groupId>
 			<artifactId>maexo-server.platform</artifactId>
 		</dependency>
@@ -94,6 +98,14 @@
 					<artifactId>mx4j-tools</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.configadmin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

@@ -63,8 +63,7 @@ public class MaexoMBeanTests extends MaexoTests {
 	 */
 	protected Bundle getTestBundle() throws InvalidSyntaxException {
 		ServiceReference serviceReference = this.bundleContext
-				.getServiceReference(PackageAdmin.class
-						.getName());
+				.getServiceReference(PackageAdmin.class.getName());
 		final PackageAdmin packageAdmin = (PackageAdmin) bundleContext
 				.getService(serviceReference);
 		Bundle[] bundles = packageAdmin.getBundles(TESTBUNDLE_SYMBOLIC_NAME,
@@ -92,6 +91,20 @@ public class MaexoMBeanTests extends MaexoTests {
 	}
 
 	/**
+	 * Returns the instance of an {@link MBeanServerConnection} from the OSGi
+	 * service registry.
+	 *
+	 * @return
+	 */
+	protected MBeanServerConnection getMBeanServerConnection() {
+		// get MBeanServer
+		ServiceReference serviceReference = bundleContext
+				.getServiceReference(MBeanServer.class.getName());
+		return (MBeanServer) bundleContext.getService(serviceReference);
+
+	}
+
+	/**
 	 * Returns an MBean registered on MBean server under given object name and
 	 * interface.
 	 *
@@ -102,14 +115,10 @@ public class MaexoMBeanTests extends MaexoTests {
 	 * @return The MBean.
 	 */
 	protected Object getMBean(ObjectName objectName, Class<?> mbeanInterface) {
-		// get MBeanServer
-		ServiceReference serviceReference = bundleContext
-				.getServiceReference(MBeanServer.class.getName());
-		MBeanServerConnection mbeanServer = (MBeanServer) bundleContext
-				.getService(serviceReference);
-		// get new MBean from MBeanServer
+		MBeanServerConnection mbeanServerConnection = this.getMBeanServerConnection();
+		// get new MBean from MBeanServerConnection
 		final Object mBean = MBeanServerInvocationHandler.newProxyInstance(
-				mbeanServer, objectName, mbeanInterface, false);
+				mbeanServerConnection, objectName, mbeanInterface, false);
 		return mBean;
 	}
 

@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -41,7 +41,7 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param bundleContext
 	 *            The bundle context of the exporting bundle.
 	 */
@@ -55,6 +55,14 @@ public final class ServiceMBeanLifeCycle extends ServiceMBeanLifeCycleSupport {
 	@Override
 	protected Object getMBean(ServiceReference serviceReference, Object service) {
 		return new ServiceMBeanImpl(super.getBundleContext(), serviceReference);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void releaseMBean(ServiceReference serviceReference,
+			Object service, Object mbean) {
 	}
 
 	/**

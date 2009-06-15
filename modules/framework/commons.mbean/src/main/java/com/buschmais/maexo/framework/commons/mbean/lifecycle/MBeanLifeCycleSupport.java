@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -58,11 +58,11 @@ public abstract class MBeanLifeCycleSupport {
 	 */
 	private final ObjectNameFactoryHelper objectNameFactoryHelper;
 
-	private final Map<Object, ServiceRegistration> mbeanRegistrations = new ConcurrentHashMap<Object, ServiceRegistration>();
+	private final Map<ObjectName, ServiceRegistration> mbeanRegistrations = new ConcurrentHashMap<ObjectName, ServiceRegistration>();
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param bundleContext
 	 *            The bundle context of the exporting bundle.
 	 */
@@ -74,7 +74,7 @@ public abstract class MBeanLifeCycleSupport {
 
 	/**
 	 * Returns the bundle context.
-	 * 
+	 *
 	 * @return The bundle context.
 	 */
 	public final BundleContext getBundleContext() {
@@ -83,7 +83,7 @@ public abstract class MBeanLifeCycleSupport {
 
 	/**
 	 * Returns the object name factory helper.
-	 * 
+	 *
 	 * @return The object name factory helper.
 	 */
 	protected final ObjectNameFactoryHelper getObjectNameHelper() {
@@ -97,7 +97,7 @@ public abstract class MBeanLifeCycleSupport {
 	 * <code>mbeanInterface</code> and will have a property named
 	 * "javax.management.ObjectName" with the value of the parameter
 	 * <code>objectName</code>.
-	 * 
+	 *
 	 * @param mbeanInterface
 	 *            The interface for service registration.
 	 * @param objectName
@@ -124,14 +124,16 @@ public abstract class MBeanLifeCycleSupport {
 	 * Unregisters a previously registered MBean.
 	 * <p>
 	 * The MBean is identified by its object name.
-	 * 
+	 *
 	 * @param objectName
 	 *            The object name which identifies the MBean to be unregistered.
+	 * @return The MBean instance that has been unregistered.
 	 */
-	protected final void unregisterMBeanService(ObjectName objectName) {
+	protected final Object unregisterMBeanService(ObjectName objectName) {
 		// lookup serviceRegistration
 		ServiceRegistration serviceRegistration = this.mbeanRegistrations
-				.get(objectName);
+				.remove(objectName);
+		Object mbean = null;
 		if (serviceRegistration != null) {
 			// unregister service
 			if (logger.isDebugEnabled()) {
@@ -139,12 +141,28 @@ public abstract class MBeanLifeCycleSupport {
 						"unregistering mbean service with object name '{}'",
 						objectName);
 			}
+			mbean = this.bundleContext.getService(serviceRegistration
+					.getReference());
 			serviceRegistration.unregister();
+			return mbean;
 		} else {
 			logger
 					.debug(
 							"mbean service with object name '{}' not found, skipping unregistration",
 							objectName);
 		}
+		return mbean;
+	}
+
+	/**
+	 * Checks if an MBean service is registered for the given {@link ObjectName}
+	 * .
+	 *
+	 * @param objectName
+	 *            The object name.
+	 * @return True if an MBean with the given object name has been registered.
+	 */
+	protected final boolean isMBeanServiceRegistered(ObjectName objectName) {
+		return this.mbeanRegistrations.containsKey(objectName);
 	}
 }

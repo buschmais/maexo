@@ -1,6 +1,6 @@
 /*
  * Copyright 2008 buschmais GbR
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -33,7 +33,7 @@ public final class StartLevelMBeanLifeCycle extends
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param bundleContext
 	 *            The bundle context of the exporting bundle.
 	 */
@@ -48,6 +48,14 @@ public final class StartLevelMBeanLifeCycle extends
 	protected Object getMBean(ServiceReference serviceReference, Object service) {
 		return new StartLevelMBeanImpl(super.getBundleContext(),
 				(org.osgi.service.startlevel.StartLevel) service);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void releaseMBean(ServiceReference serviceReference,
+			Object service, Object mbean) {
 	}
 
 	/**
