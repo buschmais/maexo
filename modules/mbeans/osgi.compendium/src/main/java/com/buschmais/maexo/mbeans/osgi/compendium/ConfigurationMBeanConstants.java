@@ -27,14 +27,12 @@ import javax.management.openmbean.OpenType;
 import javax.management.openmbean.SimpleType;
 import javax.management.openmbean.TabularType;
 
-import org.osgi.service.cm.Configuration;
-
 import com.buschmais.maexo.framework.commons.mbean.dynamic.OpenTypeFactory;
 
 /**
  * Class holding constants for {@link ConfigurationMBean}s.
  */
-public class ConfigurationMBeanConstants {
+public final class ConfigurationMBeanConstants {
 
 	/**
 	 * Constructor.
@@ -48,12 +46,24 @@ public class ConfigurationMBeanConstants {
 	/** MBean object name format. */
 	public static final String OBJECTNAME_FORMAT = "com.buschmais.maexo:type=Configuration,pid=%s,id=%s";
 
+	/**
+	 * Constant: the name of a property.
+	 */
 	public static final String PROPERTY_ITEM_NAME = "name";
 
+	/**
+	 * Constant: the type of a property.
+	 */
 	public static final String PROPERTY_ITEM_TYPE = "type";
 
+	/**
+	 * Constant: the value of a property.
+	 */
 	public static final String PROPERTY_ITEM_VALUE = "value";
 
+	/**
+	 * Defines the elements of a property.
+	 */
 	public static final List<String> PROPERTY_ITEMS = Arrays
 			.asList(new String[] { PROPERTY_ITEM_NAME, PROPERTY_ITEM_TYPE,
 					PROPERTY_ITEM_VALUE });
@@ -75,8 +85,9 @@ public class ConfigurationMBeanConstants {
 					PROPERTY_TYPE, new String[] { PROPERTY_ITEM_NAME });
 
 	/**
-	 * MBean attribute info for {@link Configuration#getBundleLocation()} and
-	 * {@link Configuration#setBundleLocation(String)}.
+	 * MBean attribute info for
+	 * {@link org.osgi.service.cm.Configuration#getBundleLocation()} and
+	 * {@link org.osgi.service.cm.Configuration#setBundleLocation(String)}.
 	 */
 	public static final OpenMBeanAttributeInfoSupport BUNDLELOCATION = new OpenMBeanAttributeInfoSupport(
 			"bundleLocation",
@@ -84,21 +95,24 @@ public class ConfigurationMBeanConstants {
 			SimpleType.STRING, true, true, false);
 
 	/**
-	 * MBean attribute info for {@link Configuration#getFactoryPid()}.
+	 * MBean attribute info for
+	 * {@link org.osgi.service.cm.Configuration#getFactoryPid()}.
 	 */
 	public static final OpenMBeanAttributeInfoSupport FACTORYPID = new OpenMBeanAttributeInfoSupport(
 			"factoryPid", "The factory PID or null.", SimpleType.STRING, true,
 			false, false);
 
 	/**
-	 * MBean attribute info for {@link Configuration#getPid()}.
+	 * MBean attribute info for
+	 * {@link org.osgi.service.cm.Configuration#getPid()}.
 	 */
 	public static final OpenMBeanAttributeInfoSupport PID = new OpenMBeanAttributeInfoSupport(
 			"pid", "The PID for this Configuration object.", SimpleType.STRING,
 			true, false, false);
 
 	/**
-	 * MBean attribute info for {@link Configuration#getProperties()}.
+	 * MBean attribute info for
+	 * {@link org.osgi.service.cm.Configuration#getProperties()}.
 	 */
 	public static final OpenMBeanAttributeInfoSupport PROPERTIES = new OpenMBeanAttributeInfoSupport(
 			"properties",
@@ -106,7 +120,8 @@ public class ConfigurationMBeanConstants {
 			PROPERTIES_TYPE, true, true, false);
 
 	/**
-	 * MBean operation info for operation {@link Configuration#delete()}.
+	 * MBean operation info for operation
+	 * {@link org.osgi.service.cm.Configuration#delete()}.
 	 */
 	public static final OpenMBeanOperationInfoSupport DELETE = new OpenMBeanOperationInfoSupport(
 			"delete", "Delete this Configuration object.",
@@ -122,7 +137,8 @@ public class ConfigurationMBeanConstants {
 			OpenMBeanOperationInfoSupport.ACTION);
 
 	/**
-	 * MBean operation info for operation {@link Configuration#remove()}.
+	 * MBean operation info for operation
+	 * {@link org.osgi.service.cm.Configuration#remove()}.
 	 */
 	public static final OpenMBeanOperationInfoSupport REMOVE = new OpenMBeanOperationInfoSupport(
 			"remove",
@@ -132,7 +148,8 @@ public class ConfigurationMBeanConstants {
 			SimpleType.VOID, OpenMBeanOperationInfoSupport.ACTION);
 
 	/**
-	 * MBean operation info for operation {@link Configuration#removeAll()}.
+	 * MBean operation info for operation
+	 * {@link org.osgi.service.cm.Configuration#removeAll()}.
 	 */
 	public static final OpenMBeanOperationInfoSupport REMOVEALL = new OpenMBeanOperationInfoSupport(
 			"removeAll", "Removes all properties from the configuration.",
@@ -141,7 +158,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setBoolean(String, Boolean)}
+	 * {@link ConfigurationMBean#setBoolean(String, Boolean)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETBOOLEAN = new OpenMBeanOperationInfoSupport(
 			"setBoolean",
@@ -155,7 +172,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getBoolean(String)}
+	 * {@link ConfigurationMBean#getBoolean(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETBOOLEAN = new OpenMBeanOperationInfoSupport(
 			"getBoolean",
@@ -166,7 +183,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfPrimitiveBoolean(String, boolean[])}
+	 * {@link ConfigurationMBean#setArrayOfPrimitiveBoolean(String, boolean[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFPRIMITIVEBOOLEAN = new OpenMBeanOperationInfoSupport(
 			"setArrayOfPrimitiveBoolean", "Sets a boolean array property.",
@@ -180,7 +197,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfPrimitiveBoolean(String)}
+	 * {@link ConfigurationMBean#getArrayOfPrimitiveBoolean(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFPRIMITIVEBOOLEAN = new OpenMBeanOperationInfoSupport(
 			"getArrayOfPrimitiveBoolean",
@@ -192,7 +209,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfBoolean(String, Boolean[])}
+	 * {@link ConfigurationMBean#setArrayOfBoolean(String, Boolean[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFBOOLEAN = new OpenMBeanOperationInfoSupport(
 			"setArrayOfBoolean", "Sets a Boolean array property.",
@@ -206,7 +223,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfBoolean(String)}
+	 * {@link ConfigurationMBean#getArrayOfBoolean(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFBOOLEAN = new OpenMBeanOperationInfoSupport(
 			"getArrayOfBoolean",
@@ -218,7 +235,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getByte(String, Byte)}
+	 * {@link ConfigurationMBean#getByte(String, Byte)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETBYTE = new OpenMBeanOperationInfoSupport(
 			"setByte", "Sets a Byte property.",
@@ -231,7 +248,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getByte(String)}
+	 * {@link ConfigurationMBean#getByte(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETBYTE = new OpenMBeanOperationInfoSupport(
 			"getByte",
@@ -242,7 +259,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfByte(String, Byte[])}
+	 * {@link ConfigurationMBean#setArrayOfByte(String, Byte[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFPRIMITIVEBYTE = new OpenMBeanOperationInfoSupport(
 			"setArrayOfPrimitiveByte", "Sets a byte array property.",
@@ -256,7 +273,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfByte(String)}
+	 * {@link ConfigurationMBean#getArrayOfByte(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFPRIMITIVEBYTE = new OpenMBeanOperationInfoSupport(
 			"getArrayOfPrimitiveByte",
@@ -268,7 +285,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfPrimitiveByte(String, byte[])}
+	 * {@link ConfigurationMBean#setArrayOfPrimitiveByte(String, byte[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFBYTE = new OpenMBeanOperationInfoSupport(
 			"setArrayOfByte", "Sets a Byte array property.",
@@ -282,7 +299,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfPrimitiveByte(String)}
+	 * {@link ConfigurationMBean#getArrayOfPrimitiveByte(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFBYTE = new OpenMBeanOperationInfoSupport(
 			"getArrayOfByte",
@@ -294,7 +311,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setCharacter(String, Character)}
+	 * {@link ConfigurationMBean#setCharacter(String, Character)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETCHARACTER = new OpenMBeanOperationInfoSupport(
 			"setCharacter",
@@ -308,7 +325,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getCharacter(String)}
+	 * {@link ConfigurationMBean#getCharacter(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETCHARACTER = new OpenMBeanOperationInfoSupport(
 			"getCharacter",
@@ -319,7 +336,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfPrimitiveCharacter(String, char[])}
+	 * {@link ConfigurationMBean#setArrayOfPrimitiveCharacter(String, char[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETPARRAYOFPRIMITIVECHARACTER = new OpenMBeanOperationInfoSupport(
 			"setArrayOfPrimitiveCharacter",
@@ -334,7 +351,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfPrimitiveCharacter(String)}
+	 * {@link ConfigurationMBean#getArrayOfPrimitiveCharacter(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETPARRAYOFPRIMITIVECHARACTER = new OpenMBeanOperationInfoSupport(
 			"getArrayOfPrimitiveCharacter",
@@ -346,7 +363,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfCharacter(String, Character[])}
+	 * {@link ConfigurationMBean#setArrayOfCharacter(String, Character[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFCHARACTER = new OpenMBeanOperationInfoSupport(
 			"setArrayOfCharacter",
@@ -361,7 +378,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfCharacter(String)}
+	 * {@link ConfigurationMBean#getArrayOfCharacter(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFCHARACTER = new OpenMBeanOperationInfoSupport(
 			"getArrayOfCharacter",
@@ -373,7 +390,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setDouble(String, Double)}
+	 * {@link ConfigurationMBean#setDouble(String, Double)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETDOUBLE = new OpenMBeanOperationInfoSupport(
 			"setDouble", "Sets a Double property.",
@@ -386,7 +403,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getDouble(String)}
+	 * {@link ConfigurationMBean#getDouble(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETDOUBLE = new OpenMBeanOperationInfoSupport(
 			"getDouble",
@@ -397,7 +414,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfPrimitiveDouble(String, double[])}
+	 * {@link ConfigurationMBean#setArrayOfPrimitiveDouble(String, double[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFPRIMITIVEDOUBLE = new OpenMBeanOperationInfoSupport(
 			"setArrayOfPrimitiveDouble", "Sets a double array property.",
@@ -411,7 +428,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfPrimitiveDouble(String)}
+	 * {@link ConfigurationMBean#getArrayOfPrimitiveDouble(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFPRIMITIVEDOUBLE = new OpenMBeanOperationInfoSupport(
 			"getArrayOfPrimitiveDouble",
@@ -423,7 +440,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfDouble(String, Double[])}
+	 * {@link ConfigurationMBean#setArrayOfDouble(String, Double[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFDOUBLE = new OpenMBeanOperationInfoSupport(
 			"setArrayOfDouble", "Sets a Double array property.",
@@ -437,7 +454,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfDouble(String)}
+	 * {@link ConfigurationMBean#getArrayOfDouble(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFDOUBLE = new OpenMBeanOperationInfoSupport(
 			"getArrayOfDouble",
@@ -449,7 +466,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setFloat(String, Float)}
+	 * {@link ConfigurationMBean#setFloat(String, Float)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETFLOAT = new OpenMBeanOperationInfoSupport(
 			"setFloat", "Sets a Float property.",
@@ -462,7 +479,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getFloat(String)}
+	 * {@link ConfigurationMBean#getFloat(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETFLOAT = new OpenMBeanOperationInfoSupport(
 			"getFloat",
@@ -473,7 +490,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfPrimitiveFloat(String, float[])}
+	 * {@link ConfigurationMBean#setArrayOfPrimitiveFloat(String, float[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFPRIMITIVEFLOAT = new OpenMBeanOperationInfoSupport(
 			"setArrayOfPrimitiveFloat", "Sets a float array property.",
@@ -487,7 +504,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfPrimitiveFloat(String)}
+	 * {@link ConfigurationMBean#getArrayOfPrimitiveFloat(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFPRIMITIVEFLOAT = new OpenMBeanOperationInfoSupport(
 			"getArrayOfPrimitiveFloat",
@@ -499,7 +516,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfFloat(String, Float[])}
+	 * {@link ConfigurationMBean#setArrayOfFloat(String, Float[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFFLOAT = new OpenMBeanOperationInfoSupport(
 			"setArrayOfFloat", "Sets a Float array property.",
@@ -513,7 +530,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfFloat(String)}
+	 * {@link ConfigurationMBean#getArrayOfFloat(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFFLOAT = new OpenMBeanOperationInfoSupport(
 			"getArrayOfFloat",
@@ -525,7 +542,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setInteger(String, Integer)}
+	 * {@link ConfigurationMBean#setInteger(String, Integer)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETINTEGER = new OpenMBeanOperationInfoSupport(
 			"setInteger",
@@ -539,7 +556,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getInteger(String)}
+	 * {@link ConfigurationMBean#getInteger(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETINTEGER = new OpenMBeanOperationInfoSupport(
 			"getInteger",
@@ -550,7 +567,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfPrimitiveInteger(String, int[])}
+	 * {@link ConfigurationMBean#setArrayOfPrimitiveInteger(String, int[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFPRIMITIVEINTEGER = new OpenMBeanOperationInfoSupport(
 			"setArrayOfPrimitiveInteger", "Sets an int array property.",
@@ -564,7 +581,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfPrimitiveInteger(String)}
+	 * {@link ConfigurationMBean#getArrayOfPrimitiveInteger(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFPRIMITIVEINTEGER = new OpenMBeanOperationInfoSupport(
 			"getArrayOfPrimitiveInteger",
@@ -576,7 +593,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfInteger(String, Integer[])}
+	 * {@link ConfigurationMBean#setArrayOfInteger(String, Integer[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFINTEGER = new OpenMBeanOperationInfoSupport(
 			"setArrayOfInteger", "Sets a Integer array property.",
@@ -590,7 +607,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfInteger(String)}
+	 * {@link ConfigurationMBean#getArrayOfInteger(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFINTEGER = new OpenMBeanOperationInfoSupport(
 			"getArrayOfInteger",
@@ -602,7 +619,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setLong(String, Long)}
+	 * {@link ConfigurationMBean#setLong(String, Long)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETLONG = new OpenMBeanOperationInfoSupport(
 			"setLong", "Sets a Long property.",
@@ -615,7 +632,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getLong(String)}
+	 * {@link ConfigurationMBean#getLong(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETLONG = new OpenMBeanOperationInfoSupport(
 			"getLong",
@@ -626,7 +643,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfPrimitiveLong(String, Long[])}
+	 * {@link ConfigurationMBean#setArrayOfPrimitiveLong(String, Long[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFPRIMITIVELONG = new OpenMBeanOperationInfoSupport(
 			"setArrayOfPrimitiveLong", "Sets a long array property.",
@@ -640,7 +657,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfPrimitiveCharacter(String)}
+	 * {@link ConfigurationMBean#getArrayOfPrimitiveCharacter(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFPRIMITIVELONG = new OpenMBeanOperationInfoSupport(
 			"getArrayOfPrimitiveLong",
@@ -652,7 +669,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfLong(String, Long[])}
+	 * {@link ConfigurationMBean#setArrayOfLong(String, Long[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFLONG = new OpenMBeanOperationInfoSupport(
 			"setArrayOfLong", "Sets a Long array property.",
@@ -666,7 +683,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfLong(String)}
+	 * {@link ConfigurationMBean#getArrayOfLong(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFLONG = new OpenMBeanOperationInfoSupport(
 			"getArrayOfLong",
@@ -678,7 +695,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setShort(String, Short)}
+	 * {@link ConfigurationMBean#setShort(String, Short)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETSHORT = new OpenMBeanOperationInfoSupport(
 			"setShort", "Sets a Short property.",
@@ -691,7 +708,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getShort(String)}
+	 * {@link ConfigurationMBean#getShort(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETSHORT = new OpenMBeanOperationInfoSupport(
 			"getShort",
@@ -702,7 +719,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfPrimitiveShort(String, short[])}
+	 * {@link ConfigurationMBean#setArrayOfPrimitiveShort(String, short[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFPRIMITIVESHORT = new OpenMBeanOperationInfoSupport(
 			"setArrayOfPrimitiveShort", "Sets a short array property.",
@@ -716,7 +733,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfPrimitiveShort(String)}
+	 * {@link ConfigurationMBean#getArrayOfPrimitiveShort(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFPRIMITIVESHORT = new OpenMBeanOperationInfoSupport(
 			"getArrayOfPrimitiveShort",
@@ -728,7 +745,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfShort(String, Short[])}
+	 * {@link ConfigurationMBean#setArrayOfShort(String, Short[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFSHORT = new OpenMBeanOperationInfoSupport(
 			"setArrayOfShort", "Sets a Short array property.",
@@ -742,7 +759,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfShort(String)}
+	 * {@link ConfigurationMBean#getArrayOfShort(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFSHORT = new OpenMBeanOperationInfoSupport(
 			"getArrayOfShort",
@@ -754,7 +771,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setString(String, String)}
+	 * {@link ConfigurationMBean#setString(String, String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETSTRING = new OpenMBeanOperationInfoSupport(
 			"setString", "Sets a String property.",
@@ -767,7 +784,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getString(String)}
+	 * {@link ConfigurationMBean#getString(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETSTRING = new OpenMBeanOperationInfoSupport(
 			"getString",
@@ -778,7 +795,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#setArrayOfString(String, String[])}
+	 * {@link ConfigurationMBean#setArrayOfString(String, String[])}.
 	 */
 	public static final OpenMBeanOperationInfoSupport SETARRAYOFSTRING = new OpenMBeanOperationInfoSupport(
 			"setArrayOfString", "Sets a string array property.",
@@ -792,7 +809,7 @@ public class ConfigurationMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationMBean#getArrayOfString(String)}
+	 * {@link ConfigurationMBean#getArrayOfString(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETARRAYOFSTRING = new OpenMBeanOperationInfoSupport(
 			"getArrayOfString",
@@ -803,7 +820,8 @@ public class ConfigurationMBeanConstants {
 			OpenMBeanOperationInfoSupport.ACTION);
 
 	/**
-	 * MBean operation info for operation {@link Configuration#update()}.
+	 * MBean operation info for operation
+	 * {@link org.osgi.service.cm.Configuration#update()}.
 	 */
 	public static final OpenMBeanOperationInfoSupport UPDATE = new OpenMBeanOperationInfoSupport(
 			"update", "Update the properties of this Configuration object.",

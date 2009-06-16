@@ -176,6 +176,8 @@ public final class ConfigurationMBeanLifeCycle extends MBeanLifeCycleSupport
 	 * An MBean instance will be created if it does not yet exist for the
 	 * provided {@link Configuration}.
 	 *
+	 * @param configuration
+	 *            The configuration which will be represented by this MBean.
 	 * @param pid
 	 *            The persistent id of the configuration.
 	 * @return The {@link ObjectName} instance.
@@ -226,6 +228,8 @@ public final class ConfigurationMBeanLifeCycle extends MBeanLifeCycleSupport
 				case ConfigurationEvent.CM_DELETED:
 					this.releaseConfigurationMBean(pid);
 					break;
+				default:
+					logger.debug("unknown configuration event type.");
 				}
 			} catch (IOException e) {
 				logger.warn("cannot process configuration event", e);

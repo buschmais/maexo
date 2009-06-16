@@ -20,14 +20,12 @@ import javax.management.openmbean.OpenMBeanOperationInfoSupport;
 import javax.management.openmbean.OpenMBeanParameterInfoSupport;
 import javax.management.openmbean.SimpleType;
 
-import org.osgi.service.cm.ConfigurationAdmin;
-
 import com.buschmais.maexo.framework.commons.mbean.dynamic.OpenTypeFactory;
 
 /**
  * Class holding constants for {@link ConfigurationAdminMBean}s.
  */
-public class ConfigurationAdminMBeanConstants {
+public final class ConfigurationAdminMBeanConstants {
 
 	/**
 	 * Constructor.
@@ -43,7 +41,7 @@ public class ConfigurationAdminMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationAdmin#createFactoryConfiguration(String)}.
+	 * {@link org.osgi.service.cm.ConfigurationAdmin#createFactoryConfiguration(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport CREATEFACTORYCONFIGURATION_BY_FACTORYPID = new OpenMBeanOperationInfoSupport(
 			"createFactoryConfiguration",
@@ -55,7 +53,7 @@ public class ConfigurationAdminMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationAdmin#createFactoryConfiguration(String, String)}.
+	 * {@link org.osgi.service.cm.ConfigurationAdmin#createFactoryConfiguration(String, String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport CREATEFACTORYCONFIGURATION_BY_FACTORYPID_AND_LOCATION = new OpenMBeanOperationInfoSupport(
 			"createFactoryConfiguration",
@@ -70,7 +68,7 @@ public class ConfigurationAdminMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationAdmin#createFactoryConfiguration(String)}.
+	 * {@link org.osgi.service.cm.ConfigurationAdmin#createFactoryConfiguration(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETCONFIGURATION_BY_PID = new OpenMBeanOperationInfoSupport(
 			"getConfiguration",
@@ -81,7 +79,7 @@ public class ConfigurationAdminMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationAdmin#createFactoryConfiguration(String, String)}.
+	 * {@link org.osgi.service.cm.ConfigurationAdmin#createFactoryConfiguration(String, String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport GETCONFIGURATION_BY_PID_AND_LOCATION = new OpenMBeanOperationInfoSupport(
 			"getConfiguration",
@@ -96,7 +94,7 @@ public class ConfigurationAdminMBeanConstants {
 
 	/**
 	 * MBean operation info for operation
-	 * {@link ConfigurationAdmin#listConfigurations(String)}.
+	 * {@link org.osgi.service.cm.ConfigurationAdmin#listConfigurations(String)}.
 	 */
 	public static final OpenMBeanOperationInfoSupport LISTCONFIGURATIONS = new OpenMBeanOperationInfoSupport(
 			"listConfigurations",

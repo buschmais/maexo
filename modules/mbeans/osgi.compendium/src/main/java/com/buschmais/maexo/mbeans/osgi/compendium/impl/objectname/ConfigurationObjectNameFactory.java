@@ -23,21 +23,20 @@ import javax.management.ObjectName;
 import org.osgi.framework.Constants;
 
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-import com.buschmais.maexo.mbeans.osgi.compendium.ConfigurationMBean;
 import com.buschmais.maexo.mbeans.osgi.compendium.ConfigurationMBeanConstants;
 
 /**
  * Object name factory implementation for a configuration (see
- * {@link ConfigurationMBean}).
+ * {@link com.buschmais.maexo.mbeans.osgi.compendium.ConfigurationMBean}).
  */
 public final class ConfigurationObjectNameFactory implements ObjectNameFactory {
 
 	/**
 	 * Returns the object name for the given resource.
-	 *
+	 * 
 	 * @see com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactory
 	 *      #getObjectName(java.lang.Object, java.util.Map)
-	 *
+	 * 
 	 * @param resource
 	 *            The resource.
 	 * @param properties

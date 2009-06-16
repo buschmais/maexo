@@ -23,12 +23,11 @@ import javax.management.ObjectName;
 import org.osgi.framework.Constants;
 
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
-import com.buschmais.maexo.mbeans.osgi.compendium.ConfigurationAdminMBean;
 import com.buschmais.maexo.mbeans.osgi.compendium.ConfigurationAdminMBeanConstants;
 
 /**
  * Object name factory implementation for the configuration admin service (see
- * {@link ConfigurationAdminMBean}.
+ * {@link com.buschmais.maexo.mbeans.osgi.compendium.ConfigurationAdminMBean}.
  */
 public final class ConfigurationAdminObjectNameFactory implements
 		ObjectNameFactory {

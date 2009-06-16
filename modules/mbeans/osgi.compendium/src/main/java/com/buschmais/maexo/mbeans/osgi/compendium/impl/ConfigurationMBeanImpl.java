@@ -297,6 +297,11 @@ public final class ConfigurationMBeanImpl extends DynamicMBeanSupport implements
 		return (Character) this.getDictionary().get(name);
 	}
 
+	/**
+	 * Returns the local dictionary of the configuration.
+	 *
+	 * @return The local dictionary.
+	 */
 	@SuppressWarnings("unchecked")
 	private synchronized Dictionary<String, Object> getDictionary() {
 		if (this.dictionary == null) {
@@ -440,11 +445,11 @@ public final class ConfigurationMBeanImpl extends DynamicMBeanSupport implements
 	public TabularData getProperties() {
 		TabularData properties = new TabularDataSupport(
 				ConfigurationMBeanConstants.PROPERTIES_TYPE);
-		Dictionary<String, Object> dictionary = this.getDictionary();
-		Enumeration<String> keys = dictionary.keys();
+		Dictionary<String, Object> localDictionary = this.getDictionary();
+		Enumeration<String> keys = localDictionary.keys();
 		while (keys.hasMoreElements()) {
 			String name = keys.nextElement();
-			Object value = dictionary.get(name);
+			Object value = localDictionary.get(name);
 			String valueAsString = null;
 			String valueType = null;
 			if (value != null) {

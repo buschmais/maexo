@@ -63,7 +63,7 @@ public class ConfigurationAdminMBeanImpl extends DynamicMBeanSupport implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public MBeanInfo getMBeanInfo() {
+	public final MBeanInfo getMBeanInfo() {
 		String className = ConfigurationAdminMBeanImpl.class.getName();
 		// attributes
 		OpenMBeanAttributeInfoSupport[] mbeanAttributeInfos = new OpenMBeanAttributeInfoSupport[0];
@@ -89,7 +89,7 @@ public class ConfigurationAdminMBeanImpl extends DynamicMBeanSupport implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public ObjectName createFactoryConfiguration(String factoryPid) {
+	public final ObjectName createFactoryConfiguration(String factoryPid) {
 		try {
 			Configuration configuration = this.configurationAdmin
 					.createFactoryConfiguration(factoryPid);
@@ -103,7 +103,7 @@ public class ConfigurationAdminMBeanImpl extends DynamicMBeanSupport implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public ObjectName createFactoryConfiguration(String factoryPid,
+	public final ObjectName createFactoryConfiguration(String factoryPid,
 			String location) {
 		try {
 			Configuration configuration = this.configurationAdmin
@@ -118,7 +118,7 @@ public class ConfigurationAdminMBeanImpl extends DynamicMBeanSupport implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public ObjectName getConfiguration(String pid) {
+	public final ObjectName getConfiguration(String pid) {
 		try {
 			Configuration configuration = this.configurationAdmin
 					.getConfiguration(pid);
@@ -132,7 +132,7 @@ public class ConfigurationAdminMBeanImpl extends DynamicMBeanSupport implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public ObjectName getConfiguration(String pid, String location) {
+	public final ObjectName getConfiguration(String pid, String location) {
 		try {
 			Configuration configuration = this.configurationAdmin
 					.getConfiguration(pid, location);
@@ -146,7 +146,7 @@ public class ConfigurationAdminMBeanImpl extends DynamicMBeanSupport implements
 	/**
 	 * {@inheritDoc}
 	 */
-	public ObjectName[] listConfigurations(String filter) {
+	public final ObjectName[] listConfigurations(String filter) {
 		Configuration[] configurations;
 		try {
 			configurations = this.configurationAdmin.listConfigurations(filter);

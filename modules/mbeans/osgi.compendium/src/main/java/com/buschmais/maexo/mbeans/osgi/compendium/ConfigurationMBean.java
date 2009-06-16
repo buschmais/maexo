@@ -18,9 +18,6 @@ package com.buschmais.maexo.mbeans.osgi.compendium;
 
 import javax.management.openmbean.TabularData;
 
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
-
 /**
  * Management interface for a configuration object provided by a
  * {@link ConfigurationAdmin} service.
@@ -32,7 +29,7 @@ public interface ConfigurationMBean {
 	/**
 	 * Delete this Configuration object.
 	 *
-	 * @see {@link Configuration#delete()}
+	 * @see {@link org.osgi.service.cm.Configuration#delete()}
 	 */
 	void delete();
 
@@ -48,7 +45,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Boolean[] getArrayOfBoolean(String name);
+	Boolean[] getArrayOfBoolean(String name);
 
 	/**
 	 * Returns a Byte array property.
@@ -57,7 +54,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Byte[] getArrayOfByte(String name);
+	Byte[] getArrayOfByte(String name);
 
 	/**
 	 * Returns a Character array property.
@@ -66,7 +63,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Character[] getArrayOfCharacter(String name);
+	Character[] getArrayOfCharacter(String name);
 
 	/**
 	 * Returns a Double array property.
@@ -75,7 +72,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Double[] getArrayOfDouble(String name);
+	Double[] getArrayOfDouble(String name);
 
 	/**
 	 * Returns a Float array property.
@@ -84,7 +81,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Float[] getArrayOfFloat(String name);
+	Float[] getArrayOfFloat(String name);
 
 	/**
 	 * Returns an Integer array property.
@@ -93,7 +90,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Integer[] getArrayOfInteger(String name);
+	Integer[] getArrayOfInteger(String name);
 
 	/**
 	 * Returns a Long array property.
@@ -102,7 +99,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Long[] getArrayOfLong(String name);
+	Long[] getArrayOfLong(String name);
 
 	/**
 	 * Returns a boolean array property.
@@ -112,7 +109,7 @@ public interface ConfigurationMBean {
 	 * @return The value of the property.
 	 */
 
-	public Boolean[] getArrayOfPrimitiveBoolean(String name);
+	Boolean[] getArrayOfPrimitiveBoolean(String name);
 
 	/**
 	 * Returns a byte array property.
@@ -121,7 +118,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Byte[] getArrayOfPrimitiveByte(String name);
+	Byte[] getArrayOfPrimitiveByte(String name);
 
 	/**
 	 * Returns a char array property.
@@ -130,7 +127,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Character[] getArrayOfPrimitiveCharacter(String name);
+	Character[] getArrayOfPrimitiveCharacter(String name);
 
 	/**
 	 * Returns a double array property.
@@ -139,7 +136,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Double[] getArrayOfPrimitiveDouble(String name);
+	Double[] getArrayOfPrimitiveDouble(String name);
 
 	/**
 	 * Returns a float array property.
@@ -148,7 +145,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Float[] getArrayOfPrimitiveFloat(String name);
+	Float[] getArrayOfPrimitiveFloat(String name);
 
 	/**
 	 * Returns an int array property.
@@ -157,7 +154,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Integer[] getArrayOfPrimitiveInteger(String name);
+	Integer[] getArrayOfPrimitiveInteger(String name);
 
 	/**
 	 * Returns a long property.
@@ -166,7 +163,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Long[] getArrayOfPrimitiveLong(String name);
+	Long[] getArrayOfPrimitiveLong(String name);
 
 	/**
 	 * Returns a short array property.
@@ -175,7 +172,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Short[] getArrayOfPrimitiveShort(String name);
+	Short[] getArrayOfPrimitiveShort(String name);
 
 	/**
 	 * Returns a Short array property.
@@ -184,7 +181,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Short[] getArrayOfShort(String name);
+	Short[] getArrayOfShort(String name);
 
 	/**
 	 * Returns a String array property.
@@ -193,7 +190,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public String[] getArrayOfString(String name);
+	String[] getArrayOfString(String name);
 
 	/**
 	 * Returns a Boolean property.
@@ -202,12 +199,12 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Boolean getBoolean(String name);
+	Boolean getBoolean(String name);
 
 	/**
 	 * Get the bundle location.
 	 *
-	 * @see {@link Configuration#getBundleLocation()}
+	 * @see {@link org.osgi.service.cm.Configuration#getBundleLocation()}
 	 *
 	 * @return location to which this configuration is bound, or null.
 	 */
@@ -220,7 +217,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Byte getByte(String name);
+	Byte getByte(String name);
 
 	/**
 	 * Returns a Character property.
@@ -229,7 +226,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Character getCharacter(String name);
+	Character getCharacter(String name);
 
 	/**
 	 * Returns a Double property.
@@ -238,13 +235,13 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Double getDouble(String name);
+	Double getDouble(String name);
 
 	/**
 	 * For a factory configuration return the PID of the corresponding Managed
 	 * Service Factory, else return null.
 	 *
-	 * @see {@link Configuration#getFactoryPid()}
+	 * @see {@link org.osgi.service.cm.Configuration#getFactoryPid()}
 	 *
 	 * @return Factory PID or null.
 	 */
@@ -257,7 +254,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Float getFloat(String name);
+	Float getFloat(String name);
 
 	/**
 	 * Returns an Integer property.
@@ -266,7 +263,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Integer getInteger(String name);
+	Integer getInteger(String name);
 
 	/**
 	 * Returns a Long property.
@@ -275,12 +272,12 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Long getLong(String name);
+	Long getLong(String name);
 
 	/**
 	 * Get the PID for this Configuration object.
 	 *
-	 * @see {@link Configuration#getPid()}
+	 * @see {@link org.osgi.service.cm.Configuration#getPid()}
 	 *
 	 * @return The PID for this Configuration object.
 	 */
@@ -290,7 +287,7 @@ public interface ConfigurationMBean {
 	 * Return the properties and the current values (as string representations)
 	 * of this Configuration object.
 	 *
-	 * @see {@link Configuration#getProperties()}
+	 * @see {@link org.osgi.service.cm.Configuration#getProperties()}
 	 *
 	 * @return A private copy of the properties for the caller or null.
 	 */
@@ -303,7 +300,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Short getShort(String name);
+	Short getShort(String name);
 
 	/**
 	 * Returns a String property.
@@ -312,7 +309,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public String getString(String name);
+	String getString(String name);
 
 	/**
 	 * Removes a property from the configuration.
@@ -320,12 +317,12 @@ public interface ConfigurationMBean {
 	 * @param name
 	 *            The name of the property.
 	 */
-	public void remove(String name);
+	void remove(String name);
 
 	/**
 	 * Removes all properties from the configuration.
 	 */
-	public void removeAll();
+	void removeAll();
 
 	/**
 	 * Sets a Boolean array property.
@@ -335,7 +332,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfBoolean(String name, Boolean[] value);
+	void setArrayOfBoolean(String name, Boolean[] value);
 
 	/**
 	 * Sets a Byte array property.
@@ -345,7 +342,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfByte(String name, Byte[] value);
+	void setArrayOfByte(String name, Byte[] value);
 
 	/**
 	 * Sets a Character array property.
@@ -355,7 +352,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfCharacter(String name, Character[] value);
+	void setArrayOfCharacter(String name, Character[] value);
 
 	/**
 	 * Sets a Double array property.
@@ -365,7 +362,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfDouble(String name, Double[] value);
+	void setArrayOfDouble(String name, Double[] value);
 
 	/**
 	 * Sets a Float array property.
@@ -375,7 +372,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfFloat(String name, Float[] value);
+	void setArrayOfFloat(String name, Float[] value);
 
 	/**
 	 * Returns an Integer array property.
@@ -384,7 +381,7 @@ public interface ConfigurationMBean {
 	 *            The name of the property.
 	 * @return The value of the property.
 	 */
-	public Integer[] setArrayOfInteger(String name);
+	Integer[] setArrayOfInteger(String name);
 
 	/**
 	 * Sets a Long array property.
@@ -394,7 +391,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfLong(String name, Long[] value);
+	void setArrayOfLong(String name, Long[] value);
 
 	/**
 	 * Sets a boolean array property.
@@ -404,7 +401,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfPrimitiveBoolean(String name, Boolean[] value);
+	void setArrayOfPrimitiveBoolean(String name, Boolean[] value);
 
 	/**
 	 * Sets a byte array property.
@@ -414,17 +411,17 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfPrimitiveByte(String name, Byte[] value);
+	void setArrayOfPrimitiveByte(String name, Byte[] value);
 
 	/**
 	 * Returns a char array property.
 	 *
 	 * @param name
 	 *            The name of the property.
-	 * @param value
+	 * @return value
 	 *            The value of the property.
 	 */
-	public Character[] setArrayOfPrimitiveCharacter(String name);
+	Character[] setArrayOfPrimitiveCharacter(String name);
 
 	/**
 	 * Sets a char array property.
@@ -434,7 +431,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfPrimitiveCharacter(String name, Character[] value);
+	void setArrayOfPrimitiveCharacter(String name, Character[] value);
 
 	/**
 	 * Sets a double array property.
@@ -444,7 +441,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfPrimitiveDouble(String name, Double[] value);
+	void setArrayOfPrimitiveDouble(String name, Double[] value);
 
 	/**
 	 * Sets a float array property.
@@ -454,7 +451,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfPrimitiveFloat(String name, Float[] value);
+	void setArrayOfPrimitiveFloat(String name, Float[] value);
 
 	/**
 	 * Sets an int array property.
@@ -464,7 +461,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfPrimitiveInteger(String name, Integer[] value);
+	void setArrayOfPrimitiveInteger(String name, Integer[] value);
 
 	/**
 	 * Sets a long property.
@@ -474,7 +471,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfPrimitiveLong(String name, Long[] value);
+	void setArrayOfPrimitiveLong(String name, Long[] value);
 
 	/**
 	 * Sets a short array property.
@@ -484,7 +481,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfPrimitiveShort(String name, Short[] value);
+	void setArrayOfPrimitiveShort(String name, Short[] value);
 
 	/**
 	 * Sets a Short array property.
@@ -494,7 +491,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfShort(String name, Short[] value);
+	void setArrayOfShort(String name, Short[] value);
 
 	/**
 	 * Sets a String array property.
@@ -504,7 +501,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setArrayOfString(String name, String[] value);
+	void setArrayOfString(String name, String[] value);
 
 	/**
 	 * Sets a Boolean property.
@@ -514,12 +511,12 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setBoolean(String name, Boolean value);
+	void setBoolean(String name, Boolean value);
 
 	/**
 	 * Bind this Configuration object to the specified bundle location.
 	 *
-	 * @see {@link Configuration#setBundleLocation(String)}
+	 * @see {@link org.osgi.service.cm.Configuration#setBundleLocation(String)}
 	 *
 	 * @param bundleLocation
 	 *            A bundle location or null.
@@ -534,7 +531,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setByte(String name, Byte value);
+	void setByte(String name, Byte value);
 
 	/**
 	 * Sets a Character property.
@@ -544,7 +541,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setCharacter(String name, Character value);
+	void setCharacter(String name, Character value);
 
 	/**
 	 * Sets a Double property.
@@ -554,7 +551,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setDouble(String name, Double value);
+	void setDouble(String name, Double value);
 
 	/**
 	 * Sets a Float property.
@@ -564,7 +561,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setFloat(String name, Float value);
+	void setFloat(String name, Float value);
 
 	/**
 	 * Sets an Integer property.
@@ -574,7 +571,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setInteger(String name, Integer value);
+	void setInteger(String name, Integer value);
 
 	/**
 	 * Sets a Long property.
@@ -584,7 +581,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setLong(String name, Long value);
+	void setLong(String name, Long value);
 
 	/**
 	 * Sets a Short property.
@@ -594,7 +591,7 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setShort(String name, Short value);
+	void setShort(String name, Short value);
 
 	/**
 	 * Sets a String property.
@@ -604,12 +601,12 @@ public interface ConfigurationMBean {
 	 * @param value
 	 *            The value of the property.
 	 */
-	public void setString(String name, String value);
+	void setString(String name, String value);
 
 	/**
 	 * Update the properties of this Configuration object.
 	 *
-	 * @see {@link Configuration#update()}
+	 * @see {@link org.osgi.service.cm.Configuration#update()}
 	 */
 	void update();
 }
