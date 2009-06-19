@@ -266,7 +266,7 @@ public class FrameworkMBeanTest extends MaexoMBeanTests implements
 			throws MalformedObjectNameException {
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
 		properties.put(ObjectName.class.getName(), new ObjectName(
-				SWITCHBOARDNOTIFICATIONLISTENER_OBJECTNAME));
+				MBEANSERVERDELEGATE_OBJECTNAME));
 		ServiceRegistration notificationListenerServiceRegistration = this.bundleContext
 				.registerService(NotificationListener.class.getName(), this,
 						properties);

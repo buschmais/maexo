@@ -1,15 +1,12 @@
 package com.buschmais.maexo.test.mbeans.osgi.core;
 
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import javax.management.MBeanServerNotification;
-import javax.management.MalformedObjectNameException;
 import javax.management.Notification;
 import javax.management.NotificationListener;
 import javax.management.ObjectName;
@@ -31,11 +28,12 @@ import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryH
 import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBean;
 import com.buschmais.maexo.mbeans.osgi.core.PackageAdminMBeanConstants;
 import com.buschmais.maexo.test.Constants;
+import com.buschmais.maexo.test.MaexoTests;
 import com.buschmais.maexo.test.common.mbeans.MaexoMBeanTests;
 
 /**
  * This class tests <code>PackageAdminMBean</code> functionality.
- * 
+ *
  * @see MaexoTests
  */
 public class PackageAdminMBeanTest extends MaexoMBeanTests implements
@@ -62,7 +60,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	/**
 	 * Compares all exported packages to information stored in
 	 * <code>exportedPackagesMBean</code>.
-	 * 
+	 *
 	 * @param exportedPackages
 	 *            Exported packages to compare.
 	 * @param exportedPackagesMBean
@@ -81,7 +79,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	/**
 	 * Compares all attributes of the exported package to all attributes of
 	 * exported package composite data.
-	 * 
+	 *
 	 * @param exportedPackageCompositeData
 	 *            Composite data containing all information about an exported
 	 *            package.
@@ -136,7 +134,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	/**
 	 * Compares an array of object names to object names of an array of
 	 * resources.
-	 * 
+	 *
 	 * @param objectNames
 	 *            Array of object names.
 	 * @param resources
@@ -159,7 +157,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	/**
 	 * Compares all attributes of the required bundle to all attributes of
 	 * required bundle composite data.
-	 * 
+	 *
 	 * @param requiredBundleCompositeData
 	 *            Composite data containing all information about an required
 	 *            bundle.
@@ -215,13 +213,12 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	/**
 	 * Returns a package admin from OSGi container for testing of general
 	 * package admin functionality.
-	 * 
+	 *
 	 * @return The package admin.
 	 */
 	private PackageAdmin getPackageAdmin() {
 		ServiceReference serviceReference = this.bundleContext
-				.getServiceReference(PackageAdmin.class
-						.getName());
+				.getServiceReference(PackageAdmin.class.getName());
 		final PackageAdmin packageAdmin = (PackageAdmin) this.bundleContext
 				.getService(serviceReference);
 		return packageAdmin;
@@ -229,7 +226,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 
 	/**
 	 * Returns a package admin MBean for the given package admin.
-	 * 
+	 *
 	 * @param packageAdmin
 	 *            The package admin.
 	 * @return The package admin MBean.
@@ -285,25 +282,6 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		bundle = getTestBundle();
 		packageAdmin = getPackageAdmin();
 		packageAdminMBean = getPackageAdminMBean(packageAdmin);
-	}
-
-	/**
-	 * Registers a notification listener which listens to events fired by
-	 * switchboard.
-	 * 
-	 * @return The listener.
-	 * @throws MalformedObjectNameException
-	 *             If notification listeners object name is incorrect.
-	 */
-	private ServiceRegistration registerNotificationListener()
-			throws MalformedObjectNameException {
-		Dictionary<String, Object> properties = new Hashtable<String, Object>();
-		properties.put(ObjectName.class.getName(), new ObjectName(
-				SWITCHBOARDNOTIFICATIONLISTENER_OBJECTNAME));
-		ServiceRegistration notificationListenerServiceRegistration = this.bundleContext
-				.registerService(NotificationListener.class.getName(), this,
-						properties);
-		return notificationListenerServiceRegistration;
 	}
 
 	/**
@@ -364,7 +342,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 
 	/**
 	 * Tests method {@link PackageAdminMBean#getExportedPackages(ObjectName)}.
-	 * 
+	 *
 	 * @throws Exception
 	 *             on error
 	 */
@@ -430,7 +408,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 		final ObjectName[] fragmentObjectNames = packageAdminMBean
 				.getFragments(bundleName);
 		Bundle[] fragments = packageAdmin.getFragments(bundle);
-		
+
 		compareItemsObjectNames(fragmentObjectNames, fragments, Bundle.class);
 	}
 
@@ -496,7 +474,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 
 	/**
 	 * Tests method {@link PackageAdminMBean#refreshPackages(Long[])}.
-	 * 
+	 *
 	 * @throws Exception
 	 *             on error
 	 */
@@ -506,13 +484,13 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 				.getBundleId()) });
 		assertEquals(Integer.valueOf(FrameworkEvent.PACKAGES_REFRESHED),
 				frameworkEvents.poll(5, TimeUnit.SECONDS));
-		
+
 		bundleContext.removeFrameworkListener(this);
 	}
 
 	/**
 	 * Tests method {@link PackageAdminMBean#refreshPackages(ObjectName[])}.
-	 * 
+	 *
 	 * @throws Exception
 	 *             on error
 	 */
@@ -527,14 +505,15 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 
 	/**
 	 * Tests method {@link PackageAdminMBean#resolveBundles(Long[])}.
-	 * 
+	 *
 	 * @throws Exception
 	 *             on error
 	 */
 	public void test_resolveBundlesByBundleIds() throws Exception {
-		ServiceRegistration notificationListenerServiceRegistration = registerNotificationListener();
+		ServiceRegistration notificationListenerServiceRegistration = registerNotificationListener(
+				this, new ObjectName(MaexoTests.MBEANSERVERDELEGATE_OBJECTNAME));
 		Bundle newBundle = reinstallTestBundle();
-		
+
 		Long bundleId = Long.valueOf(newBundle.getBundleId());
 		assertTrue(packageAdminMBean.resolveBundles(new Long[] { bundleId })
 				.booleanValue());
@@ -545,7 +524,7 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 	 * Uninstalls test bundle, waits for unregister notifications of MBeans,
 	 * reinstalls bundle, waits for register notifications of MBeans and returns
 	 * new bundle.
-	 * 
+	 *
 	 * @return The new bundle.
 	 * @throws BundleException
 	 *             If uninstall or install failed.
@@ -576,12 +555,13 @@ public class PackageAdminMBeanTest extends MaexoMBeanTests implements
 
 	/**
 	 * Tests method {@link PackageAdminMBean#resolveBundles(ObjectName[])}.
-	 * 
+	 *
 	 * @throws Exception
 	 *             on error
 	 */
 	public void test_resolveBundlesByBundleObjectNames() throws Exception {
-		ServiceRegistration notificationListenerServiceRegistration = registerNotificationListener();
+		ServiceRegistration notificationListenerServiceRegistration = registerNotificationListener(
+				this, new ObjectName(MaexoTests.MBEANSERVERDELEGATE_OBJECTNAME));
 		Bundle newBundle = reinstallTestBundle();
 
 		ObjectName objectName = getObjectName(newBundle, Bundle.class);

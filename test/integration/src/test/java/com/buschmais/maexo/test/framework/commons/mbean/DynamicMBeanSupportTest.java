@@ -41,6 +41,7 @@ public class DynamicMBeanSupportTest extends MaexoMBeanTests {
 	 */
 	private static final String OBJECTNAME_DYNAMICMBEAN = "com.buschmais.maexo:type=DynamicMBean";
 
+	@SuppressWarnings("unused")
 	private DynamicMBeanSupport dynamicMBeanSupport;
 	private DynamicMBean dynamicMBean;
 	private ServiceRegistration dynamicMBeanRegistration;

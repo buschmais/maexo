@@ -31,6 +31,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import javax.management.MBeanServerConnection;
+import javax.management.MBeanServerNotification;
 import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.TabularData;
@@ -47,7 +48,9 @@ import com.buschmais.maexo.mbeans.osgi.compendium.ConfigurationAdminMBean;
 import com.buschmais.maexo.mbeans.osgi.compendium.ConfigurationMBean;
 import com.buschmais.maexo.mbeans.osgi.compendium.ConfigurationMBeanConstants;
 import com.buschmais.maexo.test.Constants;
+import com.buschmais.maexo.test.MBeanNotificationListener;
 import com.buschmais.maexo.test.MaexoTests;
+import com.buschmais.maexo.test.MBeanNotificationListener.NotificationEvent;
 import com.buschmais.maexo.test.common.mbeans.MaexoMBeanTests;
 
 /**
@@ -104,6 +107,27 @@ public class ConfigurationAdminMBeanTest extends MaexoMBeanTests {
 
 	private static final int TIMEOUT = 5;
 
+	private ServiceReference configAdminServiceReference = null;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void onSetUp() throws Exception {
+		super.onSetUp();
+		this.configAdminServiceReference = this.bundleContext
+				.getServiceReference(ConfigurationAdmin.class.getName());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void onTearDown() throws Exception {
+		super.bundleContext.ungetService(this.configAdminServiceReference);
+		super.onTearDown();
+	}
+
 	/**
 	 * Returns a configuration admin from OSGi container for testing of general
 	 * configuration admin functionality.
@@ -111,10 +135,8 @@ public class ConfigurationAdminMBeanTest extends MaexoMBeanTests {
 	 * @return The configuration admin.
 	 */
 	private ConfigurationAdmin getConfigurationAdmin() {
-		ServiceReference serviceReference = this.bundleContext
-				.getServiceReference(ConfigurationAdmin.class.getName());
-		final ConfigurationAdmin configurationAdmin = (ConfigurationAdmin) this.bundleContext
-				.getService(serviceReference);
+		ConfigurationAdmin configurationAdmin = (ConfigurationAdmin) this.bundleContext
+				.getService(this.configAdminServiceReference);
 		return configurationAdmin;
 	}
 
@@ -439,14 +461,14 @@ public class ConfigurationAdminMBeanTest extends MaexoMBeanTests {
 	}
 
 	/**
-	 * Tests creating, updating and deleting a configuration.
+	 * Tests creating, updating and deleting a configuration using MBeans.
 	 */
 	public void test_managedService_createUpdateDelete() throws Exception {
 		this.createUpdateDeleteManagedServiceConfiguration(true);
 	}
 
 	/**
-	 * Tests creating and deleting a configuration.
+	 * Tests creating and deleting a configuration using MBeans.
 	 */
 	public void test_managedService_createDelete() throws Exception {
 		this.createUpdateDeleteManagedServiceConfiguration(false);
@@ -520,17 +542,17 @@ public class ConfigurationAdminMBeanTest extends MaexoMBeanTests {
 						dictionaryItems);
 			}
 			// delete the configuration
-			// configurationMBean.delete();
-			// configurationEvent = queue.poll(TIMEOUT, TimeUnit.SECONDS);
-			// assertNotNull(configurationEvent);
-			// assertNull(configurationEvent.getDictionary());
+			configurationMBean.delete();
+			configurationEvent = queue.poll(TIMEOUT, TimeUnit.SECONDS);
+			assertNotNull(configurationEvent);
+			assertNull(configurationEvent.getDictionary());
 		} finally {
 			serviceRegistration.unregister();
 		}
 	}
 
 	/**
-	 * Tests creating, updating and deleting a configuration.
+	 * Tests creating, updating and deleting a configuration using MBeans.
 	 */
 	public void test_managedServiceFactory_createUpdateDelete()
 			throws Exception {
@@ -538,9 +560,86 @@ public class ConfigurationAdminMBeanTest extends MaexoMBeanTests {
 	}
 
 	/**
-	 * Tests creating and deleting a configuration.
+	 * Tests creating and deleting a configuration using MBeans.
 	 */
 	public void test_managedServiceFactory_createDelete() throws Exception {
 		this.createUpdateDeleteManagedServiceFactoryConfiguration(false);
+	}
+
+	/**
+	 * Checks monitoring the life cycle of a configuration which is not
+	 * controlled by the {@link ConfigurationAdminMBean}.
+	 * <p>
+	 * The test creates, updates and deletes a configuration and test, whether
+	 * the corresponding {@link ConfigurationMBean}s are registered and
+	 * unregistered.
+	 *
+	 * @param useManagedServiceFactoryConfiguration
+	 *            if <code>true</code> use a managed service factory
+	 *            configuration, otherwise a managed service configuration.
+	 * @throws Exception
+	 *             If an error occurs.
+	 */
+	private void configurationLifeCycleMonitoring(
+			boolean useManagedServiceFactoryConfiguration) throws Exception {
+		// register MBean listener
+		MBeanNotificationListener<MBeanServerNotification> notificationListener = new MBeanNotificationListener<MBeanServerNotification>();
+		super.registerNotificationListener(notificationListener,
+				new ObjectName(MaexoTests.MBEANSERVERDELEGATE_OBJECTNAME));
+		// create a new configuration
+		Configuration configuration = null;
+		if (useManagedServiceFactoryConfiguration) {
+			configuration = this.getConfigurationAdmin()
+					.createFactoryConfiguration(FACTORY_PID);
+		} else {
+			configuration = this.getConfigurationAdmin().getConfiguration(PID);
+		}
+		// create the object name which is expected to be
+		// registered/unregistered
+		Map<String, Object> props = new HashMap<String, Object>();
+		props.put(org.osgi.framework.Constants.SERVICE_ID,
+				this.configAdminServiceReference
+						.getProperty(org.osgi.framework.Constants.SERVICE_ID));
+		props.put(org.osgi.framework.Constants.SERVICE_PID, configuration
+				.getPid());
+		ObjectName expectedObjectName = super.getObjectName(configuration,
+				Configuration.class, props);
+		// update the configuration with properties
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+		properties.put("key", "value");
+		configuration.update(properties);
+		// wait for the registration event
+		NotificationEvent<MBeanServerNotification> event = notificationListener
+				.getNotificationEvents().poll(TIMEOUT, TimeUnit.SECONDS);
+		assertEquals(MBeanServerNotification.REGISTRATION_NOTIFICATION, event
+				.getNotification().getType());
+		assertEquals(expectedObjectName, event.getNotification().getMBeanName());
+		// delete the configuration and wait for the unregistration event
+		configuration.delete();
+		event = notificationListener.getNotificationEvents().poll(TIMEOUT,
+				TimeUnit.SECONDS);
+		assertNotNull(event);
+		assertEquals(MBeanServerNotification.UNREGISTRATION_NOTIFICATION, event
+				.getNotification().getType());
+		assertEquals(expectedObjectName, event.getNotification().getMBeanName());
+	}
+
+	/**
+	 * Checks monitoring the life cycle of a managed service configuration which
+	 * is not controlled by the {@link ConfigurationAdminMBean}.
+	 */
+	public void test_managedServiceConfigurationLifeCycleMonitoring()
+			throws Exception {
+		this.configurationLifeCycleMonitoring(false);
+	}
+
+	/**
+	 * Checks monitoring the life cycle of a managed service factory
+	 * configuration which is not controlled by the
+	 * {@link ConfigurationAdminMBean}.
+	 */
+	public void test_managedServiceFactoryConfigurationLifeCycleMonitoring()
+			throws Exception {
+		this.configurationLifeCycleMonitoring(true);
 	}
 }

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;
@@ -32,6 +33,7 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.packageadmin.PackageAdmin;
 
+import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactory;
 import com.buschmais.maexo.framework.commons.mbean.objectname.ObjectNameFactoryHelper;
 import com.buschmais.maexo.test.Constants;
 import com.buschmais.maexo.test.MaexoTests;
@@ -40,9 +42,6 @@ public class MaexoMBeanTests extends MaexoTests {
 
 	/** Symbolic name for the test bundle. */
 	private static final String TESTBUNDLE_SYMBOLIC_NAME = "maexo-test.testbundle";
-
-	/** Object name for the switchboard notification listener. */
-	protected final String SWITCHBOARDNOTIFICATIONLISTENER_OBJECTNAME = "JMImplementation:type=MBeanServerDelegate";
 
 	/**
 	 * {@inheritDoc}
@@ -91,6 +90,26 @@ public class MaexoMBeanTests extends MaexoTests {
 	}
 
 	/**
+	 * Returns the object name for the given resource.
+	 *
+	 * @param resource
+	 *            The resource.
+	 * @param resourceInterface
+	 *            The interface to use for looking up the object name factory.
+	 * @param properties
+	 *            The properties which are required by the specific
+	 *            {@link ObjectNameFactory}.
+	 * @return The object name.
+	 */
+	protected ObjectName getObjectName(Object resource,
+			Class<?> resourceInterface, Map<String, Object> properties) {
+		ObjectNameFactoryHelper objectNameFactoryHelper = new ObjectNameFactoryHelper(
+				this.bundleContext);
+		return objectNameFactoryHelper.getObjectName(resource,
+				resourceInterface, properties);
+	}
+
+	/**
 	 * Returns the instance of an {@link MBeanServerConnection} from the OSGi
 	 * service registry.
 	 *
@@ -115,7 +134,8 @@ public class MaexoMBeanTests extends MaexoTests {
 	 * @return The MBean.
 	 */
 	protected Object getMBean(ObjectName objectName, Class<?> mbeanInterface) {
-		MBeanServerConnection mbeanServerConnection = this.getMBeanServerConnection();
+		MBeanServerConnection mbeanServerConnection = this
+				.getMBeanServerConnection();
 		// get new MBean from MBeanServerConnection
 		final Object mBean = MBeanServerInvocationHandler.newProxyInstance(
 				mbeanServerConnection, objectName, mbeanInterface, false);
