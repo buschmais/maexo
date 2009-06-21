@@ -51,7 +51,7 @@
 		<mx4j.tools.version>3.0.1</mx4j.tools.version>
 		<org.aopalliance.version>1.0.0</org.aopalliance.version>
 		<org.apache.felix.configadmin.version>1.0.10</org.apache.felix.configadmin.version>
-		<org.apache.felix.main.version>1.4.1</org.apache.felix.main.version>
+		<org.apache.felix.main.version>1.8.0</org.apache.felix.main.version>
 		<org.apache.felix.scr.version>1.0.6</org.apache.felix.scr.version>
 		<org.eclipse.osgi.version>3.4.0.v20080605-1900</org.eclipse.osgi.version>
 		<org.objectweb.asm.version>2.2.3</org.objectweb.asm.version>
