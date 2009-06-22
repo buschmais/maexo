@@ -22,7 +22,7 @@
 	<groupId>com.buschmais</groupId>
 	<artifactId>maexo</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<name>MAEXO - Management Extensions for OSGi</name>
 
 	<modules>
@@ -47,7 +47,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<com.buschmais.maexo.version>1.0.1-SNAPSHOT</com.buschmais.maexo.version>
+		<com.buschmais.maexo.version>1.1.0-SNAPSHOT</com.buschmais.maexo.version>
 		<mx4j.tools.version>3.0.1</mx4j.tools.version>
 		<org.aopalliance.version>1.0.0</org.aopalliance.version>
 		<org.apache.felix.configadmin.version>1.0.10</org.apache.felix.configadmin.version>

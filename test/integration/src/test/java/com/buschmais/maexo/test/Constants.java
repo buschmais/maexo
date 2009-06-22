@@ -18,7 +18,7 @@ package com.buschmais.maexo.test;
 
 public class Constants {
 
-	public static final String MAEXO_VERSION = "1.0.1-SNAPSHOT";
+	public static final String MAEXO_VERSION = "1.1.0-SNAPSHOT";
 	public static final String SLF4J_VERSION = "1.5.6";
 	public static final String SPRING_VERSION = "2.5.6.A";
 	public static final String SPRING_OSGI_VERSION = "1.2.0";
