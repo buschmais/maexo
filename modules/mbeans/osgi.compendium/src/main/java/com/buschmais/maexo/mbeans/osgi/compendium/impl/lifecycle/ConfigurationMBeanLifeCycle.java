@@ -229,7 +229,7 @@ public final class ConfigurationMBeanLifeCycle extends MBeanLifeCycleSupport
 					this.releaseConfigurationMBean(pid);
 					break;
 				default:
-					logger.debug("unknown configuration event type.");
+					logger.debug("unknown configuration event type: {}", event.getType());
 				}
 			} catch (IOException e) {
 				logger.warn("cannot process configuration event", e);
