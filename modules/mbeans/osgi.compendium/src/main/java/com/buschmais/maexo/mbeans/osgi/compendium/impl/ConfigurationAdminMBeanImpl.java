@@ -48,7 +48,7 @@ public class ConfigurationAdminMBeanImpl extends DynamicMBeanSupport implements
 
 	/**
 	 * Constructor.
-	 *
+	 * 
 	 * @param configurationAdmin
 	 *            The {@link ConfigurationAdmin} service to manage.
 	 * @param configurationMBeanLifeCycle
@@ -154,10 +154,12 @@ public class ConfigurationAdminMBeanImpl extends DynamicMBeanSupport implements
 			throw new IllegalStateException(e.getMessage());
 		}
 		List<ObjectName> objectNames = new LinkedList<ObjectName>();
-		for (Configuration configuration : configurations) {
-			objectNames.add(this.configurationMBeanLifeCycle
-					.getConfigurationMBean(configuration, configuration
-							.getPid()));
+		if (configurations != null) {
+			for (Configuration configuration : configurations) {
+				objectNames.add(this.configurationMBeanLifeCycle
+						.getConfigurationMBean(configuration, configuration
+								.getPid()));
+			}
 		}
 		return objectNames.toArray(new ObjectName[0]);
 	}
