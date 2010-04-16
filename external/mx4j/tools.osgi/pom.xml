@@ -21,7 +21,7 @@
 	<parent>
 		<groupId>com.buschmais.maexo.external</groupId>
 		<artifactId>mx4j</artifactId>
-		<version>1.1.0</version>
+		<version>1.2.0-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
