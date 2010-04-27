@@ -45,7 +45,7 @@ Now a management console can be connected:
     It offers a wide range of functionality to monitor, manage and profile running Java
     applications and allows installation of a plugin called VisualVM-MBeans (see Tools->Plugins).
     If the sample is running it will be listed in the applications view (left side) as 
-    "org.eclipse.osgi-${org.eclipse.osgi.version}.jar" or "org.apache.felix.main-${org.apache.felix.main.version}.jar".
+    "osgi-${org.eclipse.osgi.version}.jar" or "org.apache.felix.main-${org.apache.felix.main.version}.jar".
 	Double clicking the entry opens a tab where the MBeans view can be selected.
   * JDK 5.0 and JDK 6.0 provide a generic management console called JConsole. It can found in the
     directory bin/ of your Java installation and offers the same functionality as the VisualVM

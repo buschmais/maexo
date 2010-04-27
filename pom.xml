@@ -51,9 +51,9 @@
 		<mx4j.tools.version>3.0.1</mx4j.tools.version>
 		<org.aopalliance.version>1.0.0</org.aopalliance.version>
 		<org.apache.felix.configadmin.version>1.0.10</org.apache.felix.configadmin.version>
-		<org.apache.felix.main.version>1.8.1</org.apache.felix.main.version>
+		<org.apache.felix.main.version>2.0.5</org.apache.felix.main.version>
 		<org.apache.felix.scr.version>1.0.8</org.apache.felix.scr.version>
-		<org.eclipse.osgi.version>3.4.2.R34x_v20080826-1230</org.eclipse.osgi.version>
+		<org.eclipse.osgi.version>3.5.0.v20090520</org.eclipse.osgi.version>
 		<org.objectweb.asm.version>2.2.3</org.objectweb.asm.version>
 		<org.osgi.core.version>2.2.3</org.osgi.core.version>
 		<org.osgi.compendium.version>2.2.3</org.osgi.compendium.version>
@@ -474,8 +474,8 @@ limitations under the License
 				<version>${com.buschmais.maexo.version}</version>
 				<exclusions>
 					<exclusion>
-						<groupId>org.eclipse.osgi</groupId>
-						<artifactId>org.eclipse.osgi</artifactId>
+						<groupId>org.eclipse</groupId>
+						<artifactId>osgi</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>
@@ -623,8 +623,8 @@ limitations under the License
 			</dependency>
 
 			<dependency>
-				<groupId>org.eclipse.osgi</groupId>
-				<artifactId>org.eclipse.osgi</artifactId>
+				<groupId>org.eclipse</groupId>
+				<artifactId>osgi</artifactId>
 				<version>${org.eclipse.osgi.version}</version>
 				<scope>runtime</scope>
 			</dependency>
