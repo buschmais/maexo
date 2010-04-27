@@ -38,9 +38,11 @@ The following bundles are installed (see configuration/config.ini and conf/confi
     will look for active bundles in the container and evaluate application context descriptors.
       
 	  org.springframework.aop-${org.springframework.version}.jar
+	  org.springframework.asm-${org.springframework.version}.jar
       org.springframework.beans-${org.springframework.version}.jar
       org.springframework.context-${org.springframework.version}.jar
       org.springframework.core-${org.springframework.version}.jar
+      org.springframework.expression-${org.springframework.version}.jar
       spring-osgi-core-${org.springframework.osgi.version}.jar
       spring-osgi-extender-${org.springframework.osgi.version}.jar [activated]
       spring-osgi-io-${org.springframework.osgi.version}.jar

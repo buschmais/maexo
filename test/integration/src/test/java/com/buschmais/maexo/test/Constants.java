@@ -19,9 +19,9 @@ package com.buschmais.maexo.test;
 public class Constants {
 
 	public static final String MAEXO_VERSION = "1.2.0-SNAPSHOT";
-	public static final String SLF4J_VERSION = "1.5.8";
-	public static final String SPRING_VERSION = "2.5.6.A";
-	public static final String SPRING_OSGI_VERSION = "1.2.0";
+	public static final String SLF4J_VERSION = "1.5.11";
+	public static final String SPRING_VERSION = "3.0.2.RELEASE";
+	public static final String SPRING_OSGI_VERSION = "1.2.1";
 	public static final String FELIX_CONFIGADMIN_VERSION = "1.0.10";
 	public static final String OSGI_COMPENDIUM_VERSION = "1.2.0";
 
@@ -65,11 +65,15 @@ public class Constants {
 
 	public static final String ARTIFACT_SPRING_AOP = "org.springframework, org.springframework.aop, "
 			+ SPRING_VERSION;
+	public static final String ARTIFACT_SPRING_ASM = "org.springframework, org.springframework.asm, "
+			+ SPRING_VERSION;
 	public static final String ARTIFACT_SPRING_BEANS = "org.springframework, org.springframework.beans, "
 			+ SPRING_VERSION;
 	public static final String ARTIFACT_SPRING_CORE = "org.springframework, org.springframework.core, "
 			+ SPRING_VERSION;
 	public static final String ARTIFACT_SPRING_CONTEXT = "org.springframework, org.springframework.context, "
+			+ SPRING_VERSION;
+	public static final String ARTIFACT_SPRING_EXPRESSION = "org.springframework, org.springframework.expression, "
 			+ SPRING_VERSION;
 	public static final String ARTIFACT_SPRING_TEST = "org.springframework, org.springframework.test, "
 			+ SPRING_VERSION;
@@ -93,9 +97,10 @@ public class Constants {
 	public static final String[] TEST_FRAMEWORK_BUNDLES_NAMES = new String[] {
 			ARTIFACT_ASM, ARTIFACT_AOPALLIANCE, ARTIFACT_JUNIT,
 			ARTIFACT_SLF4J_JDK14, ARTIFACT_SLF4J_API, ARTIFACT_SLF4J_JCL,
-			ARTIFACT_SPRING_AOP, ARTIFACT_SPRING_BEANS,
+			ARTIFACT_SPRING_AOP, ARTIFACT_SPRING_ASM, ARTIFACT_SPRING_BEANS,
 			ARTIFACT_SPRING_CONTEXT, ARTIFACT_SPRING_CORE,
-			ARTIFACT_SPRING_TEST, ARTIFACT_SPRING_OSGI_ANNOTATION,
-			ARTIFACT_SPRING_OSGI_CORE, ARTIFACT_SPRING_OSGI_EXTENDER,
-			ARTIFACT_SPRING_OSGI_IO, ARTIFACT_SPRING_OSGI_TEST };
+			ARTIFACT_SPRING_EXPRESSION, ARTIFACT_SPRING_TEST,
+			ARTIFACT_SPRING_OSGI_ANNOTATION, ARTIFACT_SPRING_OSGI_CORE,
+			ARTIFACT_SPRING_OSGI_EXTENDER, ARTIFACT_SPRING_OSGI_IO,
+			ARTIFACT_SPRING_OSGI_TEST };
 }
