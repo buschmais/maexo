@@ -29,7 +29,7 @@ The following bundles are installed (see configuration/config.ini and conf/confi
     
       maexo-server.platform-${com.buschmais.maexo.version}.jar [activated]
   
-  * Apache Felix Service Component Runtime (SCR) - The implemenation of the OSGi Declarative
+  * Apache Felix Service Component Runtime (SCR) - The implementation of the OSGi Declarative
     Services specification from the Apache Felix project and its required dependency to the
     Configuration Admin Service (see http://felix.apache.org).
 	
