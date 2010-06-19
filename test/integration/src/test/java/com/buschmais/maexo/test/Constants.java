@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2009 buschmais GbR
+ * Copyright 2008-2010 buschmais GbR
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,26 @@
  */
 package com.buschmais.maexo.test;
 
-public class Constants {
+import java.io.IOException;
+import java.util.Properties;
 
-	public static final String MAEXO_VERSION = "1.2.0-SNAPSHOT";
-	public static final String SLF4J_VERSION = "1.5.11";
-	public static final String SPRING_VERSION = "3.0.2.RELEASE";
-	public static final String SPRING_OSGI_VERSION = "1.2.1";
-	public static final String FELIX_CONFIGADMIN_VERSION = "1.0.10";
-	public static final String OSGI_COMPENDIUM_VERSION = "1.2.0";
+public class Constants {
+	
+	private static final Properties VERSION = new Properties();
+	static {
+		try {
+			VERSION.load(Constants.class.getResourceAsStream("/version.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static final String MAEXO_VERSION = VERSION.getProperty("com.buschmais.maexo.version");
+	public static final String SLF4J_VERSION = VERSION.getProperty("org.slf4j.version");
+	public static final String SPRING_VERSION = VERSION.getProperty("org.springframework.version");
+	public static final String SPRING_OSGI_VERSION = VERSION.getProperty("org.springframework.osgi.version");
+	public static final String FELIX_CONFIGADMIN_VERSION = VERSION.getProperty("org.apache.felix.configadmin.version");
+	public static final String OSGI_COMPENDIUM_VERSION = VERSION.getProperty("org.osgi.compendium.version");
 
 	public static final String ARTIFACT_SWITCHBOARD = "com.buschmais.maexo.modules.framework, maexo-framework.switchboard, "
 			+ MAEXO_VERSION;
@@ -46,13 +58,17 @@ public class Constants {
 	public static final String ARTIFACT_PLATFORM_MBEAN_SERVER = "com.buschmais.maexo.modules.server, maexo-server.platform, "
 			+ MAEXO_VERSION;
 
-	public static final String ARTIFACT_AOPALLIANCE = "org.aopalliance, com.springsource.org.aopalliance, 1.0.0";
+	public static final String ARTIFACT_AOPALLIANCE = "org.aopalliance, com.springsource.org.aopalliance, "
+			+ VERSION.getProperty("org.aopalliance.version");
 
-	public static final String ARTIFACT_ASM = "org.objectweb.asm, com.springsource.org.objectweb.asm, 2.2.3";
+	public static final String ARTIFACT_ASM = "org.objectweb.asm, com.springsource.org.objectweb.asm, "
+			+ VERSION.getProperty("org.objectweb.asm.version");
 
-	public static final String ARTIFACT_EASYMOCK = "org.easymock, com.springsource.org.easymock, 2.3.0";
+	public static final String ARTIFACT_EASYMOCK = "org.easymock, com.springsource.org.easymock, "
+			+ VERSION.getProperty("com.springsource.org.easymock.version");
 
-	public static final String ARTIFACT_JUNIT = "org.junit, com.springsource.junit, 3.8.2";
+	public static final String ARTIFACT_JUNIT = "org.junit, com.springsource.junit, "
+			+ VERSION.getProperty("com.springsource.junit.version");
 
 	public static final String ARTIFACT_SLF4J_API = " org.slf4j,slf4j-api, "
 			+ SLF4J_VERSION;

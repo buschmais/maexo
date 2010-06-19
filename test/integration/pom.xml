@@ -29,6 +29,15 @@
 	<artifactId>maexo-test.integration</artifactId>
 	<name>MAEXO - Integration Test</name>
 
+	<build>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.felix</groupId>
