@@ -16,19 +16,12 @@
  */
 package com.buschmais.maexo.test;
 
-import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class Constants {
 	
-	private static final Properties VERSION = new Properties();
-	static {
-		try {
-			VERSION.load(Constants.class.getResourceAsStream("/version.properties"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	private static final Properties VERSION = getPropertiesFrom("/version.properties");
 
 	public static final String MAEXO_VERSION = VERSION.getProperty("com.buschmais.maexo.version");
 	public static final String SLF4J_VERSION = VERSION.getProperty("org.slf4j.version");
@@ -119,4 +112,26 @@ public class Constants {
 			ARTIFACT_SPRING_OSGI_ANNOTATION, ARTIFACT_SPRING_OSGI_CORE,
 			ARTIFACT_SPRING_OSGI_EXTENDER, ARTIFACT_SPRING_OSGI_IO,
 			ARTIFACT_SPRING_OSGI_TEST };
+
+	/**
+	 * Load properties file and ignore any exceptions.
+	 * 
+	 * @param classpath resource name
+	 * @return properties loaded from classpath resource
+	 */
+	private static Properties getPropertiesFrom(String string) {
+		Properties result = new Properties();
+		try {
+			InputStream stream = Constants.class
+					.getResourceAsStream("/version.properties");
+			try {
+				result.load(stream);
+			} finally {
+				stream.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
