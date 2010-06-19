@@ -162,7 +162,7 @@ public final class ConfigurationMBeanLifeCycle extends MBeanLifeCycleSupport
 	 */
 	private Configuration getConfiguration(String pid) {
 		try {
-			return this.configurationAdmin.getConfiguration(pid);
+			return this.configurationAdmin.getConfiguration(pid, null);
 		} catch (IOException e) {
 			throw new IllegalStateException(String.format(
 					"cannot get configuration for pid='%s'.", pid), e);
@@ -220,7 +220,7 @@ public final class ConfigurationMBeanLifeCycle extends MBeanLifeCycleSupport
 		if (this.serviceReference.equals(event.getReference())) {
 			Configuration configuration;
 			try {
-				configuration = this.configurationAdmin.getConfiguration(pid);
+				configuration = this.getConfiguration(pid);
 				switch (event.getType()) {
 				case ConfigurationEvent.CM_UPDATED:
 					this.getConfigurationMBean(configuration, pid);
@@ -231,7 +231,7 @@ public final class ConfigurationMBeanLifeCycle extends MBeanLifeCycleSupport
 				default:
 					logger.debug("unknown configuration event type: {}", event.getType());
 				}
-			} catch (IOException e) {
+			} catch (RuntimeException e) {
 				logger.warn("cannot process configuration event", e);
 			}
 		}
